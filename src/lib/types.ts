@@ -133,6 +133,15 @@ export interface LessonContent {
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
   visualizerType: AlgorithmType;
   
+  // Learning Objectives & Prerequisites
+  objectives?: string[];
+  prerequisites?: string[];
+  previousLesson?: {
+    id: string;
+    title: string;
+    moduleId?: string;
+  };
+  
   // 1. Real-World Analogy
   analogy: {
     title: string;

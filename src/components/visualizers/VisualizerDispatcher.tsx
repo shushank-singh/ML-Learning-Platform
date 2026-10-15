@@ -7,6 +7,10 @@ import { GradientDescentVisualizer } from './GradientDescentVisualizer';
 import { LogisticBoundaryVisualizer } from './LogisticBoundaryVisualizer';
 import { KMeansVisualizer } from './KMeansVisualizer';
 import { MetricsRocVisualizer } from './MetricsRocVisualizer';
+import { DecisionTreeVisualizer } from './DecisionTreeVisualizer';
+import { KNNVisualizer } from './KNNVisualizer';
+import { PCAVisualizer } from './PCAVisualizer';
+import { NeuralNetVisualizer } from './NeuralNetVisualizer';
 
 interface VisualizerDispatcherProps {
   type: AlgorithmType;
@@ -21,11 +25,20 @@ export const VisualizerDispatcher: React.FC<VisualizerDispatcherProps> = ({ type
     case 'logistic-boundary':
     case 'svm-boundary':
       return <LogisticBoundaryVisualizer />;
+    case 'decision-tree':
+      return <DecisionTreeVisualizer />;
+    case 'knn':
+      return <KNNVisualizer />;
     case 'kmeans':
       return <KMeansVisualizer />;
+    case 'neural-net':
+      return <NeuralNetVisualizer />;
     case 'metrics-roc':
       return <MetricsRocVisualizer />;
+    case 'pca':
+      return <PCAVisualizer />;
+    case 'none':
     default:
-      return <LinearRegressionVisualizer />;
+      return null;
   }
 };
