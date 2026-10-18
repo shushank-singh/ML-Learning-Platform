@@ -71,6 +71,8 @@ export interface NumericalExample {
 export interface LineExplanation {
   lines: string;
   codeSnippet: string;
+  line?: number | string;
+  code?: string;
   explanation: string;
 }
 
@@ -91,6 +93,9 @@ export interface AssumptionItem {
 export interface CommonMistake {
   mistake: string;
   solution: string;
+  whyWrong?: string;
+  howToFix?: string;
+  correction?: string;
   codeExample?: string;
 }
 
@@ -98,6 +103,8 @@ export interface UseCaseItem {
   industry: string;
   application: string;
   benefit: string;
+  title?: string;
+  description?: string;
 }
 
 export interface PracticeQuestion {
@@ -112,15 +119,19 @@ export interface QuizQuestion {
   question: string;
   options: string[];
   correctIndex: number;
+  correctAnswer?: number;
   explanation: string;
 }
 
 export interface ExerciseItem {
   title: string;
   problem: string;
+  description?: string;
+  difficulty?: string;
   hints: string[];
   starterCode: string;
   solution: string;
+  testCases?: any;
 }
 
 export interface LessonContent {
@@ -298,4 +309,198 @@ export interface UserProgressState {
   };
   totalMinutesLearned: number;
   weakTopics: string[];
+}
+
+// ============================================================
+// DSA MASTERY LAB TYPES
+// ============================================================
+
+export type DSAAlgorithmType =
+  | 'sorting'
+  | 'binary-search'
+  | 'linked-list'
+  | 'stack-queue'
+  | 'tree'
+  | 'graph'
+  | 'dp-table'
+  | 'recursion-tree'
+  | 'heap'
+  | 'hash-table'
+  | 'trie'
+  | 'none';
+
+export interface DSALessonSummary {
+  id: string;
+  moduleId: string;
+  title: string;
+  description: string;
+  order: number;
+  readTimeMinutes: number;
+  visualizerType: DSAAlgorithmType;
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  prerequisites?: string[];
+}
+
+export interface DSAModuleData {
+  id: string;
+  number: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  icon: string;
+  badge: string;
+  estimatedHours: number;
+  topicsCount: number;
+  lessons: DSALessonSummary[];
+}
+
+export interface DSAComplexityItem {
+  case: 'Best' | 'Average' | 'Worst';
+  time: string;
+  space: string;
+  explanation: string;
+}
+
+export interface DSAWorkedExampleStep {
+  step: number;
+  action: string;
+  state: string;
+  explanation: string;
+}
+
+export interface DSALessonContent {
+  id: string;
+  moduleId: string;
+  title: string;
+  subtitle: string;
+  order: number;
+  readTimeMinutes: number;
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  visualizerType: DSAAlgorithmType;
+
+  objectives: string[];
+  prerequisites: string[];
+  previousLesson?: { id: string; title: string; moduleId: string };
+
+  analogy: { title: string; text: string; metaphor: string };
+  problemSolved: { title: string; description?: string; text?: string; keyPoints: string[] };
+  intuition: {
+    overview: string;
+    steps: { step: number; title: string; description: string }[];
+  };
+  formalDefinition: { text: string; latex?: string };
+
+  complexity: {
+    overview: string;
+    cases: DSAComplexityItem[];
+    spaceNote: string;
+  };
+
+  workedExample: {
+    title: string;
+    input: string;
+    steps: DSAWorkedExampleStep[];
+    finalOutput: string;
+  };
+
+  visualExplanation: { title: string; description: string; features: string[] };
+  pseudocode: { title: string; code: string };
+  pythonCode: { title: string; code: string; explanation: string };
+  runnableCode: { code: string; expectedOutput: string };
+  lineByLineExplanation: LineExplanation[];
+  lineByLine?: LineExplanation[];
+
+  edgeCases: { case: string; handling: string; example: string }[];
+  commonMistakes: CommonMistake[];
+  applications: UseCaseItem[];
+  practiceQuestions: PracticeQuestion[];
+  quiz: QuizQuestion[];
+
+  codingChallenge: ExerciseItem;
+
+  summary: {
+    keyTakeaways: string[];
+    nextLessonId?: string;
+    nextLessonTitle?: string;
+    nextLessonModuleId?: string;
+  };
+}
+
+// ============================================================
+// PYTHON MASTERY LAB TYPES
+// ============================================================
+
+export type PythonConceptType =
+  | 'execution-trace'
+  | 'data-structure-visual'
+  | 'oop-diagram'
+  | 'memory-model'
+  | 'none';
+
+export interface PythonLessonSummary {
+  id: string;
+  moduleId: string;
+  title: string;
+  description: string;
+  order: number;
+  readTimeMinutes: number;
+  visualizerType: PythonConceptType;
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  prerequisites?: string[];
+}
+
+export interface PythonModuleData {
+  id: string;
+  number: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  icon: string;
+  badge: string;
+  estimatedHours: number;
+  topicsCount: number;
+  lessons: PythonLessonSummary[];
+}
+
+export interface PythonLessonContent {
+  id: string;
+  moduleId: string;
+  title: string;
+  subtitle: string;
+  order: number;
+  readTimeMinutes: number;
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  visualizerType: PythonConceptType;
+
+  objectives: string[];
+  prerequisites: string[];
+  previousLesson?: { id: string; title: string; moduleId: string };
+
+  analogy: { title: string; text: string; metaphor: string };
+  problemSolved: { title: string; description?: string; text?: string; keyPoints: string[] };
+  intuition: {
+    overview: string;
+    steps: { step: number; title: string; description: string }[];
+  };
+
+  codeExample: { title: string; code: string; explanation: string };
+  runnableCode: { code: string; expectedOutput: string };
+  lineByLineExplanation: LineExplanation[];
+  lineByLine?: LineExplanation[];
+
+  commonMistakes: CommonMistake[];
+  bestPractices: string[];
+  applications: UseCaseItem[];
+  realWorldApplications?: any;
+  practiceQuestions: PracticeQuestion[];
+  quiz: QuizQuestion[];
+
+  codingChallenge: ExerciseItem;
+
+  summary: {
+    keyTakeaways: string[];
+    nextLessonId?: string;
+    nextLessonTitle?: string;
+    nextLessonModuleId?: string;
+  };
 }

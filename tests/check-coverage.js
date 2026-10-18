@@ -1,0 +1,46 @@
+const fs = require('fs');
+const path = require('path');
+const ts = require('typescript');
+
+function loadModuleTs(filePath) {
+  let code = fs.readFileSync(filePath, 'utf8');
+  code = code.replace(/import\s+[\s\S]*?from\s+['"][^'"]+['"];?/g, '');
+  const res = ts.transpileModule(code, {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 }
+  });
+  const m = { exports: {} };
+  const customRequire = (id) => {
+    const resolved = path.resolve(path.dirname(filePath), id);
+    const withTs = fs.existsSync(resolved + '.ts') ? resolved + '.ts' : resolved;
+    return loadModuleTs(withTs);
+  };
+  const fn = new Function('exports', 'module', 'require', res.outputText);
+  fn(m.exports, m, customRequire);
+  return m.exports;
+}
+
+let dsaTopics = 0, dsaAuthored = 0;
+for (let i = 1; i <= 12; i++) {
+  const mod = loadModuleTs(path.join(__dirname, '..', 'src', 'data', 'dsa', `dsa-module-${i}.ts`));
+  const data = mod[`dsaModule${i}Data`];
+  const lessons = mod[`dsaModule${i}Lessons`];
+  const numTopics = data.lessons.length;
+  const numAuthored = Object.keys(lessons).length;
+  dsaTopics += numTopics;
+  dsaAuthored += numAuthored;
+  console.log(`DSA Mod ${i}: ${numAuthored}/${numTopics} authored`);
+}
+console.log(`Total DSA: ${dsaAuthored}/${dsaTopics}`);
+
+let pyTopics = 0, pyAuthored = 0;
+for (let i = 1; i <= 12; i++) {
+  const mod = loadModuleTs(path.join(__dirname, '..', 'src', 'data', 'python', `python-module-${i}.ts`));
+  const data = mod[`pythonModule${i}Data`];
+  const lessons = mod[`pythonModule${i}Lessons`];
+  const numTopics = data.lessons.length;
+  const numAuthored = Object.keys(lessons).length;
+  pyTopics += numTopics;
+  pyAuthored += numAuthored;
+  console.log(`Python Mod ${i}: ${numAuthored}/${numTopics} authored`);
+}
+console.log(`Total Python: ${pyAuthored}/${pyTopics}`);

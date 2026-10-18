@@ -55,6 +55,40 @@ const requiredFiles = [
   'src/data/modules/module9.ts',
   'src/data/modules/module10.ts',
   'src/data/modules/module11.ts',
+  // DSA Mastery Lab
+  'src/app/dsa/page.tsx',
+  'src/app/dsa/[moduleId]/page.tsx',
+  'src/app/dsa/[moduleId]/[lessonId]/page.tsx',
+  'src/data/dsa/curriculum.ts',
+  'src/data/dsa/dsa-module-1.ts',
+  'src/data/dsa/dsa-module-2.ts',
+  'src/data/dsa/dsa-module-3.ts',
+  'src/data/dsa/dsa-module-4.ts',
+  'src/data/dsa/dsa-module-5.ts',
+  'src/data/dsa/dsa-module-6.ts',
+  'src/data/dsa/dsa-module-7.ts',
+  'src/data/dsa/dsa-module-8.ts',
+  'src/data/dsa/dsa-module-9.ts',
+  'src/data/dsa/dsa-module-10.ts',
+  'src/data/dsa/dsa-module-11.ts',
+  'src/data/dsa/dsa-module-12.ts',
+  // Python Mastery Lab
+  'src/app/python/page.tsx',
+  'src/app/python/[moduleId]/page.tsx',
+  'src/app/python/[moduleId]/[lessonId]/page.tsx',
+  'src/data/python/curriculum.ts',
+  'src/data/python/python-module-1.ts',
+  'src/data/python/python-module-2.ts',
+  'src/data/python/python-module-3.ts',
+  'src/data/python/python-module-4.ts',
+  'src/data/python/python-module-5.ts',
+  'src/data/python/python-module-6.ts',
+  'src/data/python/python-module-7.ts',
+  'src/data/python/python-module-8.ts',
+  'src/data/python/python-module-9.ts',
+  'src/data/python/python-module-10.ts',
+  'src/data/python/python-module-11.ts',
+  'src/data/python/python-module-12.ts',
 ];
 
 let missing = 0;
@@ -357,11 +391,81 @@ for (let mIdx = 0; mIdx <= 11; mIdx++) {
 }
 
 // 5. Verify Total Curriculum Breadth
-console.log('\n--- [5/5] Curriculum Totals & Sanity Checks ---');
+console.log('\n--- [5/7] ML Curriculum Totals & Sanity Checks ---');
 console.log(`  Total verified unique lessons: ${totalLessonsCount}`);
 assert.strictEqual(totalLessonsCount, 107, `Expected exactly 107 lessons across 12 modules, got ${totalLessonsCount}`);
 
+// 6. Verify DSA Curriculum Catalog & Modules
+console.log('\n--- [6/7] Verifying DSA Mastery Lab Modules & Registry ---');
+let totalDSALessons = 0;
+const dsaLessonIdSet = new Set();
+
+for (let dsaIdx = 1; dsaIdx <= 12; dsaIdx++) {
+  const dsaModFile = path.join(__dirname, '..', `src/data/dsa/dsa-module-${dsaIdx}.ts`);
+  const dsaModExports = loadModuleTs(dsaModFile);
+  const dataKey = `dsaModule${dsaIdx}Data`;
+  const lessonsKey = `dsaModule${dsaIdx}Lessons`;
+
+  assert(dsaModExports[dataKey], `Missing ${dataKey} export in dsa-module-${dsaIdx}.ts`);
+  assert(dsaModExports[lessonsKey], `Missing ${lessonsKey} export in dsa-module-${dsaIdx}.ts`);
+
+  const modData = dsaModExports[dataKey];
+  assert.strictEqual(modData.number, dsaIdx, `Module number mismatch for DSA Module ${dsaIdx}`);
+  assert(modData.title && modData.title.length > 0, `DSA Module ${dsaIdx} missing title`);
+  assert(Array.isArray(modData.lessons), `DSA Module ${dsaIdx} lessons must be an array`);
+  assert.strictEqual(
+    modData.topicsCount,
+    modData.lessons.length,
+    `DSA Module ${dsaIdx} topicsCount (${modData.topicsCount}) must match lessons length (${modData.lessons.length})`
+  );
+
+  modData.lessons.forEach((l) => {
+    assert(!dsaLessonIdSet.has(l.id), `Duplicate DSA lesson ID: ${l.id}`);
+    dsaLessonIdSet.add(l.id);
+    assert(l.id && l.title && l.description, `DSA lesson missing essential fields: ${l.id}`);
+    assert(['Beginner', 'Intermediate', 'Advanced'].includes(l.difficulty), `Invalid difficulty: ${l.difficulty}`);
+    totalDSALessons++;
+  });
+  console.log(`  Module ${dsaIdx}: "${modData.title}" (${modData.lessons.length} lessons registered)`);
+}
+console.log(`  [PASS] All 12 DSA modules verified. Total registered DSA topics: ${totalDSALessons}`);
+
+// 7. Verify Python Curriculum Catalog & Modules
+console.log('\n--- [7/7] Verifying Python Mastery Lab Modules & Registry ---');
+let totalPythonLessons = 0;
+const pyLessonIdSet = new Set();
+
+for (let pyIdx = 1; pyIdx <= 12; pyIdx++) {
+  const pyModFile = path.join(__dirname, '..', `src/data/python/python-module-${pyIdx}.ts`);
+  const pyModExports = loadModuleTs(pyModFile);
+  const dataKey = `pythonModule${pyIdx}Data`;
+  const lessonsKey = `pythonModule${pyIdx}Lessons`;
+
+  assert(pyModExports[dataKey], `Missing ${dataKey} export in python-module-${pyIdx}.ts`);
+  assert(pyModExports[lessonsKey], `Missing ${lessonsKey} export in python-module-${pyIdx}.ts`);
+
+  const modData = pyModExports[dataKey];
+  assert.strictEqual(modData.number, pyIdx, `Module number mismatch for Python Module ${pyIdx}`);
+  assert(modData.title && modData.title.length > 0, `Python Module ${pyIdx} missing title`);
+  assert(Array.isArray(modData.lessons), `Python Module ${pyIdx} lessons must be an array`);
+  assert.strictEqual(
+    modData.topicsCount,
+    modData.lessons.length,
+    `Python Module ${pyIdx} topicsCount (${modData.topicsCount}) must match lessons length (${modData.lessons.length})`
+  );
+
+  modData.lessons.forEach((l) => {
+    assert(!pyLessonIdSet.has(l.id), `Duplicate Python lesson ID: ${l.id}`);
+    pyLessonIdSet.add(l.id);
+    assert(l.id && l.title && l.description, `Python lesson missing essential fields: ${l.id}`);
+    assert(['Beginner', 'Intermediate', 'Advanced'].includes(l.difficulty), `Invalid difficulty: ${l.difficulty}`);
+    totalPythonLessons++;
+  });
+  console.log(`  Module ${pyIdx}: "${modData.title}" (${modData.lessons.length} lessons registered)`);
+}
+console.log(`  [PASS] All 12 Python modules verified. Total registered Python topics: ${totalPythonLessons}`);
+
 console.log('\n=================================================================');
-console.log('  SUCCESS: ALL 12 MODULES & 107 LESSONS VALIDATED (20/20 SECTIONS)');
-console.log('  NO GENERIC FALLBACKS DETECTED. ALL ASSUMPTIONS & QUIZZES SOUND.');
+console.log('  SUCCESS: FULL ML, DSA & PYTHON PLATFORM ARCHITECTURE VERIFIED  ');
+console.log(`  ML Lessons: ${totalLessonsCount} | DSA Topics: ${totalDSALessons} | Python Topics: ${totalPythonLessons}`);
 console.log('=================================================================\n');

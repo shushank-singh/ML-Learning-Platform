@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { Search, X, BookOpen, Compass, Calculator, ArrowRight, Code } from 'lucide-react';
+import { MODULES_CATALOG_DSA } from '@/data/dsa/curriculum';
+import { MODULES_CATALOG_PYTHON } from '@/data/python/curriculum';
 
 interface SearchResult {
   title: string;
@@ -154,6 +156,32 @@ const SEARCH_DATABASE: SearchResult[] = [
   },
 ];
 
+const DSA_SEARCH_ITEMS: SearchResult[] = MODULES_CATALOG_DSA.flatMap((mod) =>
+  mod.lessons.map((lesson) => ({
+    title: lesson.title,
+    category: 'Algorithm' as const,
+    url: `/dsa/${mod.id}/${lesson.id}`,
+    description: lesson.description,
+    badge: `DSA M${mod.number}`,
+  }))
+);
+
+const PYTHON_SEARCH_ITEMS: SearchResult[] = MODULES_CATALOG_PYTHON.flatMap((mod) =>
+  mod.lessons.map((lesson) => ({
+    title: lesson.title,
+    category: 'Lesson' as const,
+    url: `/python/${mod.id}/${lesson.id}`,
+    description: lesson.description,
+    badge: `Python M${mod.number}`,
+  }))
+);
+
+const ALL_SEARCH_ITEMS: SearchResult[] = [
+  ...SEARCH_DATABASE,
+  ...DSA_SEARCH_ITEMS,
+  ...PYTHON_SEARCH_ITEMS,
+];
+
 interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -177,9 +205,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
   }, [isOpen, onClose]);
 
   const filtered = useMemo(() => {
-    if (!query.trim()) return SEARCH_DATABASE.slice(0, 6);
+    if (!query.trim()) return ALL_SEARCH_ITEMS.slice(0, 6);
     const q = query.toLowerCase();
-    return SEARCH_DATABASE.filter(
+    return ALL_SEARCH_ITEMS.filter(
       (item) =>
         item.title.toLowerCase().includes(q) ||
         item.description.toLowerCase().includes(q) ||

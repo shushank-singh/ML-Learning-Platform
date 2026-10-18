@@ -17,6 +17,7 @@ import {
   AlertTriangle,
   Play,
   Award,
+  Cpu,
 } from 'lucide-react';
 import { MODULES_CATALOG } from '@/data/modules/curriculum';
 import { getProgress } from '@/lib/storage';
@@ -207,8 +208,52 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Quick Laboratories Launchpad */}
+        {/* Quick Laboratories & Tracks Launchpad */}
         <div className="lg:col-span-4 space-y-3">
+          <Link
+            href="/dsa"
+            className="p-4 rounded-xl border border-violet-200 dark:border-violet-900/60 bg-violet-50/40 dark:bg-slate-900 shadow-sm hover:border-violet-500/80 transition-all flex items-start gap-3 group block"
+          >
+            <div className="p-2.5 rounded-xl bg-violet-100 dark:bg-violet-950/60 text-violet-600 dark:text-violet-400 group-hover:scale-110 transition-transform">
+              <Cpu className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-1.5">
+                <h3 className="font-semibold text-sm text-slate-900 dark:text-slate-100 group-hover:text-violet-600 transition-colors">
+                  DSA Mastery Lab
+                </h3>
+                <span className="text-[10px] font-bold px-1.5 py-0.2 bg-violet-100 dark:bg-violet-950 text-violet-600 dark:text-violet-400 rounded">
+                  NEW
+                </span>
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                12 modules: Trees, Graphs, Sorting, DP, Linked Lists & interactive visualizers.
+              </p>
+            </div>
+          </Link>
+
+          <Link
+            href="/python"
+            className="p-4 rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/40 dark:bg-slate-900 shadow-sm hover:border-emerald-500/80 transition-all flex items-start gap-3 group block"
+          >
+            <div className="p-2.5 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
+              <Terminal className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-1.5">
+                <h3 className="font-semibold text-sm text-slate-900 dark:text-slate-100 group-hover:text-emerald-600 transition-colors">
+                  Python Mastery Lab
+                </h3>
+                <span className="text-[10px] font-bold px-1.5 py-0.2 bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 rounded">
+                  NEW
+                </span>
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                12 modules: Execution model, OOP, Internals, NumPy, Pandas & 8 capstone projects.
+              </p>
+            </div>
+          </Link>
+
           <Link
             href="/playground"
             className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:border-indigo-500/50 transition-all flex items-start gap-3 group block"
@@ -221,41 +266,7 @@ export default function DashboardPage() {
                 Interactive ML Playground
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                Sliders for noise, learning rates, decision boundaries, K-Means clustering & ROC curves.
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            href="/code-lab"
-            className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:border-indigo-500/50 transition-all flex items-start gap-3 group block"
-          >
-            <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
-              <Terminal className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-sm text-slate-900 dark:text-slate-100 group-hover:text-emerald-600 transition-colors">
-                Python Code Studio
-              </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                Client-side Pyodide WebAssembly with NumPy and scikit-learn starter code.
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            href="/formulas"
-            className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:border-indigo-500/50 transition-all flex items-start gap-3 group block"
-          >
-            <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform">
-              <Calculator className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-sm text-slate-900 dark:text-slate-100 group-hover:text-amber-600 transition-colors">
-                Formula & Math Explorer
-              </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                Searchable LaTeX database of mathematical proofs, loss functions & matrix calculus.
+                Sliders for noise, learning rates, decision boundaries, K-Means & ROC curves.
               </p>
             </div>
           </Link>

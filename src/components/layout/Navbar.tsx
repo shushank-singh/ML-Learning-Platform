@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   Search,
   Sun,
@@ -65,6 +66,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenSearch })
     }
   };
 
+  const pathname = usePathname();
+  const isDsa = pathname.startsWith('/dsa');
+  const isPython = pathname.startsWith('/python');
+  const isMl = !isDsa && !isPython;
+
   return (
     <header className="sticky top-0 z-30 h-14 border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between">
       {/* Left: Mobile hamburger & Brand */}
@@ -81,26 +87,60 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenSearch })
           <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white font-bold text-base shadow-sm">
             ML
           </div>
-          <div className="hidden sm:block">
-            <span className="font-extrabold text-sm tracking-tight text-slate-900 dark:text-slate-100 block leading-tight">
-              ML Mastery Lab
-            </span>
-            <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium block leading-tight">
-              Math · Code · Visuals
-            </span>
-          </div>
+        <div className="hidden sm:block">
+          <span className="font-extrabold text-sm tracking-tight text-slate-900 dark:text-slate-100 block leading-tight">
+            Learning Platform
+          </span>
+          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium block leading-tight">
+            ML · DSA · Python
+          </span>
+        </div>
+        </Link>
+      </div>
+
+      {/* Track Selector Tabs (Desktop) */}
+      <div className="hidden lg:flex items-center gap-1 bg-slate-100 dark:bg-slate-800/80 p-1 rounded-xl text-xs font-semibold">
+        <Link
+          href="/"
+          className={`px-3 py-1 rounded-lg transition-all ${
+            isMl
+              ? 'bg-indigo-600 text-white shadow-xs'
+              : 'text-slate-600 dark:text-slate-300 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-700'
+          }`}
+        >
+          ML Mastery
+        </Link>
+        <Link
+          href="/dsa"
+          className={`px-3 py-1 rounded-lg transition-all ${
+            isDsa
+              ? 'bg-violet-600 text-white shadow-xs'
+              : 'text-slate-600 dark:text-slate-300 hover:text-violet-600 hover:bg-white dark:hover:bg-slate-700'
+          }`}
+        >
+          DSA Mastery
+        </Link>
+        <Link
+          href="/python"
+          className={`px-3 py-1 rounded-lg transition-all ${
+            isPython
+              ? 'bg-emerald-600 text-white shadow-xs'
+              : 'text-slate-600 dark:text-slate-300 hover:text-emerald-600 hover:bg-white dark:hover:bg-slate-700'
+          }`}
+        >
+          Python Mastery
         </Link>
       </div>
 
       {/* Middle: Global Search bar pill */}
-      <div className="flex-1 max-w-md mx-4 hidden md:block">
+      <div className="flex-1 max-w-xs mx-4 hidden md:block">
         <button
           onClick={onOpenSearch}
           className="w-full flex items-center justify-between px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 text-slate-400 hover:border-slate-300 dark:hover:border-slate-700 hover:text-slate-600 dark:hover:text-slate-300 transition-colors text-xs"
         >
           <div className="flex items-center gap-2">
             <Search className="w-3.5 h-3.5" />
-            <span>Search algorithms, formulas, derivations...</span>
+            <span>Search ML, DSA & Python...</span>
           </div>
           <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-[10px] font-mono">
             Ctrl+K
