@@ -100,9 +100,11 @@ export interface CommonMistake {
 }
 
 export interface UseCaseItem {
-  industry: string;
-  application: string;
-  benefit: string;
+  industry?: string;
+  application?: string;
+  benefit?: string;
+  useCase?: string;
+  impact?: string;
   title?: string;
   description?: string;
 }
@@ -110,8 +112,9 @@ export interface UseCaseItem {
 export interface PracticeQuestion {
   id: string;
   question: string;
-  hint: string;
+  hint?: string;
   answer: string;
+  explanation?: string;
 }
 
 export interface QuizQuestion {
@@ -124,6 +127,7 @@ export interface QuizQuestion {
 }
 
 export interface ExerciseItem {
+  id?: string;
   title: string;
   problem: string;
   description?: string;
@@ -131,6 +135,20 @@ export interface ExerciseItem {
   hints: string[];
   starterCode: string;
   solution: string;
+  solutionCode?: string;
+  testCases?: any;
+}
+
+export interface JavaExerciseItem {
+  id?: string;
+  title: string;
+  problem?: string;
+  description?: string;
+  difficulty?: string;
+  hints?: string[];
+  starterCode: string;
+  solution?: string;
+  solutionCode?: string;
   testCases?: any;
 }
 
@@ -504,3 +522,88 @@ export interface PythonLessonContent {
     nextLessonModuleId?: string;
   };
 }
+
+// ============================================================
+// JAVA MASTERY LAB TYPES
+// ============================================================
+
+export type JavaConceptType =
+  | 'jvm-architecture'
+  | 'memory-model'
+  | 'control-flow'
+  | 'call-stack'
+  | 'oop-hierarchy'
+  | 'array-algorithm'
+  | 'collections-visual'
+  | 'none';
+
+export interface JavaLessonSummary {
+  id: string;
+  moduleId: string;
+  title: string;
+  description: string;
+  order: number;
+  readTimeMinutes: number;
+  visualizerType: JavaConceptType;
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  prerequisites?: string[];
+}
+
+export interface JavaModuleData {
+  id: string;
+  number: number;
+  order?: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  icon: string;
+  badge: string;
+  estimatedHours: number;
+  topicsCount: number;
+  lessons: JavaLessonSummary[];
+}
+
+export interface JavaLessonContent {
+  id: string;
+  moduleId: string;
+  title: string;
+  subtitle: string;
+  order: number;
+  readTimeMinutes: number;
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  visualizerType: JavaConceptType;
+
+  objectives: string[];
+  prerequisites: string[];
+  previousLesson?: { id: string; title: string; moduleId: string };
+
+  analogy: { title: string; text: string; metaphor: string };
+  problemSolved: { title: string; description?: string; text?: string; keyPoints: string[] };
+  intuition: {
+    overview: string;
+    steps: { step: number; title: string; description: string }[];
+  };
+
+  visualExplanation?: { title: string; description: string; features: string[] };
+  codeExample: { title: string; code: string; explanation: string };
+  runnableCode: { code: string; expectedOutput: string };
+  lineByLineExplanation: LineExplanation[];
+  lineByLine?: LineExplanation[];
+
+  commonMistakes: CommonMistake[];
+  bestPractices: string[];
+  applications: UseCaseItem[];
+  realWorldApplications?: any;
+  practiceQuestions: PracticeQuestion[];
+  quiz: QuizQuestion[];
+
+  codingChallenge: JavaExerciseItem;
+
+  summary: {
+    keyTakeaways: string[];
+    nextLessonId?: string;
+    nextLessonTitle?: string;
+    nextLessonModuleId?: string;
+  };
+}
+

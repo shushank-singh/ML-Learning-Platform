@@ -89,6 +89,34 @@ const requiredFiles = [
   'src/data/python/python-module-10.ts',
   'src/data/python/python-module-11.ts',
   'src/data/python/python-module-12.ts',
+  // Java Mastery Lab
+  'src/app/java/page.tsx',
+  'src/app/java/[moduleId]/page.tsx',
+  'src/app/java/[moduleId]/[lessonId]/page.tsx',
+  'src/app/api/execute-java/route.ts',
+  'src/components/java/JavaLessonView.tsx',
+  'src/components/java/JavaCodeRunner.tsx',
+  'src/components/java/visualizers/JavaVisualizerDispatcher.tsx',
+  'src/components/java/visualizers/JVMArchitectureVisualizer.tsx',
+  'src/components/java/visualizers/JavaMemoryVisualizer.tsx',
+  'src/components/java/visualizers/JavaControlFlowVisualizer.tsx',
+  'src/components/java/visualizers/JavaCallStackVisualizer.tsx',
+  'src/components/java/visualizers/JavaOOPVisualizer.tsx',
+  'src/components/java/visualizers/JavaArrayAlgorithmVisualizer.tsx',
+  'src/components/java/visualizers/JavaCollectionsVisualizer.tsx',
+  'src/data/java/curriculum.ts',
+  'src/data/java/java-module-1.ts',
+  'src/data/java/java-module-2.ts',
+  'src/data/java/java-module-3.ts',
+  'src/data/java/java-module-4.ts',
+  'src/data/java/java-module-5.ts',
+  'src/data/java/java-module-6.ts',
+  'src/data/java/java-module-7.ts',
+  'src/data/java/java-module-8.ts',
+  'src/data/java/java-module-9.ts',
+  'src/data/java/java-module-10.ts',
+  'src/data/java/java-module-11.ts',
+  'src/data/java/java-module-12.ts',
 ];
 
 let missing = 0;
@@ -465,7 +493,61 @@ for (let pyIdx = 1; pyIdx <= 12; pyIdx++) {
 }
 console.log(`  [PASS] All 12 Python modules verified. Total registered Python topics: ${totalPythonLessons}`);
 
+// 8. Verify Java Curriculum Catalog & Complete Lessons
+console.log('\n--- [8/8] Verifying Java Mastery Lab Modules & 120 Lessons ---');
+let totalJavaLessons = 0;
+const javaLessonIdSet = new Set();
+
+for (let jIdx = 1; jIdx <= 12; jIdx++) {
+  const javaModFile = path.join(__dirname, '..', `src/data/java/java-module-${jIdx}.ts`);
+  const javaModExports = loadModuleTs(javaModFile);
+  const dataKey = `javaModule${jIdx}Data`;
+  const lessonsKey = `javaModule${jIdx}Lessons`;
+
+  assert(javaModExports[dataKey], `Missing ${dataKey} export in java-module-${jIdx}.ts`);
+  assert(javaModExports[lessonsKey], `Missing ${lessonsKey} export in java-module-${jIdx}.ts`);
+
+  const modData = javaModExports[dataKey];
+  const modLessons = javaModExports[lessonsKey];
+
+  assert.strictEqual(modData.number, jIdx, `Module number mismatch for Java Module ${jIdx}`);
+  assert(modData.title && modData.title.length > 0, `Java Module ${jIdx} missing title`);
+  assert(Array.isArray(modData.lessons), `Java Module ${jIdx} lessons summary must be an array`);
+
+  const lessonKeys = Object.keys(modLessons);
+  assert.strictEqual(
+    modData.lessons.length,
+    lessonKeys.length,
+    `Java Module ${jIdx}: summary lessons (${modData.lessons.length}) does not match moduleLessons count (${lessonKeys.length})`
+  );
+
+  lessonKeys.forEach((lessonId) => {
+    assert(!javaLessonIdSet.has(lessonId), `Duplicate Java lesson ID: ${lessonId}`);
+    javaLessonIdSet.add(lessonId);
+
+    const lesson = modLessons[lessonId];
+    assert.strictEqual(lesson.id, lessonId, `Java Lesson ID mismatch`);
+    assert(lesson.title && lesson.title.length > 0, `Java Lesson ${lessonId} missing title`);
+    assert(lesson.analogy && lesson.analogy.text, `Java Lesson ${lessonId} missing analogy`);
+    assert(lesson.runnableCode && lesson.runnableCode.code, `Java Lesson ${lessonId} missing runnableCode`);
+    assert(
+      (lesson.lineByLineExplanation && lesson.lineByLineExplanation.length > 0) ||
+      (lesson.lineByLine && lesson.lineByLine.length > 0),
+      `Java Lesson ${lessonId} missing lineByLineExplanation`
+    );
+    assert(Array.isArray(lesson.quiz) && lesson.quiz.length >= 1, `Java Lesson ${lessonId} missing quiz`);
+    assert(lesson.codingChallenge && lesson.codingChallenge.starterCode, `Java Lesson ${lessonId} missing codingChallenge`);
+    totalJavaLessons++;
+  });
+
+  console.log(`  Java Module ${jIdx}: "${modData.title}" (${lessonKeys.length} complete lessons verified)`);
+}
+
+assert.strictEqual(totalJavaLessons, 120, `Expected exactly 120 Java lessons across 12 modules, got ${totalJavaLessons}`);
+console.log(`  [PASS] All 12 Java modules verified. Total complete Java lessons: ${totalJavaLessons}`);
+
 console.log('\n=================================================================');
-console.log('  SUCCESS: FULL ML, DSA & PYTHON PLATFORM ARCHITECTURE VERIFIED  ');
-console.log(`  ML Lessons: ${totalLessonsCount} | DSA Topics: ${totalDSALessons} | Python Topics: ${totalPythonLessons}`);
+console.log('  SUCCESS: FULL ML, DSA, PYTHON & JAVA PLATFORMS VERIFIED!       ');
+console.log(`  ML Lessons: ${totalLessonsCount} | DSA Topics: ${totalDSALessons} | Python Topics: ${totalPythonLessons} | Java Lessons: ${totalJavaLessons}`);
 console.log('=================================================================\n');
+

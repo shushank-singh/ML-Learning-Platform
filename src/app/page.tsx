@@ -18,6 +18,7 @@ import {
   Play,
   Award,
   Cpu,
+  Coffee,
 } from 'lucide-react';
 import { MODULES_CATALOG } from '@/data/modules/curriculum';
 import { getProgress } from '@/lib/storage';
@@ -210,6 +211,28 @@ export default function DashboardPage() {
 
         {/* Quick Laboratories & Tracks Launchpad */}
         <div className="lg:col-span-4 space-y-3">
+          <Link
+            href="/java"
+            className="p-4 rounded-xl border border-amber-200 dark:border-amber-900/60 bg-amber-50/40 dark:bg-slate-900 shadow-sm hover:border-amber-500/80 transition-all flex items-start gap-3 group block"
+          >
+            <div className="p-2.5 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform">
+              <Coffee className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-1.5">
+                <h3 className="font-semibold text-sm text-slate-900 dark:text-slate-100 group-hover:text-amber-600 transition-colors">
+                  Java Mastery Lab
+                </h3>
+                <span className="text-[10px] font-bold px-1.5 py-0.2 bg-amber-100 dark:bg-amber-950 text-amber-600 dark:text-amber-400 rounded">
+                  NEW
+                </span>
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                12 modules (120 lessons): JVM, Memory, OOP, Generics, Collections, DSA & Runner.
+              </p>
+            </div>
+          </Link>
+
           <Link
             href="/dsa"
             className="p-4 rounded-xl border border-violet-200 dark:border-violet-900/60 bg-violet-50/40 dark:bg-slate-900 shadow-sm hover:border-violet-500/80 transition-all flex items-start gap-3 group block"

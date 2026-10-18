@@ -21,13 +21,14 @@ import {
 } from 'lucide-react';
 import { MODULES_CATALOG_DSA } from '@/data/dsa/curriculum';
 import { MODULES_CATALOG_PYTHON } from '@/data/python/curriculum';
+import { MODULES_CATALOG_JAVA } from '@/data/java/curriculum';
 
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-type TrackType = 'ml' | 'dsa' | 'python';
+type TrackType = 'ml' | 'dsa' | 'python' | 'java';
 
 const ML_NAV_ITEMS = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
@@ -63,6 +64,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const getActiveTrackFromPath = (path: string): TrackType => {
     if (path.startsWith('/dsa')) return 'dsa';
     if (path.startsWith('/python')) return 'python';
+    if (path.startsWith('/java')) return 'java';
     return 'ml';
   };
 
@@ -94,7 +96,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider px-1 block mb-1.5">
               Learning Lab Track
             </span>
-            <div className="grid grid-cols-3 gap-1 bg-slate-100 dark:bg-slate-800/80 p-1 rounded-xl text-[11px] font-semibold">
+            <div className="grid grid-cols-4 gap-1 bg-slate-100 dark:bg-slate-800/80 p-1 rounded-xl text-[11px] font-semibold">
               <Link
                 href="/"
                 onClick={() => {
@@ -135,7 +137,21 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
-                Python
+                Py
+              </Link>
+              <Link
+                href="/java"
+                onClick={() => {
+                  setActiveTrack('java');
+                  onClose();
+                }}
+                className={`py-1.5 text-center rounded-lg transition-all ${
+                  activeTrack === 'java'
+                    ? 'bg-amber-600 text-white shadow-xs'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                }`}
+              >
+                Java
               </Link>
             </div>
           </div>
@@ -212,6 +228,50 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                       className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-[11px] transition-colors ${
                         isActive
                           ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 font-semibold'
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2 truncate">
+                        <span className="w-4 text-center font-mono text-[10px] text-slate-400">
+                          {mod.number}
+                        </span>
+                        <span className="truncate">{mod.title}</span>
+                      </div>
+                      <ChevronRight className="w-3 h-3 text-slate-400 shrink-0" />
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {activeTrack === 'java' && (
+            <div className="space-y-1">
+              <div className="flex items-center justify-between px-2 mb-2">
+                <span className="text-[11px] font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <Terminal className="w-3.5 h-3.5" />
+                  Java Track
+                </span>
+                <Link
+                  href="/java"
+                  onClick={onClose}
+                  className="text-[10px] text-slate-400 hover:underline"
+                >
+                  Overview
+                </Link>
+              </div>
+
+              <div className="space-y-1">
+                {MODULES_CATALOG_JAVA.map((mod) => {
+                  const isActive = pathname.includes(`/java/${mod.id}`);
+                  return (
+                    <Link
+                      key={mod.id}
+                      href={`/java/${mod.id}`}
+                      onClick={onClose}
+                      className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-[11px] transition-colors ${
+                        isActive
+                          ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 font-semibold'
                           : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/50'
                       }`}
                     >

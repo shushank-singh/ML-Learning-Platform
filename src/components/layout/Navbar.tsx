@@ -69,7 +69,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenSearch })
   const pathname = usePathname();
   const isDsa = pathname.startsWith('/dsa');
   const isPython = pathname.startsWith('/python');
-  const isMl = !isDsa && !isPython;
+  const isJava = pathname.startsWith('/java');
+  const isMl = !isDsa && !isPython && !isJava;
 
   return (
     <header className="sticky top-0 z-30 h-14 border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between">
@@ -84,7 +85,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenSearch })
         </button>
 
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white font-bold text-base shadow-sm">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-amber-600 to-indigo-600 flex items-center justify-center text-white font-bold text-base shadow-sm">
             ML
           </div>
         <div className="hidden sm:block">
@@ -92,7 +93,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenSearch })
             Learning Platform
           </span>
           <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium block leading-tight">
-            ML · DSA · Python
+            ML · DSA · Python · Java
           </span>
         </div>
         </Link>
@@ -129,6 +130,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenSearch })
           }`}
         >
           Python Mastery
+        </Link>
+        <Link
+          href="/java"
+          className={`px-3 py-1 rounded-lg transition-all ${
+            isJava
+              ? 'bg-amber-600 text-white shadow-xs'
+              : 'text-slate-600 dark:text-slate-300 hover:text-amber-600 hover:bg-white dark:hover:bg-slate-700'
+          }`}
+        >
+          Java Mastery
         </Link>
       </div>
 
