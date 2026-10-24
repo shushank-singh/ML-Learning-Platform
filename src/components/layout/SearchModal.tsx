@@ -16,6 +16,13 @@ interface SearchResult {
 }
 
 const SEARCH_DATABASE: SearchResult[] = [
+  {
+    title: 'Visual Short Notes & 60s Revision System',
+    category: 'Algorithm',
+    url: '/revision-notes',
+    description: 'Quick visual revision for Machine Learning, Python, Java, and DSA with animated diagrams and recall quizzes.',
+    badge: 'Visual Notes',
+  },
   // Lessons & Algorithms
   {
     title: 'Ordinary Least Squares & Linear Regression',

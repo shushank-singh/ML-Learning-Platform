@@ -18,6 +18,7 @@ import {
   GraduationCap,
   Code2,
   Cpu,
+  Zap,
 } from 'lucide-react';
 import { MODULES_CATALOG_DSA } from '@/data/dsa/curriculum';
 import { MODULES_CATALOG_PYTHON } from '@/data/python/curriculum';
@@ -32,6 +33,7 @@ type TrackType = 'ml' | 'dsa' | 'python' | 'java';
 
 const ML_NAV_ITEMS = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
+  { name: 'Visual Short Notes', href: '/revision-notes', icon: Zap },
   { name: 'ML Curriculum', href: '/curriculum', icon: BookOpen },
   { name: 'ML Playground', href: '/playground', icon: Sliders },
   { name: 'Python Code Lab', href: '/code-lab', icon: Terminal },

@@ -187,6 +187,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenSearch })
           <span>{studyMinutes}m</span>
         </div>
 
+        {/* Visual Short Notes shortcut */}
+        <Link
+          href="/revision-notes"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-900 text-xs font-medium hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors"
+        >
+          <Sparkles className="w-3.5 h-3.5 text-purple-500" />
+          <span className="hidden sm:inline">Short Notes</span>
+        </Link>
+
         {/* Code Lab shortcut */}
         <Link
           href="/code-lab"
