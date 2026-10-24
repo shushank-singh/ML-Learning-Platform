@@ -15,6 +15,7 @@ import {
   Check,
   HelpCircle,
   Sparkles,
+  Lightbulb,
 } from 'lucide-react';
 
 interface QuickRecallProps {
@@ -31,12 +32,10 @@ export const QuickRecall: React.FC<QuickRecallProps> = ({
   const [revealed, setRevealed] = useState<boolean>(!isExamMode);
   const [copied, setCopied] = useState<boolean>(false);
 
-  // Sync with prop if it toggles
+  // Sync with prop or topic data change
   React.useEffect(() => {
-    if (!isExamMode) {
-      setRevealed(true);
-    }
-  }, [isExamMode]);
+    setRevealed(!isExamMode);
+  }, [data, isExamMode]);
 
   const copyFormula = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -82,6 +81,21 @@ export const QuickRecall: React.FC<QuickRecallProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Simple Real-World Analogy (ELI5) */}
+      {data.simpleAnalogy && (
+        <div className="p-3.5 rounded-xl bg-amber-950/30 border border-amber-500/30 flex items-start gap-2.5">
+          <Lightbulb className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+          <div className="space-y-0.5">
+            <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wider block">
+              Simple Everyday Analogy
+            </span>
+            <p className="text-xs text-amber-100/90 leading-relaxed font-medium">
+              {data.simpleAnalogy}
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Hidden container when in Exam Mode */}
       <div

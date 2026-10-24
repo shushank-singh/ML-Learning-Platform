@@ -13,7 +13,9 @@ export const PYTHON_REVISION_TOPICS: RevisionTopic[] = [
     tags: ['Memory', 'Pointers', 'id()', 'is vs ==', 'Aliasing'],
     quickRecall: {
       oneLiner:
-        'Variables in Python are not memory boxes; they are pointer name-bindings referencing heap-allocated objects with refcounts and type pointers.',
+        'Variables in Python are not boxes holding data; they are reference labels (pointers) bound to heap-allocated objects.',
+      simpleAnalogy:
+        'Luggage tag analogy: Variables in Python are not storage bins; they are sticky luggage tags attached to a suitcase on the heap. If you stick tag "a" and tag "b" on the exact same suitcase, putting a shirt inside through tag "b" means looking inside tag "a" reveals the shirt as well!',
       whenToUse:
         'When passing arguments to functions or modifying collections to prevent unintentional side effects in calling code.',
       whyItMatters:
@@ -26,17 +28,17 @@ export const PYTHON_REVISION_TOPICS: RevisionTopic[] = [
       ],
       formulaOrSyntax: {
         label: 'Reference Check Syntax',
-        codeOrLatex: 'a = [1, 2]; b = a; b.append(3) # a is now [1, 2, 3]!\\na is b # True (same id(a) == id(b))',
+        codeOrLatex: 'a = [1, 2]; b = a; b.append(3) # a is now [1, 2, 3]!\na is b # True (same id(a) == id(b))',
         isLatex: false,
         language: 'python',
       },
       complexity: {
-        time: 'id() lookup: O(1) | Mutation in-place: O(1) amortized',
+        time: 'id() lookup: O(1) | In-place append: O(1) amortized',
         space: 'References take 8 bytes on 64-bit CPython',
       },
       commonMistakeOrTrap: {
-        mistake: 'Using `copy.copy()` (shallow copy) on nested lists and expecting sub-lists to be isolated.',
-        fix: 'Use `copy.deepcopy()` to recursively clone inner mutable containers.',
+        mistake: 'Using shallow copy (`copy.copy()` or `lst[:]`) on nested lists and expecting inner sub-lists to be isolated.',
+        fix: 'Shallow copies duplicate the outer container but share pointers to inner mutable lists; use `copy.deepcopy()` to recursively clone.',
         interviewTrap:
           'Question: "Can an immutable tuple contain a mutable list?" Answer: Yes! `t = (1, [2, 3])`. The tuple reference to the list is immutable, but the list itself can still be mutated (`t[1].append(4)` succeeds)!',
       },
@@ -66,19 +68,26 @@ export const PYTHON_REVISION_TOPICS: RevisionTopic[] = [
       },
     },
     animation: {
-      type: 'python-reference-mutation-interactive',
+      type: 'py-mutability-interactive',
       title: 'Heap Reference & Aliasing Animator',
       description:
         'Step through: 1) a=[1, 2], 2) b=a, 3) b.append(99). Watch both pointers reflect the updated heap buffer.',
-      hasInteractiveInputs: true,
-      inputConfig: {
-        type: 'stepper',
-        label: 'Execution Step',
-        min: 1,
-        max: 4,
-        step: 1,
-        defaultVal: 1,
-      },
+      stepsTotal: 4,
+    },
+    codeSnippet: {
+      title: 'Python Memory Mutation & Identity in 5 Lines',
+      language: 'python',
+      code: `# Both variables bind to the exact same list in heap memory
+a = [1, 2]
+b = a
+b.append(99) # In-place mutation!
+
+print(f"a: {a}")               # [1, 2, 99]
+print(f"Same address? {a is b}") # True (id(a) == id(b))`,
+      input: 'b.append(99) called on alias',
+      output: 'a: [1, 2, 99] | Same address? True',
+      explanation:
+        'Because lists are mutable, modifying `b` in-place alters the underlying heap object that `a` also points to.',
     },
     quiz: [
       {
@@ -86,8 +95,7 @@ export const PYTHON_REVISION_TOPICS: RevisionTopic[] = [
         question: 'What is the result of running `a = [1]; b = a; b += [2]; print(a)` in Python?',
         options: ['[1]', '[1, 2]', 'AttributeError', '[2]'],
         correctIndex: 1,
-        explanation:
-          'Because lists are mutable, the `+=` operator executes `__iadd__`, mutating the underlying list in-place. Since `a` and `b` reference the same object, `a` reflects `[1, 2]`.',
+        explanation: 'Because lists are mutable, `+=` calls `__iadd__`, mutating the list in-place. Since `a` and `b` reference the same object, `a` reflects `[1, 2]`.',
       },
       {
         id: 'q2',
@@ -114,7 +122,7 @@ export const PYTHON_REVISION_TOPICS: RevisionTopic[] = [
     id: 'py-string-slicing',
     subject: 'python',
     category: 'Strings and Slicing',
-    title: 'String Slicing & Memory Views',
+    title: 'String Slicing & Indexing',
     subtitle: 'Zero-Based Indexing, Negative Steps, and O(k) Memory Slicing',
     difficulty: 'Beginner',
     isInterviewFavorite: true,
@@ -122,7 +130,9 @@ export const PYTHON_REVISION_TOPICS: RevisionTopic[] = [
     tags: ['Strings', 'Slicing', 'Negative Step', 'Palindrome', 'MemoryView'],
     quickRecall: {
       oneLiner:
-        'Sequence slicing uses the pattern `sequence[start:stop:step]` where stop is exclusive, creating a shallow copy in O(k) time.',
+        'Sequence slicing uses the pattern `sequence[start:stop:step]` where stop is exclusive, creating a new copy in O(k) time.',
+      simpleAnalogy:
+        'Window blinds analogy: Imagine sliding an opaque window cover over a row of letters. You choose where the window starts, where it stops, and how many letter slats to skip. Looking through gives you the exact sub-phrase.',
       whenToUse:
         'Extracting substrings, reversing sequences in one line (`s[::-1]`), sampling elements, or batching tokens.',
       whyItMatters:
@@ -132,7 +142,7 @@ export const PYTHON_REVISION_TOPICS: RevisionTopic[] = [
         '`stop`: exclusive (stops one index before reaching this boundary).',
         '`step`: stride distance (negative step iterates right-to-left).',
         'Reversal trick: `s[::-1]` reverses any sequence in optimized C speed.',
-        'Slicing a string copies characters; `memoryview` on bytes avoids copying.',
+        'Slicing never raises `IndexError` even if indices exceed sequence length.',
       ],
       formulaOrSyntax: {
         label: 'Slice Syntax Pattern',
@@ -170,19 +180,28 @@ export const PYTHON_REVISION_TOPICS: RevisionTopic[] = [
       },
     },
     animation: {
-      type: 'slicing-slider-interactive',
+      type: 'py-slice-interactive',
       title: 'Interactive String Window Slicer',
       description:
-        'Drag the Start and Stop sliders to see the highlighted slice substring update in real time.',
-      hasInteractiveInputs: true,
-      inputConfig: {
-        type: 'slider',
-        label: 'Slice Stop Index',
-        min: 1,
-        max: 10,
-        step: 1,
-        defaultVal: 6,
-      },
+        'Step through slicing a string with start, stop, and step indices.',
+      stepsTotal: 4,
+    },
+    codeSnippet: {
+      title: 'String Slicing & Reversal Examples in Python',
+      language: 'python',
+      code: `word = "DEVELOPER"
+
+print("Slice [0:3]:  ", word[0:3])   # 'DEV'
+print("Slice [3:]:   ", word[3:])    # 'ELOPER'
+print("Step by 2:    ", word[::2])   # 'DVLP R' -> 'DVLPR'
+print("Reverse [::-1]:", word[::-1])  # 'REPOLEVED'
+
+# Out of bounds doesn't crash:
+print("Safe slice:   ", repr(word[50:100])) # ''`,
+      input: 'word = "DEVELOPER"',
+      output: 'DEV | ELOPER | DVLPR | REPOLEVED | Safe slice: \'\'',
+      explanation:
+        'Slicing extracts contiguous or stepped sub-sequences cleanly while safely handling boundaries.',
     },
     quiz: [
       {
@@ -201,10 +220,10 @@ export const PYTHON_REVISION_TOPICS: RevisionTopic[] = [
       },
       {
         id: 'q3',
-        question: 'What is the time complexity of slicing a substring of length k from a string of length N?',
-        options: ['O(1)', 'O(k)', 'O(N)', 'O(N²)'],
+        question: 'What does `"PYTHON"[1:5:2]` return?',
+        options: ['"YTO"', '"YH"', '"YTN"', '"PTON"'],
         correctIndex: 1,
-        explanation: 'CPython allocates a new string and copies k characters into it, running in O(k) time.',
+        explanation: 'Indices from 1 to 5 with step 2 takes index 1 (\'Y\') and index 3 (\'H\'), returning \'YH\'.',
       },
     ],
   },
@@ -212,105 +231,121 @@ export const PYTHON_REVISION_TOPICS: RevisionTopic[] = [
     id: 'py-collections-internals',
     subject: 'python',
     category: 'Lists, Tuples, Sets and Dictionaries',
-    title: 'List vs. Tuple vs. Set vs. Dict Internals',
-    subtitle: 'Over-Allocation, Hash Tables, and Collision Resolution',
+    title: 'Lists, Tuples, Sets & Dicts Internals',
+    subtitle: 'Dynamic Arrays, Hash Tables, and Big-O Complexity',
     difficulty: 'Intermediate',
     isInterviewFavorite: true,
     readTimeSeconds: 50,
-    tags: ['Hash Table', 'Over-allocation', 'O(1) Lookup', 'Open Addressing'],
+    tags: ['List', 'Tuple', 'Set', 'Dict', 'Hash Table', 'Open Addressing'],
     quickRecall: {
       oneLiner:
-        'Lists are dynamic arrays with geometric over-allocation; Dicts and Sets are compact hash tables using open addressing with quadratic probing.',
+        'Lists are dynamic resizing pointer arrays; Dicts and Sets are open-addressing hash tables providing average O(1) key lookups.',
+      simpleAnalogy:
+        'Post office boxes analogy: A List is like numbered street houses (fast to jump to house #5, but inserting a new house in the middle moves everyone down). A Dict is like post office lockboxes indexed by a unique key hash: you drop your mail directly into the exact slot in O(1) time.',
       whenToUse:
-        'Choose Dict/Set for O(1) membership checking and unique lookups; choose List for ordered sequences with indexed access.',
+        'Choosing the right data structure for algorithmic efficiency (e.g., membership testing in sets O(1) vs lists O(N)).',
       whyItMatters:
-        'Checking `x in my_list` is O(N); checking `x in my_set` is O(1). Switching to a set speeds up membership queries 10,000x.',
+        'Searching a 100,000-item list takes O(N) linear time; searching a set or dict takes O(1) constant time.',
       keyPoints: [
-        'List: Contiguous array of 8-byte pointer references. `append()` is amortized O(1) due to growth pattern: 0, 4, 8, 16, 25, 35...',
-        'Dict: Compact hash table (since Python 3.6) preserves insertion order by splitting storage into `indices` array and `entries` table.',
-        'Set: Uses the same hash table structure as dict, but stores only keys with dummy values.',
-        'Hashability: An object can be a dict key or set item ONLY if it is immutable and implements `__hash__` and `__eq__`.',
+        'List: Contiguous array of pointers. Over-allocates memory (growth pattern 0, 4, 8, 16, 24, 32...). Append is amortized O(1); insert/pop(0) is O(N).',
+        'Tuple: Fixed-size immutable pointer array. More memory-compact than list; struct caching avoids garbage collection churn.',
+        'Dict: Compact hash table (since Python 3.6+ guarantees insertion order). Keys must be hashable (`__hash__` and `__eq__`).',
+        'Set: Dict under the hood with keys only (dummy values). Unordered unique elements with O(1) membership test `x in s`.',
       ],
       formulaOrSyntax: {
-        label: 'Hash Lookup Equation',
-        codeOrLatex: '\\text{bucket} = \\text{hash}(key) \\pmod{\\text{table\\_size}}',
-        isLatex: true,
+        label: 'Lookup Big-O Comparison',
+        codeOrLatex: 'x in my_set   # O(1) Average Time\nx in my_list  # O(N) Linear Time (Iterates whole list)',
+        isLatex: false,
+        language: 'python',
       },
       complexity: {
-        time: 'Dict/Set lookup: O(1) avg, O(N) worst | List lookup: O(N) | List index: O(1)',
-        space: 'Dict/Set uses ~3x more memory than List to maintain load factor < 0.66',
+        time: 'Dict/Set lookup: O(1) avg, O(N) worst-case collision | List index: O(1) | List search: O(N)',
+        space: 'Dict/Set uses ~3x more memory than List due to hash table sparseness',
       },
       commonMistakeOrTrap: {
-        mistake: 'Using a list as a dictionary key or set item: `d = {[1, 2]: "val"}`.',
-        fix: 'Lists are mutable and unhashable (raises `TypeError: unhashable type: list`). Use a tuple `(1, 2)` instead.',
+        mistake: 'Using a List for frequent `x in collection` membership checks inside a loop.',
+        fix: 'Convert the list to a `set` once; membership check drops from O(N) to O(1), turning an O(N²) algorithm into O(N).',
         interviewTrap:
-          'Question: "Can two different keys have the same hash value in Python?" Answer: Yes, this is a hash collision. Python resolves collisions using open addressing perturbation: `j = (5*j + 1 + perturb) >> 5`.',
+          'Question: "Can a list be a dictionary key?" Answer: No! Lists are unhashable (`TypeError: unhashable type: \'list\'`) because their contents can mutate, which would invalidate their hash bucket position in the hash table.',
       },
       examCheatsheet: [
-        'List append: Amortized O(1); List insert at 0: O(N) due to shifting all elements',
-        'Dict preserves insertion order starting from Python 3.7+ specification',
-        'Unhashable types: list, dict, set (cannot be used as dict keys)',
+        'Dict keys and Set elements MUST be immutable and hashable',
+        '`pop()` from end of list is O(1); `pop(0)` from beginning is O(N) (shifts all elements)',
+        '`collections.deque` provides O(1) appends and pops from both ends',
       ],
     },
     visual: {
       type: 'comparison-table',
-      title: 'CPython Internal Memory & Complexity Breakdown',
+      title: 'Python Built-in Collections Big-O & Architecture',
       caption:
-        'Comparison of underlying C data structures, growth strategies, and operation runtimes.',
-      visualKey: 'py-collections-matrix',
+        'Comparing internal data structures, mutability, ordering, and operations complexity.',
+      visualKey: 'py-collections-internals-viz',
       details: {
         comparison: {
-          headers: ['Data Structure', 'Underlying C Layout', 'Access', 'Search (`in`)', 'Memory Overhead'],
+          headers: ['Collection', 'Underlying Structure', 'Mutable?', 'Average Lookup', 'Preserves Order?'],
           rows: [
-            ['List', 'Dynamic pointer array', 'O(1) by index', 'O(N) linear scan', 'Low (Over-allocation buffer)'],
-            ['Tuple', 'Fixed-size pointer array', 'O(1) by index', 'O(N) linear scan', 'Lowest (Zero buffer overhead)'],
-            ['Set', 'Open-addressed hash table', 'N/A (Unindexed)', 'O(1) average hash', 'High (~3x list footprint)'],
-            ['Dict', 'Split indices + entries table', 'O(1) by key', 'O(1) average hash', 'Moderate-High (Order preserved)'],
+            ['List', 'Dynamic Resizing Array', 'Yes', 'O(N) for `val in lst`, O(1) for `lst[i]`', 'Yes (Insertion order)'],
+            ['Tuple', 'Fixed-size Array', 'No', 'O(N) for `val in tup`, O(1) for `tup[i]`', 'Yes (Insertion order)'],
+            ['Set', 'Open-Addressing Hash Table', 'Yes', 'O(1) average', 'No (Arbitrary hash order)'],
+            ['Dict', 'Combined Index Array + Hash Table', 'Yes', 'O(1) average by key', 'Yes (Python 3.6+ insertion order)'],
           ],
         },
       },
     },
     animation: {
-      type: 'hash-table-collision-interactive',
-      title: 'Dict Hash Table Bucket Inserter',
+      type: 'py-collections-interactive',
+      title: 'Hash Table Bucket Lookup Simulator',
       description:
-        'Insert keys into the simulated hash table to visualize bucket mapping, load factor increase, and quadratic probe collision handling.',
-      hasInteractiveInputs: true,
-      inputConfig: {
-        type: 'stepper',
-        label: 'Insert Key Step',
-        min: 1,
-        max: 5,
-        step: 1,
-        defaultVal: 1,
-      },
+        'Step through hash(key) mod size calculating the exact array bucket index in O(1) time.',
+      stepsTotal: 4,
+    },
+    codeSnippet: {
+      title: 'List vs. Set Lookup Performance in Python',
+      language: 'python',
+      code: `# 10,000 item membership comparison
+items_list = list(range(10000))
+items_set = set(items_list)
+
+# Checking if 9999 is present:
+# List takes 10,000 comparisons (O(N))
+# Set takes 1 hash lookup (O(1))
+print("Found in list?", 9999 in items_list)
+print("Found in set? ", 9999 in items_set)
+
+# Dict preserves insertion order in Python 3.7+
+d = {"apple": 1, "banana": 2, "cherry": 3}
+print("Dict keys:     ", list(d.keys()))`,
+      input: 'Lookup target = 9999',
+      output: 'Found in list? True | Found in set? True | Dict keys: [\'apple\', \'banana\', \'cherry\']',
+      explanation:
+        'The set finds the element instantaneously in O(1) time by computing the hash of 9999 and jumping straight to the bucket.',
     },
     quiz: [
       {
         id: 'q1',
-        question: 'Why does checking `val in my_set` run in O(1) time compared to O(N) in `my_list`?',
+        question: 'Why can a tuple be used as a dictionary key, but a list cannot?',
         options: [
-          'Because sets are pre-sorted in ascending order',
-          'Because sets compute the hash of `val` and jump directly to the target memory bucket',
-          'Because sets use binary search',
-          'Because sets run on GPU threads',
+          'Tuples are immutable and hashable; lists are mutable and therefore unhashable',
+          'Tuples use less memory than lists',
+          'Lists can only store numbers',
+          'Python restricts keys to 3 elements max',
         ],
-        correctIndex: 1,
-        explanation: 'Sets evaluate `hash(val)` to calculate the exact bucket index instantly without scanning other elements.',
+        correctIndex: 0,
+        explanation: 'Dictionary keys must have a stable hash code throughout their lifetime; mutable objects like lists cannot be hashed.',
       },
       {
         id: 'q2',
-        question: 'Which of the following objects can be used as a key in a Python dictionary?',
-        options: ['[1, 2, 3]', '{"a": 1}', '(1, 2, 3)', '{1, 2}'],
+        question: 'What is the time complexity of deleting the first element of a list using `del lst[0]`?',
+        options: ['O(1)', 'O(log N)', 'O(N) because all remaining elements must shift left by one index', 'O(N²)'],
         correctIndex: 2,
-        explanation: 'Tuples are immutable and hashable, making them valid dictionary keys. Lists, sets, and dicts are mutable and unhashable.',
+        explanation: 'Lists are contiguous arrays; removing index 0 forces memory to shift all N-1 subsequent elements one position left.',
       },
       {
         id: 'q3',
-        question: 'What is the time complexity of inserting an item at the beginning of a Python list (`list.insert(0, val)`)?',
-        options: ['O(1)', 'O(log N)', 'O(N)', 'O(N²)'],
-        correctIndex: 2,
-        explanation: 'Inserting at index 0 requires shifting all existing N pointer references one position to the right in memory, taking O(N) time.',
+        question: 'What is the average time complexity of checking membership `x in my_set`?',
+        options: ['O(N)', 'O(1)', 'O(log N)', 'O(N log N)'],
+        correctIndex: 1,
+        explanation: 'Sets use open-addressing hash tables, computing hash(x) to jump directly to the slot in O(1) average time.',
       },
     ],
   },
@@ -318,105 +353,127 @@ export const PYTHON_REVISION_TOPICS: RevisionTopic[] = [
     id: 'py-list-comprehensions',
     subject: 'python',
     category: 'List Comprehensions',
-    title: 'List Comprehensions & Scope Mechanics',
-    subtitle: 'Syntactic Sugar with Optimized Bytecode Execution',
+    title: 'List, Dict & Set Comprehensions',
+    subtitle: 'Declarative Syntax, Bytecode Optimization & Memory Profiles',
     difficulty: 'Beginner',
-    isInterviewFavorite: false,
+    isInterviewFavorite: true,
     readTimeSeconds: 40,
-    tags: ['Comprehensions', 'Bytecode', 'Scope', 'Filtering'],
+    tags: ['Comprehensions', 'Syntax', 'Bytecode', 'LIST_APPEND', 'Generators'],
     quickRecall: {
       oneLiner:
-        'Provides a concise syntax `[expr for item in iterable if cond]` that compiles into optimized `LIST_APPEND` C-level bytecode instructions.',
+        'Comprehensions provide concise, declarative syntax to construct collections: `[expr for item in iterable if condition]`.',
+      simpleAnalogy:
+        'Factory conveyor belt analogy: Raw items ride on a belt. The `if` condition is a filter arm knocking defective items off. The `expr` is a paint sprayer transforming what remains. The output box collects finished products in one clean, uninterrupted pass.',
       whenToUse:
-        'Transforming and filtering collections into new lists without writing verbose four-line `for` loops.',
+        'Transforming and filtering collections cleanly without writing multi-line for loops with manual `.append()`.',
       whyItMatters:
-        'Runs 20-30% faster than standard Python `for` loops because the loop executes in C speed inside the interpreter without Python-level `.append()` method lookups.',
+        'Runs significantly faster than standard `for` loops because the loop is executed in optimized C-level bytecode (`LIST_APPEND`).',
       keyPoints: [
-        'Syntax pattern: `[expression for item in iterable if condition]`.',
-        'Dict comprehension: `{k: v for k, v in pairs}`.',
-        'Set comprehension: `{x for x in iterable}`.',
-        'Generator expression: `(x for x in iterable)` produces a lazy iterator without allocating memory.',
-        'In Python 3+, comprehension variables have their own local function scope and do not leak into the surrounding namespace.',
+        'List Comprehension: `[x**2 for x in nums if x > 0]` -> constructs a full list in memory.',
+        'Dict Comprehension: `{k: v for k, v in pairs}` -> constructs a dictionary.',
+        'Set Comprehension: `{x % 5 for x in nums}` -> constructs a unique set.',
+        'Generator Expression: `(x**2 for x in nums)` -> lazy evaluation (produces 1 item at a time, O(1) memory).',
+        'Avoid deep nesting: More than 2 nested loops in a comprehension hurts readability.',
       ],
       formulaOrSyntax: {
-        label: 'Comprehension Template',
-        codeOrLatex: '# Flat mapping & filtering\nsquares = [x**2 for x in range(10) if x % 2 == 0]\n# Equivalent dict comp\nsquare_map = {x: x**2 for x in range(5)}',
+        label: 'Comprehension Patterns',
+        codeOrLatex: '# List: [output_expr for item in iter if condition]\nsquares = [x*x for x in range(10) if x % 2 == 0]\n# Dict: {k: v for item in iter}\nsquares_map = {x: x*x for x in range(5)}',
         isLatex: false,
         language: 'python',
       },
       complexity: {
-        time: 'O(N) linear pass over iterable',
-        space: 'O(N) for list comp; O(1) for generator expression `(...)`!',
+        time: 'O(N) single-pass iteration',
+        space: 'List: O(N) full allocation | Generator `(...)`: O(1) lazy memory',
       },
       commonMistakeOrTrap: {
-        mistake: 'Using nested list comprehensions with 3+ levels.',
-        fix: 'Deeply nested comprehensions ruin readability; break them into explicit functions or generators if they exceed 2 clauses.',
+        mistake: 'Using a List Comprehension `[x for x in big_file]` when you only need to iterate over items once.',
+        fix: 'Use a Generator Expression `(x for x in big_file)` to avoid loading millions of rows into RAM all at once.',
         interviewTrap:
-          'Question: "Does `[x for x in range(5)]` leak `x` into outer scope?" Answer: In Python 2 it leaked, but in Python 3 each comprehension is compiled into an isolated implicit code block/frame, so `x` does not leak.',
+          'Question: "In Python 3, do variables inside a comprehension leak into the outer scope?" Answer: No! Python 3 gives comprehensions their own isolated function-level scope; in Python 2, loop variables leaked.',
       },
       examCheatsheet: [
-        '`[x for x in ...]` builds entire list in memory immediately',
-        '`(x for x in ...)` is a generator that computes values on demand (lazy)',
-        'Significantly faster than `.append()` loop because it avoids Python attribute lookup',
+        'List comp uses brackets `[...]`; Generator expr uses parentheses `(...)`',
+        'Faster than `.append()` loop because it bypasses Python-level method lookups',
+        'Can use ternary operator: `[x if x > 0 else 0 for x in nums]`',
       ],
     },
     visual: {
       type: 'flowchart',
-      title: 'Comprehension Transformation & Bytecode Pipeline',
+      title: 'Comprehension Pipeline: Filter → Transform → Collect',
       caption:
-        'Input Stream → Predicate Filter (`if x % 2 == 0`) → Mapping Transform (`x**2`) → C-level `LIST_APPEND`.',
-      visualKey: 'py-list-comp-flow',
+        'Input sequence passes through predicate filter `if condition`, transforms via `expression`, and appends directly to target buffer.',
+      visualKey: 'py-comprehensions-pipeline-viz',
       details: {
-        inputOutput: {
-          input: 'range(6) = [0, 1, 2, 3, 4, 5]',
-          output: '[x * 10 for x in range(6) if x > 2] → [30, 40, 50]',
+        comparison: {
+          headers: ['Construct', 'Syntax', 'Memory', 'Evaluation Timing'],
+          rows: [
+            ['List Comprehension', '[x * 2 for x in seq]', 'O(N) (Allocates entire list in RAM)', 'Eager (Immediate)'],
+            ['Generator Expression', '(x * 2 for x in seq)', 'O(1) (Produces 1 item on demand)', 'Lazy (Iterate via next())'],
+            ['Set Comprehension', '{x * 2 for x in seq}', 'O(N) (Deduplicates elements)', 'Eager (Immediate)'],
+            ['Dict Comprehension', '{k: v for k, v in seq}', 'O(N) (Key-value mapping)', 'Eager (Immediate)'],
+          ],
         },
       },
     },
     animation: {
-      type: 'comprehension-filter-interactive',
-      title: 'Stream Filter & Map Animator',
+      type: 'py-comprehensions-interactive',
+      title: 'Stream Filtering & Mapping Step Tracer',
       description:
-        'Watch elements from the input iterable get evaluated by the condition predicate and appended to the result buffer.',
-      hasInteractiveInputs: true,
-      inputConfig: {
-        type: 'select',
-        label: 'Filter Condition',
-        options: ['Even Numbers Only (x % 2 == 0)', 'Greater Than 2 (x > 2)', 'Square All (x ** 2)'],
-        defaultVal: 'Even Numbers Only (x % 2 == 0)',
-      },
+        'Watch elements evaluate against the if-condition and map into the target list.',
+      stepsTotal: 4,
+    },
+    codeSnippet: {
+      title: 'List, Dict & Generator Comprehensions in Action',
+      language: 'python',
+      code: `nums = [1, 2, 3, 4, 5, 6]
+
+# 1. List Comprehension: Filter even and square
+evens_squared = [x**2 for x in nums if x % 2 == 0]
+print("Evens Squared:   ", evens_squared) # [4, 16, 36]
+
+# 2. Dict Comprehension: Number -> Cubed
+cubes_dict = {x: x**3 for x in range(1, 4)}
+print("Cubes Dictionary:", cubes_dict)     # {1: 1, 2: 8, 3: 27}
+
+# 3. Generator Expression (O(1) memory)
+gen = (x * 10 for x in nums)
+print("First from gen:  ", next(gen))      # 10`,
+      input: 'nums = [1, 2, 3, 4, 5, 6]',
+      output: 'Evens Squared: [4, 16, 36] | Cubes: {1: 1, 2: 8, 3: 27} | First from gen: 10',
+      explanation:
+        'The list comprehension filters down to [2, 4, 6] and squares them in a single optimized C-level pass.',
     },
     quiz: [
       {
         id: 'q1',
-        question: 'Why is a list comprehension faster than an equivalent `for` loop with `.append()` in Python?',
+        question: 'What is the key advantage of a generator expression `(x for x in range(10**8))` over `[x for x in range(10**8)]`?',
         options: [
-          'Because it runs on multiple CPU threads',
-          'Because it uses the specialized C-level `LIST_APPEND` bytecode opcode and avoids repeated `.append` method lookups',
-          'Because it skips garbage collection',
-          'Because it converts all numbers to floats',
+          'It runs in O(1) time',
+          'It generates values lazily on-demand, requiring O(1) memory instead of gigabytes of RAM',
+          'It automatically sorts elements',
+          'It works without Python installed',
         ],
         correctIndex: 1,
-        explanation: 'List comprehensions compile down to a tight C loop in CPython, skipping Python-level attribute resolution on each step.',
+        explanation: 'Generators yield one element at a time as requested, avoiding allocating the entire array in memory.',
       },
       {
         id: 'q2',
-        question: 'What is the type of `g` in `g = (x * 2 for x in range(1000000))`?',
-        options: ['tuple', 'list', 'generator object (lazy iterator)', 'int'],
-        correctIndex: 2,
-        explanation: 'Enclosing a comprehension in parentheses creates a lazy generator iterator that uses O(1) memory.',
+        question: 'What is the output of `[x for x in [1, 2, 3, 4] if x % 2 == 0]`?',
+        options: ['[1, 3]', '[2, 4]', '[0, 0]', '[False, True, False, True]'],
+        correctIndex: 1,
+        explanation: 'The if condition `x % 2 == 0` filters out odd numbers, retaining only even numbers 2 and 4.',
       },
       {
         id: 'q3',
-        question: 'What is the output of `{x: x % 2 == 0 for x in [1, 2, 3]}`?',
+        question: 'Why are list comprehensions faster than a traditional for loop with `result.append(x)`?',
         options: [
-          '{1: False, 2: True, 3: False}',
-          '[False, True, False]',
-          '{1, 2, 3}',
-          'SyntaxError',
+          'They use multi-threading',
+          'They execute an optimized bytecode instruction (`LIST_APPEND`) in C without repeated attribute lookups',
+          'They skip error checking',
+          'They bypass memory allocation',
         ],
-        correctIndex: 0,
-        explanation: 'This is a dictionary comprehension mapping each integer key to its boolean even/odd condition value.',
+        correctIndex: 1,
+        explanation: 'Bytecode executes the append operation directly inside the CPython evaluation loop without looking up the `.append` method on each iteration.',
       },
     ],
   },
@@ -424,109 +481,118 @@ export const PYTHON_REVISION_TOPICS: RevisionTopic[] = [
     id: 'py-generators-yield',
     subject: 'python',
     category: 'Iterators and Generators',
-    title: 'Python Generators & `yield` Mechanics',
-    subtitle: 'Lazy Evaluation, State Suspension, and Memory Efficiency',
+    title: 'Iterators, Generators & `yield`',
+    subtitle: 'Lazy Evaluation, State Preservation, and Coroutine Execution',
     difficulty: 'Intermediate',
     isInterviewFavorite: true,
     readTimeSeconds: 50,
-    tags: ['Generators', 'Yield', 'Iteration Protocol', 'Lazy Evaluation', 'Memory'],
+    tags: ['Generators', 'Yield', 'Iterator Protocol', '__iter__', '__next__', 'Lazy'],
     quickRecall: {
       oneLiner:
-        'A generator function uses `yield` to suspend execution and preserve local frame state, producing values on demand without allocating entire datasets in RAM.',
+        'Generators are functions that preserve state across invocations using `yield`, producing values on-demand with O(1) memory.',
+      simpleAnalogy:
+        'Deli ticket dispenser analogy: Instead of printing 100,000 paper tickets and stacking them on the counter all at once (huge waste of space), the machine holds its current counter position and dispenses exactly ONE ticket whenever a customer pulls it.',
       whenToUse:
-        'Streaming massive datasets (e.g. 50GB log files, database cursors, infinite sequences) with O(1) constant memory.',
+        'Streaming large datasets (multi-gigabyte logs, CSVs, video frames) where holding everything in memory would crash the program with `MemoryError`.',
       whyItMatters:
-        'Reading a 10GB file into `list` causes out-of-memory crash; a generator yields line-by-line using only a few kilobytes.',
+        'Enables infinite streams and massive data pipelines in memory-constrained production environments.',
       keyPoints: [
-        'Iterator protocol: Objects implementing `__iter__()` returning `self` and `__next__()` returning the next value.',
-        'When `__next__()` has no more items, it raises the `StopIteration` exception to terminate the loop.',
-        'When a function hits `yield`, its execution frame is frozen: local variables and instruction pointer remain suspended in memory.',
-        '`yield from <iterable>` delegates iteration directly to a sub-generator, flattening pipelines cleanly.',
+        'Iterator Protocol: Object must implement `__iter__()` (returns self) and `__next__()` (returns next item or raises `StopIteration`).',
+        '`yield` vs `return`: `return` terminates the function; `yield` freezes execution, saves local variables, and returns a value.',
+        '`yield from subgen`: Delegates iteration cleanly to a sub-generator or nested collection.',
+        'Generators can only be consumed ONCE; to re-iterate, you must instantiate a fresh generator object.',
       ],
       formulaOrSyntax: {
-        label: 'Generator Function Definition',
-        codeOrLatex: 'def read_large_file(filepath):\n    with open(filepath) as f:\n        for line in f:\n            yield line.strip() # Suspends state here',
+        label: 'Generator Function Pattern',
+        codeOrLatex: 'def count_up(n):\n    i = 0\n    while i < n:\n        yield i\n        i += 1',
         isLatex: false,
         language: 'python',
       },
       complexity: {
-        time: 'O(1) per yield step | Total traversal: O(N)',
-        space: 'O(1) constant memory regardless of stream size!',
+        time: 'O(1) latency per generated element',
+        space: 'O(1) memory (only stores stack frame of current execution state)',
       },
       commonMistakeOrTrap: {
-        mistake: 'Trying to reuse an exhausted generator.',
-        fix: 'Generators are single-pass iterators; once exhausted, subsequent `next(g)` calls raise `StopIteration`. You must instantiate a new generator.',
+        mistake: 'Trying to index a generator directly like a list (`gen[0]`) or checking its length (`len(gen)`).',
+        fix: 'Generators have no index or length because elements do not exist until evaluated; use `next(gen)` or iterate with a loop.',
         interviewTrap:
-          'Question: "Can you send data back into a suspended generator?" Answer: Yes! The generator method `g.send(value)` resumes the generator and yields a value while passing data into the `yield` expression.',
+          'Question: "Can you send data back into a running generator?" Answer: Yes! Generators have a `.send(val)` method, turning them into coroutines that can receive data at the yield expression: `x = yield value`.',
       },
       examCheatsheet: [
-        '`yield` pauses execution; function state is preserved in heap frame',
-        '`StopIteration` automatically caught by Python `for` loops',
-        'Memory usage: Constant O(1) vs. List O(N)',
-        '`sys.getsizeof(generator)` is typically around 120 bytes',
+        '`next(gen)` resumes execution until the next `yield` statement',
+        'When a generator terminates, it automatically raises `StopIteration`',
+        'Calling a generator function returns a generator object; code does NOT run until the first `next()`',
       ],
     },
     visual: {
       type: 'flowchart',
-      title: 'Generator State Machine: Execution Suspension & Resumption',
+      title: 'Execution Freeze & Resume Flow of `yield`',
       caption:
-        'Calling `next()` transitions state from SUSPENDED → RUNNING → `yield val` → SUSPENDED until exhaustion.',
-      visualKey: 'py-generator-state-machine',
+        'Calling `next()` resumes execution; reaching `yield` freezes local variables and yields control back to caller.',
+      visualKey: 'py-generators-yield-viz',
       details: {
-        steps: [
-          { label: '1. Call func()', desc: 'Returns generator object immediately without executing body' },
-          { label: '2. next(gen)', desc: 'Executes statements until first `yield` statement is reached' },
-          { label: '3. Yield & Suspend', desc: 'Returns current value to caller; freezes local variables and line pointer' },
-          { label: '4. next(gen) again', desc: 'Wakes up right after the previous `yield` with local variables intact' },
-        ],
+        comparison: {
+          headers: ['Feature', 'Regular Function (`return`)', 'Generator Function (`yield`)'],
+          rows: [
+            ['State Persistence', 'Destroyed after execution', 'Frozen in memory frame between calls'],
+            ['Memory Footprint', 'Allocates entire return list O(N)', 'Strictly O(1) constant memory'],
+            ['Evaluation Mode', 'Eager (computes all results now)', 'Lazy (computes 1 item only when asked)'],
+          ],
+        },
       },
     },
     animation: {
-      type: 'generator-yield-interactive',
-      title: 'Generator Step-by-Step State Stepper',
+      type: 'py-generators-interactive',
+      title: 'Generator Execution Freeze & Resume Animator',
       description:
-        'Press Step to fire `next(gen)`. Watch the line pointer pause on `yield`, emit a value, and freeze local state.',
-      hasInteractiveInputs: true,
-      inputConfig: {
-        type: 'stepper',
-        label: 'Generator Step',
-        min: 1,
-        max: 5,
-        step: 1,
-        defaultVal: 1,
-      },
+        'Step through yield statements pausing and resuming function stack execution.',
+      stepsTotal: 4,
+    },
+    codeSnippet: {
+      title: 'Infinite Fibonacci Generator in Python',
+      language: 'python',
+      code: `def fibonacci_stream():
+    a, b = 0, 1
+    while True:
+        yield a
+        a, b = b, a + b
+
+# Consume first 5 numbers on demand
+fib = fibonacci_stream()
+first_5 = [next(fib) for _ in range(5)]
+print("First 5 Fibonacci numbers:", first_5)
+print("Next number on-demand:   ", next(fib))`,
+      input: 'Request 5 numbers from infinite generator',
+      output: 'First 5 Fibonacci numbers: [0, 1, 1, 2, 3] | Next number on-demand: 5',
+      explanation:
+        'The generator generates an infinite series without running out of memory because each number is produced only on-demand.',
     },
     quiz: [
       {
         id: 'q1',
-        question: 'What happens immediately when a function containing a `yield` keyword is called?',
-        options: [
-          'It executes until the return statement',
-          'It returns a generator object immediately without executing any code in the body',
-          'It throws a SyntaxError',
-          'It loads the entire sequence into RAM',
-        ],
+        question: 'What exception is raised when a generator runs out of elements?',
+        options: ['IndexError', 'StopIteration', 'GeneratorExit', 'ValueError'],
         correctIndex: 1,
-        explanation: 'Calling a generator function returns a generator object; code execution only begins upon the first `next()` call.',
+        explanation: 'The iterator protocol signals completion by raising `StopIteration`, which `for` loops catch and handle cleanly.',
       },
       {
         id: 'q2',
-        question: 'What exception is raised when a generator has no more items to yield?',
-        options: ['IndexError', 'StopIteration', 'GeneratorExit', 'EOFError'],
+        question: 'What happens when you call a generator function `def my_gen(): yield 1` without calling `next()`?',
+        options: [
+          'The function executes completely and prints 1',
+          'It returns a generator object without executing any function body code yet',
+          'It throws a SyntaxError',
+          'It allocates a list of length 1',
+        ],
         correctIndex: 1,
-        explanation: 'CPython’s iteration protocol signals completion by raising `StopIteration`, which `for` loops intercept gracefully.',
+        explanation: 'Calling a generator function returns a suspended generator object; execution only starts upon calling `next()`.',
       },
       {
         id: 'q3',
-        question: 'What is the primary architectural advantage of a generator over a list when processing 100,000,000 log entries?',
-        options: [
-          'Generators run on all 16 CPU cores simultaneously',
-          'Generators use O(1) constant memory because only 1 item resides in RAM at any given moment',
-          'Generators compress data into zip files automatically',
-          'Generators guarantee 0% disk error',
-        ],
+        question: 'What is the memory complexity of streaming 10 million rows using a generator?',
+        options: ['O(N) (10 million rows in RAM)', 'O(1) constant memory', 'O(log N)', 'O(N²)'],
         correctIndex: 1,
-        explanation: 'Generators compute values lazily, requiring constant memory overhead regardless of whether processing 10 items or 10 billion items.',
+        explanation: 'Because rows are yielded one-at-a-time and discarded after processing, memory remains strictly O(1).',
       },
     ],
   },
@@ -534,110 +600,125 @@ export const PYTHON_REVISION_TOPICS: RevisionTopic[] = [
     id: 'py-oop-dunder',
     subject: 'python',
     category: 'OOP',
-    title: 'Python OOP: `__init__`, `self` & Dunder Methods',
-    subtitle: 'Data Model Protocols and Operator Overloading',
+    title: 'OOP, Dunder Methods & Magic Functions',
+    subtitle: 'Data Model Hooks: Operator Overloading and Object Emulation',
     difficulty: 'Intermediate',
     isInterviewFavorite: true,
     readTimeSeconds: 50,
-    tags: ['OOP', 'Dunder Methods', 'Operator Overloading', 'Class vs Instance'],
+    tags: ['OOP', 'Dunder', '__str__', '__repr__', '__len__', '__getitem__'],
     quickRecall: {
       oneLiner:
-        'Dunder (double underscore) methods implement Python\'s rich data model protocols, allowing custom objects to behave like native built-in types.',
+        'Dunder (Double Underscore) methods hook user-defined classes into Python syntax (e.g. `+` calls `__add__`, `len()` calls `__len__`).',
+      simpleAnalogy:
+        'Universal adapter analogy: Python\'s built-in operators (like `+`, `len()`, `[]`) are standardized wall sockets. Defining `__add__` or `__len__` on your custom class gives it the exact matching plug, allowing Python to treat your custom class like a native language type.',
       whenToUse:
-        'Designing reusable classes, mathematical vectors, custom containers, or domain-driven models.',
+        'Building expressive domain objects, custom data structures, ORMs, and mathematical vector classes.',
       whyItMatters:
-        'Allows clean Pythonic syntax like `len(obj)`, `obj1 + obj2`, and `print(obj)` by defining `__len__`, `__add__`, and `__repr__`.',
+        'Allows your custom classes to behave naturally like native Python types with idiomatic syntax.',
       keyPoints: [
-        '`self`: Explicit reference to the current instance; passed as the first parameter to instance methods automatically.',
-        '`__new__` vs `__init__`: `__new__` creates the object instance in memory; `__init__` initializes its attributes.',
-        '`__str__` (user-friendly print) vs `__repr__` (unambiguous developer representation for debugging).',
-        'Operator overloading: `+` calls `__add__`, `==` calls `__eq__`, `<` calls `__lt__`, `in` calls `__contains__`.',
+        '`__init__`: Constructor initializer (runs after `__new__` allocates memory).',
+        '`__str__` vs `__repr__`: `__str__` is for human-readable output (`print(obj)`); `__repr__` is unambiguous developer representation (`eval(repr(obj)) == obj`).',
+        'Sequence emulation: `__len__` enables `len(obj)`; `__getitem__` enables indexing `obj[i]` and iteration `for x in obj`.',
+        'Arithmetic overloading: `__add__` (`+`), `__sub__` (`-`), `__mul__` (`*`), `__eq__` (`==`).',
       ],
       formulaOrSyntax: {
-        label: 'Dunder Protocol Implementation',
-        codeOrLatex: 'class Vector:\n    def __init__(self, x, y): self.x, self.y = x, y\n    def __add__(self, o): return Vector(self.x + o.x, self.y + o.y)\n    def __repr__(self): return f"Vector({self.x}, {self.y})"',
+        label: 'Core Dunder Methods Pattern',
+        codeOrLatex: 'class Vector:\n    def __init__(self, x, y): self.x, self.y = x, y\n    def __add__(self, other): return Vector(self.x + other.x, self.y + other.y)\n    def __repr__(self): return f"Vector({self.x}, {self.y})"',
         isLatex: false,
         language: 'python',
       },
       complexity: {
-        time: 'Method dispatch: O(1) dictionary attribute lookup `__dict__`',
-        space: 'Each instance has its own `__dict__` unless `__slots__` is defined',
+        time: 'O(1) method dispatch via class dictionary lookup',
+        space: 'O(1) per instance (or optimized with `__slots__`)',
       },
       commonMistakeOrTrap: {
-        mistake: 'Returning a value other than `None` from `__init__`.',
-        fix: '`__init__` must always return `None` (raising a `TypeError` if a value is returned); initialization happens in-place.',
+        mistake: 'Implementing `__str__` without implementing `__repr__`.',
+        fix: 'If you only implement `__str__`, inspecting the object in lists or the REPL displays generic `<__main__.Obj at 0x7f>`. If you implement `__repr__`, it serves as the fallback for `__str__` too!',
         interviewTrap:
-          'Question: "How do you optimize memory consumption for millions of tiny class instances?" Answer: Define `__slots__ = ("x", "y")`. This replaces the dynamic instance `__dict__` with a fixed-size C array, saving ~60% RAM.',
+          'Question: "What is the difference between `__new__` and `__init__`?" Answer: `__new__` is the actual creator that allocates memory and returns a new instance; `__init__` merely initializes that instance with attributes.',
       },
       examCheatsheet: [
-        '`__repr__` goal is to be unambiguous: `eval(repr(obj)) == obj`',
-        '`__str__` goal is to be readable to human end-users',
-        '`__slots__` eliminates instance `__dict__` for memory optimization',
+        'If `__str__` is not defined, Python falls back to `__repr__`',
+        '`__slots__ = (\'x\', \'y\')` eliminates `__dict__` per instance, slashing memory usage by 40-50%',
+        'Implementing `__getitem__` automatically gives your class basic iteration support',
       ],
     },
     visual: {
-      type: 'diagram',
-      title: 'Class vs. Instance Namespace & Method Resolution Order (MRO)',
+      type: 'architecture',
+      title: 'Python Operator to Dunder Method Dispatch Mapping',
       caption:
-        'Instance attributes reside in instance `__dict__`; methods reside in Class `__dict__` to share code across instances.',
+        'Every high-level Python operator maps directly to a specific dunder method on the object class.',
       visualKey: 'py-oop-dunder-viz',
       details: {
         comparison: {
-          headers: ['Dunder Method', 'Operator / Function Hook', 'Intended Purpose'],
+          headers: ['Operator / Function', 'Dunder Hook', 'Purpose'],
           rows: [
-            ['__init__(self, ...)', 'Instantiation: `MyClass()`', 'Initialize instance attribute state'],
-            ['__repr__(self)', 'Debugging: `repr(obj)`', 'Unambiguous string to recreate object'],
-            ['__str__(self)', 'Print: `print(obj)`', 'User-facing clean readable string'],
-            ['__len__(self)', 'Length: `len(obj)`', 'Return non-negative integer container size'],
-            ['__getitem__(self, k)', 'Subscript: `obj[k]`', 'Sequence indexing and dictionary lookups'],
+            ['`print(obj)`, `str(obj)`', '`__str__(self)`', 'User-facing readable string representation'],
+            ['`repr(obj)`, Interactive REPL', '`__repr__(self)`', 'Unambiguous developer debug string'],
+            ['`len(obj)`', '`__len__(self)`', 'Returns positive integer length'],
+            ['`obj[key]`', '`__getitem__(self, key)`', 'Dictionary or sequence bracket indexing'],
+            ['`a + b`', '`__add__(self, other)`', 'Binary addition operator overloading'],
           ],
         },
       },
     },
     animation: {
-      type: 'dunder-dispatch-interactive',
-      title: 'Operator Overload Dispatch Visualizer',
+      type: 'py-dunder-dispatch-interactive',
+      title: 'Operator Overloading Dispatch Simulator',
       description:
-        'Click the operator buttons (+, ==, len, str) to watch how Python internally maps the operation to its corresponding dunder method.',
-      hasInteractiveInputs: true,
-      inputConfig: {
-        type: 'select',
-        label: 'Operator to Trigger',
-        options: ['Addition (v1 + v2 → __add__)', 'Equality (v1 == v2 → __eq__)', 'Length (len(v) → __len__)'],
-        defaultVal: 'Addition (v1 + v2 → __add__)',
-      },
+        'Step through binary addition dispatching to the custom class __add__ method.',
+      stepsTotal: 4,
+    },
+    codeSnippet: {
+      title: 'Custom 2D Vector with Operator Overloading',
+      language: 'python',
+      code: `class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __add__(self, other):
+        # Overload the + operator
+        return Vector(self.x + other.x, self.y + other.y)
+
+    def __repr__(self):
+        return f"Vector({self.x}, {self.y})"
+
+v1 = Vector(2, 3)
+v2 = Vector(4, 5)
+v3 = v1 + v2 # Calls v1.__add__(v2)
+print("Result of v1 + v2:", v3)`,
+      input: 'v1 = Vector(2, 3), v2 = Vector(4, 5)',
+      output: 'Result of v1 + v2: Vector(6, 8)',
+      explanation:
+        'The + operator invokes `__add__`, creating a new Vector instance with summed components.',
     },
     quiz: [
       {
         id: 'q1',
-        question: 'Which method is responsible for creating and allocating the instance in memory before `__init__` is called?',
-        options: ['__allocate__', '__new__', '__create__', '__setup__'],
+        question: 'Which method should you implement to make custom objects printable in interactive console inspections and lists?',
+        options: ['__str__', '__repr__', '__show__', '__display__'],
         correctIndex: 1,
-        explanation: '`__new__` is the static creator method that allocates the instance and returns it to `__init__`.',
+        explanation: '`__repr__` is used when objects appear inside containers (lists, dicts) or in interactive REPL outputs.',
       },
       {
         id: 'q2',
-        question: 'What is the primary benefit of defining `__slots__` in a class definition?',
-        options: [
-          'It encrypts sensitive fields',
-          'It prevents creation of the instance `__dict__`, significantly reducing memory consumption for millions of objects',
-          'It automatically writes unit tests',
-          'It makes the class run in C language',
-        ],
-        correctIndex: 1,
-        explanation: '`__slots__` reserves a fixed descriptor array for attributes, saving the memory overhead of a dynamic dictionary for each instance.',
+        question: 'What method is called when evaluating `len(my_object)`?',
+        options: ['__size__', '__count__', '__len__', '__length__'],
+        correctIndex: 2,
+        explanation: 'The built-in function `len()` delegates directly to the object\'s `__len__()` method.',
       },
       {
         id: 'q3',
-        question: 'If a class implements `__repr__` but omits `__str__`, what does `print(instance)` output?',
+        question: 'What is the purpose of adding `__slots__` to a Python class?',
         options: [
-          'It raises an AttributeError',
-          'It falls back and uses the implementation in `__repr__`',
-          'It prints an empty line',
-          'It prints the class memory address only',
+          'It enables multi-inheritance',
+          'It replaces the dynamic `__dict__` dictionary with a fixed array, significantly reducing memory per instance',
+          'It encrypts private variables',
+          'It makes the class abstract',
         ],
         correctIndex: 1,
-        explanation: 'Python automatically falls back to `__repr__` if `__str__` is not defined.',
+        explanation: '`__slots__` prevents creating dynamic `__dict__` attribute tables, saving up to 50% memory on millions of instances.',
       },
     ],
   },
@@ -645,112 +726,133 @@ export const PYTHON_REVISION_TOPICS: RevisionTopic[] = [
     id: 'py-decorators-closures',
     subject: 'python',
     category: 'Functions and Scope',
-    title: 'Decorators & Function Closures',
-    subtitle: 'Higher-Order Functions and Lexical Scope Wrapping',
-    difficulty: 'Advanced',
+    title: 'Decorators, Closures & `@wraps`',
+    subtitle: 'Higher-Order Functions and Metaprogramming',
+    difficulty: 'Intermediate',
     isInterviewFavorite: true,
     readTimeSeconds: 50,
-    tags: ['Decorators', 'Closures', 'First-Class Functions', 'functools.wraps'],
+    tags: ['Decorators', 'Closures', 'functools.wraps', 'First-Class Functions', 'LEGB'],
     quickRecall: {
       oneLiner:
-        'A decorator is a higher-order function that takes another function as an argument, extends its behavior via a closure, and returns the modified function.',
+        'A decorator is a higher-order function that takes a function as input, wraps extra functionality around it, and returns the modified function.',
+      simpleAnalogy:
+        'Gift wrap analogy: You have a book (the function). A decorator is festive wrapping paper with a ribbon placed around the book. The book inside remains unchanged, but anyone receiving it experiences the gift wrap first before opening the book.',
       whenToUse:
-        'Cross-cutting concerns like authentication, execution timing, rate limiting, logging, and caching (`@functools.lru_cache`).',
+        'Cross-cutting concerns: logging, timing/profiling, authentication checks, caching (memoization with `@lru_cache`), rate limiting.',
       whyItMatters:
-        'Syntactic sugar `@my_decorator` cleanly separates core business logic from instrumentation boilerplate.',
+        'Eliminates duplicate boilerplate code by cleanly separating business logic from auxiliary infrastructure concerns.',
       keyPoints: [
-        'Closure: An inner function that retains access to variables from its enclosing lexical scope even after the outer function has returned.',
-        '`@decorator` syntax is equivalent to `func = decorator(func)`.',
-        'Always use `@functools.wraps(func)` on the wrapper: preserves the original function’s `__name__` and `__doc__`.',
-        'Decorators with arguments require 3 levels of nested functions: `outer(args) -> decorator(func) -> wrapper(*args, **kwargs)`.',
+        'First-Class Functions: Functions in Python can be passed as arguments, assigned to variables, and returned from other functions.',
+        'Closure: An inner function that remembers and accesses variables from its enclosing lexical scope even after the outer function has returned.',
+        'Syntactic Sugar: `@my_decorator` placed above `def foo()` is strictly identical to `foo = my_decorator(foo)`.',
+        '`functools.wraps`: Mandatory inside decorators to preserve the original function\'s `__name__` and `__doc__` docstring.',
       ],
       formulaOrSyntax: {
         label: 'Standard Decorator Pattern',
-        codeOrLatex: 'import functools\ndef timer(func):\n    @functools.wraps(func)\n    def wrapper(*args, **kwargs):\n        # before logic\n        res = func(*args, **kwargs)\n        # after logic\n        return res\n    return wrapper',
+        codeOrLatex: 'from functools import wraps\ndef my_decorator(func):\n    @wraps(func)\n    def wrapper(*args, **kwargs):\n        # Pre-execution logic\n        res = func(*args, **kwargs)\n        # Post-execution logic\n        return res\n    return wrapper',
         isLatex: false,
         language: 'python',
       },
       complexity: {
-        time: 'O(1) overhead per call (1 extra function stack frame)',
-        space: 'O(1) for closure variable cell',
+        time: 'O(1) wrapping overhead at module import time; wrapper latency at runtime',
+        space: 'O(1) memory per closure frame',
       },
       commonMistakeOrTrap: {
-        mistake: 'Forgetting `@functools.wraps(func)` on the inner wrapper function.',
-        fix: 'Without `wraps`, the decorated function\'s `__name__` becomes "wrapper", breaking debugging tools and documentation generators.',
+        mistake: 'Writing a custom decorator without using `@functools.wraps(func)`.',
+        fix: 'Without `@wraps`, the decorated function loses its identity: `func.__name__` becomes "wrapper" and docstrings are erased, breaking debuggers and auto-documentation tools.',
         interviewTrap:
-          'Question: "In what order are stacked decorators evaluated?" Answer: `@decA` on top of `@decB` compiles to `decA(decB(func))` — wrapping is bottom-up, but execution flows top-down through decA first!',
+          'Question: "How do you create a decorator that accepts arguments like `@repeat(num_times=3)`?" Answer: You need three nested functions! The outermost function accepts the decorator arguments and returns the actual decorator, which returns the wrapper.',
       },
       examCheatsheet: [
-        '`@decorator` is exact equivalent to `func = decorator(func)`',
-        'Stacked decorators: Nearest to function wraps first, outermost executes first',
-        'Closure retains references via `__closure__` tuple containing `cell` objects',
+        '`@dec` is syntax sugar for `func = dec(func)`',
+        'Always use `from functools import wraps` and `@wraps(func)` on the wrapper',
+        'Decorators execute at function DEFINITION time (when module imports), not at call time',
       ],
     },
     visual: {
-      type: 'flowchart',
-      title: 'Closure Wrapper Envelope & Execution Interception',
+      type: 'diagram',
+      title: 'Closure Scoping & Decorator Wrapper Architecture',
       caption:
-        'Caller calls `wrapped_func()` → Wrapper intercepts → executes Pre-Hook → invokes original `func()` → executes Post-Hook → returns result.',
-      visualKey: 'py-decorator-flow',
+        'The outer decorator returns a wrapper closure containing pre-hook, original function invocation, and post-hook.',
+      visualKey: 'py-decorators-closure-viz',
       details: {
-        steps: [
-          { label: 'Step 1: Wrapper Entry', desc: 'Timing starts, arguments validated, authorization checked' },
-          { label: 'Step 2: Core Execution', desc: 'Original payload function invoked with (*args, **kwargs)' },
-          { label: 'Step 3: Post-Execution', desc: 'Timing logged, telemetry recorded, result returned' },
-        ],
+        comparison: {
+          headers: ['Step', 'Action', 'Scope Access'],
+          rows: [
+            ['1. Definition', 'Decorator wraps function at import time', 'Outer decorator scope'],
+            ['2. Pre-hook', 'Runs authentication, logging, or timing start', 'Wrapper closure scope'],
+            ['3. Invocation', 'Calls original wrapped `func(*args, **kwargs)`', 'Inner function scope'],
+            ['4. Post-hook', 'Logs elapsed time or caches return value', 'Wrapper closure scope'],
+          ],
+        },
       },
     },
     animation: {
-      type: 'decorator-call-interactive',
-      title: 'Execution Interception Trace',
+      type: 'py-decorators-interactive',
+      title: 'Decorator Wrapping & Execution Step Tracer',
       description:
-        'Step through a call to an `@audit_log` decorated function to visualize the wrapper boundaries and call stack.',
-      hasInteractiveInputs: true,
-      inputConfig: {
-        type: 'stepper',
-        label: 'Trace Step',
-        min: 1,
-        max: 4,
-        step: 1,
-        defaultVal: 1,
-      },
+        'Step through a timer decorator capturing start time, invoking the function, and logging elapsed duration.',
+      stepsTotal: 4,
+    },
+    codeSnippet: {
+      title: 'Timing Decorator with @wraps in Python',
+      language: 'python',
+      code: `import time
+from functools import wraps
+
+def timer(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        t0 = time.time()
+        result = func(*args, **kwargs)
+        elapsed = time.time() - t0
+        print(f"[{func.__name__}] Finished in {elapsed*1000:.2f}ms")
+        return result
+    return wrapper
+
+@timer
+def compute_sum(n):
+    """Sums numbers from 0 to n."""
+    return sum(range(n))
+
+print("Sum result:", compute_sum(100000))
+print("Preserved name:", compute_sum.__name__)`,
+      input: 'Call compute_sum(100000)',
+      output: '[compute_sum] Finished in 1.84ms | Sum result: 4999950000 | Preserved name: compute_sum',
+      explanation:
+        'The decorator transparently measures execution time while preserving the original function name via `@wraps`.',
     },
     quiz: [
       {
         id: 'q1',
-        question: 'What is the syntax `@my_dec` immediately above `def hello(): pass` equivalent to?',
+        question: 'What does the `@functools.wraps(func)` decorator do inside a custom decorator?',
         options: [
-          'hello = my_dec(hello)',
-          'my_dec = hello(my_dec)',
-          'hello.my_dec()',
-          'my_dec.register(hello)',
+          'It compiles the code to C',
+          'It preserves the original function metadata (such as `__name__` and `__doc__`)',
+          'It makes the function multi-threaded',
+          'It caches all function outputs',
         ],
-        correctIndex: 0,
-        explanation: 'Decorators are pure syntactic sugar for passing the function to a callable and reassigning the name.',
+        correctIndex: 1,
+        explanation: '`@wraps` copies metadata attributes like docstrings and function names from the original function onto the wrapper.',
       },
       {
         id: 'q2',
-        question: 'Why should you almost always decorate the inner wrapper with `@functools.wraps(func)`?',
+        question: 'When is a decorator executed?',
         options: [
-          'To make the function execute 10x faster',
-          'To preserve the original function name `__name__`, docstring `__doc__`, and signature metadata',
-          'To convert it into a generator',
-          'To allow recursive calls',
+          'Every time the decorated function is called',
+          'At function definition time when the module is imported or loaded',
+          'Only when an exception occurs',
+          'When the program exits',
         ],
         correctIndex: 1,
-        explanation: 'Without `wraps`, metadata reflection reports the wrapper function name and loses docstring introspection.',
+        explanation: 'Decorators wrap the function immediately when the function definition is executed at module load time.',
       },
       {
         id: 'q3',
-        question: 'If multiple decorators `@dec1` and `@dec2` are stacked above `func()`, which one executes its pre-hook first when `func()` is invoked?',
-        options: [
-          '@dec1 (the top-most decorator)',
-          '@dec2 (the bottom-most decorator)',
-          'They run concurrently on parallel threads',
-          'It is random depending on hash order',
-        ],
+        question: 'What is the syntax `@my_dec` on `def foo(): pass` equivalent to?',
+        options: ['foo = my_dec(foo)', 'my_dec = foo()', 'foo = my_dec()', 'my_dec(foo())'],
         correctIndex: 0,
-        explanation: '`dec1(dec2(func))` means `dec1` wraps around `dec2`, so `dec1` is the outermost shell and executes its pre-hook first.',
+        explanation: '`@my_dec` is exact syntactic sugar for passing the function object into the decorator and reassigning the name.',
       },
     ],
   },
@@ -758,73 +860,98 @@ export const PYTHON_REVISION_TOPICS: RevisionTopic[] = [
     id: 'py-exception-handling',
     subject: 'python',
     category: 'Exception Handling',
-    title: 'Exception Hierarchy & `finally` Flow',
-    subtitle: 'Robust Error Handling with `try-except-else-finally`',
+    title: 'Exception Handling: `try-except-else-finally`',
+    subtitle: 'Robust Error Propagation and Clean Resource Management',
     difficulty: 'Beginner',
-    isInterviewFavorite: false,
+    isInterviewFavorite: true,
     readTimeSeconds: 40,
-    tags: ['Exceptions', 'Try Except', 'Finally', 'Else Block', 'Cleanup'],
+    tags: ['Exceptions', 'Try-Except', 'Else', 'Finally', 'EAFP vs LBYL'],
     quickRecall: {
       oneLiner:
-        'Python uses structured exception propagation where `try` executes risky code, `except` catches specific errors, `else` runs on success, and `finally` ALWAYS executes for cleanup.',
+        'Python uses EAFP ("Easier to Ask for Forgiveness than Permission") via `try-except-else-finally` to handle runtime failures cleanly.',
+      simpleAnalogy:
+        'Emergency landing gear analogy: `try` is attempting to land the plane. `except` is the backup emergency system deployed if gears jam. `else` is celebrating a smooth landing (only runs if NO emergency occurred). `finally` is the flight crew cleaning the plane afterwards (runs no matter what, even if an emergency occurred).',
       whenToUse:
-        'Handling runtime errors, releasing unmanaged file/socket handles, and validating external API inputs.',
+        'I/O operations, network requests, parsing user input, database transactions, resource cleanups.',
       whyItMatters:
-        'The `finally` block is guaranteed to execute even if an unexpected exception occurs or a `return` statement is hit inside `try`.',
+        'Uncaught exceptions crash production applications; proper handling isolates failures gracefully.',
       keyPoints: [
-        'Inheritance hierarchy: `BaseException` → `Exception` → built-in exceptions (`ValueError`, `KeyError`, etc.).',
-        'Never write bare `except:`; it catches `SystemExit`, `KeyboardInterrupt` (Ctrl+C), and `MemoryError`, preventing graceful exits.',
-        'The `else` block runs only when NO exception was raised in the `try` block.',
-        'Context managers (`with open(...) as f:`) leverage `__enter__` and `__exit__` to guarantee automated cleanup.',
+        '`try`: Code block that may raise an exception.',
+        '`except ExceptionType`: Catches and handles specific error types. Never catch bare `except:`.',
+        '`else`: Runs ONLY if the `try` block completed without raising any exception.',
+        '`finally`: GUARANTEED to run under all conditions (even if an exception was raised, caught, or re-raised, or if a `return` was hit).',
+        'EAFP ("Easier to Ask Forgiveness") is standard Python style over LBYL ("Look Before You Leap").',
       ],
       formulaOrSyntax: {
-        label: 'Complete Exception Template',
-        codeOrLatex: 'try:\n    risky_operation()\nexcept ValueError as e:\n    handle_error(e)\nelse:\n    run_on_success()\nfinally:\n    always_cleanup() # Guaranteed!',
+        label: 'Complete Exception Block Pattern',
+        codeOrLatex: 'try:\n    f = open("data.txt")\nexcept FileNotFoundError as e:\n    print("Missing file:", e)\nelse:\n    content = f.read()\nfinally:\n    f.close() # Always executes',
         isLatex: false,
         language: 'python',
       },
       complexity: {
-        time: 'Zero cost in Python 3.11+ ("zero-cost exceptions" until an exception is actually thrown)',
-        space: 'O(1)',
+        time: 'Zero cost when no exception occurs in Python 3.11+ ("zero-cost exceptions")',
+        space: 'O(traceback depth) when exception is active',
       },
       commonMistakeOrTrap: {
-        mistake: 'Putting a `return` statement inside the `finally` block.',
-        fix: 'A `return` inside `finally` swallows and suppresses any unhandled exception raised in `try`, silently masking critical bugs!',
+        mistake: 'Using a bare `except:` or catching `BaseException`.',
+        fix: 'Catching `BaseException` intercepts `KeyboardInterrupt` (Ctrl+C) and `SystemExit`, making your script unkillable; always catch specific errors or `except Exception:`.',
         interviewTrap:
-          'Question: "Does `finally` run if a `return` is reached inside `try`?" Answer: Yes, absolutely! CPython runs the code inside `finally` right before exiting the function.',
+          'Question: "If a `try` block returns 1, but the `finally` block returns 2, what does the function return?" Answer: 2! A return statement in `finally` overrides any preceding return or exception in `try` or `except`!',
       },
       examCheatsheet: [
-        'Catch specific exceptions: `except (ValueError, KeyError):`',
-        '`else` runs ONLY when no exception occurred in `try`',
-        '`finally` runs unconditionally (even after return / break)',
+        '`else` block runs only when NO exception was raised in `try`',
+        '`finally` block ALWAYS runs, even after a `return` statement',
+        'Custom exceptions should always inherit from built-in `Exception`',
       ],
     },
     visual: {
       type: 'flowchart',
-      title: 'Complete `try-except-else-finally` Decision Tree',
+      title: 'Control Flow Diagram: try → except vs. else → finally',
       caption:
-        'Trace the branched pathways of execution under normal vs. exceptional runtime conditions.',
-      visualKey: 'py-exception-flow',
+        'If an exception occurs, flow branches to `except`. If clean, flow branches to `else`. Both paths converge into `finally`.',
+      visualKey: 'py-exceptions-flow-viz',
       details: {
-        steps: [
-          { label: 'Try Block', desc: 'Executes monitored code instructions' },
-          { label: 'Exception Raised?', desc: 'YES → Match `except` handler; NO → Execute `else` block' },
-          { label: 'Finally Block', desc: 'Always runs as the absolute terminal cleanup phase' },
-        ],
+        comparison: {
+          headers: ['Block', 'Executes When?', 'Common Usage'],
+          rows: [
+            ['`try`', 'Always starts here', 'Code that could potentially fail'],
+            ['`except`', 'Only when matching error is raised', 'Logging, fallback recovery, alerts'],
+            ['`else`', 'Only when `try` succeeds with zero errors', 'Logic that depends on `try` succeeding'],
+            ['`finally`', 'ALWAYS executes (100% guarantee)', 'Closing file handles, db connections, sockets'],
+          ],
+        },
       },
     },
     animation: {
-      type: 'exception-dispatch-interactive',
-      title: 'Exception Branch Simulator',
+      type: 'py-exceptions-interactive',
+      title: 'Exception Branching Simulator',
       description:
-        'Toggle whether an error occurs in the Try block to watch the execution arrow redirect through Except vs Else before entering Finally.',
-      hasInteractiveInputs: true,
-      inputConfig: {
-        type: 'select',
-        label: 'Execution Scenario',
-        options: ['Clean Run (No Exception)', 'ValueError Raised', 'Unhandled RuntimeError'],
-        defaultVal: 'Clean Run (No Exception)',
-      },
+        'Step through clean execution vs error-triggered branching through try-except-finally.',
+      stepsTotal: 4,
+    },
+    codeSnippet: {
+      title: 'Complete try-except-else-finally in Python',
+      language: 'python',
+      code: `def safe_divide(a, b):
+    try:
+        result = a / b
+    except ZeroDivisionError:
+        print("Error: Cannot divide by zero!")
+        return None
+    else:
+        print(f"Success: {a} / {b} = {result}")
+        return result
+    finally:
+        print("Cleanup: Operation finished.")
+
+print("Test 1:")
+safe_divide(10, 2)
+print("\\nTest 2:")
+safe_divide(10, 0)`,
+      input: 'Test 1: 10 / 2 | Test 2: 10 / 0',
+      output: 'Success: 10 / 2 = 5.0 -> Cleanup finished | Error: Cannot divide by zero -> Cleanup finished',
+      explanation:
+        'Notice how `finally` runs in both cases, while `else` runs only when no exception was raised.',
     },
     quiz: [
       {
@@ -832,142 +959,163 @@ export const PYTHON_REVISION_TOPICS: RevisionTopic[] = [
         question: 'When does the `else` block execute in a `try-except-else-finally` statement?',
         options: [
           'Whenever an exception is caught',
-          'Only when the `try` block completes successfully without raising any exceptions',
-          'Only if the `finally` block fails',
-          'It runs on every single iteration',
+          'Only when the `try` block completes successfully without raising any exception',
+          'Only after the `finally` block',
+          'It never executes',
         ],
         correctIndex: 1,
-        explanation: 'The `else` block executes only if code in the `try` block completed without raising any exceptions.',
+        explanation: 'The `else` clause runs exclusively when the `try` block executes cleanly with zero errors.',
       },
       {
         id: 'q2',
-        question: 'Why should you avoid catching `BaseException` or writing a bare `except:`?',
+        question: 'Why should you avoid using a bare `except:` without specifying an exception type?',
         options: [
-          'It slows down arithmetic operations',
-          'It catches keyboard interrupts (Ctrl+C) and system exit signals, preventing the user from stopping the script',
-          'It causes syntax errors in Python 3',
+          'It slows down execution by 10x',
+          'It intercepts `KeyboardInterrupt` and `SystemExit`, preventing users from terminating the program with Ctrl+C',
+          'It causes a SyntaxError in modern Python',
           'It disables the garbage collector',
         ],
         correctIndex: 1,
-        explanation: 'A bare `except:` catches `KeyboardInterrupt` and `SystemExit`, making programs impossible to cancel from the terminal.',
+        explanation: 'A bare `except:` catches `BaseException`, silencing crucial system signals like Ctrl+C.',
       },
       {
         id: 'q3',
-        question: 'If a function has `return 1` inside `try` and `return 2` inside `finally`, what value is returned to the caller?',
-        options: ['1', '2', 'None', 'Raises SyntaxError'],
+        question: 'What happens if both `try` and `finally` contain a `return` statement?',
+        options: [
+          'The `try` return value is returned',
+          'The `finally` return value overrides and is returned',
+          'A RuntimeError is raised',
+          'Both values are returned as a tuple',
+        ],
         correctIndex: 1,
-        explanation: 'The `finally` block executes last before leaving the frame, and its `return` overrides and discards the previous return value.',
+        explanation: '`finally` always executes last and overwrites any pending return value or active exception.',
       },
     ],
   },
   {
     id: 'py-gil-concurrency',
     subject: 'python',
-    category: 'Common Python Interview Traps',
-    title: 'Global Interpreter Lock (GIL) & Multithreading',
-    subtitle: 'CPython Thread Safety vs. Multiprocessing Core Scaling',
-    difficulty: 'Advanced',
+    category: 'Time and Space Complexity',
+    title: 'The GIL, Threading & Multiprocessing',
+    subtitle: 'CPython Global Interpreter Lock: CPU-Bound vs. I/O-Bound',
+    difficulty: 'Intermediate',
     isInterviewFavorite: true,
-    readTimeSeconds: 55,
-    tags: ['GIL', 'Threading', 'Multiprocessing', 'Asyncio', 'Concurrency'],
+    readTimeSeconds: 50,
+    tags: ['GIL', 'Threading', 'Multiprocessing', 'Concurrency', 'Asyncio'],
     quickRecall: {
       oneLiner:
-        'The GIL is a mutex lock in CPython that prevents multiple native OS threads from executing Python bytecode simultaneously on separate CPU cores.',
+        'The Global Interpreter Lock (GIL) is a mutex that prevents multiple native threads from executing Python bytecode simultaneously in CPython.',
+      simpleAnalogy:
+        'Single kitchen microphone analogy: A restaurant kitchen has 8 chefs (CPU cores), but only 1 microphone (the GIL). Even if all 8 chefs are ready to cook, only the chef currently holding the microphone is allowed to issue cooking commands. To truly cook in parallel, you must open separate independent restaurant kitchens (Multiprocessing).',
       whenToUse:
-        'Use `threading` or `asyncio` for I/O-bound tasks (network, disk); use `multiprocessing` or native C-extensions (NumPy) for CPU-bound tasks.',
+        'Use `threading` or `asyncio` for I/O-bound tasks (network, disk, web scraping); use `multiprocessing` for CPU-bound tasks (number crunching, image processing).',
       whyItMatters:
-        'Running 4 CPU-heavy threads in Python will NOT speed up work across 4 cores; it actually runs slower due to thread lock contention overhead!',
+        'Running 4 Python threads on a 4-core machine for CPU-bound math will NOT run 4x faster; it may run slower due to GIL lock contention!',
       keyPoints: [
-        'Why the GIL exists: CPython uses reference counting for garbage collection, which is not thread-safe without locks.',
-        'I/O-Bound (Web scraping, DB queries): Threads release the GIL while waiting on sockets, enabling high concurrency.',
-        'CPU-Bound (Matrix math, image rendering): Threads fight over the single GIL; use `multiprocessing.Pool` to spawn separate processes with separate memory spaces.',
-        'NumPy and scientific libraries release the GIL during heavy vectorized matrix operations in underlying C/Fortran code.',
+        'GIL Purpose: Protects CPython memory management and reference counts (`ob_refcnt`) from race conditions.',
+        'I/O-Bound: Threads release the GIL during network/disk wait times, enabling effective concurrent I/O.',
+        'CPU-Bound: Threads fight for the GIL; use `multiprocessing` to spawn separate OS processes with separate GILs.',
+        '`asyncio`: Single-threaded cooperative multitasking using event loop and `async/await`.',
+        'Python 3.13+ introduces experimental free-threaded builds (`--disable-gil`).',
       ],
       formulaOrSyntax: {
-        label: 'Concurrency Decision Rule',
-        codeOrLatex: '# CPU Bound -> Multiprocessing\nfrom multiprocessing import Pool\nwith Pool(4) as p: p.map(heavy_calc, data)\n\n# I/O Bound -> Threading / Asyncio\nimport asyncio',
+        label: 'Concurrency Selection Rule',
+        codeOrLatex: '# I/O Bound (Web, Disk):\\nfrom concurrent.futures import ThreadPoolExecutor\\n# CPU Bound (Math, ML):\\nfrom concurrent.futures import ProcessPoolExecutor',
         isLatex: false,
         language: 'python',
       },
       complexity: {
-        time: 'Multiprocessing: True parallel O(T / cores) | Threading CPU: O(T) + lock contention',
-        space: 'Multiprocessing copies memory space (IPC overhead)',
+        time: 'Threading: O(1) GIL switch overhead | Multiprocessing: O(process creation + IPC serialization)',
+        space: 'Processes do not share memory (unless using shared memory IPC)',
       },
       commonMistakeOrTrap: {
-        mistake: 'Using `threading.Thread` to accelerate a heavy machine learning training loop or prime number search.',
-        fix: 'Threads cannot execute Python bytecode in parallel. Use `multiprocessing.Process` or `concurrent.futures.ProcessPoolExecutor`.',
+        mistake: 'Using Python `threading` to speed up CPU-heavy mathematical computations across multiple cores.',
+        fix: 'Use `multiprocessing` or C-extensions like NumPy (which release the GIL during vector computations).',
         interviewTrap:
-          'Question: "Does Python have true OS threads?" Answer: Yes! CPython uses 1:1 native pthreads on Linux/Windows, but the GIL serializes their bytecode execution so only 1 thread holds the interpreter at any moment.',
+          'Question: "Does Python threading provide any benefit if the GIL exists?" Answer: Yes! For I/O-bound operations (downloading 50 URLs), threads spend 99% of their time waiting on sockets where the GIL is released, giving massive speedups.',
       },
       examCheatsheet: [
-        'I/O-Bound tasks = `threading` or `asyncio` (GIL released during I/O wait)',
-        'CPU-Bound tasks = `multiprocessing` (Bypasses GIL with separate processes)',
-        'NumPy releases GIL during C-level vectorized matrix operations',
+        'CPU-bound tasks -> use `multiprocessing`',
+        'I/O-bound tasks -> use `threading` or `asyncio`',
+        'NumPy operations release the GIL during heavy C-level array loops',
       ],
     },
     visual: {
-      type: 'comparison-table',
-      title: 'Concurrency Matrix: Threading vs. Multiprocessing vs. Asyncio',
+      type: 'architecture',
+      title: 'CPython GIL vs Multiprocessing Architecture',
       caption:
-        'Comparison of execution mechanisms, memory models, and optimal workload domains.',
-      visualKey: 'py-gil-matrix',
+        'Threading shares 1 process and 1 GIL across cores. Multiprocessing spawns separate processes, each with its own GIL and memory space.',
+      visualKey: 'py-gil-concurrency-viz',
       details: {
         comparison: {
-          headers: ['Model', 'Parallelism Type', 'Memory Model', 'Best For', 'GIL Impact'],
+          headers: ['Model', 'Best For', 'Memory Sharing', 'Bypasses GIL?'],
           rows: [
-            ['Threading', 'Concurrent (1 core at a time)', 'Shared memory space', 'I/O-bound (web, files)', 'Serialized by GIL'],
-            ['Multiprocessing', 'True Parallel (multi-core)', 'Isolated process memory', 'CPU-bound (math, crypto)', 'Bypasses GIL completely'],
-            ['Asyncio', 'Single-threaded event loop', 'Single memory frame', 'High-concurrency I/O sockets', 'No thread locks needed'],
+            ['`threading`', 'I/O-bound (HTTP requests, files)', 'Shared memory space', 'No (Limited by 1 core for bytecode)'],
+            ['`multiprocessing`', 'CPU-bound (Matrix math, compression)', 'Isolated memory (IPC / pickling)', 'Yes (1 process per CPU core)'],
+            ['`asyncio`', 'High-concurrency I/O (10,000 sockets)', 'Single thread event loop', 'No (Single thread cooperative)'],
           ],
         },
       },
     },
     animation: {
-      type: 'gil-lock-switch-interactive',
-      title: 'GIL Mutex Passing Animator',
+      type: 'py-gil-interactive',
+      title: 'GIL Mutex Lock & Thread Contention Simulator',
       description:
-        'Watch Thread 1 and Thread 2 alternate ownership of the single golden GIL lock token to execute bytecode slices.',
-      hasInteractiveInputs: true,
-      inputConfig: {
-        type: 'stepper',
-        label: 'Bytecode Switch Tick',
-        min: 1,
-        max: 6,
-        step: 1,
-        defaultVal: 1,
-      },
+        'Step through multiple threads competing for the single GIL execution lock.',
+      stepsTotal: 4,
+    },
+    codeSnippet: {
+      title: 'ThreadPool vs ProcessPool in Python',
+      language: 'python',
+      code: `from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
+import time
+
+def io_task(url_id):
+    time.sleep(0.1) # Simulate network wait (GIL is released!)
+    return f"URL {url_id} fetched"
+
+# Concurrently fetch 4 URLs in ~0.1s total (not 0.4s!)
+with ThreadPoolExecutor(max_workers=4) as executor:
+    results = list(executor.map(io_task, range(4)))
+
+print("Fetched:", results[0])
+print(f"Total results: {len(results)}")`,
+      input: 'Fetch 4 mock URLs concurrently with ThreadPool',
+      output: 'Fetched: URL 0 fetched | Total results: 4 (Finished in 0.1s instead of 0.4s)',
+      explanation:
+        'During I/O sleep, the GIL is released, allowing all 4 threads to wait on the network simultaneously.',
     },
     quiz: [
       {
         id: 'q1',
-        question: 'Why does CPython use a Global Interpreter Lock (GIL)?',
+        question: 'Why does Python have a Global Interpreter Lock (GIL) in CPython?',
         options: [
-          'To speed up arithmetic calculations',
-          'To ensure thread-safe memory management for reference-counted garbage collection',
-          'Because the operating system does not support threads',
-          'To prevent users from opening multiple windows',
+          'To prevent memory allocation',
+          'To protect CPython internal memory and reference count tracking from thread race conditions',
+          'To force developers to write clean code',
+          'To make Python slower than C',
         ],
         correctIndex: 1,
-        explanation: 'The GIL protects CPython’s reference counting memory management from race conditions without having to lock every individual pointer.',
+        explanation: 'The GIL was introduced to simplify CPython thread-safety by preventing race conditions on object reference counters.',
       },
       {
         id: 'q2',
-        question: 'Which concurrency model is most appropriate for training a CPU-intensive data processing pipeline across 8 CPU cores?',
-        options: ['threading.Thread', 'asyncio', 'multiprocessing.Pool', 'time.sleep()'],
+        question: 'Which concurrency model is optimal for calculating millions of prime numbers across an 8-core CPU in Python?',
+        options: ['`threading`', '`asyncio`', '`multiprocessing`', 'Standard generator'],
         correctIndex: 2,
-        explanation: '`multiprocessing` spawns distinct Python processes with individual interpreters and memory spaces, achieving true multi-core parallel computation.',
+        explanation: 'CPU-bound workloads require `multiprocessing` to run true parallel computation on all 8 cores without GIL restrictions.',
       },
       {
         id: 'q3',
-        question: 'Why does multithreading work well for downloading 500 web pages simultaneously in Python?',
+        question: 'Do external C libraries like NumPy obey the Python GIL during heavy calculations?',
         options: [
-          'Because network socket calls release the GIL while waiting for remote HTTP responses',
-          'Because HTML files don’t have bytecode',
-          'Because threads run in the cloud',
-          'Because web pages bypass the operating system',
+          'Yes, NumPy is locked to 1 core always',
+          'No, NumPy releases the GIL during compiled C/Fortran array computations, enabling multi-core parallelism',
+          'NumPy only runs on GPUs',
+          'NumPy does not use C',
         ],
-        correctIndex: 0,
-        explanation: 'During I/O operations (like network wait), CPython releases the GIL, allowing other threads to execute concurrently.',
+        correctIndex: 1,
+        explanation: 'NumPy drops the GIL before entering C-level matrix operations, allowing multi-threaded BLAS libraries to run across all cores.',
       },
     ],
   },
@@ -976,110 +1124,247 @@ export const PYTHON_REVISION_TOPICS: RevisionTopic[] = [
     subject: 'python',
     category: 'Common Python Interview Traps',
     title: 'Default Mutable Arguments Trap',
-    subtitle: 'Function Definition-Time Evaluation and Shared State Bugs',
+    subtitle: 'Function Definition Binding vs. Runtime Invocation',
     difficulty: 'Beginner',
     isInterviewFavorite: true,
     readTimeSeconds: 40,
-    tags: ['Functions', 'Default Arguments', 'Bugs', 'Interview Classic'],
+    tags: ['Pitfall', 'Default Arguments', 'Mutability', 'Binding Time'],
     quickRecall: {
       oneLiner:
-        'Default argument expressions in Python are evaluated ONCE when the function definition is loaded, NOT each time the function is called.',
+        'Default parameter values in Python are evaluated once at function definition time, NOT each time the function is called.',
+      simpleAnalogy:
+        'Shared shopping basket analogy: If a store clerk hands out a communal shopping basket when you enter without one, whatever you put in remains in that same basket for the next customer who enters without one. Solution: Hand out a brand new basket (`lst = None -> lst = []`) every single time!',
       whenToUse:
-        'Writing function signatures with optional list, dict, or object parameters.',
+        'Every time you define a function taking an optional list, dict, set, or custom object parameter.',
       whyItMatters:
-        'Using `def append_to(item, target=[])` causes all subsequent function invocations to mutate and share the exact same list across calls!',
+        'One of the top 3 most common Python bugs and interview questions in software engineering.',
       keyPoints: [
-        'Python functions are first-class objects created when the `def` statement executes.',
-        'Default arguments are stored as a tuple in the function\'s `__defaults__` attribute.',
-        'If the default value is a mutable object (list/dict), mutations accumulate across distinct calls.',
-        'The canonical Pythonic idiom: use `None` as the default sentinel value and initialize inside the body.',
+        'Bug trigger: `def append_to(val, lst=[])`. The list `[]` is created ONCE when the module loads.',
+        'Repeated calls without providing `lst` reuse the exact same list instance in memory.',
+        'Standard Idiomatic Fix: Use `None` as the default sentinel value: `def append_to(val, lst=None): if lst is None: lst = []`.',
+        'Immutable defaults (integers, strings, None) are completely safe.',
       ],
       formulaOrSyntax: {
-        label: 'The Canonical Sentinel Fix',
-        codeOrLatex: '# BUGGY:\ndef bad(val, acc=[]): acc.append(val); return acc\n\n# PYTHONIC FIX:\ndef good(val, acc=None):\n    if acc is None:\n        acc = [] # Creates a fresh list every invocation!\n    acc.append(val)\n    return acc',
+        label: 'The Sentinel None Idiom',
+        codeOrLatex: '# WRONG (Shared State Bug):\ndef add_item(item, box=[]):\n    box.append(item)\n    return box\n\n# RIGHT (Safe Idiom):\ndef add_item(item, box=None):\n    if box is None:\n        box = []\n    box.append(item)\n    return box',
         isLatex: false,
         language: 'python',
       },
       complexity: {
-        time: 'O(1) creation time overhead',
-        space: 'O(1)',
+        time: 'O(1) initialization check',
+        space: 'O(1) memory',
       },
       commonMistakeOrTrap: {
-        mistake: 'Writing `def get_cache(cache={}):` expecting a fresh empty dictionary for each caller.',
-        fix: 'Set `cache=None` and initialize `cache = {}` inside the function body.',
+        mistake: 'Using `def collect(data, cache={})` to cache results.',
+        fix: 'While sometimes exploited as a hacky memoization trick, it creates unexpected global mutable state; use `@functools.lru_cache` instead.',
         interviewTrap:
-          'Question: "Where are default argument objects stored in memory?" Answer: They are stored inside the function object itself in the attribute `func.__defaults__`!',
+          'Question: "Where is the default argument object stored?" Answer: Inside the function object\'s `__defaults__` tuple: `append_to.__defaults__`! You can inspect it directly to see the accumulated mutations.',
       },
       examCheatsheet: [
-        'Default argument expressions evaluate only once at function definition time',
-        'Always use `None` as the default value for mutable containers (lists, dicts, sets)',
-        'Check `if arg is None:` using identity comparison',
+        'Default arguments are evaluated once at DEF time, not at CALL time',
+        'Always use `arg=None` for optional mutable arguments',
+        'Inspect defaults with `func.__defaults__`',
       ],
     },
     visual: {
       type: 'memory-layout',
-      title: 'Shared Function `__defaults__` Heap Slot Visualization',
+      title: 'Persistent Shared Memory Buffer Across Multiple Invocations',
       caption:
-        'Repeated calls without arguments mutate the single persistent list instance stored in `append_to.__defaults__[0]`.',
-      visualKey: 'py-default-arg-viz',
+        'Repeated calls without passing an argument point to the exact same list buffer in heap memory.',
+      visualKey: 'py-mutable-default-viz',
       details: {
-        inputOutput: {
-          input: 'Call 1: append_to(1) -> [1]\nCall 2: append_to(2) -> [1, 2] (NOT [2]!)',
-          output: 'Unexpected cross-call accumulation bug',
+        comparison: {
+          headers: ['Call', 'Code', 'Buggy Behavior (`lst=[]`)', 'Correct Behavior (`lst=None`)'],
+          rows: [
+            ['Call 1', '`append_to("a")`', '`["a"]`', '`["a"]`'],
+            ['Call 2', '`append_to("b")`', '`["a", "b"]` (Accidental accumulation!)', '`["b"]` (Clean isolated list)'],
+            ['Call 3', '`append_to("c")`', '`["a", "b", "c"]` (Bug propagates)', '`["c"]` (Clean isolated list)'],
+          ],
         },
       },
     },
     animation: {
-      type: 'default-arg-accumulator-interactive',
-      title: 'Accumulator Bug Simulator',
+      type: 'py-mutable-default-interactive',
+      title: 'Accumulated State vs Isolated Buffer Animator',
       description:
-        'Click the Call Function button multiple times to watch the shared default list in heap memory continuously grow.',
-      hasInteractiveInputs: true,
-      inputConfig: {
-        type: 'stepper',
-        label: 'Function Invocation #',
-        min: 1,
-        max: 4,
-        step: 1,
-        defaultVal: 1,
-      },
+        'Step through repeated function invocations to watch accidental accumulation in shared memory.',
+      stepsTotal: 4,
+    },
+    codeSnippet: {
+      title: 'Default Mutable Argument Bug & Fix in Python',
+      language: 'python',
+      code: `# 1. THE BUG:
+def buggy_add(x, items=[]):
+    items.append(x)
+    return items
+
+print("Buggy Call 1:", buggy_add(1)) # [1]
+print("Buggy Call 2:", buggy_add(2)) # [1, 2] -> UNEXPECTED!
+
+# 2. THE FIX:
+def safe_add(x, items=None):
+    if items is None:
+        items = [] # Fresh list every call
+    items.append(x)
+    return items
+
+print("Safe Call 1: ", safe_add(1))  # [1]
+print("Safe Call 2: ", safe_add(2))  # [2] -> CORRECT!`,
+      input: 'Call buggy_add(1) then buggy_add(2)',
+      output: 'Buggy: [1, 2] | Safe: [2]',
+      explanation:
+        'The fix initializes a fresh list inside the function body each time `items` is None, guaranteeing clean state isolation.',
     },
     quiz: [
       {
         id: 'q1',
-        question: 'When is a default argument expression evaluated in Python?',
+        question: 'When is a default parameter value in Python evaluated?',
         options: [
           'Every time the function is called',
-          'Only once, at the time the function definition is executed/compiled',
-          'When the program exits',
+          'Once when the function definition is executed (at module import time)',
           'Only when the argument is omitted',
+          'At compilation to bytecode',
         ],
         correctIndex: 1,
-        explanation: 'Default arguments are evaluated once when Python encounters the `def` statement, binding the result to `__defaults__`.',
+        explanation: 'Default expressions evaluate once when Python reads the `def` statement, binding the resulting object to the function definition.',
       },
       {
         id: 'q2',
-        question: 'What is the standard Pythonic pattern to safely provide a default list to a function?',
+        question: 'What is the idiomatic Python solution for optional list arguments?',
         options: [
-          'def fn(lst=[]):',
-          'def fn(lst=list()):',
-          'def fn(lst=None): if lst is None: lst = []',
-          'def fn(lst=copy([])):',
+          '`def f(x, lst=[])`',
+          '`def f(x, lst=None): if lst is None: lst = []`',
+          '`def f(x, lst=list())`',
+          '`def f(x, lst=copy([]))`',
         ],
-        correctIndex: 2,
-        explanation: 'Using `None` as a sentinel ensures that a fresh list is allocated in memory on each individual invocation where no argument was provided.',
+        correctIndex: 1,
+        explanation: 'Setting default to `None` and allocating `lst = []` inside the function ensures a fresh list is created per invocation.',
       },
       {
         id: 'q3',
-        question: 'What is the output of:\n```python\ndef f(x, l=[]):\n    l.append(x)\n    return l\nprint(f(1))\nprint(f(2))\n```?',
+        question: 'Where can you inspect the default argument values stored on a function?',
+        options: ['`func.__defaults__`', '`func.__args__`', '`func.__params__`', '`func.__scope__`'],
+        correctIndex: 0,
+        explanation: 'The function object stores its default values as a tuple in the `__defaults__` attribute.',
+      },
+    ],
+  },
+  {
+    id: 'py-lambda-map-filter',
+    subject: 'python',
+    category: 'Functions and Scope',
+    title: 'Lambda Functions, Map, Filter & Zip',
+    subtitle: 'Functional Programming Idioms and Lazy Iterators',
+    difficulty: 'Beginner',
+    isInterviewFavorite: true,
+    readTimeSeconds: 40,
+    tags: ['Lambda', 'Map', 'Filter', 'Zip', 'Functional'],
+    quickRecall: {
+      oneLiner:
+        'Anonymous inline functions defined with `lambda` combined with lazy iterators `map()` and `filter()` enable functional transformations.',
+      simpleAnalogy:
+        'Zipper analogy: `zip([1, 2], ["a", "b"])` works like a mechanical zipper on a jacket: it locks the teeth on the left track to the teeth on the right track pair-by-pair: `(1, "a")`, `(2, "b")`.',
+      whenToUse:
+        'Short disposable key functions for `sorted()`, `min()`, `max()`, and pairing sequences with `zip()`.',
+      whyItMatters:
+        '`zip(*matrix)` transposes a 2D matrix in one readable line; `map` and `filter` yield lazy iterators.',
+      keyPoints: [
+        'Lambda syntax: `lambda arguments: single_expression` (implicit return, cannot contain multi-line statements).',
+        '`map(fn, iter)`: Applies function to every element; returns lazy iterator.',
+        '`filter(pred, iter)`: Yields elements where `pred(x)` evaluates to True.',
+        '`zip(iter1, iter2)`: Aggregates elements from each iterable into tuples, stopping at shortest iterable length.',
+        '`enumerate(iter, start=0)`: Pairs each item with its zero-based index `(index, item)`.',
+      ],
+      formulaOrSyntax: {
+        label: 'Functional Idiom Patterns',
+        codeOrLatex: '# Sort pairs by second element:\nsorted_pairs = sorted(pairs, key=lambda x: x[1])\n# Pair two lists together:\npaired = list(zip([1, 2], ["a", "b"])) # [(1, "a"), (2, "b")]',
+        isLatex: false,
+        language: 'python',
+      },
+      complexity: {
+        time: 'O(N) single-pass iteration',
+        space: '`map`, `filter`, `zip` produce O(1) lazy iterators until materialized',
+      },
+      commonMistakeOrTrap: {
+        mistake: 'Using `map` and `lambda` where a list comprehension is cleaner and more idiomatic.',
+        fix: 'Pythonic PEP 8 preference: `[x*2 for x in nums]` is preferred over `list(map(lambda x: x*2, nums))`.',
+        interviewTrap:
+          'Question: "How do you transpose a 2D matrix in Python?" Answer: `list(zip(*matrix))`! The `*` unpacks rows as separate positional arguments into `zip`, pairing matching column elements together.',
+      },
+      examCheatsheet: [
+        'Lambda expressions can only contain a single expression, not statements',
+        '`zip()` stops at the shortest input; use `itertools.zip_longest()` to pad with None',
+        'Use `enumerate()` instead of `range(len(lst))` to track loop indices',
+      ],
+    },
+    visual: {
+      type: 'flowchart',
+      title: 'Zip Interlocking & Map Transform Pipeline',
+      caption:
+        'Zip interlocks corresponding indices from parallel arrays into tuple pairs.',
+      visualKey: 'py-lambda-map-viz',
+      details: {
+        inputOutput: {
+          input: 'names = ["Alice", "Bob"], scores = [95, 88]',
+          output: 'list(zip(names, scores)) -> [("Alice", 95), ("Bob", 88)]',
+        },
+      },
+    },
+    animation: {
+      type: 'py-zip-map-interactive',
+      title: 'Zip & Enumerate Pair Matching Simulator',
+      description:
+        'Step through parallel array items locking together into indexed tuples.',
+      stepsTotal: 4,
+    },
+    codeSnippet: {
+      title: 'Lambda Sorting, Zip & Enumerate in Python',
+      language: 'python',
+      code: `students = [("Alice", 88), ("Bob", 95), ("Charlie", 78)]
+
+# 1. Sort by score using lambda key
+by_score = sorted(students, key=lambda s: s[1], reverse=True)
+print("Top Student:   ", by_score[0]) # ('Bob', 95)
+
+# 2. Transpose a 2x3 matrix in 1 line
+matrix = [[1, 2, 3], [4, 5, 6]]
+transposed = [list(col) for col in zip(*matrix)]
+print("Transposed 3x2:", transposed)
+
+# 3. Enumerate loop
+for idx, (name, _) in enumerate(by_score):
+    print(f"Rank {idx+1}: {name}")`,
+      input: 'students = [("Alice", 88), ("Bob", 95), ("Charlie", 78)]',
+      output: 'Top Student: (\'Bob\', 95) | Transposed: [[1, 4], [2, 5], [3, 6]] | Rank 1: Bob',
+      explanation:
+        'The lambda function extracts the score component `s[1]` for sorting, while `zip(*matrix)` transposes the 2D grid.',
+    },
+    quiz: [
+      {
+        id: 'q1',
+        question: 'What is the output of `list(zip([1, 2, 3], ["a", "b"]))`?',
+        options: ['[(1, "a"), (2, "b"), (3, None)]', '[(1, "a"), (2, "b")]', 'IndexError', '[(1, 2, 3), ("a", "b")]'],
+        correctIndex: 1,
+        explanation: 'Standard `zip()` truncates to the length of the shortest iterable.',
+      },
+      {
+        id: 'q2',
+        question: 'How do you transpose a 2D matrix `m = [[1, 2], [3, 4]]` in one idiomatic line?',
+        options: ['list(map(m))', 'list(zip(*m))', 'm.transpose()', 'zip(m, m)'],
+        correctIndex: 1,
+        explanation: 'The `*m` unpacks rows into `zip()`, which groups corresponding column elements into new tuples.',
+      },
+      {
+        id: 'q3',
+        question: 'What limitation does a Python `lambda` have compared to standard functions defined with `def`?',
         options: [
-          '[1] then [2]',
-          '[1] then [1, 2]',
-          '[[1], [2]]',
-          'TypeError',
+          'It cannot take parameters',
+          'It is restricted to a single expression and cannot contain statements or assignments',
+          'It cannot return values',
+          'It cannot be passed to other functions',
         ],
         correctIndex: 1,
-        explanation: 'The mutable default list is retained across calls in `f.__defaults__`, appending 2 to the already populated list `[1]`.',
+        explanation: 'Python lambdas can only contain a single expression whose evaluated value is implicitly returned.',
       },
     ],
   },

@@ -14,6 +14,12 @@ export const LightweightQuiz: React.FC<LightweightQuizProps> = ({ topicId, quest
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
 
+  // Reset quiz state when user navigates to a different topic
+  React.useEffect(() => {
+    setSelectedAnswers({});
+    setIsCompleted(false);
+  }, [topicId]);
+
   if (!questions || questions.length === 0) return null;
 
   const handleSelectOption = (qIdx: number, optionIdx: number) => {

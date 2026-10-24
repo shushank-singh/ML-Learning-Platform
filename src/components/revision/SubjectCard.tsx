@@ -24,6 +24,13 @@ export const SubjectCard: React.FC<SubjectCardProps> = ({
 }) => {
   const percentage = totalTopics > 0 ? Math.round((revisedTopics / totalTopics) * 100) : 0;
 
+  const activeStyles: Record<string, string> = {
+    ml: 'border-indigo-500 ring-2 ring-indigo-500/30 shadow-lg shadow-indigo-500/10',
+    python: 'border-emerald-500 ring-2 ring-emerald-500/30 shadow-lg shadow-emerald-500/10',
+    java: 'border-amber-500 ring-2 ring-amber-500/30 shadow-lg shadow-amber-500/10',
+    dsa: 'border-violet-500 ring-2 ring-violet-500/30 shadow-lg shadow-violet-500/10',
+  };
+
   // Mini decorative SVG illustration based on subject type
   const renderIllustration = () => {
     switch (meta.illustrationType) {
@@ -113,7 +120,7 @@ export const SubjectCard: React.FC<SubjectCardProps> = ({
       onClick={onSelect}
       className={`group relative overflow-hidden rounded-2xl border transition-all duration-300 p-5 cursor-pointer bg-slate-900/90 hover:bg-slate-900 hover:shadow-xl ${
         isSelected
-          ? `border-${meta.color.primary} ring-2 ring-${meta.color.primary}/30 shadow-lg shadow-${meta.color.primary}/10`
+          ? (activeStyles[meta.id] || 'border-indigo-500 ring-2 ring-indigo-500/30')
           : 'border-slate-800 hover:border-slate-700'
       }`}
     >

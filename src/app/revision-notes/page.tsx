@@ -32,6 +32,7 @@ import { QuickRecall } from '@/components/revision/QuickRecall';
 import { VisualDiagram } from '@/components/revision/VisualDiagram';
 import { AnimatedVisualizer } from '@/components/revision/AnimatedVisualizer';
 import { LightweightQuiz } from '@/components/revision/LightweightQuiz';
+import { PracticalCodeCard } from '@/components/revision/PracticalCodeCard';
 import { RevisionControls } from '@/components/revision/RevisionControls';
 import { KeyboardShortcutsModal } from '@/components/revision/KeyboardShortcutsModal';
 import {
@@ -109,6 +110,8 @@ function RevisionNotesContent() {
         setFilters((prev) => ({ ...prev, subject: topic.subject }));
         recordTopicViewed(topic.id);
       }
+    } else {
+      setActiveTopicId(null);
     }
   }, [searchParams]);
 
@@ -567,6 +570,17 @@ function RevisionNotesContent() {
                       <span>Section C • See It In Action (30% Animation)</span>
                     </div>
                     <AnimatedVisualizer data={activeTopic.animation} />
+                  </section>
+                )}
+
+                {/* PRACTICAL CODE IMPLEMENTATION */}
+                {activeTopic.codeSnippet && !storageState.quickReviewModeEnabled && (
+                  <section className="space-y-2 pt-4 border-t border-slate-800/80">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-cyan-400">
+                      <span className="w-2 h-2 rounded-full bg-cyan-500" />
+                      <span>Code in Action • Runnable Syntax & Output</span>
+                    </div>
+                    <PracticalCodeCard snippet={activeTopic.codeSnippet} />
                   </section>
                 )}
 

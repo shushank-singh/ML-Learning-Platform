@@ -35,8 +35,18 @@ export interface CommonMistakeOrTrap {
   codeSnippet?: string;
 }
 
+export interface PracticalCodeSnippet {
+  title: string;
+  language: string;
+  code: string;
+  input?: string;
+  output?: string;
+  explanation: string;
+}
+
 export interface QuickRecallData {
   oneLiner: string;
+  simpleAnalogy?: string;
   whenToUse: string;
   whyItMatters: string;
   keyPoints: string[];
@@ -112,6 +122,9 @@ export interface RevisionTopic {
 
   // Strict Section C: See It in Action (30% Animation)
   animation: AnimationData;
+
+  // Practical Code Example (Clean, runnable code with input & output)
+  codeSnippet?: PracticalCodeSnippet;
 
   // Smart Feature: Lightweight Quiz (3 recall questions)
   quiz: QuickRecallQuestion[];
