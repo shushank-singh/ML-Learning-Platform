@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "node tests/verify.js"
+    "test": "node tests/verify.js && node tests/auth-verify.js"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +14,8 @@
   "description": "ML Mastery Lab — Learn Machine Learning from Mathematics to Deployment",
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.118.0",
     "autoprefixer": "^10.4.20",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",

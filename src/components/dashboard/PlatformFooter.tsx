@@ -66,7 +66,7 @@ export const PlatformFooter: React.FC = () => {
                   className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5"
                 >
                   <Brain className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-                  <span>Machine Learning</span>
+                  <span>Complete Machine Learning</span>
                 </Link>
               </li>
               <li>

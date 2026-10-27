@@ -11,8 +11,13 @@ import { module8Data, module8Lessons } from './module8';
 import { module9Data, module9Lessons } from './module9';
 import { module10Data, module10Lessons } from './module10';
 import { module11Data, module11Lessons } from './module11';
+import { MODULES_CATALOG_NUMPY, NUMPY_FULL_LESSONS } from '@/data/numpy/curriculum';
+import { MODULES_CATALOG_PANDAS, PANDAS_FULL_LESSONS } from '@/data/pandas/curriculum';
 
-export const MODULES_CATALOG: ModuleData[] = [
+export { MODULES_CATALOG_NUMPY, NUMPY_FULL_LESSONS } from '@/data/numpy/curriculum';
+export { MODULES_CATALOG_PANDAS, PANDAS_FULL_LESSONS } from '@/data/pandas/curriculum';
+
+export const MODULES_CATALOG_ML_CORE: ModuleData[] = [
   module0Data,
   module1Data,
   module2Data,
@@ -25,6 +30,12 @@ export const MODULES_CATALOG: ModuleData[] = [
   module9Data,
   module10Data,
   module11Data,
+];
+
+export const MODULES_CATALOG: ModuleData[] = [
+  ...MODULES_CATALOG_ML_CORE,
+  ...MODULES_CATALOG_NUMPY,
+  ...MODULES_CATALOG_PANDAS,
 ];
 
 export const FULL_LESSONS: Record<string, LessonContent> = {
@@ -40,6 +51,8 @@ export const FULL_LESSONS: Record<string, LessonContent> = {
   ...module9Lessons,
   ...module10Lessons,
   ...module11Lessons,
+  ...NUMPY_FULL_LESSONS,
+  ...PANDAS_FULL_LESSONS,
 };
 
 export function getModule(moduleId: string): ModuleData | undefined {

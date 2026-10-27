@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { Search, X, BookOpen, Compass, Calculator, ArrowRight, Code } from 'lucide-react';
+import { MODULES_CATALOG } from '@/data/modules/curriculum';
 import { MODULES_CATALOG_DSA } from '@/data/dsa/curriculum';
 import { MODULES_CATALOG_PYTHON } from '@/data/python/curriculum';
 import { MODULES_CATALOG_JAVA } from '@/data/java/curriculum';
@@ -194,8 +195,19 @@ const JAVA_SEARCH_ITEMS: SearchResult[] = MODULES_CATALOG_JAVA.flatMap((mod) =>
   }))
 );
 
+const ML_SEARCH_ITEMS: SearchResult[] = MODULES_CATALOG.flatMap((mod) =>
+  mod.lessons.map((lesson) => ({
+    title: lesson.title,
+    category: 'Lesson' as const,
+    url: `/curriculum/${mod.id}/${lesson.id}`,
+    description: lesson.description,
+    badge: mod.id.startsWith('numpy') ? 'NumPy' : mod.id.startsWith('pandas') ? 'Pandas' : `ML M${mod.number}`,
+  }))
+);
+
 const ALL_SEARCH_ITEMS: SearchResult[] = [
   ...SEARCH_DATABASE,
+  ...ML_SEARCH_ITEMS,
   ...DSA_SEARCH_ITEMS,
   ...PYTHON_SEARCH_ITEMS,
   ...JAVA_SEARCH_ITEMS,
