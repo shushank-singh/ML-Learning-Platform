@@ -9,6 +9,8 @@ export type AlgorithmType =
   | 'metrics-roc'
   | 'pca'
   | 'svm-boundary'
+  | 'numpy-interactive'
+  | 'pandas-interactive'
   | 'none';
 
 export interface LessonSummary {

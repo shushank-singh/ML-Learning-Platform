@@ -31,6 +31,8 @@ import { getProgress } from '@/lib/storage';
 import { getMLProgress } from '@/data/learningPlatformConfig';
 import { UserProgressState } from '@/lib/types';
 import { SearchModal } from './SearchModal';
+import { UserMenu } from '@/components/auth/UserMenu';
+import { AuthGuard } from '@/components/auth/AuthGuard';
 
 const ML_NAV_ITEMS = [
   { name: 'ML Curriculum', href: '/curriculum', icon: BookOpen },
@@ -124,7 +126,7 @@ export const MLLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
                 ML Mastery Lab
               </span>
               <span className="text-[10px] text-indigo-600 dark:text-indigo-400 font-semibold block leading-tight">
-                Machine Learning Environment
+                Complete Machine Learning
               </span>
             </div>
           </Link>
@@ -200,6 +202,9 @@ export const MLLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
           >
             {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-600" />}
           </button>
+
+          {/* User Account Menu */}
+          <UserMenu />
         </div>
       </header>
 
@@ -320,7 +325,7 @@ export const MLLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
       {/* Main Content Area */}
       <main className="lg:pl-64 transition-all min-h-[calc(100vh-3.5rem)]">
-        {children}
+        <AuthGuard>{children}</AuthGuard>
       </main>
 
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />

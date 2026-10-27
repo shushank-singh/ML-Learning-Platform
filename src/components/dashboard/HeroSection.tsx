@@ -50,7 +50,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {/* Hero headline */}
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] text-slate-950 dark:text-slate-100">
-          Master <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 dark:from-indigo-300 dark:via-cyan-200 dark:to-emerald-300">Machine Learning</span>,{' '}
+          Master <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 dark:from-indigo-300 dark:via-cyan-200 dark:to-emerald-300">Complete Machine Learning</span>,{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 dark:from-violet-300 dark:via-purple-200 dark:to-pink-300">Algorithms</span> &amp;{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-500 to-orange-500 dark:from-amber-300 dark:via-amber-200 dark:to-orange-300">Modern Programming</span>
         </h1>
@@ -139,7 +139,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="flex flex-wrap items-center justify-center gap-2 pt-2 text-xs">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/40 text-indigo-700 dark:text-indigo-300 font-medium">
             <Brain className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-            Machine Learning
+            Complete Machine Learning
           </span>
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-violet-50 dark:bg-violet-950/40 border border-violet-200 dark:border-violet-800/40 text-violet-700 dark:text-violet-300 font-medium">
             <Cpu className="w-3.5 h-3.5 text-violet-600 dark:text-violet-400" />

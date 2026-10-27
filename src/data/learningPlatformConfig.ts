@@ -28,7 +28,7 @@ import {
   CheckSquare,
   BarChart2,
 } from 'lucide-react';
-import { MODULES_CATALOG } from '@/data/modules/curriculum';
+import { MODULES_CATALOG, MODULES_CATALOG_NUMPY, MODULES_CATALOG_PANDAS } from '@/data/modules/curriculum';
 import { MODULES_CATALOG_DSA } from '@/data/dsa/curriculum';
 import { MODULES_CATALOG_PYTHON } from '@/data/python/curriculum';
 import { MODULES_CATALOG_JAVA } from '@/data/java/curriculum';
@@ -122,6 +122,30 @@ export interface ResumeLessonInfo {
 
 export function getMLProgress(progress: UserProgressState | null): LearningSectionProgress {
   const allLessons = MODULES_CATALOG.flatMap((m) => m.lessons);
+  const totalLessons = allLessons.length;
+  if (!progress || totalLessons === 0) return { completedLessons: 0, totalLessons, percentage: 0 };
+  const completedLessons = allLessons.filter((l) => Boolean(progress.completedLessons[l.id])).length;
+  return {
+    completedLessons,
+    totalLessons,
+    percentage: Math.round((completedLessons / totalLessons) * 100),
+  };
+}
+
+export function getNumPyProgress(progress: UserProgressState | null): LearningSectionProgress {
+  const allLessons = MODULES_CATALOG_NUMPY.flatMap((m) => m.lessons);
+  const totalLessons = allLessons.length;
+  if (!progress || totalLessons === 0) return { completedLessons: 0, totalLessons, percentage: 0 };
+  const completedLessons = allLessons.filter((l) => Boolean(progress.completedLessons[l.id])).length;
+  return {
+    completedLessons,
+    totalLessons,
+    percentage: Math.round((completedLessons / totalLessons) * 100),
+  };
+}
+
+export function getPandasProgress(progress: UserProgressState | null): LearningSectionProgress {
+  const allLessons = MODULES_CATALOG_PANDAS.flatMap((m) => m.lessons);
   const totalLessons = allLessons.length;
   if (!progress || totalLessons === 0) return { completedLessons: 0, totalLessons, percentage: 0 };
   const completedLessons = allLessons.filter((l) => Boolean(progress.completedLessons[l.id])).length;
@@ -248,7 +272,7 @@ export function resolveUserResumeLesson(progress: UserProgressState | null): Res
             moduleId: mod.id,
             title: found.title,
             trackId: 'ml',
-            trackTitle: 'Machine Learning',
+            trackTitle: 'Complete Machine Learning',
             route: `/curriculum/${mod.id}/${found.id}`,
             completionPercentage: getMLProgress(progress).percentage,
           };
@@ -316,12 +340,12 @@ export const LEARNING_SECTIONS: Record<string, LearningSectionConfig> = {
   ml: {
     id: 'ml',
     categoryId: 'machine-learning',
-    title: 'Machine Learning / ML Mastery Lab',
-    badge: 'Core ML & AI Track',
+    title: 'Complete Machine Learning',
+    badge: 'Category 1 · Predictive Models & AI',
     shortDescription:
-      'Rigorous mathematical foundations, step-by-step calculus & linear algebra derivations, vectorized NumPy implementations, live parameter visualizers, and production Docker MLOps pipelines.',
+      'The comprehensive machine learning masterclass: Core ML algorithms & math derivations, NumPy Mastery (7 modules), and Pandas Mastery (10 modules) — with live visualizers, runnable code, and production capstone projects.',
     route: '/curriculum',
-    primaryActionLabel: 'Explore ML Section',
+    primaryActionLabel: 'Explore Complete ML',
     icon: Brain,
     theme: {
       accent: 'text-indigo-400',
@@ -337,17 +361,17 @@ export const LEARNING_SECTIONS: Record<string, LearningSectionConfig> = {
       progressBar: 'bg-gradient-to-r from-indigo-500 to-cyan-400',
     },
     highlights: [
-      '12 Modules & 107 Deep Lessons',
-      'Normal Equation & Gradient Derivations',
-      'Vectorized NumPy from Scratch',
+      '29 Modules & 299 Comprehensive Lessons',
+      'Core ML Algorithms & Math Derivations',
+      'NumPy Mastery (7 Modules & Analytics Capstone)',
+      'Pandas Mastery (10 Modules & Sales Capstone)',
       'Live Interactive Visualizer Playground',
-      'Docker, FastAPI & Industry Blueprints',
     ],
     features: [
-      'Linear & Logistic Regression, Decision Trees, SVM, Ensembles, Neural Networks',
-      'Interactive Live Visualizer Playground with parameter sliders & ROC metrics',
-      'Full Formula Explorer with variable annotations and math definitions',
-      '10 Guided Industry Blueprints & Capstone Workspaces',
+      'Core ML: Linear & Logistic Regression, Decision Trees, SVM, Ensembles, Neural Networks',
+      'NumPy Mastery: Foundations, Indexing & Reshaping, Broadcasting, Vectorization, Data Science',
+      'Pandas Mastery: Series/DataFrames, Selection, Cleaning, Transformation, GroupBy, ML Pipelines',
+      'End-to-End Capstone Projects: Student Performance Analytics & Real-World Sales Analytics',
     ],
     stats: {
       totalModules: MODULES_CATALOG.length,
@@ -525,11 +549,11 @@ export const LEARNING_SECTIONS: Record<string, LearningSectionConfig> = {
 export const LEARNING_CATEGORIES: LearningCategoryConfig[] = [
   {
     id: 'machine-learning',
-    title: 'Machine Learning',
+    title: 'Complete Machine Learning',
     badge: 'Category 1 · Predictive Models & AI',
-    tagline: 'From First Principles Mathematics to Production Deployment',
+    tagline: 'Core ML, NumPy & Pandas: Mathematical Foundations to Production AI',
     description:
-      'Delve into mathematical rigor, matrix operations, objective functions, optimization regimes, and real-world system architecture.',
+      'The comprehensive masterclass integrating Core ML algorithms, NumPy numerical mastery, and Pandas data analytics into one unified pathway.',
     icon: Brain,
     accentColor: 'indigo',
     sections: [LEARNING_SECTIONS.ml],

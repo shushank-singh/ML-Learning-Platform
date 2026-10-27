@@ -11,6 +11,8 @@ import { DecisionTreeVisualizer } from './DecisionTreeVisualizer';
 import { KNNVisualizer } from './KNNVisualizer';
 import { PCAVisualizer } from './PCAVisualizer';
 import { NeuralNetVisualizer } from './NeuralNetVisualizer';
+import { NumPyVisualizer } from './NumPyVisualizer';
+import { PandasVisualizer } from './PandasVisualizer';
 
 interface VisualizerDispatcherProps {
   type: AlgorithmType;
@@ -37,6 +39,10 @@ export const VisualizerDispatcher: React.FC<VisualizerDispatcherProps> = ({ type
       return <MetricsRocVisualizer />;
     case 'pca':
       return <PCAVisualizer />;
+    case 'numpy-interactive':
+      return <NumPyVisualizer />;
+    case 'pandas-interactive':
+      return <PandasVisualizer />;
     case 'none':
     default:
       return null;

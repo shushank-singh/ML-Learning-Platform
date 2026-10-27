@@ -29,6 +29,13 @@ export const TopicVisualizer: React.FC<TopicVisualizerProps> = ({ lesson }) => {
     const title = lesson.title.toLowerCase();
     const mod = lesson.moduleId.toLowerCase();
 
+    if (mod.startsWith('numpy') || id.startsWith('numpy') || lesson.visualizerType === 'numpy-interactive') {
+      return 'numpy-array-architecture';
+    }
+    if (mod.startsWith('pandas') || id.startsWith('pandas') || lesson.visualizerType === 'pandas-interactive') {
+      return 'pandas-dataframe-architecture';
+    }
+
     if (id.includes('bias-variance') || title.includes('bias-variance') || id.includes('overfitting')) {
       return 'bias-variance';
     }
@@ -207,6 +214,132 @@ function renderSvgDiagram(
   setSelectedNode: (id: string | null) => void
 ) {
   switch (diagramType) {
+    case 'numpy-array-architecture':
+      return (
+        <svg viewBox="0 0 700 270" className="w-full h-auto max-w-3xl mx-auto select-none">
+          <rect width="700" height="270" fill="#0B1120" rx="10" />
+          <defs>
+            <linearGradient id="npGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#0891B2" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#0E7490" stopOpacity="0.1" />
+            </linearGradient>
+          </defs>
+
+          {/* Section 1: Memory Header */}
+          <rect x="40" y="25" width="280" height="90" rx="8" fill="url(#npGrad)" stroke="#06B6D4" strokeWidth="1.5" />
+          <text x="180" y="50" fill="#22D3EE" fontSize="13" fontWeight="bold" textAnchor="middle">
+            NumPy Array Internal Architecture
+          </text>
+          <text x="60" y="75" fill="#94A3B8" fontSize="11" fontFamily="monospace">
+            • Data Pointer: 0x7ffd98b0
+          </text>
+          <text x="60" y="95" fill="#94A3B8" fontSize="11" fontFamily="monospace">
+            • dtype: float64 (8 bytes/elem)
+          </text>
+
+          {/* Section 2: Strides & Shape */}
+          <rect x="360" y="25" width="300" height="90" rx="8" fill="#1E293B" stroke="#475569" strokeWidth="1.5" />
+          <text x="510" y="50" fill="#E2E8F0" fontSize="13" fontWeight="bold" textAnchor="middle">
+            Shape &amp; Strides Metadata
+          </text>
+          <text x="380" y="75" fill="#A5B4FC" fontSize="11" fontFamily="monospace">
+            • shape: (3, 4) [rows, cols]
+          </text>
+          <text x="380" y="95" fill="#A5B4FC" fontSize="11" fontFamily="monospace">
+            • strides: (32, 8) [row jump, col jump]
+          </text>
+
+          {/* Section 3: Contiguous C Memory Buffer */}
+          <rect x="40" y="140" width="620" height="100" rx="8" fill="#0F172A" stroke="#334155" strokeWidth="1" />
+          <text x="60" y="165" fill="#38BDF8" fontSize="12" fontWeight="bold">
+            Contiguous C-Memory Buffer (Flat 1D physical RAM):
+          </text>
+
+          {/* Array Cells */}
+          {[0, 1, 2, 3, 4, 5, 6, 7].map((val, idx) => (
+            <g key={idx} transform={`translate(${60 + idx * 70}, 180)`}>
+              <rect width="64" height="42" rx="6" fill="#1E293B" stroke="#06B6D4" strokeWidth="1.2" />
+              <text x="32" y="25" fill="#E0F2FE" fontSize="11" fontFamily="monospace" fontWeight="bold" textAnchor="middle">
+                val_{val}
+              </text>
+              <text x="32" y="55" fill="#64748B" fontSize="9" fontFamily="monospace" textAnchor="middle">
+                +{val * 8}B
+              </text>
+            </g>
+          ))}
+        </svg>
+      );
+
+    case 'pandas-dataframe-architecture':
+      return (
+        <svg viewBox="0 0 700 270" className="w-full h-auto max-w-3xl mx-auto select-none">
+          <rect width="700" height="270" fill="#0B1120" rx="10" />
+          <defs>
+            <linearGradient id="pdGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#059669" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#047857" stopOpacity="0.1" />
+            </linearGradient>
+          </defs>
+
+          {/* Index Header */}
+          <rect x="40" y="25" width="130" height="35" rx="6" fill="#1E293B" stroke="#475569" strokeWidth="1.5" />
+          <text x="105" y="48" fill="#CBD5E1" fontSize="11" fontFamily="monospace" fontWeight="bold" textAnchor="middle">
+            Row Index
+          </text>
+
+          {/* Column Headers */}
+          <rect x="180" y="25" width="150" height="35" rx="6" fill="url(#pdGrad)" stroke="#10B981" strokeWidth="1.5" />
+          <text x="255" y="48" fill="#6EE7B7" fontSize="11" fontFamily="monospace" fontWeight="bold" textAnchor="middle">
+            Series: &apos;Name&apos; [obj]
+          </text>
+
+          <rect x="340" y="25" width="150" height="35" rx="6" fill="url(#pdGrad)" stroke="#10B981" strokeWidth="1.5" />
+          <text x="415" y="48" fill="#6EE7B7" fontSize="11" fontFamily="monospace" fontWeight="bold" textAnchor="middle">
+            Series: &apos;Salary&apos; [int]
+          </text>
+
+          <rect x="500" y="25" width="160" height="35" rx="6" fill="url(#pdGrad)" stroke="#10B981" strokeWidth="1.5" />
+          <text x="580" y="48" fill="#6EE7B7" fontSize="11" fontFamily="monospace" fontWeight="bold" textAnchor="middle">
+            Series: &apos;Rating&apos; [flt]
+          </text>
+
+          {/* Rows */}
+          {[
+            { idx: '0 (E101)', c1: 'Alice', c2: '$95,000', c3: '4.8' },
+            { idx: '1 (E102)', c1: 'Bob', c2: '$62,000', c3: '3.9' },
+            { idx: '2 (E103)', c1: 'Charlie', c2: '$88,000', c3: '4.5' },
+          ].map((r, rIdx) => (
+            <g key={rIdx} transform={`translate(0, ${70 + rIdx * 45})`}>
+              <rect x="40" y="0" width="130" height="38" rx="6" fill="#1E293B" stroke="#334155" strokeWidth="1" />
+              <text x="105" y="24" fill="#94A3B8" fontSize="11" fontFamily="monospace" textAnchor="middle">
+                {r.idx}
+              </text>
+
+              <rect x="180" y="0" width="150" height="38" rx="6" fill="#0F172A" stroke="#334155" strokeWidth="1" />
+              <text x="255" y="24" fill="#E2E8F0" fontSize="11" fontFamily="monospace" textAnchor="middle">
+                {r.c1}
+              </text>
+
+              <rect x="340" y="0" width="150" height="38" rx="6" fill="#0F172A" stroke="#059669" strokeWidth="1.2" />
+              <text x="415" y="24" fill="#A7F3D0" fontSize="11" fontFamily="monospace" fontWeight="bold" textAnchor="middle">
+                {r.c2}
+              </text>
+
+              <rect x="500" y="0" width="160" height="38" rx="6" fill="#0F172A" stroke="#334155" strokeWidth="1" />
+              <text x="580" y="24" fill="#E2E8F0" fontSize="11" fontFamily="monospace" textAnchor="middle">
+                {r.c3}
+              </text>
+            </g>
+          ))}
+
+          {/* Under-the-hood BlockManager footer */}
+          <rect x="40" y="215" width="620" height="38" rx="6" fill="#064E3B" stroke="#10B981" strokeWidth="1.5" />
+          <text x="350" y="239" fill="#D1FAE5" fontSize="11" fontWeight="bold" textAnchor="middle">
+            BlockManager: Columns of the same dtype share contiguous homogeneous NumPy arrays underneath
+          </text>
+        </svg>
+      );
+
     case 'bias-variance':
       return (
         <svg viewBox="0 0 700 280" className="w-full h-auto max-w-3xl mx-auto select-none">

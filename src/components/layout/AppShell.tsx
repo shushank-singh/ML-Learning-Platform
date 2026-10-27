@@ -25,8 +25,15 @@ interface AppShellProps {
 export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const pathname = usePathname() || '/';
 
-  // 1. Home Dashboard: Standalone landing page without sidebar or topbar
-  if (pathname === '/') {
+  // 1. Home Dashboard or Auth Pages: Standalone layout without sidebar or topbar
+  if (
+    pathname === '/' ||
+    pathname === '/login' ||
+    pathname === '/signup' ||
+    pathname === '/forgot-password' ||
+    pathname === '/reset-password' ||
+    pathname.startsWith('/auth')
+  ) {
     return <LandingLayout>{children}</LandingLayout>;
   }
 
