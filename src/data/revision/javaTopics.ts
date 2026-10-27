@@ -1362,4 +1362,1030 @@ public class GenericsDemo {
       },
     ],
   },
+
+  {
+    "id": "java-control-flow",
+    "subject": "java",
+    "category": "Operators and Control Flow",
+    "title": "Short-Circuit Operators & Switch Expressions",
+    "subtitle": "&& vs &, || vs |, and Modern Arrow Switch Expressions with yield",
+    "difficulty": "Beginner",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 45,
+    "tags": [
+      "Operators",
+      "Short-Circuit",
+      "Switch",
+      "yield",
+      "Control Flow"
+    ],
+    "quickRecall": {
+      "oneLiner": "Java provides short-circuit boolean operators (&&, ||) to safely prevent NullPointerExceptions, alongside modern enhanced switch expressions with 'yield'.",
+      "simpleAnalogy": "A security checklist before entering a bank vault: Check #1: 'Is your badge valid?' If the answer is NO, the guard stops checking immediately without bothering to check #2: 'Do you know the password?' (Short-circuit &&). Testing check #2 when badge is null would trigger an alarm (NullPointerException)!",
+      "whenToUse": "Safe null checks (if (user != null && user.isActive())), bitwise flag masks with & and |, and exhaustive multi-branch value returns with switch expressions.",
+      "whyItMatters": "Using single & or | evaluates both sides unconditionally. If the right-hand side accesses a property of a null reference on the left, your app crashes with NullPointerException.",
+      "keyPoints": [
+        "&& vs &: && short-circuits (skips right-hand side if left is false); & evaluates BOTH sides unconditionally (also used for bitwise AND).",
+        "|| vs |: || short-circuits (skips right-hand side if left is true); | evaluates BOTH sides unconditionally.",
+        "Modern Switch Expressions (Java 14+): Arrow syntax 'case X -> value' avoids fall-through bugs and does NOT require break statements.",
+        "The 'yield' Keyword: Returns a value from a multi-line switch block statement.",
+        "Exhaustiveness: Switch expressions returning a value MUST cover every possible case or provide a 'default' branch."
+      ],
+      "formulaOrSyntax": {
+        "label": "Short-Circuit Null Check & Switch Expression",
+        "codeOrLatex": "if (obj != null && obj.isValid()) { ... }\n\nString label = switch (status) {\n    case ACTIVE -> \"Live\";\n    case PENDING -> { log(); yield \"In Review\"; }\n    default -> \"Unknown\";\n};",
+        "isLatex": false,
+        "language": "java"
+      },
+      "complexity": {
+        "time": "O(1) constant time boolean and jump-table switch evaluation",
+        "space": "O(1) memory"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Writing 'if (str != null & str.length() > 0)' using single '&'.",
+        "fix": "Use double '&&'! Single '&' evaluates str.length() even when str is null, immediately throwing NullPointerException.",
+        "interviewTrap": "Question: 'What happens in classic switch without break statements?' Answer: Fall-through! Execution flows uncontrollably into all subsequent cases until the switch block ends. Modern arrow syntax (->) eliminates this trap."
+      },
+      "examCheatsheet": [
+        "&& and ||: Short-circuit (stops evaluation early)",
+        "& and |: Unconditional evaluation (evaluates both operands)",
+        "Modern switch: 'case X -> result;' does NOT fall through",
+        "'yield' returns values from multi-line switch branches"
+      ]
+    },
+    "visual": {
+      "type": "flowchart",
+      "title": "Short-Circuit Operator Evaluation Path",
+      "caption": "In 'A && B', if A evaluates to false, evaluation terminates immediately, returning false without touching B.",
+      "visualKey": "java-control-flow",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Operator",
+            "Behavior",
+            "Right Side Evaluated if Left is False?",
+            "Null Safety"
+          ],
+          "rows": [
+            [
+              "&&",
+              "Logical AND (Short-circuit)",
+              "NO (Skipped)",
+              "100% Safe (obj != null && obj.fn())"
+            ],
+            [
+              "&",
+              "Bitwise / Unconditional AND",
+              "YES (Always evaluated)",
+              "DANGEROUS: Throws NullPointerException"
+            ],
+            [
+              "||",
+              "Logical OR (Short-circuit)",
+              "YES (if left is false)",
+              "Safe"
+            ],
+            [
+              "|",
+              "Bitwise / Unconditional OR",
+              "YES (Always evaluated)",
+              "DANGEROUS: Evaluates both sides"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "Short-Circuit Evaluation vs Unconditional Evaluation",
+      "description": "Trace how the JVM skips evaluating null.length() when using &&, preventing a crash.",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Safe Short-Circuit Null Checks & Modern Switch Expression",
+      "language": "java",
+      "code": "public class ControlFlowDemo {\n    public static void main(String[] args) {\n        String user = null;\n\n        // 1. Safe short-circuit: user.length() is NEVER evaluated\n        if (user != null && user.length() > 0) {\n            System.out.println(\"User present: \" + user);\n        } else {\n            System.out.println(\"Safe check passed: user is null\");\n        }\n\n        // 2. Modern Java Switch Expression returning a value\n        int statusCode = 200;\n        String message = switch (statusCode) {\n            case 200, 201 -> \"Success: Request Processed\";\n            case 404 -> \"Client Error: Resource Not Found\";\n            case 500 -> \"Server Error: Internal Failure\";\n            default -> {\n                System.out.println(\"Logging unmapped code: \" + statusCode);\n                yield \"Unknown Status\";\n            }\n        };\n        System.out.println(\"HTTP Status: \" + message);\n    }\n}",
+      "input": "user = null, statusCode = 200",
+      "output": "Safe check passed: user is null | HTTP Status: Success: Request Processed",
+      "explanation": "&& prevents evaluating user.length() on null, and modern switch returns a value cleanly without break statements."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "What happens when executing: String s = null; if (s != null & s.length() > 0)?",
+        "options": [
+          "It prints false safely",
+          "It compiles with an error",
+          "It throws NullPointerException at runtime because single & evaluates both sides",
+          "It automatically initializes s to empty string"
+        ],
+        "correctIndex": 2,
+        "explanation": "Single & is unconditional and always evaluates both sides. Calling s.length() on null throws NullPointerException."
+      },
+      {
+        "id": "q2",
+        "question": "In modern Java switch expressions (Java 14+), what keyword is used to return a value from a multi-line block?",
+        "options": [
+          "return",
+          "yield",
+          "send",
+          "break"
+        ],
+        "correctIndex": 1,
+        "explanation": "The 'yield' keyword yields a value from inside a multi-line block within a switch expression."
+      },
+      {
+        "id": "q3",
+        "question": "Why does arrow switch syntax (case X -> result) prevent classic Java switch bugs?",
+        "options": [
+          "It runs in parallel threads",
+          "It eliminates accidental fall-through into subsequent cases without needing 'break'",
+          "It only allows integers",
+          "It compiles to C++"
+        ],
+        "correctIndex": 1,
+        "explanation": "Arrow syntax executes strictly only the matched branch and automatically terminates without falling through."
+      }
+    ]
+  },
+  {
+    "id": "java-loops-arrays",
+    "subject": "java",
+    "category": "Loops and Arrays",
+    "title": "Array Memory Allocation & Enhanced for-each Loop",
+    "subtitle": "Contiguous Heap Memory, Bounds Checking, Arrays.copyOf vs clone()",
+    "difficulty": "Beginner",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 50,
+    "tags": [
+      "Arrays",
+      "Heap",
+      "for-each",
+      "System.arraycopy",
+      "Memory"
+    ],
+    "quickRecall": {
+      "oneLiner": "In Java, arrays are fixed-length reference objects allocated contiguously in Heap memory with automatic 0-based boundary checks.",
+      "simpleAnalogy": "A reserved row of lockers at a gym: when you ask for 'new int[5]', the gym manager reserves 5 adjacent lockers in a row (Heap). The locker row cannot expand or shrink. If you attempt to open locker #5 (when lockers are indexed 0 to 4), the manager stops you instantly: 'ArrayIndexOutOfBoundsException'!",
+      "whenToUse": "Fixed-size performance-critical collections, multidimensional matrices, and primitive data storage without Integer/Double wrapper boxing overhead.",
+      "whyItMatters": "Unlike C++, Java arrays carry their length (.length property) and cannot access memory outside bounds, guaranteeing JVM memory safety.",
+      "keyPoints": [
+        "Fixed Size: Once created, array length is immutable. To resize, you must allocate a new array and copy elements.",
+        "Memory Layout: The array object itself lives on the Heap. Local array reference variables live on the Stack.",
+        "Default Initialization: Primitive numeric elements default to 0/0.0, booleans to false, object references to null.",
+        "Enhanced For-Each (for (int x : arr)): Read-only traversal. Modifying the loop variable 'x' does NOT change the array element!",
+        "Fast Array Copy: System.arraycopy() is a native C-level memcpy, running 10x faster than manual element-by-element copy loops."
+      ],
+      "formulaOrSyntax": {
+        "label": "Array Declaration & Copying",
+        "codeOrLatex": "int[] arr = new int[5];  // Heap allocated, initialized to 0\nint[] copy = Arrays.copyOf(arr, arr.length);\nSystem.arraycopy(src, 0, dest, 0, len);  // Native memcpy",
+        "isLatex": false,
+        "language": "java"
+      },
+      "complexity": {
+        "time": "Index access O(1) constant time; Linear search O(N); Copying O(N)",
+        "space": "O(N) contiguous Heap allocation"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Attempting to modify array elements inside an enhanced for-each loop: for (int x : arr) { x = 99; }",
+        "fix": "x is just a local copy of the element! Use standard indexed loop to mutate: for (int i = 0; i < arr.length; i++) { arr[i] = 99; }",
+        "interviewTrap": "Question: 'Is int[] an Object in Java?' Answer: Yes! Every array in Java inherits directly from java.lang.Object and possesses methods like clone(), equals(), and getClass()."
+      },
+      "examCheatsheet": [
+        "Array length is fixed and read via .length (field, not method!)",
+        "Primitive arrays default to 0 / false; Object arrays default to null",
+        "Enhanced for-each loop cannot mutate array elements",
+        "System.arraycopy() is native C-speed block memory copy"
+      ]
+    },
+    "visual": {
+      "type": "memory-layout",
+      "title": "Java Array Memory Layout: Stack Reference to Heap Object",
+      "caption": "The array variable 'nums' on the Stack stores a 64-bit reference address pointing to contiguous memory cells in the Heap.",
+      "visualKey": "java-loops-arrays",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Type",
+            "Memory Storage",
+            "Default Value",
+            "Size Mutability"
+          ],
+          "rows": [
+            [
+              "int[] (Primitive)",
+              "Contiguous raw 32-bit ints in Heap",
+              "0",
+              "Fixed length"
+            ],
+            [
+              "String[] (Reference)",
+              "Contiguous references to String pool",
+              "null",
+              "Fixed length"
+            ],
+            [
+              "ArrayList<Integer>",
+              "Dynamic array of boxed Integer objects",
+              "Empty (size 0)",
+              "Automatically resizes"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "Array Heap Allocation & Index Traversal",
+      "description": "Watch stack pointer link to contiguous Heap slots, initializing default values, and accessing elements via index offsets.",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Array Allocation, Mutation, and Native System.arraycopy",
+      "language": "java",
+      "code": "import java.util.Arrays;\n\npublic class ArrayDemo {\n    public static void main(String[] args) {\n        // 1. Heap allocation initialized with default 0s\n        int[] numbers = new int[]{10, 20, 30, 40, 50};\n\n        // 2. Traversal with enhanced for-each\n        int sum = 0;\n        for (int val : numbers) {\n            sum += val;\n        }\n        System.out.println(\"Sum of elements: \" + sum);\n\n        // 3. Native fast memory copying (System.arraycopy)\n        int[] enlarged = new int[8];\n        System.arraycopy(numbers, 0, enlarged, 0, numbers.length);\n        enlarged[5] = 60;\n\n        System.out.println(\"Original Array: \" + Arrays.toString(numbers));\n        System.out.println(\"Enlarged Array: \" + Arrays.toString(enlarged));\n    }\n}",
+      "input": "int[] {10, 20, 30, 40, 50} copied to larger array of size 8",
+      "output": "Sum of elements: 150 | Enlarged Array: [10, 20, 30, 40, 50, 60, 0, 0]",
+      "explanation": "System.arraycopy quickly transfers raw contiguous bytes, and trailing elements retain default 0 values."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "What is the default value of elements in a newly allocated boolean[] array of size 10 in Java?",
+        "options": [
+          "true",
+          "false",
+          "null",
+          "0"
+        ],
+        "correctIndex": 1,
+        "explanation": "In Java, primitive boolean array elements default to false."
+      },
+      {
+        "id": "q2",
+        "question": "Can you resize an existing Java array after its creation?",
+        "options": [
+          "Yes, by calling arr.resize(10)",
+          "Yes, if it is declared with var",
+          "No, arrays have fixed immutable length; resizing requires allocating a new array and copying elements",
+          "Yes, if initialized with new int[]"
+        ],
+        "correctIndex": 2,
+        "explanation": "Java arrays have fixed size. If you need dynamic resizing, use ArrayList."
+      },
+      {
+        "id": "q3",
+        "question": "What happens if you execute: for (int x : arr) { x = x * 2; }?",
+        "options": [
+          "Every element in arr is doubled",
+          "The array is cleared",
+          "Only local variable x is doubled; arr remains completely unchanged",
+          "A compilation error is thrown"
+        ],
+        "correctIndex": 2,
+        "explanation": "In an enhanced for-each loop, x is a local copy of each primitive value. Modifying x does not affect the array in Heap."
+      }
+    ]
+  },
+  {
+    "id": "java-methods-recursion",
+    "subject": "java",
+    "category": "Methods and Recursion",
+    "title": "Pass-By-Value Mechanics & Stack Frames in Java",
+    "subtitle": "Reference Passing vs Value Passing, Call Stack Activation Records & StackOverflowError",
+    "difficulty": "Intermediate",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 55,
+    "tags": [
+      "Pass-By-Value",
+      "Stack Frames",
+      "Recursion",
+      "StackOverflowError",
+      "Memory"
+    ],
+    "quickRecall": {
+      "oneLiner": "Java is strictly 100% Pass-By-Value: primitives pass copies of bits, and object references pass copies of pointer addresses.",
+      "simpleAnalogy": "You write down your home address on a piece of paper and hand it to a painter (pass-by-value of a reference). The painter can drive to your house and paint your front door blue (modifies internal object state). But if the painter burns the piece of paper and writes a different address on it (reassigns the reference parameter), your actual house does not move!",
+      "whenToUse": "Method design, recursive algorithms (tree traversal, divide-and-conquer), and debugging unexpected parameter mutations.",
+      "whyItMatters": "The single most frequently failed Java interview question: 'Does Java pass objects by reference?' NO! It passes object references by value.",
+      "keyPoints": [
+        "Strictly Pass-By-Value: Java NEVER passes variables by reference. A copy of the value is ALWAYS pushed onto the callee's stack frame.",
+        "Primitives: Passing int, double, etc. copies the raw value. Changes inside the method never affect the caller.",
+        "Object References: The value being copied IS the memory address. Both caller and callee reference the same Heap object.",
+        "Reassignment Trap: Reassigning 'obj = new Car()' inside a method reassigns the local parameter copy only. The caller's reference remains unchanged!",
+        "StackOverflowError: Recursion without a working base case exhausts the thread's Stack memory (default ~1MB per thread)."
+      ],
+      "formulaOrSyntax": {
+        "label": "Method Stack Frame Lifecycle",
+        "codeOrLatex": "void mutate(Dog d) {\n    d.setName(\"Buddy\"); // MUTATES caller's heap object\n    d = new Dog(\"Max\"); // REASSIGNS local copy only (caller unaffected!)\n}",
+        "isLatex": false,
+        "language": "java"
+      },
+      "complexity": {
+        "time": "Method dispatch O(1) constant time; Recursion O(depth)",
+        "space": "O(1) stack frame per invocation; O(depth) call stack memory"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Believing a swap method 'void swap(Person a, Person b) { Person temp = a; a = b; b = temp; }' will swap the caller's objects.",
+        "fix": "It does nothing! It only swaps local copies of the reference pointers inside the method frame.",
+        "interviewTrap": "Question: 'Is Java pass-by-reference or pass-by-value?' Answer: Strictly pass-by-value! When an object is passed, a copy of the reference address is passed by value."
+      },
+      "examCheatsheet": [
+        "Java is 100% strictly Pass-By-Value (no exceptions!)",
+        "Passing an object passes a copy of its 64-bit reference address",
+        "Reassigning a method parameter does NOT affect the caller",
+        "StackOverflowError: Thrown when call stack exceeds thread limit (-Xss)"
+      ]
+    },
+    "visual": {
+      "type": "memory-layout",
+      "title": "Java Method Call Stack & Reference Value Copy",
+      "caption": "Both caller stack frame and callee stack frame hold independent copies of address 0x4A, pointing to the same Heap object.",
+      "visualKey": "java-methods-recursion",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Type Passed",
+            "What is Copied",
+            "Can Mutate Original Object?",
+            "Can Reassign Caller Variable?"
+          ],
+          "rows": [
+            [
+              "Primitive (int, boolean)",
+              "Raw bits of value (e.g. 42)",
+              "NO (Caller independent)",
+              "NO"
+            ],
+            [
+              "Object (e.g. List, Person)",
+              "Reference memory address (0x4A)",
+              "YES (via setters/mutators)",
+              "NO (Reassignment is local)"
+            ],
+            [
+              "Immutable Object (String)",
+              "Reference address to string pool",
+              "NO (Strings are immutable)",
+              "NO"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "Pass-By-Value Stack Frame Trace",
+      "description": "Trace method invocation: pushing stack frame, copying reference address, mutating Heap field, and destroying frame on return.",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Proving Java Pass-by-Value with Primitive and Object Mutator",
+      "language": "java",
+      "code": "public class PassByValueDemo {\n    static class Box {\n        int value = 10;\n    }\n\n    static void modify(int num, Box b) {\n        num = 999;          // Primitive copy modified -> Caller unaffected\n        b.value = 50;       // Heap object mutated via reference copy -> Caller sees change!\n        b = new Box();      // Reassignment -> Only affects local variable 'b'!\n        b.value = 1000;\n    }\n\n    public static void main(String[] args) {\n        int x = 10;\n        Box myBox = new Box();\n\n        modify(x, myBox);\n\n        System.out.println(\"x after method: \" + x);             // 10\n        System.out.println(\"myBox.value after: \" + myBox.value); // 50 (NOT 1000!)\n    }\n}",
+      "input": "x = 10, myBox.value = 10",
+      "output": "x after method: 10 | myBox.value after: 50",
+      "explanation": "Primitive x remains 10. myBox.value changed to 50 via setter, but reassigning b = new Box() had zero effect on myBox."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Which statement correctly describes parameter passing in Java?",
+        "options": [
+          "Primitives are passed by value; objects are passed by reference",
+          "All arguments in Java are strictly passed by value",
+          "Objects are passed by reference if marked with final",
+          "Methods can choose passing mode via annotations"
+        ],
+        "correctIndex": 1,
+        "explanation": "Java is strictly pass-by-value. When an object is passed, the value of the reference address is copied."
+      },
+      {
+        "id": "q2",
+        "question": "What happens to the caller's variable if a method reassigns an object parameter: 'void test(Person p) { p = new Person(); }'?",
+        "options": [
+          "The caller's variable now points to the new Person",
+          "The original Person object in Heap is deleted",
+          "The caller's variable is completely unaffected and points to the original Person",
+          "A compilation error occurs"
+        ],
+        "correctIndex": 2,
+        "explanation": "Reassigning the parameter only changes the local reference variable inside test()'s stack frame; the caller's variable remains unchanged."
+      },
+      {
+        "id": "q3",
+        "question": "What error occurs when a recursive method has no terminating base case?",
+        "options": [
+          "OutOfMemoryError",
+          "StackOverflowError",
+          "IllegalStateException",
+          "NullPointerException"
+        ],
+        "correctIndex": 1,
+        "explanation": "Infinite recursive calls push stack frames until the thread stack memory limit is breached, throwing StackOverflowError."
+      }
+    ]
+  },
+  {
+    "id": "java-encapsulation-abstraction",
+    "subject": "java",
+    "category": "Encapsulation and Abstraction",
+    "title": "Encapsulation, Data Hiding & Access Modifiers",
+    "subtitle": "private, default (package-private), protected & public Scope Boundaries",
+    "difficulty": "Beginner",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 45,
+    "tags": [
+      "OOP",
+      "Encapsulation",
+      "Abstraction",
+      "Access Modifiers",
+      "Data Hiding"
+    ],
+    "quickRecall": {
+      "oneLiner": "Encapsulation bundles data with code and hides internal state via private fields; Abstraction exposes essential behavior while hiding complex implementation details.",
+      "simpleAnalogy": "A car accelerator pedal: you press the pedal to accelerate (Abstraction: clean public interface). You don't need to know how fuel injection, spark plugs, or hydraulic valves work, and you cannot directly touch the fuel intake valve with your bare hands while driving (Encapsulation: private internal state).",
+      "whenToUse": "Every domain entity class to protect business invariants, prevent invalid state (e.g. negative balance), and decouple API consumers from internal implementation.",
+      "whyItMatters": "Public fields allow outside code to corrupt internal state directly. Encapsulation enables validation, thread-safety, and future implementation changes without breaking client code.",
+      "keyPoints": [
+        "Encapsulation: Make fields 'private' and expose controlled access via public getters and setters with validation logic.",
+        "Abstraction: Achieved using Abstract Classes and Interfaces, specifying WHAT an object does rather than HOW it does it.",
+        "private: Accessible ONLY within the defining class.",
+        "default (no keyword): Accessible within classes in the SAME package.",
+        "protected: Accessible within the same package PLUS subclasses in other packages.",
+        "public: Accessible everywhere across all packages."
+      ],
+      "formulaOrSyntax": {
+        "label": "Access Modifier Visibility Matrix",
+        "codeOrLatex": "Class | Package | Subclass (outside) | World\nprivate   : Yes   | No      | No                 | No\ndefault   : Yes   | Yes     | No                 | No\nprotected : Yes   | Yes     | Yes                | No\npublic    : Yes   | Yes     | Yes                | Yes",
+        "isLatex": false
+      },
+      "complexity": {
+        "time": "O(1) access control checked at compile-time by javac with zero runtime penalty",
+        "space": "O(1) memory overhead"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Returning direct references to mutable internal objects from getters (e.g. 'public Date getDob() { return this.dob; }').",
+        "fix": "Return a defensive copy: 'return new Date(this.dob.getTime());' or use immutable types like java.time.LocalDate.",
+        "interviewTrap": "Question: 'What is package-private in Java?' Answer: When no access modifier is specified (default), the member is accessible ONLY to classes within the exact same package, but NOT to subclasses in other packages."
+      },
+      "examCheatsheet": [
+        "private -> class only",
+        "default (package-private) -> same package only",
+        "protected -> same package + subclasses anywhere",
+        "public -> everywhere",
+        "Encapsulation = Data Hiding; Abstraction = Implementation Hiding"
+      ]
+    },
+    "visual": {
+      "type": "diagram",
+      "title": "Java Access Modifier Visibility Hierarchy",
+      "caption": "Visibility expands outward: private (innermost) -> default (package) -> protected (package + subclasses) -> public (world).",
+      "visualKey": "java-encapsulation-abstraction",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Modifier",
+            "Same Class",
+            "Same Package",
+            "Subclass (Different Pkg)",
+            "Everywhere"
+          ],
+          "rows": [
+            [
+              "private",
+              "YES",
+              "NO",
+              "NO",
+              "NO"
+            ],
+            [
+              "default (no modifier)",
+              "YES",
+              "YES",
+              "NO",
+              "NO"
+            ],
+            [
+              "protected",
+              "YES",
+              "YES",
+              "YES",
+              "NO"
+            ],
+            [
+              "public",
+              "YES",
+              "YES",
+              "YES",
+              "YES"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "Access Boundary Check at Compile-Time",
+      "description": "Watch the compiler check package scopes and subclass relationships, enforcing private and protected boundaries.",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Encapsulating Business Invariants with Defensive Setters",
+      "language": "java",
+      "code": "public class BankAccount {\n    // 1. Private fields hide internal state from outside tampering\n    private double balance;\n    private final String accountNumber;\n\n    public BankAccount(String accountNumber, double initialDeposit) {\n        this.accountNumber = accountNumber;\n        if (initialDeposit < 0) throw new IllegalArgumentException(\"Deposit cannot be negative\");\n        this.balance = initialDeposit;\n    }\n\n    // 2. Controlled mutation enforcing business rules\n    public void deposit(double amount) {\n        if (amount <= 0) throw new IllegalArgumentException(\"Amount must be > 0\");\n        this.balance += amount;\n    }\n\n    // 3. Read-only getter\n    public double getBalance() {\n        return this.balance;\n    }\n\n    public static void main(String[] args) {\n        BankAccount acc = new BankAccount(\"ACC-9812\", 500.0);\n        acc.deposit(250.0);\n        // acc.balance = -10000; // COMPILATION ERROR: balance has private access!\n        System.out.println(\"Verified Balance: $\" + acc.getBalance());\n    }\n}",
+      "input": "Create BankAccount with $500, deposit $250",
+      "output": "Verified Balance: $750.0",
+      "explanation": "Private fields guarantee that external callers cannot corrupt balance into an invalid negative number."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Which access modifier allows access to subclasses in other packages, but NOT to unrelated classes in other packages?",
+        "options": [
+          "public",
+          "protected",
+          "default (package-private)",
+          "private"
+        ],
+        "correctIndex": 1,
+        "explanation": "protected members are accessible to all classes in the same package AND to subclasses in any other package."
+      },
+      {
+        "id": "q2",
+        "question": "What is the access level when no modifier is written before a field or method?",
+        "options": [
+          "public",
+          "private",
+          "default (package-private)",
+          "protected"
+        ],
+        "correctIndex": 2,
+        "explanation": "When omitted, Java assigns package-private access, visible only to classes in the same package."
+      },
+      {
+        "id": "q3",
+        "question": "What is the primary difference between Encapsulation and Abstraction?",
+        "options": [
+          "Encapsulation is for variables; Abstraction is for loops",
+          "Encapsulation hides internal state and data; Abstraction hides implementation complexity and exposes behavior",
+          "Encapsulation is deprecated in Java 17",
+          "Abstraction requires private constructors"
+        ],
+        "correctIndex": 1,
+        "explanation": "Encapsulation protects data via private fields; Abstraction exposes simple interfaces (like a steering wheel) while hiding complex machinery."
+      }
+    ]
+  },
+  {
+    "id": "java-constructors-super",
+    "subject": "java",
+    "category": "Constructors and this / super",
+    "title": "Constructor Chaining with this() and super()",
+    "subtitle": "Object Initialization Sequence: Static Blocks, Instance Initializers & super() Delegation",
+    "difficulty": "Beginner",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 50,
+    "tags": [
+      "Constructors",
+      "this()",
+      "super()",
+      "Initialization",
+      "Inheritance"
+    ],
+    "quickRecall": {
+      "oneLiner": "Constructors initialize new object instances, delegating within the same class via this() or to the parent class via super(), which must be the very first statement.",
+      "simpleAnalogy": "Building a 2-story house: before you can build the second floor (child class), the foundation and first floor (parent class super()) MUST be completed first. If you don't explicitly call the parent foundation contractor, Java automatically calls the default parent constructor for you!",
+      "whenToUse": "Overloaded constructors for default arguments, initializing immutable final fields, and setting up subclass state.",
+      "whyItMatters": "Failing to understand constructor order causes subtle bugs where child constructor logic references uninitialized parent fields.",
+      "keyPoints": [
+        "First Statement Rule: A call to this(...) or super(...) MUST be the absolute first statement in a constructor body.",
+        "Default super(): If a constructor does not explicitly call this() or super(), the compiler automatically inserts 'super();' calling the parent's no-arg constructor.",
+        "No-Arg Constructor Trap: If parent defines a parameterized constructor and NO no-arg constructor, child classes MUST explicitly call super(args) or they will fail to compile!",
+        "Initialization Order: 1. Parent static blocks -> 2. Child static blocks -> 3. Parent instance blocks & constructor -> 4. Child instance blocks & constructor.",
+        "Constructors are NOT inherited: Subclasses do not inherit parent constructors; they merely invoke them."
+      ],
+      "formulaOrSyntax": {
+        "label": "Constructor Chaining Pattern",
+        "codeOrLatex": "class Child extends Parent {\n    Child() { this(\"Default\"); }       // Calls overloaded constructor\n    Child(String name) { super(name); } // Calls parent constructor (MUST BE FIRST!)\n}",
+        "isLatex": false,
+        "language": "java"
+      },
+      "complexity": {
+        "time": "O(1) allocation and sequential field initialization",
+        "space": "O(1) object header + fields allocated in Heap"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Placing any code before super() or this(), such as System.out.println() or logging statements.",
+        "fix": "super() and this() must strictly be the first statement on line 1 of the constructor body.",
+        "interviewTrap": "Question: 'What happens if a parent class has only Parent(int x) and child defines Child() { }?' Answer: Compile Error! The compiler attempts to insert super(), but Parent has no no-arg constructor."
+      },
+      "examCheatsheet": [
+        "this(...) calls overloaded constructor in the same class",
+        "super(...) calls parent class constructor",
+        "Must be the FIRST statement in the constructor",
+        "Static initializers run ONCE when class is loaded; constructors run on every 'new'"
+      ]
+    },
+    "visual": {
+      "type": "flowchart",
+      "title": "Java Object Initialization Order: Static -> Parent -> Child",
+      "caption": "Class loading triggers static initializers first. Then 'new' triggers parent constructor, followed by child fields and constructor.",
+      "visualKey": "java-constructors-super",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Step",
+            "What Runs",
+            "When",
+            "Frequency"
+          ],
+          "rows": [
+            [
+              "1. Static Initializers",
+              "Parent static -> Child static",
+              "Class loading by ClassLoader",
+              "Once per JVM lifetime"
+            ],
+            [
+              "2. Parent Instance",
+              "Parent instance variables & super()",
+              "Object instantiation via 'new'",
+              "Every time 'new' is called"
+            ],
+            [
+              "3. Child Instance",
+              "Child instance variables & constructor",
+              "After parent constructor returns",
+              "Every time 'new' is called"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "Constructor Chaining Execution Sequence",
+      "description": "Watch Child() invoke this(param), which invokes super(param), initializing the parent before running child body.",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Constructor Chaining with this() and super() Delegation",
+      "language": "java",
+      "code": "class Vehicle {\n    String brand;\n    Vehicle(String brand) {\n        this.brand = brand;\n        System.out.println(\"1. Vehicle constructor initialized: \" + brand);\n    }\n}\n\nclass Car extends Vehicle {\n    int wheels;\n\n    // Overloaded constructor chains to sibling constructor\n    Car() {\n        this(\"Tesla\", 4); // Delegating to overloaded Car constructor\n    }\n\n    Car(String brand, int wheels) {\n        super(brand);     // MUST be first statement: calls Vehicle(brand)\n        this.wheels = wheels;\n        System.out.println(\"2. Car constructor initialized with \" + wheels + \" wheels\");\n    }\n}\n\npublic class ConstructorDemo {\n    public static void main(String[] args) {\n        Car myCar = new Car();\n    }\n}",
+      "input": "new Car() with no arguments",
+      "output": "1. Vehicle constructor initialized: Tesla | 2. Car constructor initialized with 4 wheels",
+      "explanation": "Car() chains to Car(String, int), which invokes super(brand) before running its own body."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Where must this() or super() be placed inside a constructor?",
+        "options": [
+          "Anywhere in the constructor body",
+          "Strictly as the very first statement",
+          "At the end of the constructor",
+          "Inside a try-catch block"
+        ],
+        "correctIndex": 1,
+        "explanation": "Java enforces that this() or super() must be the first statement to ensure parent state is initialized before child execution."
+      },
+      {
+        "id": "q2",
+        "question": "Can a constructor contain BOTH a call to this() AND a call to super()?",
+        "options": [
+          "Yes, if this() is first and super() is second",
+          "No, because both require being the first statement, so only one can be used",
+          "Yes, in abstract classes",
+          "Yes, if one is empty"
+        ],
+        "correctIndex": 1,
+        "explanation": "Both calls must be the first statement, which is physically impossible. Calling this() will eventually chain to a constructor that calls super()."
+      },
+      {
+        "id": "q3",
+        "question": "What constructor does the Java compiler generate if a class defines zero constructors?",
+        "options": [
+          "No constructor is created",
+          "A public/package-private no-argument default constructor with a body of 'super();'",
+          "A private constructor",
+          "A constructor that takes null"
+        ],
+        "correctIndex": 1,
+        "explanation": "The compiler creates a synthetic default no-argument constructor that simply calls super()."
+      }
+    ]
+  },
+  {
+    "id": "java-collections-hierarchy",
+    "subject": "java",
+    "category": "Collections Framework",
+    "title": "Java Collections Hierarchy & Iterable/Iterator Core",
+    "subtitle": "List vs Set vs Queue, Fail-Fast vs Fail-Safe Iterators & ConcurrentModificationException",
+    "difficulty": "Intermediate",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 55,
+    "tags": [
+      "Collections",
+      "Iterable",
+      "Fail-Fast",
+      "ConcurrentModificationException",
+      "List",
+      "Set",
+      "Queue"
+    ],
+    "quickRecall": {
+      "oneLiner": "The Collections Framework is a unified architecture rooted in Iterable and Collection, categorized into ordered Lists, unique Sets, and FIFO Queues (with Maps existing as a parallel hierarchy).",
+      "simpleAnalogy": "A buffet line: A List is a tray where items are kept in the exact order you picked them (duplicates allowed). A Set is a bouncer who checks stamps at the door—nobody gets in twice (strictly unique). A Queue is the line of people waiting for food (first-come, first-served). A Map is the coat check room (ticket number → coat).",
+      "whenToUse": "Storing and manipulating groups of objects dynamically: List for ordered indexed data, Set for uniqueness/membership tests, Queue for task processing, Map for key-value lookups.",
+      "whyItMatters": "Understanding the interface hierarchy prevents coding to concrete implementations (always write 'List<String> list = new ArrayList<>()', never 'ArrayList<String>').",
+      "keyPoints": [
+        "Root Interface: java.lang.Iterable -> java.util.Collection -> List, Set, Queue. (Map does NOT implement Collection!).",
+        "List: Ordered, allows duplicates, positional index access (ArrayList, LinkedList).",
+        "Set: Unordered, guarantees uniqueness (HashSet, LinkedHashSet, TreeSet).",
+        "Queue / Deque: FIFO order or double-ended queues (ArrayDeque, PriorityQueue).",
+        "Fail-Fast Iterators: Iterators on ArrayList/HashMap throw ConcurrentModificationException if the collection is structurally modified during iteration!",
+        "Safe Element Removal: Use Iterator.remove() or collection.removeIf(predicate); NEVER use list.remove() inside a for-each loop!"
+      ],
+      "formulaOrSyntax": {
+        "label": "Safe Iterator Removal vs removeIf",
+        "codeOrLatex": "// Safe: iterator.remove()\nIterator<String> it = list.iterator();\nwhile (it.hasNext()) {\n    if (it.next().equals(\"bad\")) it.remove();\n}\n// Modern Java 8+ idiom:\nlist.removeIf(s -> s.equals(\"bad\"));",
+        "isLatex": false,
+        "language": "java"
+      },
+      "complexity": {
+        "time": "Iteration O(N); Collection.contains(): O(1) for HashSet vs O(N) for ArrayList",
+        "space": "O(N) heap storage"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Calling list.remove(x) inside an enhanced for-each loop: for (String s : list) { if (s.equals(\"x\")) list.remove(s); }",
+        "fix": "Throws ConcurrentModificationException! Use list.removeIf(s -> s.equals(\"x\")) or iterator.remove().",
+        "interviewTrap": "Question: 'Does java.util.Map implement Collection or Iterable?' Answer: NO! Map is an independent top-level interface because it works with key-value pairs (Map.Entry), not individual elements. You access its views via map.keySet(), map.values(), or map.entrySet()."
+      },
+      "examCheatsheet": [
+        "Iterable -> Collection -> List, Set, Queue",
+        "Map is NOT a Collection (independent hierarchy)",
+        "Modifying collection inside for-each loop = ConcurrentModificationException",
+        "Safe removal: use iterator.remove() or list.removeIf()"
+      ]
+    },
+    "visual": {
+      "type": "diagram",
+      "title": "Java Collections Framework Interface Hierarchy",
+      "caption": "Iterable sits at the top. Collection branches into List, Set, and Queue. Map stands alongside as a parallel key-value hierarchy.",
+      "visualKey": "java-collections-hierarchy",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Interface",
+            "Duplicates Allowed?",
+            "Ordered?",
+            "Key Implementations"
+          ],
+          "rows": [
+            [
+              "List",
+              "YES",
+              "YES (Index-based)",
+              "ArrayList, LinkedList, Vector, CopyOnWriteArrayList"
+            ],
+            [
+              "Set",
+              "NO",
+              "NO (TreeSet is sorted, LinkedHashSet preserves insertion)",
+              "HashSet, LinkedHashSet, TreeSet"
+            ],
+            [
+              "Queue / Deque",
+              "YES",
+              "FIFO / Priority order",
+              "ArrayDeque, PriorityQueue, LinkedList"
+            ],
+            [
+              "Map (Parallel)",
+              "Keys: NO, Values: YES",
+              "NO (TreeMap is sorted, LinkedHashMap is insertion order)",
+              "HashMap, LinkedHashMap, TreeMap, ConcurrentHashMap"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "Fail-Fast modCount Verification Check",
+      "description": "Watch the iterator compare expectedModCount with modCount. When they differ, it triggers ConcurrentModificationException.",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Safe Collection Removal: Iterator.remove vs removeIf",
+      "language": "java",
+      "code": "import java.util.*;\n\npublic class CollectionDemo {\n    public static void main(String[] args) {\n        // List allows duplicates and preserves insertion order\n        List<String> fruits = new ArrayList<>(Arrays.asList(\"Apple\", \"Banana\", \"Cherry\", \"Banana\"));\n\n        // Modern safe removal without ConcurrentModificationException\n        fruits.removeIf(f -> f.equals(\"Banana\"));\n        System.out.println(\"After removeIf: \" + fruits);\n\n        // Set guarantees uniqueness\n        Set<String> uniqueFruits = new HashSet<>(fruits);\n        uniqueFruits.add(\"Apple\"); // Duplicate ignored!\n        System.out.println(\"Unique Set: \" + uniqueFruits);\n    }\n}",
+      "input": "List: [Apple, Banana, Cherry, Banana]",
+      "output": "After removeIf: [Apple, Cherry] | Unique Set: [Apple, Cherry]",
+      "explanation": "removeIf safely strips elements without triggering fail-fast exceptions, and HashSet guarantees duplicate suppression."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Does java.util.Map extend the java.util.Collection interface?",
+        "options": [
+          "Yes, Map extends Collection",
+          "No, Map is a separate hierarchy because it represents key-value pairs rather than individual elements",
+          "Yes, but only in Java 8 and above",
+          "Map extends Iterable, but not Collection"
+        ],
+        "correctIndex": 1,
+        "explanation": "Map has a distinct contract based on key-value pairs and does not implement Collection or Iterable."
+      },
+      {
+        "id": "q2",
+        "question": "What exception is thrown when modifying a collection directly during an active for-each loop iteration?",
+        "options": [
+          "IllegalStateException",
+          "ConcurrentModificationException",
+          "IndexOutOfBoundsException",
+          "UnsupportedOperationException"
+        ],
+        "correctIndex": 1,
+        "explanation": "Fail-fast iterators detect that modCount != expectedModCount and immediately throw ConcurrentModificationException."
+      },
+      {
+        "id": "q3",
+        "question": "Which Collection implementation provides O(1) amortized add, O(1) get-by-index, and faster iteration than LinkedList?",
+        "options": [
+          "Vector",
+          "LinkedList",
+          "ArrayList",
+          "TreeSet"
+        ],
+        "correctIndex": 2,
+        "explanation": "ArrayList stores elements in contiguous memory arrays, offering O(1) random index access and superior CPU cache locality."
+      }
+    ]
+  },
+  {
+    "id": "java-collections-complexity",
+    "subject": "java",
+    "category": "Time and Space Complexity",
+    "title": "Java Collections Framework Big-O Reference",
+    "subtitle": "ArrayList vs LinkedList vs ArrayDeque vs HashSet vs TreeMap Performance Profiles",
+    "difficulty": "Intermediate",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 55,
+    "tags": [
+      "Big-O",
+      "Complexity",
+      "ArrayList",
+      "LinkedList",
+      "HashMap",
+      "ArrayDeque"
+    ],
+    "quickRecall": {
+      "oneLiner": "Choosing the right Java collection hinges on algorithmic complexity: ArrayList wins for random access, ArrayDeque for queues/stacks, and HashMap/HashSet for O(1) lookups.",
+      "simpleAnalogy": "Choosing a vehicle: an ArrayList is a high-speed bullet train (blazing fast along its fixed track O(1), but changing the track layout mid-way is costly O(N)). A LinkedList is a bicycle (can hop on and off anywhere O(1) at the ends, but riding to mile marker #500 takes a long time O(N)). In 99% of real-world cases, ArrayList wins due to CPU cache locality!",
+      "whenToUse": "System design, high-frequency low-latency pipelines, and technical coding interview algorithmic optimization.",
+      "whyItMatters": "Using LinkedList where ArrayList is needed or using ArrayList where ArrayDeque is needed causes 10x to 100x slowdowns in throughput.",
+      "keyPoints": [
+        "ArrayList: Random access get(i) is O(1). Append is O(1) amortized. Insert/remove in middle is O(N) due to System.arraycopy shifts.",
+        "LinkedList: get(i) is slow O(N) linear traversal! Insert/remove at head/tail is O(1). Rarely preferred in modern Java due to pointer cache misses.",
+        "ArrayDeque: Double-ended queue backed by circular array. O(1) push/pop at both ends. Beats LinkedList as a Queue and beats java.util.Stack!",
+        "HashSet / HashMap: O(1) average get/put/contains. Degrades to O(log N) worst-case with high collisions (Red-Black tree binning).",
+        "TreeSet / TreeMap: O(log N) guaranteed for get/put/contains because it is backed by a balanced Red-Black Tree."
+      ],
+      "formulaOrSyntax": {
+        "label": "Collections Complexity Quick Matrix",
+        "codeOrLatex": "Collection  | Get(i)  | Add(end) | Add(mid) | Contains\nArrayList   | O(1)    | O(1)*    | O(N)     | O(N)\nLinkedList  | O(N)    | O(1)     | O(N)     | O(N)\nArrayDeque  | N/A     | O(1)     | N/A      | O(N)\nHashMap     | O(1)*   | O(1)*    | N/A      | O(1)*\nTreeMap     | O(logN) | O(logN)  | N/A      | O(logN)",
+        "isLatex": false
+      },
+      "complexity": {
+        "time": "ArrayList get(i): O(1); HashMap lookup: O(1) average; TreeMap: O(log N)",
+        "space": "ArrayList: Contiguous memory; LinkedList: Heavy overhead (24 bytes per node for pointers)"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Using LinkedList because you heard 'insertions are O(1)'.",
+        "fix": "Insertion in LinkedList is ONLY O(1) if you already possess the Node reference! Finding position i requires an O(N) linear walk.",
+        "interviewTrap": "Question: 'Why is ArrayList faster than LinkedList even when iterating?' Answer: CPU Cache Locality! ArrayList elements sit in contiguous memory so the CPU pre-fetches entire cache lines. LinkedList nodes are scattered randomly across the Heap, causing constant CPU cache misses."
+      },
+      "examCheatsheet": [
+        "ArrayList: O(1) index access, best overall general list",
+        "ArrayDeque: O(1) push/pop at both ends (better than Stack & LinkedList)",
+        "HashMap: O(1) average, O(log N) worst-case (treeified bucket)",
+        "TreeMap: O(log N) sorted keys (Red-Black Tree)",
+        "Avoid LinkedList in 99% of applications"
+      ]
+    },
+    "visual": {
+      "type": "comparison-table",
+      "title": "Java Collections Time & Space Complexity Master Reference",
+      "caption": "Comparison of access, insertion, deletion, and space overhead across primary Java collection classes.",
+      "visualKey": "java-collections-complexity",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Collection",
+            "Index Access",
+            "Insert at Head",
+            "Insert at Tail",
+            "Lookup / Search",
+            "Memory Overhead"
+          ],
+          "rows": [
+            [
+              "ArrayList",
+              "O(1)",
+              "O(N)",
+              "O(1) amortized",
+              "O(N)",
+              "Low (Contiguous array)"
+            ],
+            [
+              "LinkedList",
+              "O(N)",
+              "O(1)",
+              "O(1)",
+              "O(N)",
+              "High (3 references per node)"
+            ],
+            [
+              "ArrayDeque",
+              "N/A",
+              "O(1)",
+              "O(1)",
+              "O(N)",
+              "Low (Circular array buffer)"
+            ],
+            [
+              "HashSet / HashMap",
+              "N/A",
+              "N/A",
+              "O(1) average",
+              "O(1) average",
+              "Medium (Node objects + array)"
+            ],
+            [
+              "TreeSet / TreeMap",
+              "N/A",
+              "N/A",
+              "O(log N)",
+              "O(log N)",
+              "Medium-High (Red-Black Tree)"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "ArrayList Array Resizing & Amortized O(1) Mechanics",
+      "description": "Trace internal capacity expansion: 10 elements reach capacity -> new array of size 15 created -> elements copied -> new item inserted.",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Benchmarking ArrayList vs ArrayDeque for Queue Operations",
+      "language": "java",
+      "code": "import java.util.*;\n\npublic class ComplexityDemo {\n    public static void main(String[] args) {\n        // 1. ArrayDeque: Preferred LIFO stack and FIFO queue (O(1) at both ends)\n        Deque<Integer> deque = new ArrayDeque<>();\n        deque.addLast(100);  // Enqueue O(1)\n        deque.addLast(200);\n        int front = deque.pollFirst(); // Dequeue O(1)\n        System.out.println(\"Deque Poll Front: \" + front);\n\n        // 2. HashMap: O(1) average lookup\n        Map<String, Integer> scores = new HashMap<>();\n        scores.put(\"Alice\", 95);\n        scores.put(\"Bob\", 88);\n        System.out.println(\"Alice's Score (O(1) lookup): \" + scores.get(\"Alice\"));\n\n        // 3. TreeMap: O(log N) sorted keys\n        NavigableMap<Integer, String> tree = new TreeMap<>();\n        tree.put(30, \"Thirty\");\n        tree.put(10, \"Ten\");\n        tree.put(20, \"Twenty\");\n        System.out.println(\"TreeMap Sorted Keys (O(log N)): \" + tree.keySet());\n    }\n}",
+      "input": "ArrayDeque operations, HashMap lookups, and TreeMap sorted traversal",
+      "output": "Deque Poll Front: 100 | Alice's Score: 95 | TreeMap Sorted Keys: [10, 20, 30]",
+      "explanation": "ArrayDeque provides O(1) double-ended queue operations without pointer overhead, and TreeMap maintains natural sorted order."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Why is ArrayList almost always preferred over LinkedList in real-world Java applications?",
+        "options": [
+          "LinkedList is not thread-safe",
+          "ArrayList has superior CPU cache locality and lower memory overhead, whereas LinkedList causes cache misses and allocates 24 bytes per node",
+          "LinkedList cannot hold strings",
+          "ArrayList uses less CPU clock cycles for sorting"
+        ],
+        "correctIndex": 1,
+        "explanation": "Contiguous array storage enables CPU cache pre-fetching, making ArrayList significantly faster even for many insertion patterns."
+      },
+      {
+        "id": "q2",
+        "question": "What is the worst-case time complexity of HashMap get() in Java 8+ when all keys collide into the same bucket?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(log N)",
+          "O(N log N)"
+        ],
+        "correctIndex": 2,
+        "explanation": "In Java 8+, when a bucket exceeds TREEIFY_THRESHOLD (8 items), the linked list converts to a balanced Red-Black tree with O(log N) search."
+      },
+      {
+        "id": "q3",
+        "question": "Which Java collection should be used when implementing a LIFO Stack or FIFO Queue with maximum performance?",
+        "options": [
+          "java.util.Stack",
+          "java.util.LinkedList",
+          "java.util.ArrayDeque",
+          "java.util.Vector"
+        ],
+        "correctIndex": 2,
+        "explanation": "ArrayDeque is faster than Stack (which incurs synchronized method lock overhead) and faster than LinkedList (which creates node objects)."
+      }
+    ]
+  }
 ];

@@ -1368,4 +1368,576 @@ for idx, (name, _) in enumerate(by_score):
       },
     ],
   },
+
+  {
+    "id": "py-conditions-loops",
+    "subject": "python",
+    "category": "Conditions and Loops",
+    "title": "Control Flow: for-else, while-break & enumerate()",
+    "subtitle": "Pythonic Loops, Truthy/Falsy Evaluation & The Loop-Else Fallback",
+    "difficulty": "Beginner",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 45,
+    "tags": [
+      "Loops",
+      "for-else",
+      "enumerate",
+      "zip",
+      "Control Flow"
+    ],
+    "quickRecall": {
+      "oneLiner": "Python loops provide powerful idioms like for-else (executes only if no break occurred) and enumerate() for clean zero-indexed iteration.",
+      "simpleAnalogy": "Searching for a missing set of keys in your apartment: you search room by room (the loop). If you find them, you grab them and stop searching (break). If you search every single room and never found them (the loop finishes without hitting break), the 'else' block runs to declare: 'Keys were not found!'",
+      "whenToUse": "Search loops (linear scan for a target), paired iterations with zip(), and index-item tracking with enumerate() instead of range(len(items)).",
+      "whyItMatters": "Eliminates messy boolean flag variables like 'found = False'. Writing pythonic loops is a key distinction between junior and mid-level developers.",
+      "keyPoints": [
+        "for-else / while-else: The else block runs ONLY if the loop completes normally without encountering a break statement.",
+        "enumerate(iterable, start=0): Yields (index, item) pairs cleanly. Never write 'for i in range(len(arr))' when you need both!",
+        "zip(*iterables): Combines multiple lists element-wise. Stops at shortest by default, or use itertools.zip_longest().",
+        "Truthy / Falsy: Empty collections ([], {}, set(), ''), 0, 0.0, and None evaluate to False in if-conditions.",
+        "Walrus Operator (:=): Assigns values to variables as part of an expression: while (line := file.readline()): ..."
+      ],
+      "formulaOrSyntax": {
+        "label": "for-else & enumerate Syntax",
+        "codeOrLatex": "for item in collection:\n    if condition(item): break\nelse:\n    # Runs ONLY if loop did not break",
+        "isLatex": false,
+        "language": "python"
+      },
+      "complexity": {
+        "time": "O(N) single-pass iteration across sequence",
+        "space": "O(1) auxiliary memory using lazy generators"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Thinking the loop 'else' block runs when the loop condition is false, like an if-else.",
+        "fix": "Think of loop-else as 'then-no-break'. If a break occurs, the else block is completely skipped.",
+        "interviewTrap": "Question: 'What does this print: for x in [1, 2, 3]: if x == 2: break; else: print(4)?' Answer: Nothing! Because x == 2 hits the break statement, which skips the loop's else block."
+      },
+      "examCheatsheet": [
+        "for-else: Runs when loop finishes without break",
+        "enumerate(lst, start=0): Returns (index, item) tuples",
+        "Falsy values: [], {}, set(), '', 0, None, False",
+        "zip(a, b): Pairs items, truncates to shortest list"
+      ]
+    },
+    "visual": {
+      "type": "flowchart",
+      "title": "Python for-else Execution Logic",
+      "caption": "Loop iterates over items. If target is found, break exits immediately. If all items exhaust without break, the else clause executes.",
+      "visualKey": "py-conditions-loops",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Loop Pattern",
+            "Unpythonic Anti-Pattern",
+            "Clean Pythonic Idiom"
+          ],
+          "rows": [
+            [
+              "Index + Item",
+              "for i in range(len(items)): x = items[i]",
+              "for i, x in enumerate(items):"
+            ],
+            [
+              "Parallel Lists",
+              "for i in range(len(a)): ... a[i], b[i]",
+              "for x, y in zip(a, b):"
+            ],
+            [
+              "Search Sentinel",
+              "found = False; for x in lst: ... if found:",
+              "for x in lst: ... break else: (not found)"
+            ],
+            [
+              "Empty Check",
+              "if len(my_list) == 0:",
+              "if not my_list: (Pythonic truthiness)"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "for-else Loop Evaluation Trace",
+      "description": "Walk through iterating elements, checking search condition, and triggering the else clause when no target matches.",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Prime Number Search using for-else and enumerate",
+      "language": "python",
+      "code": "def check_prime(n):\n    if n <= 1:\n        return False\n    for d in range(2, int(n**0.5) + 1):\n        if n % d == 0:\n            print(f\"{n} is divisible by {d} -> NOT prime\")\n            break\n    else:\n        # Executes ONLY if no divisor broke the loop\n        print(f\"{n} has no divisors -> IS PRIME!\")\n        return True\n    return False\n\nnumbers = [15, 17]\nfor i, num in enumerate(numbers, start=1):\n    print(f\"Test #{i}:\")\n    check_prime(num)",
+      "input": "Check numbers 15 and 17",
+      "output": "Test #1: 15 is divisible by 3 -> NOT prime | Test #2: 17 has no divisors -> IS PRIME!",
+      "explanation": "For 15, the divisor 3 triggers 'break', skipping else. For 17, the loop finishes cleanly, triggering the 'else' block."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "When does the 'else' block of a Python 'for' loop execute?",
+        "options": [
+          "Every time the loop finishes an iteration",
+          "Only when the loop terminates normally without encountering a break statement",
+          "Only when an exception is raised inside the loop",
+          "Whenever the list is empty at the start"
+        ],
+        "correctIndex": 1,
+        "explanation": "The loop-else block runs only when the loop completes all iterations naturally without hitting a break."
+      },
+      {
+        "id": "q2",
+        "question": "Which of the following values is TRUTHY in a Python if-statement?",
+        "options": [
+          "[] (empty list)",
+          "\"0\" (string containing character zero)",
+          "0 (integer zero)",
+          "None"
+        ],
+        "correctIndex": 1,
+        "explanation": "Any non-empty string is truthy, including \"0\" and \"False\". Only empty strings \"\" are falsy."
+      },
+      {
+        "id": "q3",
+        "question": "What is the most pythonic way to iterate over a list while needing both the index and the value?",
+        "options": [
+          "for i in range(len(lst)):",
+          "for idx, val in enumerate(lst):",
+          "i = 0; while i < len(lst): ... i += 1",
+          "for x in lst: idx = lst.index(x)"
+        ],
+        "correctIndex": 1,
+        "explanation": "enumerate(lst) yields (index, item) tuples cleanly in O(N) time without extra lookups."
+      }
+    ]
+  },
+  {
+    "id": "py-recursion-depth",
+    "subject": "python",
+    "category": "Recursion",
+    "title": "Recursion Mechanics & Call Stack Depth in Python",
+    "subtitle": "Base Cases, sys.getrecursionlimit, RecursionError & Memoization with @lru_cache",
+    "difficulty": "Intermediate",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 50,
+    "tags": [
+      "Recursion",
+      "Call Stack",
+      "lru_cache",
+      "RecursionError",
+      "Memoization"
+    ],
+    "quickRecall": {
+      "oneLiner": "Recursion solves problems by having a function call itself with smaller subproblems until hitting a base case, bounded by Python's stack depth limit.",
+      "simpleAnalogy": "Russian nesting dolls (Matryoshka): to find the tiny prize inside, you open doll after doll (recursive calls). When you finally reach the solid wooden doll that cannot be opened (the base case), you close them back up one by one, returning the answer up the chain.",
+      "whenToUse": "Tree traversals (DOM, file systems, ASTs), divide-and-conquer (MergeSort), and depth-first search (DFS).",
+      "whyItMatters": "Python does NOT have Tail Call Optimization (TCO). Every recursive call adds a frame to the C call stack. Exceeding 1000 calls raises RecursionError.",
+      "keyPoints": [
+        "Base Case: The termination condition that stops recursion. Without it, the function calls itself infinitely until stack overflow.",
+        "Default Stack Limit: sys.getrecursionlimit() is typically 1000. Can be increased via sys.setrecursionlimit(), but risks crashing Python interpreter.",
+        "No Tail Call Optimization (TCO): Unlike Scheme or Haskell, Python does not optimize tail-recursive functions into loops.",
+        "Memoization (@lru_cache): Turns exponential O(2^N) recursive algorithms (like Fibonacci) into linear O(N) by caching previous results.",
+        "Iterative Alternative: Any recursive algorithm can be rewritten iteratively using an explicit list as a stack."
+      ],
+      "formulaOrSyntax": {
+        "label": "Memoized Recursion Pattern",
+        "codeOrLatex": "from functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef recursive_fn(n):\n    if n <= 1: return n  # Base case\n    return recursive_fn(n - 1) + recursive_fn(n - 2)",
+        "isLatex": false,
+        "language": "python"
+      },
+      "complexity": {
+        "time": "Naive Fibonacci: O(2^N) exponential; With @lru_cache: O(N) linear",
+        "space": "O(N) memory for call stack frames proportional to recursion depth"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Relying on deep recursion (> 1000 calls) in Python production without an iterative loop fallback.",
+        "fix": "Use an explicit stack list: stack = [root] while stack: node = stack.pop() ...",
+        "interviewTrap": "Question: 'Does Python optimize tail recursion?' Answer: No! Guido van Rossum deliberately chose not to include TCO in Python to preserve complete stack traces for debugging."
+      },
+      "examCheatsheet": [
+        "Default recursion limit: 1000 frames (sys.getrecursionlimit())",
+        "No Tail Call Optimization (TCO) in Python",
+        "Missing base case = RecursionError: maximum recursion depth exceeded",
+        "@functools.lru_cache(None) caches function returns for O(1) repeat lookups"
+      ]
+    },
+    "visual": {
+      "type": "flowchart",
+      "title": "Recursion Call Stack & Unwinding Trace",
+      "caption": "Function calls push stack frames down until hitting the base case (f(1)). The base case returns values that bubble back up.",
+      "visualKey": "py-recursion-depth",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Approach",
+            "Time Complexity",
+            "Space (Call Stack)",
+            "Risk"
+          ],
+          "rows": [
+            [
+              "Naive Recursive Fibonacci",
+              "O(2^N) exponential",
+              "O(N) stack frames",
+              "Freezes browser/CPU for N > 35"
+            ],
+            [
+              "Memoized (@lru_cache)",
+              "O(N) linear",
+              "O(N) stack + hash map",
+              "RecursionError if N > 1000"
+            ],
+            [
+              "Iterative Loop (DP)",
+              "O(N) linear",
+              "O(1) constant space",
+              "Zero risk of stack overflow"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "Call Stack Push & Pop Lifecycle",
+      "description": "Watch stack frames accumulate with each call: factorial(3) -> factorial(2) -> factorial(1), then pop and resolve.",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Fibonacci with and without @lru_cache Memoization",
+      "language": "python",
+      "code": "from functools import lru_cache\nimport sys\n\n# Inspect current interpreter recursion limit\nprint(\"Default recursion limit:\", sys.getrecursionlimit())\n\n# Memoized recursive function\n@lru_cache(maxsize=128)\ndef fib(n):\n    # Base case\n    if n < 2:\n        return n\n    # Recursive relation\n    return fib(n - 1) + fib(n - 2)\n\n# Computes in sub-millisecond O(N) time instead of O(2^N)\nresult = fib(40)\nprint(f\"fib(40) = {result}\")\nprint(\"Cache info:\", fib.cache_info())",
+      "input": "Calculate fib(40) with @lru_cache",
+      "output": "Default recursion limit: 1000 | fib(40) = 102334155 | Cache hits: 38",
+      "explanation": "@lru_cache stores previously computed values in a dictionary, preventing duplicate exponential subtrees."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "What exception does Python raise when a function exceeds its maximum recursion depth?",
+        "options": [
+          "StackOverflowError",
+          "RecursionError",
+          "MemoryError",
+          "IndexError"
+        ],
+        "correctIndex": 1,
+        "explanation": "Python raises a built-in RecursionError (which inherits from Exception) when sys.getrecursionlimit() is reached."
+      },
+      {
+        "id": "q2",
+        "question": "Does CPython support Tail Call Optimization (TCO)?",
+        "options": [
+          "Yes, automatically for functions ending with return fn()",
+          "No, Python never optimizes tail calls into loops",
+          "Yes, but only when compiling with -O flag",
+          "Yes, if decorated with @tail_rec"
+        ],
+        "correctIndex": 1,
+        "explanation": "Python does not support TCO to ensure full, accurate stack traces are available for debugging."
+      },
+      {
+        "id": "q3",
+        "question": "What is the time complexity of calculating fib(35) recursively without memoization vs with @lru_cache?",
+        "options": [
+          "O(N) without vs O(1) with",
+          "O(2^N) exponential without vs O(N) linear with",
+          "O(N log N) without vs O(N) with",
+          "Both are O(N)"
+        ],
+        "correctIndex": 1,
+        "explanation": "Naive recursion repeatedly recomputes overlapping subproblems taking O(2^N) time. Memoization caches each result for O(N) total work."
+      }
+    ]
+  },
+  {
+    "id": "py-file-handling",
+    "subject": "python",
+    "category": "File Handling",
+    "title": "Context Managers & Safe File I/O with open()",
+    "subtitle": "Deterministic Resource Cleanup, __enter__/__exit__, Text vs Binary Streams",
+    "difficulty": "Beginner",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 45,
+    "tags": [
+      "File I/O",
+      "Context Managers",
+      "with open",
+      "Resource Leaks",
+      "Streaming"
+    ],
+    "quickRecall": {
+      "oneLiner": "The 'with open()' statement is a context manager that guarantees file handles are closed immediately upon block exit, even if exceptions occur.",
+      "simpleAnalogy": "Checking out a library book with an automatic return slot: using 'with open()' guarantees the book is checked back in the exact moment you leave the reading room, even if you suddenly trip or get a phone call (an unexpected error). Without 'with', the book stays checked out forever until the library runs out of copies (file descriptor leak).",
+      "whenToUse": "Reading/writing files, database connections, acquiring threading locks, and network sockets.",
+      "whyItMatters": "Operating systems have a strict limit on open file descriptors (typically 1024). Leaking descriptors causes 'OSError: [Errno 24] Too many open files' crashes.",
+      "keyPoints": [
+        "The 'with' Statement: Calls file.__enter__() on entry and guarantees file.__exit__() on exit, safely flushing buffers and closing the descriptor.",
+        "File Modes: 'r' (read text), 'w' (overwrite text), 'a' (append), 'rb' / 'wb' (binary mode for images/PDFs/pickles).",
+        "Memory Safety: Never use f.read() on a 10 GB file! Iterate line-by-line using 'for line in f:' which streams in lazy chunks.",
+        "Encoding: Always specify encoding='utf-8' explicitly to prevent cross-platform UnicodeDecodeError on Windows.",
+        "Writing Custom Context Managers: Implement __enter__ and __exit__, or use the @contextmanager decorator from contextlib."
+      ],
+      "formulaOrSyntax": {
+        "label": "Pythonic File Context Manager",
+        "codeOrLatex": "with open('data.txt', mode='r', encoding='utf-8') as f:\n    for line in f:  # Lazy generator stream\n        process(line.strip())",
+        "isLatex": false,
+        "language": "python"
+      },
+      "complexity": {
+        "time": "O(N) proportional to file size",
+        "space": "O(1) memory when streaming line-by-line; O(N) if calling f.read() or f.readlines()"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Writing f = open('file.txt') followed by f.read() without a try-finally or 'with' block.",
+        "fix": "Always wrap in 'with open(...) as f:'. If an error occurs between open and close, manual f.close() never executes!",
+        "interviewTrap": "Question: 'What does __exit__ receive when an exception happens inside a with block?' Answer: It receives (exc_type, exc_val, exc_tb). If __exit__ returns True, it suppresses the exception; if it returns False or None, the exception propagates normally."
+      },
+      "examCheatsheet": [
+        "Always use 'with open()' for deterministic descriptor cleanup",
+        "Always pass explicit encoding='utf-8'",
+        "Lazy line streaming: 'for line in f:' uses O(1) RAM",
+        "f.read() loads entire file into RAM at once (O(N) memory danger)"
+      ]
+    },
+    "visual": {
+      "type": "flowchart",
+      "title": "Context Manager Protocol: __enter__ and __exit__",
+      "caption": "Entering the 'with' block opens the OS descriptor. Whether the body completes normally or crashes with an exception, __exit__ flushes and closes.",
+      "visualKey": "py-file-handling",
+      "details": {
+        "comparison": {
+          "headers": [
+            "File Reading Method",
+            "Memory Usage",
+            "Safety for Huge Files",
+            "Return Type"
+          ],
+          "rows": [
+            [
+              "for line in f:",
+              "O(1) chunk buffered",
+              "100% Safe (streams line-by-line)",
+              "String per iteration"
+            ],
+            [
+              "f.readline()",
+              "O(1) single line",
+              "Safe (manual loop required)",
+              "Single string"
+            ],
+            [
+              "f.readlines()",
+              "O(N) entire file",
+              "DANGEROUS on > 1 GB files",
+              "List of strings"
+            ],
+            [
+              "f.read()",
+              "O(N) entire file",
+              "DANGEROUS on large files",
+              "Single monolithic string"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "File Stream Chunk Buffering & Closure",
+      "description": "Follow OS descriptor acquisition, line-by-line buffer reading, EOF detection, and automatic __exit__ descriptor release.",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Memory-Efficient Safe File I/O & Custom Context Manager",
+      "language": "python",
+      "code": "import tempfile\nimport os\n\n# Create a temporary file safely\nwith tempfile.NamedTemporaryFile(mode='w+', delete=False, encoding='utf-8') as f:\n    temp_path = f.name\n    f.write(\"Apple\\nBanana\\nCherry\\n\")\n\ntry:\n    # Read file line-by-line using streaming generator (O(1) memory)\n    with open(temp_path, mode='r', encoding='utf-8') as f:\n        for line_num, line in enumerate(f, start=1):\n            print(f\"Line #{line_num}: {line.strip()}\")\nfinally:\n    # Clean up temp file\n    if os.path.exists(temp_path):\n        os.remove(temp_path)\n        print(\"Temporary file successfully closed and removed.\")",
+      "input": "File with 3 lines: Apple, Banana, Cherry",
+      "output": "Line #1: Apple | Line #2: Banana | Line #3: Cherry | Temporary file closed",
+      "explanation": "Iterating directly over file handle 'f' processes one line at a time without reading the entire contents into memory."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "What is the primary danger of opening files with f = open(...) without using a 'with' block?",
+        "options": [
+          "The file will be encrypted automatically",
+          "File descriptors leak if an exception occurs before f.close() is reached",
+          "Python will delete the file contents",
+          "The file will always be read in binary mode"
+        ],
+        "correctIndex": 1,
+        "explanation": "If an unhandled error happens before f.close(), the OS file handle remains open until process termination, eventually exhausting system limits."
+      },
+      {
+        "id": "q2",
+        "question": "What is the most memory-efficient way to process a 5 GB log file in Python?",
+        "options": [
+          "content = f.read(); lines = content.split('\\n')",
+          "lines = f.readlines()",
+          "for line in f: process(line)",
+          "import json; json.load(f)"
+        ],
+        "correctIndex": 2,
+        "explanation": "Iterating over the file object ('for line in f') uses a small buffer and processes line-by-line using negligible constant memory."
+      },
+      {
+        "id": "q3",
+        "question": "Which special dunder methods make an object usable inside a 'with' statement?",
+        "options": [
+          "__start__ and __stop__",
+          "__enter__ and __exit__",
+          "__init__ and __del__",
+          "__open__ and __close__"
+        ],
+        "correctIndex": 1,
+        "explanation": "The context management protocol consists of __enter__() to acquire resources and __exit__() to release them."
+      }
+    ]
+  },
+  {
+    "id": "py-numpy-pandas",
+    "subject": "python",
+    "category": "NumPy and Pandas essentials",
+    "title": "NumPy Vectorization & Pandas Indexing Essentials",
+    "subtitle": "SIMD C-Arrays, Broadcasting Rules, loc vs iloc & Avoiding Iterrows Traps",
+    "difficulty": "Intermediate",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 55,
+    "tags": [
+      "NumPy",
+      "Pandas",
+      "Vectorization",
+      "Broadcasting",
+      "loc vs iloc",
+      "Data Science"
+    ],
+    "quickRecall": {
+      "oneLiner": "NumPy replaces slow Python pointer loops with contiguous C memory buffers and SIMD vectorization; Pandas adds labeled tabular Series and DataFrames.",
+      "simpleAnalogy": "Standard Python lists are like a box of addresses on sticky notes pointing to values scattered all over town (pointer overhead + type checking at every step). NumPy arrays are like eggs packed contiguously in an egg carton: they sit side-by-side in raw RAM, allowing the CPU to process 8 numbers simultaneously in a single clock cycle (vectorization).",
+      "whenToUse": "Numerical computing, matrix algebra, data cleaning, feature engineering, and statistical aggregations on tabular data.",
+      "whyItMatters": "Vectorized operations run 50x-200x faster than pure Python 'for' loops by avoiding GIL lockups and dynamically dispatched type checks.",
+      "keyPoints": [
+        "Vectorization: Applying operations to entire arrays simultaneously without explicit for-loops (e.g. arr * 2).",
+        "Broadcasting: Automatically aligns arrays with compatible shapes (dimensions match or one of them is 1) without copying memory.",
+        "loc vs iloc in Pandas: df.loc uses LABELS (index names, column names); df.iloc uses INTEGER POSITIONS (0, 1, 2...).",
+        "CRITICAL PANDAS TRAP: Never use df.iterrows() in production loops! It creates a slow Series object for every row. Use vectorized columns or np.where().",
+        "Boolean Masking: Filter rows effortlessly: df[df['age'] > 30] runs at compiled C-speed."
+      ],
+      "formulaOrSyntax": {
+        "label": "Pandas loc vs iloc & Vectorized Masking",
+        "codeOrLatex": "# Label-based vs Integer-based\ndf.loc[df['salary'] > 50000, ['name', 'salary']]\ndf.iloc[0:5, 1:3]",
+        "isLatex": false,
+        "language": "python"
+      },
+      "complexity": {
+        "time": "NumPy vectorized math: O(N) at C-speed (50x faster than Python loop)",
+        "space": "O(N) contiguous memory buffer without Python PyObject overhead"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Iterating over a DataFrame using 'for index, row in df.iterrows():' to calculate a new column.",
+        "fix": "Use vectorized operations: df['bonus'] = df['salary'] * 0.1, or df['category'] = np.where(df['age'] > 30, 'Senior', 'Junior').",
+        "interviewTrap": "Question: 'What is the difference between df.loc[0:3] and df.iloc[0:3]?' Answer: df.loc includes the stop label '3' (inclusive). df.iloc uses Python slicing conventions and EXCLUDES index 3 (only returns rows 0, 1, 2)."
+      },
+      "examCheatsheet": [
+        "NumPy arrays: Homogeneous types in contiguous C-memory (SIMD acceleration)",
+        "Broadcasting: Shapes match if dimensions are equal or one dimension is 1",
+        "df.loc = by label (inclusive of end label)",
+        "df.iloc = by integer position (exclusive of stop index)",
+        "Avoid df.iterrows() -> use vectorized pandas operations"
+      ]
+    },
+    "visual": {
+      "type": "architecture",
+      "title": "NumPy Contiguous Memory vs Python Pointer List",
+      "caption": "Python list contains pointers to scattered PyObject wrappers. NumPy array packs raw C primitives in unbroken contiguous memory.",
+      "visualKey": "py-numpy-pandas",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Feature",
+            "Python Native List",
+            "NumPy ndarray",
+            "Pandas DataFrame"
+          ],
+          "rows": [
+            [
+              "Memory Layout",
+              "Pointers to scattered PyObjects",
+              "Contiguous raw bytes in RAM",
+              "2D table of NumPy column arrays"
+            ],
+            [
+              "Element Types",
+              "Heterogeneous (any mix)",
+              "Strictly homogeneous (e.g. float64)",
+              "Homogeneous per column, labeled"
+            ],
+            [
+              "Loop Speed",
+              "Slow (dynamic type checking)",
+              "Blazing (SIMD compiled C-speed)",
+              "Vectorized C-speed operations"
+            ],
+            [
+              "Indexing",
+              "Integer offsets only arr[0]",
+              "Multi-dimensional slicing arr[0, :]",
+              "Label-based (loc) & Position (iloc)"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "NumPy Broadcasting & Vectorized Math",
+      "description": "Watch a 1D scalar get broadcast across a 2D matrix without memory duplication, performing element-wise addition.",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Vectorized Column Math vs Slow Loop in Pandas",
+      "language": "python",
+      "code": "import pandas as pd\nimport numpy as np\n\n# Sample Employee DataFrame\ndata = {\n    'name': ['Alice', 'Bob', 'Charlie', 'Diana'],\n    'age': [24, 38, 45, 29],\n    'salary': [48000, 85000, 110000, 52000]\n}\ndf = pd.DataFrame(data)\n\n# Vectorized boolean filtering & loc indexing\nsenior_staff = df.loc[df['age'] >= 30, ['name', 'salary']]\nprint(\"Senior Staff (loc filter):\\n\", senior_staff)\n\n# Fast vectorized column creation with np.where (Avoid iterrows!)\ndf['tax_bracket'] = np.where(df['salary'] > 75000, 'High', 'Standard')\nprint(\"\\nUpdated DataFrame:\\n\", df[['name', 'salary', 'tax_bracket']])",
+      "input": "4 employees with ages and salaries",
+      "output": "Senior Staff: Bob ($85k), Charlie ($110k) | Tax brackets computed vectorially",
+      "explanation": "Vectorized operations apply instant C-level logic across the entire column without Python loop overhead."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "What is the key difference between df.loc and df.iloc in Pandas?",
+        "options": [
+          "df.loc works on strings; df.iloc works on numbers",
+          "df.loc is label-based (inclusive of stop label); df.iloc is integer position-based (exclusive of stop index)",
+          "df.loc is deprecated in Pandas 2.0",
+          "df.iloc only works on single rows"
+        ],
+        "correctIndex": 1,
+        "explanation": "df.loc uses index and column names/labels, while df.iloc strictly uses 0-based integer positions."
+      },
+      {
+        "id": "q2",
+        "question": "Why is NumPy array computation dramatically faster than Python list iteration?",
+        "options": [
+          "NumPy compresses data with gzip",
+          "NumPy stores homogeneous data in contiguous memory buffers, enabling CPU SIMD vectorization and avoiding dynamic type checks",
+          "NumPy bypasses the operating system kernel",
+          "NumPy runs in the cloud"
+        ],
+        "correctIndex": 1,
+        "explanation": "Contiguous C memory layout allows modern CPUs to fetch entire cache lines and compute multiple mathematical operations per clock cycle."
+      },
+      {
+        "id": "q3",
+        "question": "Why should you avoid using df.iterrows() for calculating new columns in Pandas?",
+        "options": [
+          "It raises a syntax error",
+          "It iterates row-by-row in pure Python, boxing every row into a new Series and running 100x slower than vectorization",
+          "It modifies the original DataFrame irreversibly",
+          "It only works on numeric data"
+        ],
+        "correctIndex": 1,
+        "explanation": "df.iterrows() destroys performance by invoking Python interpreter overhead and Series creation for every single row."
+      }
+    ]
+  }
 ];

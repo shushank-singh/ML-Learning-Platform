@@ -1,0 +1,1180 @@
+[
+  {
+    "id": "module-0",
+    "number": 0,
+    "title": "Machine Learning Foundations",
+    "subtitle": "Taxonomy, Workflows, Datasets & Problem Formulation",
+    "lessonCount": 7,
+    "lessons": [
+      {
+        "id": "ai-ml-dl-foundations",
+        "moduleId": "module-0",
+        "title": "What is AI, ML, and Deep Learning?",
+        "subtitle": "From Handcrafted Symbolic Rules to Inductive Learning from Experience",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 1,
+        "readTimeMinutes": 18
+      },
+      {
+        "id": "ml-types-paradigms",
+        "moduleId": "module-0",
+        "title": "Paradigms of Machine Learning",
+        "subtitle": "Supervised, Unsupervised, Semi-Supervised, and Reinforcement Learning",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 2,
+        "readTimeMinutes": 20
+      },
+      {
+        "id": "regression-vs-classification",
+        "moduleId": "module-0",
+        "title": "Regression vs Classification Tasks",
+        "subtitle": "Continuous Real-Valued Outputs versus Discrete Categorical Decision Boundaries",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 3,
+        "readTimeMinutes": 20
+      },
+      {
+        "id": "features-parameters-hyperparameters",
+        "moduleId": "module-0",
+        "title": "Features, Labels, Parameters & Hyperparameters",
+        "subtitle": "The Internal Learned State of Models versus External Configuration Knobs",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 4,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "train-val-test-splits",
+        "moduleId": "module-0",
+        "title": "Training, Validation, and Test Splits",
+        "subtitle": "Preventing Data Snooping, Leakage, and Achieving Unbiased Generalization",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 5,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "batch-vs-online-learning",
+        "moduleId": "module-0",
+        "title": "Batch vs Online Learning",
+        "subtitle": "Full-Dataset Offline Optimization versus Incremental Streaming Updates",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 6,
+        "readTimeMinutes": 18
+      },
+      {
+        "id": "ml-workflow-problem-formulation",
+        "moduleId": "module-0",
+        "title": "End-to-End ML Workflow & Problem Formulation",
+        "subtitle": "From Translating Business Questions to Objective Losses and Production Monitoring",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 7,
+        "readTimeMinutes": 22
+      }
+    ]
+  },
+  {
+    "id": "module-1",
+    "number": 1,
+    "title": "Mathematics for Machine Learning",
+    "subtitle": "Linear Algebra, Matrix Calculus, Probability & Optimization",
+    "lessonCount": 15,
+    "lessons": [
+      {
+        "id": "scalars-vectors-matrices-tensors",
+        "moduleId": "module-1",
+        "title": "Scalars, Vectors, Matrices, and Tensors",
+        "subtitle": "The Geometric and Algebraic Building Blocks of High-Dimensional Machine Learning",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 1,
+        "readTimeMinutes": 20
+      },
+      {
+        "id": "vector-operations-dot-products",
+        "moduleId": "module-1",
+        "title": "Vector Operations, Dot Products & Projections",
+        "subtitle": "Inner Products, Geometric Angles, Cosine Similarity & Orthogonality",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 2,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "matrix-inverse-rank-determinants",
+        "moduleId": "module-1",
+        "title": "Matrix Inverses, Rank, and Determinants",
+        "subtitle": "Linear Independence, Full Column Rank, Singular Systems & Volume Scaling",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 3,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "eigenvalues-eigenvectors",
+        "moduleId": "module-1",
+        "title": "Eigenvalues and Eigenvectors",
+        "subtitle": "Invariant Directional Axes, Spectral Decomposition & Principal Coordinate Systems",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 4,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "singular-value-decomposition",
+        "moduleId": "module-1",
+        "title": "Singular Value Decomposition (SVD)",
+        "subtitle": "The Universal Factorization Theorem: A = U Sigma V^T, Low-Rank Approximations & Pseudoinverses",
+        "visualizerType": "none",
+        "difficulty": "Advanced",
+        "order": 5,
+        "readTimeMinutes": 28
+      },
+      {
+        "id": "derivatives-chain-rule",
+        "moduleId": "module-1",
+        "title": "Derivatives and the Multivariable Chain Rule",
+        "subtitle": "First Principles, Instantaneous Rate of Change & Computational Graphs",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 6,
+        "readTimeMinutes": 20
+      },
+      {
+        "id": "gradients-jacobian-hessian",
+        "moduleId": "module-1",
+        "title": "Gradients, Jacobians, and Hessian Matrices",
+        "subtitle": "Steepest Ascent Directions, First-Order Jacobians & Second-Order Curvature",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 7,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "gradient-descent-optimization",
+        "moduleId": "module-1",
+        "title": "Gradient Descent & First-Order Optimization",
+        "subtitle": "Iterative Minimization, Learning Rate Bounds, Lipschitz Smoothness & Oscillations",
+        "visualizerType": "gradient-descent",
+        "difficulty": "Beginner",
+        "order": 8,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "convexity-optimization",
+        "moduleId": "module-1",
+        "title": "Convexity and Optimization Theory",
+        "subtitle": "Convex Sets, Jensen's Inequality, Stationary Points & Global Optimality Guarantees",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 9,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "probability-bayes-theorem",
+        "moduleId": "module-1",
+        "title": "Probability Rules & Bayes Theorem",
+        "subtitle": "Kolmogorov Axioms, Conditional Likelihood, Prior Beliefs & Bayesian Inversion",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 10,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "probability-distributions",
+        "moduleId": "module-1",
+        "title": "Discrete and Continuous Probability Distributions",
+        "subtitle": "Bernoulli, Binomial, Poisson, Gaussian & Multivariate Normal Covariance",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 11,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "expectation-variance-covariance",
+        "moduleId": "module-1",
+        "title": "Expectation, Variance, and Covariance Matrices",
+        "subtitle": "Moments of Distributions, Dispersion, Correlation Metrics & Covariance Geometry",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 12,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "sampling-central-limit-theorem",
+        "moduleId": "module-1",
+        "title": "Sampling and the Central Limit Theorem",
+        "subtitle": "Law of Large Numbers, Asymptotic Normality & Standard Error of the Mean",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 13,
+        "readTimeMinutes": 20
+      },
+      {
+        "id": "mle-map-estimation",
+        "moduleId": "module-1",
+        "title": "Maximum Likelihood (MLE) & MAP Estimation",
+        "subtitle": "Frequentist Log-Likelihood vs Bayesian Priors: The Bridge to Regularization",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 14,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "entropy-cross-entropy-kl-divergence",
+        "moduleId": "module-1",
+        "title": "Entropy, Cross-Entropy, and KL Divergence",
+        "subtitle": "Information Theory Foundations, Surprise, Relative Entropy & Classification Loss",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 15,
+        "readTimeMinutes": 25
+      }
+    ]
+  },
+  {
+    "id": "module-2",
+    "number": 2,
+    "title": "Data Preprocessing and Feature Engineering",
+    "subtitle": "Cleaning, Encoders, Scalers, Pipelines & Leakage Prevention",
+    "lessonCount": 13,
+    "lessons": [
+      {
+        "id": "eda-inspection",
+        "moduleId": "module-2",
+        "title": "Exploratory Data Analysis & Statistical Inspection",
+        "subtitle": "Summary Statistics, Skewness, Kurtosis, Correlation Heatmaps & Visual Diagnosis",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 1,
+        "readTimeMinutes": 20
+      },
+      {
+        "id": "missing-values-duplicates",
+        "moduleId": "module-2",
+        "title": "Missing Data Mechanisms & Imputation Strategies",
+        "subtitle": "MCAR, MAR, MNAR, KNNImputer, Iterative MICE & Deduplication Protocols",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 2,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "outlier-detection-treatment",
+        "moduleId": "module-2",
+        "title": "Outlier Detection & Treatment Techniques",
+        "subtitle": "Tukey IQR Fences, Z-Scores, Modified Z-Scores (MAD), Isolation Forests & Winsorization",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 3,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "categorical-encoding",
+        "moduleId": "module-2",
+        "title": "Categorical Feature Encoding",
+        "subtitle": "Nominal vs Ordinal, One-Hot Encoding, Dummy Variable Trap & Target Encoding with Smoothing",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 4,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "feature-scaling-normalization",
+        "moduleId": "module-2",
+        "title": "Feature Scaling & Normalization",
+        "subtitle": "StandardScaler, MinMaxScaler, RobustScaler, Normalizer & Algorithm Sensitivity",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 5,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "train-val-test-splitting",
+        "moduleId": "module-2",
+        "title": "Train, Validation & Test Splitting Strategies",
+        "subtitle": "Stratified Splits, TimeSeriesSplit, GroupKFold & Empirical Risk Protocols",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 6,
+        "readTimeMinutes": 20
+      },
+      {
+        "id": "data-leakage-prevention",
+        "moduleId": "module-2",
+        "title": "Data Leakage: Types, Detection & Prevention",
+        "subtitle": "Target Leakage, Preprocessing Contamination & Temporal Lookahead Bias",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 7,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "feature-selection-extraction",
+        "moduleId": "module-2",
+        "title": "Feature Selection & Extraction Methods",
+        "subtitle": "Filter Methods, Wrapper RFE, Embedded Lasso & Mutual Information",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 8,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "polynomial-features",
+        "moduleId": "module-2",
+        "title": "Polynomial Features & Interaction Terms",
+        "subtitle": "Basis Function Expansion, Cross-Terms, Runge's Phenomenon & Dimensionality Control",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 9,
+        "readTimeMinutes": 20
+      },
+      {
+        "id": "datetime-text-features",
+        "moduleId": "module-2",
+        "title": "Date/Time and Basic Text Feature Engineering",
+        "subtitle": "Cyclical Periodic Sin/Cos Transforms, Bag-of-Words & TF-IDF Extraction",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 10,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "imbalanced-datasets-smote",
+        "moduleId": "module-2",
+        "title": "Imbalanced Datasets & SMOTE Resampling",
+        "subtitle": "The Accuracy Paradox, Synthetic Oversampling, Borderline SMOTE & Cost-Sensitive Weights",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 11,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "columntransformer-pipelines",
+        "moduleId": "module-2",
+        "title": "Scikit-Learn Pipelines & ColumnTransformer",
+        "subtitle": "Composing Heterogeneous Preprocessing for Mixed Numerical and Categorical Tables",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 12,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "cross-validation-foundations",
+        "moduleId": "module-2",
+        "title": "Cross-Validation Protocols & Generalization Variance",
+        "subtitle": "K-Fold, Repeated Stratified K-Fold, LOOCV & Estimating Performance Stability",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 13,
+        "readTimeMinutes": 22
+      }
+    ]
+  },
+  {
+    "id": "module-3",
+    "number": 3,
+    "title": "Linear and Regularized Regression",
+    "subtitle": "Ordinary Least Squares, Metrics, Residuals, Ridge, Lasso & Elastic Net",
+    "lessonCount": 10,
+    "lessons": [
+      {
+        "id": "linear-regression",
+        "moduleId": "module-3",
+        "title": "Simple & Multiple Linear Regression: Ordinary Least Squares (OLS)",
+        "subtitle": "From the Geometry of Projections to the Normal Equation and Gradient Descent",
+        "visualizerType": "linear-regression",
+        "difficulty": "Beginner",
+        "order": 1,
+        "readTimeMinutes": 28
+      },
+      {
+        "id": "multiple-linear-regression",
+        "moduleId": "module-3",
+        "title": "Multiple Linear Regression & Hyperplane Geometry",
+        "subtitle": "Partial Slopes, Matrix Formulation y = Xw + eps & The Gauss-Markov Theorem",
+        "visualizerType": "linear-regression",
+        "difficulty": "Intermediate",
+        "order": 2,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "regression-metrics",
+        "moduleId": "module-3",
+        "title": "Regression Evaluation Metrics: MSE, MAE, RMSE & R²",
+        "subtitle": "Residual Sum of Squares, Scale-Dependent vs Relative Errors & Adjusted R²",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 3,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "residual-analysis-assumptions",
+        "moduleId": "module-3",
+        "title": "Residual Diagnostics & Gauss-Markov Assumptions",
+        "subtitle": "Homoscedasticity, Independence, Normality of Residuals & Q-Q Plots",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 4,
+        "readTimeMinutes": 25
+      },
+      {
+        "id": "multicollinearity-vif",
+        "moduleId": "module-3",
+        "title": "Multicollinearity & Variance Inflation Factor (VIF)",
+        "subtitle": "Correlated Predictors, Unstable Inversions & Inflated Coefficient Variances",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 5,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "polynomial-regression",
+        "moduleId": "module-3",
+        "title": "Polynomial Regression & Non-Linear Fits",
+        "subtitle": "Capturing Curvature via Basis Expansion & Managing Boundary Runge Oscillations",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 6,
+        "readTimeMinutes": 20
+      },
+      {
+        "id": "ridge-regression",
+        "moduleId": "module-3",
+        "title": "Ridge Regression & L2 Regularization",
+        "subtitle": "Tikhonov Regularization, Weight Shrinkage & Conditioning Ill-Posed Inverses",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 7,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "lasso-regression",
+        "moduleId": "module-3",
+        "title": "Lasso Regression & L1 Regularization",
+        "subtitle": "L1 Norm Geometry, Subgradient Calculus, Coordinate Descent & Sparse Feature Selection",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 8,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "elastic-net",
+        "moduleId": "module-3",
+        "title": "Elastic Net Regression",
+        "subtitle": "Convex Combination of L1 and L2 Regularization & The Grouping Effect",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 9,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "bias-variance-tradeoff",
+        "moduleId": "module-3",
+        "title": "The Bias-Variance Tradeoff & Generalization Error",
+        "subtitle": "Expected Prediction Error Decomposition: Bias², Variance & Irreducible Noise",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 10,
+        "readTimeMinutes": 24
+      }
+    ]
+  },
+  {
+    "id": "module-4",
+    "number": 4,
+    "title": "Classification Algorithms",
+    "subtitle": "Logistic Regression, KNN, Decision Trees, Naive Bayes & Support Vector Machines",
+    "lessonCount": 10,
+    "lessons": [
+      {
+        "id": "logistic-regression",
+        "moduleId": "module-4",
+        "title": "Logistic Regression & Maximum Likelihood Estimation",
+        "subtitle": "From Odd Ratios and the Sigmoid Link to Binary Cross-Entropy Optimization",
+        "visualizerType": "logistic-boundary",
+        "difficulty": "Beginner",
+        "order": 1,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "log-loss-cross-entropy",
+        "moduleId": "module-4",
+        "title": "Binary Cross-Entropy & Log Loss Optimization",
+        "subtitle": "Convexity, Non-Saturating Gradients & Vectorized Parameter Calculus",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 2,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "multiclass-softmax",
+        "moduleId": "module-4",
+        "title": "Multiclass Classification & Softmax Regression",
+        "subtitle": "The Softmax Function, Categorical Cross-Entropy, OvR vs OvO Decomposition",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 3,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "k-nearest-neighbors",
+        "moduleId": "module-4",
+        "title": "K-Nearest Neighbors (KNN)",
+        "subtitle": "Non-Parametric Memory-Based Learning, Distance Geometries & KD-Tree Search",
+        "visualizerType": "knn",
+        "difficulty": "Beginner",
+        "order": 4,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "decision-trees",
+        "moduleId": "module-4",
+        "title": "Decision Trees & The CART Algorithm",
+        "subtitle": "Recursive Binary Partitioning, Orthogonal Decision Regions & Tree Pruning",
+        "visualizerType": "decision-tree",
+        "difficulty": "Beginner",
+        "order": 5,
+        "readTimeMinutes": 25
+      },
+      {
+        "id": "gini-entropy-information-gain",
+        "moduleId": "module-4",
+        "title": "Gini Impurity, Entropy & Information Gain",
+        "subtitle": "Quantifying Node Purity, Gini vs Entropy, Information Gain & Variance Reduction",
+        "visualizerType": "decision-tree",
+        "difficulty": "Intermediate",
+        "order": 6,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "naive-bayes",
+        "moduleId": "module-4",
+        "title": "Naive Bayes Classifiers",
+        "subtitle": "The Conditional Independence Assumption, Gaussian NB & Laplace Smoothing",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 7,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "support-vector-machines",
+        "moduleId": "module-4",
+        "title": "Support Vector Machines (SVM) & Maximum Margin",
+        "subtitle": "Geometric Margin 2/||w||, Support Vectors, Slack Variables & Hinge Loss",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 8,
+        "readTimeMinutes": 28
+      },
+      {
+        "id": "svm-kernel-trick",
+        "moduleId": "module-4",
+        "title": "The Kernel Trick & Non-Linear SVMs",
+        "subtitle": "Mercer's Condition, RBF Gaussian Kernels & Infinite-Dimensional Hilbert Spaces",
+        "visualizerType": "none",
+        "difficulty": "Advanced",
+        "order": 9,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "probability-calibration",
+        "moduleId": "module-4",
+        "title": "Probability Calibration & Reliability Diagrams",
+        "subtitle": "Assessing Calibration, Brier Score, Platt Scaling & Isotonic Regression",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 10,
+        "readTimeMinutes": 22
+      }
+    ]
+  },
+  {
+    "id": "module-5",
+    "number": 5,
+    "title": "Model Evaluation and Selection",
+    "subtitle": "Confusion Matrices, ROC-AUC, PR Curves, Hyperparameter Tuning & Cost Matrices",
+    "lessonCount": 7,
+    "lessons": [
+      {
+        "id": "confusion-matrix-metrics",
+        "moduleId": "module-5",
+        "title": "Confusion Matrix, Precision, Recall & Specificity",
+        "subtitle": "The 2x2 Contingency Table, Type I & Type II Errors & Base-Rate Sensitivity",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 1,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "f1-score-fbeta",
+        "moduleId": "module-5",
+        "title": "F1-Score, F-Beta & The Harmonic Mean",
+        "subtitle": "Mathematical Justification of Harmonic Means & Weighted Asymmetric Priorities",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 2,
+        "readTimeMinutes": 20
+      },
+      {
+        "id": "roc-auc-curve",
+        "moduleId": "module-5",
+        "title": "Receiver Operating Characteristic (ROC) & AUC",
+        "subtitle": "TPR vs FPR Trajectories, Threshold Invariance & Probabilistic Ranking Meaning",
+        "visualizerType": "metrics-roc",
+        "difficulty": "Beginner",
+        "order": 3,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "precision-recall-curve",
+        "moduleId": "module-5",
+        "title": "Precision-Recall Curves & Average Precision",
+        "subtitle": "Why PR Curves Outperform ROC Under Extreme Imbalance & Average Precision (AP)",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 4,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "hyperparameter-tuning",
+        "moduleId": "module-5",
+        "title": "Hyperparameter Tuning: Grid, Random & Bayesian Optimization",
+        "subtitle": "Exhaustive Grids, Bergstra's Random Theorem & Gaussian Process Bayesian Optimization",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 5,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "learning-validation-curves",
+        "moduleId": "module-5",
+        "title": "Learning & Validation Curves Diagnostic Protocols",
+        "subtitle": "Diagnosing High Bias vs High Variance via Sample Size Scaling",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 6,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "threshold-tuning-cost-matrix",
+        "moduleId": "module-5",
+        "title": "Classification Threshold Tuning & Cost Matrix Optimization",
+        "subtitle": "Cost-Sensitive Decision Boundaries & Minimizing Expected Dollar Loss",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 7,
+        "readTimeMinutes": 24
+      }
+    ]
+  },
+  {
+    "id": "module-6",
+    "number": 6,
+    "title": "Ensemble Learning and Boosting",
+    "subtitle": "Bagging, Random Forests, AdaBoost, Gradient Boosting, XGBoost, Stacking & SHAP",
+    "lessonCount": 9,
+    "lessons": [
+      {
+        "id": "ensemble-foundations",
+        "moduleId": "module-6",
+        "title": "Ensemble Foundations & Wisdom of Crowds",
+        "subtitle": "Condorcet Jury Theorem, Bias-Variance Reduction & Diversity",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 1,
+        "readTimeMinutes": 20
+      },
+      {
+        "id": "bagging-bootstrap-aggregating",
+        "moduleId": "module-6",
+        "title": "Bagging & Out-of-Bag (OOB) Evaluation",
+        "subtitle": "Bootstrap Sampling with Replacement & Asymptotic OOB Bounds",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 2,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "random-forests",
+        "moduleId": "module-6",
+        "title": "Random Forests & Tree Decorrelation",
+        "subtitle": "Feature Subspace Sampling, Tree Decorrelation & Variance Slashing",
+        "visualizerType": "decision-tree",
+        "difficulty": "Intermediate",
+        "order": 3,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "boosting-fundamentals",
+        "moduleId": "module-6",
+        "title": "Boosting Fundamentals & Sequential Learning",
+        "subtitle": "Converting Weak Learners to Strong Learners via Stage-Wise Additive Modeling",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 4,
+        "readTimeMinutes": 20
+      },
+      {
+        "id": "adaboost",
+        "moduleId": "module-6",
+        "title": "AdaBoost: Adaptive Boosting & Exponential Loss",
+        "subtitle": "Sample Weight Dynamics, Learner Competence Alpha & Exponential Loss Minimization",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 5,
+        "readTimeMinutes": 25
+      },
+      {
+        "id": "gradient-boosting",
+        "moduleId": "module-6",
+        "title": "Gradient Boosted Decision Trees (GBDT)",
+        "subtitle": "Functional Gradient Descent, Pseudo-Residuals & Terminal Leaf Optimization",
+        "visualizerType": "gradient-descent",
+        "difficulty": "Advanced",
+        "order": 6,
+        "readTimeMinutes": 28
+      },
+      {
+        "id": "xgboost-lightgbm-catboost",
+        "moduleId": "module-6",
+        "title": "Modern Gradient Boosters: XGBoost, LightGBM & CatBoost",
+        "subtitle": "Second-Order Taylor Expansions, Histogram Binning & Categorical Encodings",
+        "visualizerType": "none",
+        "difficulty": "Advanced",
+        "order": 7,
+        "readTimeMinutes": 30
+      },
+      {
+        "id": "voting-stacking-blending",
+        "moduleId": "module-6",
+        "title": "Voting, Stacking & Blending Architectures",
+        "subtitle": "Multi-Model Meta-Learning, Out-of-Fold Predictions & Blending Schemes",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 8,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "feature-importance-shap",
+        "moduleId": "module-6",
+        "title": "Feature Importance & TreeSHAP Interpretability",
+        "subtitle": "MDI Impurity Bias, Permutation Importance & Cooperative Game-Theoretic Shapley Values",
+        "visualizerType": "none",
+        "difficulty": "Advanced",
+        "order": 9,
+        "readTimeMinutes": 26
+      }
+    ]
+  },
+  {
+    "id": "module-7",
+    "number": 7,
+    "title": "Unsupervised Learning & Dimensionality Reduction",
+    "subtitle": "K-Means, Hierarchical, DBSCAN, GMM, PCA, t-SNE, UMAP & Anomaly Detection",
+    "lessonCount": 9,
+    "lessons": [
+      {
+        "id": "clustering-foundations",
+        "moduleId": "module-7",
+        "title": "Clustering Foundations & Partitioning Principles",
+        "subtitle": "Within-Cluster Sum of Squares, Between-Cluster Variance & Total Energy Conservation",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 1,
+        "readTimeMinutes": 20
+      },
+      {
+        "id": "k-means-clustering",
+        "moduleId": "module-7",
+        "title": "K-Means Clustering & K-Means++ Seeding",
+        "subtitle": "Lloyd’s Coordinate Descent, Voronoi Partitions & D(x)^2 Seeding Guarantees",
+        "visualizerType": "kmeans",
+        "difficulty": "Beginner",
+        "order": 2,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "choosing-k-clustering-metrics",
+        "moduleId": "module-7",
+        "title": "Choosing K & Cluster Validation Metrics",
+        "subtitle": "Elbow Inertia Heuristics, Silhouette Analysis & Calinski-Harabasz Dispersion",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 3,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "hierarchical-clustering",
+        "moduleId": "module-7",
+        "title": "Hierarchical Agglomerative Clustering & Linkage",
+        "subtitle": "Bottom-Up Merging, Dendrogram Tree Slicing & Ward’s Minimum Variance Linkage",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 4,
+        "readTimeMinutes": 25
+      },
+      {
+        "id": "dbscan-clustering",
+        "moduleId": "module-7",
+        "title": "DBSCAN: Density-Based Spatial Clustering",
+        "subtitle": "Density Reachability, Epsilon Neighborhoods & Non-Spherical Manifolds",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 5,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "gaussian-mixture-models",
+        "moduleId": "module-7",
+        "title": "Gaussian Mixture Models & Expectation-Maximization",
+        "subtitle": "Probabilistic Soft Clustering, Covariance Topologies & The EM Algorithm",
+        "visualizerType": "none",
+        "difficulty": "Advanced",
+        "order": 6,
+        "readTimeMinutes": 28
+      },
+      {
+        "id": "pca-principal-component-analysis",
+        "moduleId": "module-7",
+        "title": "Principal Component Analysis (PCA)",
+        "subtitle": "Variance Maximization, Covariance Eigendecomposition & SVD Equivalence",
+        "visualizerType": "pca",
+        "difficulty": "Intermediate",
+        "order": 7,
+        "readTimeMinutes": 28
+      },
+      {
+        "id": "tsne-umap",
+        "moduleId": "module-7",
+        "title": "Non-Linear Manifold Learning: t-SNE & UMAP",
+        "subtitle": "Preserving Local Topology, Student-t Heavy Tails & Fuzzy Simplicial Sets",
+        "visualizerType": "none",
+        "difficulty": "Advanced",
+        "order": 8,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "anomaly-detection",
+        "moduleId": "module-7",
+        "title": "Anomaly Detection: Isolation Forest & LOF",
+        "subtitle": "Recursive Random Partitioning, Path Length h(x) & Local Reachability Density",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 9,
+        "readTimeMinutes": 24
+      }
+    ]
+  },
+  {
+    "id": "module-8",
+    "number": 8,
+    "title": "Advanced Classical ML & Real-World Challenges",
+    "subtitle": "Feature Selection, Explainable AI, Cost-Sensitive Learning, Fairness, Drift & Time Series",
+    "lessonCount": 6,
+    "lessons": [
+      {
+        "id": "advanced-feature-selection",
+        "moduleId": "module-8",
+        "title": "Advanced Feature Selection: Filter, Wrapper, Embedded & Boruta",
+        "subtitle": "Mutual Information, RFE Elimination & The Boruta Shadow Feature Algorithm",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 1,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "explainable-ai-shap-lime",
+        "moduleId": "module-8",
+        "title": "Explainable AI (XAI): LIME Local Surrogates & SHAP Interactions",
+        "subtitle": "Local Surrogate Approximations, Perturbation Kernels & Higher-Order SHAP Interactions",
+        "visualizerType": "none",
+        "difficulty": "Advanced",
+        "order": 2,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "cost-sensitive-learning",
+        "moduleId": "module-8",
+        "title": "Cost-Sensitive Learning & Asymmetric Error Optimization",
+        "subtitle": "Business Cost Matrices, Bayes Decision Thresholds & Cost-Proportionate Weighting",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 3,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "fairness-bias-ethics",
+        "moduleId": "module-8",
+        "title": "Algorithmic Fairness, Bias & Ethical Machine Learning",
+        "subtitle": "Demographic Parity, Equalized Odds & The Mathematical Impossibility of Fairness",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 4,
+        "readTimeMinutes": 25
+      },
+      {
+        "id": "data-and-concept-drift",
+        "moduleId": "module-8",
+        "title": "Data Drift, Concept Drift & Model Monitoring",
+        "subtitle": "Covariate Shift, Concept Drift, Kolmogorov-Smirnov Tests & Population Stability Index",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 5,
+        "readTimeMinutes": 25
+      },
+      {
+        "id": "time-series-machine-learning",
+        "moduleId": "module-8",
+        "title": "Time Series Machine Learning: Lags, Windows & Leakage Prevention",
+        "subtitle": "Autoregressive Lags, Rolling Statistics & Purged TimeSeriesSplit Validation",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 6,
+        "readTimeMinutes": 26
+      }
+    ]
+  },
+  {
+    "id": "module-9",
+    "number": 9,
+    "title": "Neural Networks & Deep Learning Foundations",
+    "subtitle": "Perceptrons, Backpropagation, Optimizers, Regularization & PyTorch",
+    "lessonCount": 10,
+    "lessons": [
+      {
+        "id": "perceptron-mcp",
+        "moduleId": "module-9",
+        "title": "The Perceptron & McCulloch-Pitts Neuron",
+        "subtitle": "Threshold Logic, Rosenblatt’s Learning Rule & The XOR Linear Separability Crisis",
+        "visualizerType": "none",
+        "difficulty": "Beginner",
+        "order": 1,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "multilayer-perceptron-ann",
+        "moduleId": "module-9",
+        "title": "Multi-Layer Perceptrons & Universal Approximation",
+        "subtitle": "Hidden Layers, Non-Linear Transformations & The Cybenko-Hornik Theorem",
+        "visualizerType": "neural-net",
+        "difficulty": "Beginner",
+        "order": 2,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "activation-functions",
+        "moduleId": "module-9",
+        "title": "Activation Functions: Sigmoid, Tanh, ReLU & GELU",
+        "subtitle": "Mathematical Properties, Analytical Derivatives & Vanishing Gradient Dynamics",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 3,
+        "readTimeMinutes": 22
+      },
+      {
+        "id": "backpropagation-derivation",
+        "moduleId": "module-9",
+        "title": "Backpropagation: Complete Vector & Matrix Derivation",
+        "subtitle": "Multivariate Chain Rule, Error Tensors Delta & Vectorized Layer Gradients",
+        "visualizerType": "none",
+        "difficulty": "Advanced",
+        "order": 4,
+        "readTimeMinutes": 28
+      },
+      {
+        "id": "neural-loss-functions",
+        "moduleId": "module-9",
+        "title": "Loss Functions for Deep Learning: Cross-Entropy & Focal Loss",
+        "subtitle": "Categorical Cross-Entropy, Logit Cancellation & Focal Loss for Extreme Imbalance",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 5,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "optimization-algorithms",
+        "moduleId": "module-9",
+        "title": "Deep Learning Optimizers: SGD, Momentum, RMSprop & Adam",
+        "subtitle": "Exponentially weighted moving averages, physical momentum, adaptive per-parameter learning rates, and Adam bias corrections.",
+        "visualizerType": "gradient-descent",
+        "difficulty": "Advanced",
+        "order": 6,
+        "readTimeMinutes": 28
+      },
+      {
+        "id": "regularization-in-deep-learning",
+        "moduleId": "module-9",
+        "title": "Regularization: Dropout, Weight Decay & Normalization",
+        "subtitle": "Inverted Dropout, L2 weight decay equivalence, Batch Normalization mini-batch statistics, and Layer Normalization in Transformers.",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 7,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "vanishing-exploding-gradients",
+        "moduleId": "module-9",
+        "title": "Vanishing & Exploding Gradients & Initialization",
+        "subtitle": "Jacobian product chains, saturation analysis, Xavier/Glorot variance derivation, He/Kaiming initialization for ReLU, and gradient clipping.",
+        "visualizerType": "none",
+        "difficulty": "Advanced",
+        "order": 8,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "pytorch-fundamentals",
+        "moduleId": "module-9",
+        "title": "PyTorch Fundamentals: Tensors, Autograd & Graphs",
+        "subtitle": "Dynamic Computation Graphs (define-by-run), tensor memory strides, automatic reverse-mode differentiation, and Vector-Jacobian Products.",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 9,
+        "readTimeMinutes": 24
+      },
+      {
+        "id": "pytorch-training-loop",
+        "moduleId": "module-9",
+        "title": "Building End-to-End Neural Networks in PyTorch",
+        "subtitle": "nn.Module architecture, DataLoader multi-processing, the canonical 5-step training loop, validation protocols, and model checkpointing.",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 10,
+        "readTimeMinutes": 26
+      }
+    ]
+  },
+  {
+    "id": "module-10",
+    "number": 10,
+    "title": "Machine Learning Engineering & Production",
+    "subtitle": "FastAPI, Docker, MLflow, Drift Monitoring & CI/CD Pipelines",
+    "lessonCount": 6,
+    "lessons": [
+      {
+        "id": "model-serialization-serving",
+        "moduleId": "module-10",
+        "title": "Model Serialization: Pickle, Joblib & ONNX",
+        "subtitle": "Security Vulnerabilities, Memory-Mapped I/O & Universal Inference Runtimes",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 1,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "production-fastapi-service",
+        "moduleId": "module-10",
+        "title": "Production ML APIs with FastAPI & Pydantic",
+        "subtitle": "Async Event Loops, Strict Schema Validation, Lifespan Handlers & Sub-50ms SLAs",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 2,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "docker-containerization-ml",
+        "moduleId": "module-10",
+        "title": "Docker Containerization for ML Deployments",
+        "subtitle": "Multi-Stage Builds, Minimal Base Images, Non-Root Security & CUDA Acceleration",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 3,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "model-versioning-mlflow",
+        "moduleId": "module-10",
+        "title": "Experiment Tracking & Model Registries with MLflow",
+        "subtitle": "Metric Lineage, Artifact Stores, Run Reproducibility & Staging-to-Production Lifecycle",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 4,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "monitoring-data-drift-evidently",
+        "moduleId": "module-10",
+        "title": "Production Monitoring: Data Drift & Concept Drift",
+        "subtitle": "Kolmogorov-Smirnov Tests, Population Stability Index (PSI) & Drift Alerting",
+        "visualizerType": "none",
+        "difficulty": "Intermediate",
+        "order": 5,
+        "readTimeMinutes": 26
+      },
+      {
+        "id": "cicd-for-machine-learning",
+        "moduleId": "module-10",
+        "title": "CI/CD Pipelines & Continuous Training for ML",
+        "subtitle": "The ML Testing Pyramid, GitHub Actions Workflows, Regression Gates & Canary Releases",
+        "visualizerType": "none",
+        "difficulty": "Advanced",
+        "order": 6,
+        "readTimeMinutes": 28
+      }
+    ]
+  },
+  {
+    "id": "module-11",
+    "number": 11,
+    "title": "Real-World Capstone Project Workspace",
+    "subtitle": "5 End-to-End Guided Industry Capstones from Data to Deployment",
+    "lessonCount": 5,
+    "lessons": [
+      {
+        "id": "project-house-price-prediction",
+        "moduleId": "module-11",
+        "title": "Capstone 1: Ames Real Estate Valuation System",
+        "subtitle": "Advanced Tabular Regression, Skewness Transformations, ElasticNet & LightGBM",
+        "visualizerType": "none",
+        "difficulty": "Advanced",
+        "order": 1,
+        "readTimeMinutes": 32
+      },
+      {
+        "id": "project-customer-churn",
+        "moduleId": "module-11",
+        "title": "Capstone 2: Telecom Customer Churn & Retention Analytics",
+        "subtitle": "Cost-Sensitive XGBoost, Precision-Recall Thresholding & Financial ROI Optimization",
+        "visualizerType": "none",
+        "difficulty": "Advanced",
+        "order": 2,
+        "readTimeMinutes": 30
+      },
+      {
+        "id": "project-credit-risk",
+        "moduleId": "module-11",
+        "title": "Capstone 3: Financial Loan Default & Credit Risk Scoring",
+        "subtitle": "Imbalanced Data, Platt Probability Calibration & Basel Expected Loss Minimization",
+        "visualizerType": "none",
+        "difficulty": "Advanced",
+        "order": 3,
+        "readTimeMinutes": 32
+      },
+      {
+        "id": "project-customer-sentiment",
+        "moduleId": "module-11",
+        "title": "Capstone 4: E-Commerce Review NLP Sentiment Classifier",
+        "subtitle": "TF-IDF N-Grams, LinearSVC vs Fine-Tuned DistilBERT & Sub-20ms Production Latency",
+        "visualizerType": "none",
+        "difficulty": "Advanced",
+        "order": 4,
+        "readTimeMinutes": 30
+      },
+      {
+        "id": "project-prediction-api",
+        "moduleId": "module-11",
+        "title": "Capstone 5: Production Prediction API & Monitoring Service",
+        "subtitle": "FastAPI, Redis Caching, Docker Containerization & Evidently AI Drift Observability",
+        "visualizerType": "none",
+        "difficulty": "Advanced",
+        "order": 5,
+        "readTimeMinutes": 32
+      }
+    ]
+  }
+]

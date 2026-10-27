@@ -1437,4 +1437,1195 @@ print("Max Knapsack Value:", knapsack_01(weights, values, max_weight)) # 22`,
       },
     ],
   },
+
+  {
+    "id": "dsa-arrays-kadanes",
+    "subject": "dsa",
+    "category": "Arrays and Strings",
+    "title": "Kadane's Algorithm for Maximum Subarray Sum",
+    "subtitle": "Greedy/DP Optimization in Single Pass O(N) Time and O(1) Extra Space",
+    "difficulty": "Beginner",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 45,
+    "tags": [
+      "Arrays",
+      "Kadane",
+      "Dynamic Programming",
+      "Sliding Window",
+      "Subarray"
+    ],
+    "quickRecall": {
+      "oneLiner": "Kadane's Algorithm finds the contiguous subarray with the largest sum in O(N) time by deciding at each step whether to extend the current subarray or start fresh.",
+      "simpleAnalogy": "Carrying a streak in a game: at every new level, if your accumulated score drops below zero, it is an active penalty (dead weight). You are better off resetting your streak to zero and starting fresh from the current level rather than carrying negative debt into the future!",
+      "whenToUse": "Maximum subarray sum, maximum product subarray (with sign tracking), circular subarray sum, and stock buying single-transaction profit.",
+      "whyItMatters": "Transforms a naive O(N³) triple-nested brute-force or O(N²) pair-sum algorithm into a blazing fast O(N) single-pass scan.",
+      "keyPoints": [
+        "Core Recurrence: current_sum = max(num, current_sum + num). At index i, either add num to existing streak or start a brand new subarray at num.",
+        "Global Tracking: max_sum = max(max_sum, current_sum). Updated at every step.",
+        "All-Negative Edge Case: If the array contains only negative numbers (e.g. [-5, -2, -8]), initialize max_sum = arr[0] (NOT 0!), yielding -2.",
+        "Single Pass: Processes each element exactly once from left to right.",
+        "Subarray vs Subsequence: Subarrays MUST be contiguous (touching elements without gaps); subsequences do not need to be contiguous."
+      ],
+      "formulaOrSyntax": {
+        "label": "Kadane's Dynamic Programming Recurrence",
+        "codeOrLatex": "\\text{curr}[i] = \\max(x_i, \\text{curr}[i-1] + x_i), \\quad \\text{max\\_so\\_far} = \\max(\\text{max\\_so\\_far}, \\text{curr}[i])",
+        "isLatex": true
+      },
+      "complexity": {
+        "time": "O(N) single pass through array of length N",
+        "space": "O(1) auxiliary space (tracks only two scalar variables)"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Initializing max_sum = 0 instead of arr[0] or -Infinity.",
+        "fix": "If all numbers are negative (e.g. [-3, -1, -4]), initializing with 0 erroneously outputs 0, when the true maximum subarray sum is -1!",
+        "interviewTrap": "Question: 'How can you return the start and end indices of the maximum subarray?' Answer: Track a temp_start pointer that resets to i whenever current_sum resets to num[i]. Update best_start and best_end whenever max_sum is updated."
+      },
+      "examCheatsheet": [
+        "curr = max(x, curr + x)",
+        "max_so_far = max(max_so_far, curr)",
+        "Time: O(N), Space: O(1)",
+        "Always initialize with arr[0], never 0 (handles all-negative arrays)"
+      ]
+    },
+    "visual": {
+      "type": "diagram",
+      "title": "Kadane's Subarray Streak Decision Tree",
+      "caption": "At each element, evaluate: does adding x improve current_sum, or is starting fresh at x strictly better?",
+      "visualKey": "dsa-arrays-kadanes",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Index i",
+            "Array Value",
+            "curr_sum = max(x, curr + x)",
+            "max_so_far",
+            "Decision"
+          ],
+          "rows": [
+            [
+              "0",
+              "-2",
+              "-2",
+              "-2",
+              "Start at index 0"
+            ],
+            [
+              "1",
+              "1",
+              "1",
+              "1",
+              "Discard -2 debt, start fresh at 1"
+            ],
+            [
+              "2",
+              "-3",
+              "-2",
+              "1",
+              "Extend subarray (curr drops to -2)"
+            ],
+            [
+              "3",
+              "4",
+              "4",
+              "4",
+              "Discard negative debt, start fresh at 4"
+            ],
+            [
+              "4",
+              "-1",
+              "3",
+              "4",
+              "Extend subarray (sum = 3)"
+            ],
+            [
+              "5",
+              "2",
+              "5",
+              "5",
+              "Extend subarray (sum = 5) -> New Best!"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "Kadane's Running Sum Traversal Trace",
+      "description": "Step through array [-2, 1, -3, 4, -1, 2, 1, -5, 4], watching curr_sum reset at negative drops and peak at 6.",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Kadane's Algorithm in Python with Index Tracking",
+      "language": "python",
+      "code": "def max_subarray(nums):\n    if not nums:\n        return 0, []\n\n    max_sum = current_sum = nums[0]\n    start = end = temp_start = 0\n\n    for i in range(1, len(nums)):\n        num = nums[i]\n        if num > current_sum + num:\n            current_sum = num\n            temp_start = i\n        else:\n            current_sum += num\n\n        if current_sum > max_sum:\n            max_sum = current_sum\n            start = temp_start\n            end = i\n\n    return max_sum, nums[start:end + 1]\n\narr = [-2, 1, -3, 4, -1, 2, 1, -5, 4]\nmax_val, subarray = max_subarray(arr)\nprint(f\"Maximum Subarray Sum: {max_val}\")\nprint(f\"Optimal Subarray Elements: {subarray}\")",
+      "input": "nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]",
+      "output": "Maximum Subarray Sum: 6 | Optimal Subarray Elements: [4, -1, 2, 1]",
+      "explanation": "Contiguous subarray [4, -1, 2, 1] achieves the maximum sum of 6 in a single linear pass."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "What is the optimal time and space complexity of Kadane's Algorithm?",
+        "options": [
+          "O(N log N) time, O(N) space",
+          "O(N) time, O(1) space",
+          "O(N²) time, O(1) space",
+          "O(1) time, O(N) space"
+        ],
+        "correctIndex": 1,
+        "explanation": "Kadane scans the array once from left to right using only two tracking scalar variables, achieving O(N) time and O(1) auxiliary space."
+      },
+      {
+        "id": "q2",
+        "question": "If the input array is [-8, -3, -6, -2, -5], what will Kadane's algorithm output when properly initialized?",
+        "options": [
+          "0",
+          "-2",
+          "-8",
+          "-24"
+        ],
+        "correctIndex": 1,
+        "explanation": "Initializing with arr[0] correctly finds -2 as the maximum single-element subarray."
+      },
+      {
+        "id": "q3",
+        "question": "When does Kadane's algorithm decide to start a new subarray rather than extending the existing one?",
+        "options": [
+          "When the current number is positive",
+          "When the existing accumulated current_sum is negative (current_sum < 0)",
+          "When reaching the midpoint of the array",
+          "When an even number is encountered"
+        ],
+        "correctIndex": 1,
+        "explanation": "Carrying a negative accumulated sum degrades any future number, so starting fresh at x is strictly superior."
+      }
+    ]
+  },
+  {
+    "id": "dsa-prefix-sum",
+    "subject": "dsa",
+    "category": "Prefix Sum",
+    "title": "Prefix Sum Array & Subarray Range Sums",
+    "subtitle": "O(1) Range Queries [L..R], Running Accumulator & Subarray Sum Equals K Pattern",
+    "difficulty": "Beginner",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 50,
+    "tags": [
+      "Prefix Sum",
+      "Range Query",
+      "Subarray Sum Equals K",
+      "Hash Map",
+      "Cumulative Sum"
+    ],
+    "quickRecall": {
+      "oneLiner": "Prefix sum pre-computes cumulative running totals so that any subarray range sum between index L and R can be queried in O(1) time.",
+      "simpleAnalogy": "A car odometer: if your odometer read 10,000 miles when you left Chicago (index L-1) and reads 10,450 miles when you arrive in Denver (index R), you don't need to add up every single mile driven—you simply compute 10,450 - 10,000 = 450 miles in one instant subtraction (O(1))!",
+      "whenToUse": "Frequent range sum queries on static arrays, 2D matrix range sums, and the classic 'Subarray Sum Equals K' problem paired with a Hash Map.",
+      "whyItMatters": "Reduces Q range queries from O(Q * N) brute force down to O(N) pre-processing + O(1) per query = O(N + Q) total time.",
+      "keyPoints": [
+        "1D Prefix Formula: prefix[i] = prefix[i-1] + arr[i]. With 1-based indexing: sum(L..R) = prefix[R] - prefix[L-1].",
+        "Zero-Base Padding: Using prefix array of size N+1 with prefix[0] = 0 avoids ugly edge-case 'if (L == 0)' conditional checks.",
+        "Subarray Sum Equals K: If (prefix_sum - K) exists in a Hash Map, a contiguous subarray summing to K ends at the current index!",
+        "Limitation on Updates: If array elements change frequently, updating the prefix array takes O(N). Use a Fenwick Tree (Binary Indexed Tree) or Segment Tree for dynamic updates.",
+        "2D Prefix Sum: Extends to rectangular submatrices in O(1) using inclusion-exclusion: Area = P[r2][c2] - P[r1-1][c2] - P[r2][c1-1] + P[r1-1][c1-1]."
+      ],
+      "formulaOrSyntax": {
+        "label": "1D Range Sum & Subarray Equals K Formula",
+        "codeOrLatex": "\\text{Sum}(L, R) = P[R + 1] - P[L], \\quad \\text{Check: } (\\text{curr\\_sum} - K) \\in \\text{HashMap}",
+        "isLatex": true
+      },
+      "complexity": {
+        "time": "Precomputation: O(N); Each query: O(1) constant time",
+        "space": "O(N) to store cumulative prefix sum array"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Forgetting to initialize the Hash Map with {0: 1} in the 'Subarray Sum Equals K' problem.",
+        "fix": "Without map[0] = 1, any subarray that sums to K starting from index 0 will be completely missed!",
+        "interviewTrap": "Question: 'Can Prefix Sum be used with negative numbers?' Answer: YES! Unlike Two Pointers / Sliding Window (which requires strictly non-negative numbers for monotonic growth), Prefix Sum + Hash Map works seamlessly with negative numbers."
+      },
+      "examCheatsheet": [
+        "prefix[i] = prefix[i-1] + arr[i]",
+        "sum(L..R) = prefix[R+1] - prefix[L]",
+        "Subarray Sum = K: Use Hash Map to store prefix_sum frequencies",
+        "Always initialize hash map with {0: 1}"
+      ]
+    },
+    "visual": {
+      "type": "diagram",
+      "title": "Prefix Sum Cumulative Subtraction Logic",
+      "caption": "Range sum from index 2 to 4 is calculated instantly by subtracting Prefix[1] from Prefix[4].",
+      "visualKey": "dsa-prefix-sum",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Index",
+            "Original Array",
+            "Prefix Array P (1-based)",
+            "Range Query Example"
+          ],
+          "rows": [
+            [
+              "0",
+              "3",
+              "3",
+              "Sum(0..0) = P[0] = 3"
+            ],
+            [
+              "1",
+              "1",
+              "4 (3 + 1)",
+              "Sum(0..1) = P[1] = 4"
+            ],
+            [
+              "2",
+              "4",
+              "8 (4 + 4)",
+              "Sum(2..4) = P[4] - P[1] = 17 - 4 = 13"
+            ],
+            [
+              "3",
+              "2",
+              "10 (8 + 2)",
+              "Single subtraction: O(1) time"
+            ],
+            [
+              "4",
+              "7",
+              "17 (10 + 7)",
+              "Entire array sum = P[4] = 17"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "Subarray Sum Equals K Hash Map Trace",
+      "description": "Trace running sum accumulation, checking if (sum - K) exists in hash map, and incrementing match count.",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Subarray Sum Equals K (LeetCode 560) in Python",
+      "language": "python",
+      "code": "def subarray_sum(nums, k):\n    # Hash map stores: prefix_sum -> frequency count\n    # Crucial base case: prefix sum of 0 has appeared 1 time\n    prefix_counts = {0: 1}\n    curr_sum = 0\n    total_subarrays = 0\n\n    for num in nums:\n        curr_sum += num\n        # If (curr_sum - k) was seen before, a subarray summing to k exists!\n        if (curr_sum - k) in prefix_counts:\n            total_subarrays += prefix_counts[curr_sum - k]\n\n        # Record current running prefix sum in map\n        prefix_counts[curr_sum] = prefix_counts.get(curr_sum, 0) + 1\n\n    return total_subarrays\n\narr = [3, 4, 7, 2, -3, 1, 4, 2]\nK = 7\nprint(f\"Number of subarrays summing to {K}: {subarray_sum(arr, K)}\")",
+      "input": "nums = [3, 4, 7, 2, -3, 1, 4, 2], k = 7",
+      "output": "Number of subarrays summing to 7: 4",
+      "explanation": "Finds [3, 4], [7], [7, 2, -3, 1], and [1, 4, 2] in O(N) time and O(N) space using Hash Map lookups."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "What is the query time complexity for finding the sum of elements from index L to R using a precomputed prefix sum array?",
+        "options": [
+          "O(R - L)",
+          "O(log N)",
+          "O(1)",
+          "O(N)"
+        ],
+        "correctIndex": 2,
+        "explanation": "Prefix sum enables range queries via a single subtraction: prefix[R] - prefix[L-1], executing in O(1) constant time."
+      },
+      {
+        "id": "q2",
+        "question": "Why must the hash map in 'Subarray Sum Equals K' be initialized with {0: 1}?",
+        "options": [
+          "To avoid division by zero",
+          "To account for subarrays that sum to K starting directly from index 0",
+          "Because 0 is a prime number",
+          "To prevent KeyError on negative numbers"
+        ],
+        "correctIndex": 1,
+        "explanation": "If a prefix sum equals K at index i, (curr_sum - k) = 0. Without {0: 1}, this valid subarray from the beginning would be missed."
+      },
+      {
+        "id": "q3",
+        "question": "Can the Sliding Window technique replace Prefix Sum if the array contains negative numbers?",
+        "options": [
+          "Yes, sliding window works on all arrays",
+          "No, because negative numbers break the monotonicity requirement (expanding window can decrease sum)",
+          "Yes, if the array is sorted first",
+          "Only for arrays of even length"
+        ],
+        "correctIndex": 1,
+        "explanation": "Sliding window relies on the property that expanding the window increases the sum. Negative numbers destroy this monotonic guarantee."
+      }
+    ]
+  },
+  {
+    "id": "dsa-hashing-two-sum",
+    "subject": "dsa",
+    "category": "Hashing",
+    "title": "Hash Map Lookup & The Classic Two Sum Pattern",
+    "subtitle": "O(1) Average Lookup, Collision Resolution (Chaining vs Open Addressing) & Complement Map",
+    "difficulty": "Beginner",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 45,
+    "tags": [
+      "Hashing",
+      "HashMap",
+      "Two Sum",
+      "Collision Resolution",
+      "O(1) Lookup"
+    ],
+    "quickRecall": {
+      "oneLiner": "Hash Tables provide O(1) average-time key-value lookups by mapping keys through a hash function to array bucket indices, resolving collisions via chaining or open addressing.",
+      "simpleAnalogy": "A coat check room with numbered pigeonholes: when you check in your coat, the attendant hashes your name to a bucket number (e.g. bucket 42) and hangs your coat there. When you return, they go directly to bucket 42 in O(1) time without searching every coat in the building!",
+      "whenToUse": "Frequency counting, instant O(1) deduplication, pairing problems (Two Sum), and caching/memoization.",
+      "whyItMatters": "Trading space for time: Hash tables turn slow O(N) searches into instant O(1) lookups, forming the backbone of modern software engineering.",
+      "keyPoints": [
+        "Hash Function: Converts an arbitrary key into an integer hash code, modulated to fit table capacity: index = hash(key) % capacity.",
+        "Collision Resolution: Separate Chaining (linked lists or balanced trees at each bucket) vs Open Addressing (linear/quadratic probing).",
+        "Two Sum Pattern: For each number x, calculate complement = target - x. Check if complement exists in Hash Map. If yes, match found in O(N) total time!",
+        "Load Factor (α = N / Capacity): When load factor exceeds threshold (typically 0.75), the table doubles its capacity and rehashes all keys.",
+        "Worst-Case Trap: If all keys hash to the same bucket (hash collision attack), lookup degrades to O(N) (or O(log N) in Java 8+ Red-Black trees)."
+      ],
+      "formulaOrSyntax": {
+        "label": "Hash Bucket Indexing & Two Sum Relation",
+        "codeOrLatex": "\\text{index} = \\text{hashCode}(\\text{key}) \\pmod{\\text{capacity}}, \\quad \\text{complement} = \\text{target} - \\text{nums}[i]",
+        "isLatex": true
+      },
+      "complexity": {
+        "time": "Average: O(1) for insert, delete, and lookup; Worst-case: O(N) under severe collisions",
+        "space": "O(N) memory overhead for buckets and node pointers"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Adding the current number to the Hash Map BEFORE checking for the complement in Two Sum.",
+        "fix": "Check for complement first! If you add first and target is 8 with number 4, it will pair 4 with itself (using the same element twice).",
+        "interviewTrap": "Question: 'What requirements must a custom object meet to be used as a HashMap key in Java?' Answer: It MUST properly override both equals() and hashCode() consistently! If two objects are equal according to equals(), they MUST return identical hashCodes."
+      },
+      "examCheatsheet": [
+        "Average lookup/insert: O(1) constant time",
+        "Worst-case lookup: O(N) if all keys collide",
+        "Two Sum: complement = target - num (O(N) time, O(N) space)",
+        "Check complement in map BEFORE inserting current element"
+      ]
+    },
+    "visual": {
+      "type": "diagram",
+      "title": "Hash Table Bucket Array with Separate Chaining",
+      "caption": "Keys are hashed to bucket indices. Multiple keys landing in bucket 2 form a linked list chain.",
+      "visualKey": "dsa-hashing-two-sum",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Collision Strategy",
+            "How It Resolves Collisions",
+            "Pros",
+            "Cons"
+          ],
+          "rows": [
+            [
+              "Separate Chaining",
+              "Bucket holds linked list or tree of entries",
+              "Simple, degrades gracefully under high load",
+              "Memory overhead for node pointers"
+            ],
+            [
+              "Linear Probing",
+              "Searches next adjacent slot (i+1, i+2...)",
+              "Excellent CPU cache locality, no pointers",
+              "Suffers from primary clustering"
+            ],
+            [
+              "Quadratic Probing",
+              "Checks intervals i + 1², i + 2², i + 3²",
+              "Reduces linear clustering",
+              "Can fail to find open slot if table > 50% full"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "Two Sum Hash Map Lookup Progression",
+      "description": "Trace iterating through [2, 7, 11, 15] for target 9: check complement 9-2=7 (not found), insert 2; check 9-7=2 (found!).",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Classic Two Sum in Python with One-Pass Hash Map",
+      "language": "python",
+      "code": "def two_sum(nums, target):\n    # Map stores: number -> index\n    seen = {}\n\n    for i, num in enumerate(nums):\n        complement = target - num\n        # Step 1: Check if complement was already encountered\n        if complement in seen:\n            return [seen[complement], i]\n        # Step 2: Store current number and its index\n        seen[num] = i\n\n    return []\n\narr = [2, 11, 7, 15]\ntarget_val = 9\nindices = two_sum(arr, target_val)\nprint(f\"Indices that sum to {target_val}: {indices}\")\nprint(f\"Values: nums[{indices[0]}]={arr[indices[0]]} + nums[{indices[1]}]={arr[indices[1]]}\")",
+      "input": "nums = [2, 11, 7, 15], target = 9",
+      "output": "Indices that sum to 9: [0, 2] | Values: 2 + 7 = 9",
+      "explanation": "Resolves Two Sum in O(N) single-pass time and O(N) space, avoiding the naive O(N²) nested loops."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "What is the average time complexity of searching for a key in a well-balanced Hash Table?",
+        "options": [
+          "O(N)",
+          "O(log N)",
+          "O(1)",
+          "O(N log N)"
+        ],
+        "correctIndex": 2,
+        "explanation": "Hash tables compute the hash code and jump directly to the target bucket in O(1) average time."
+      },
+      {
+        "id": "q2",
+        "question": "Why should you check for the complement in Two Sum BEFORE inserting the current number into the hash map?",
+        "options": [
+          "It saves memory",
+          "It prevents an element from pairing with itself when target = 2 * num (e.g. target 6 with single element 3)",
+          "It keeps the hash map sorted",
+          "It avoids hashing collisions"
+        ],
+        "correctIndex": 1,
+        "explanation": "Inserting before checking would match 3 with itself if target is 6, incorrectly returning the same index twice."
+      },
+      {
+        "id": "q3",
+        "question": "What is 'Separate Chaining' in Hash Table implementations?",
+        "options": [
+          "Deleting keys when collisions occur",
+          "Storing colliding keys in a linked list or tree attached to that bucket",
+          "Probing the next sequential array slot",
+          "Encrypting keys with SHA-256"
+        ],
+        "correctIndex": 1,
+        "explanation": "In separate chaining, each bucket holds a linked data structure (list or balanced tree) containing all colliding entries."
+      }
+    ]
+  },
+  {
+    "id": "dsa-backtracking",
+    "subject": "dsa",
+    "category": "Recursion and Backtracking",
+    "title": "Backtracking: Choose, Explore, and Unchoose Pattern",
+    "subtitle": "State Space Tree Search, Pruning Dead Branches, Subsets, Permutations & N-Queens",
+    "difficulty": "Intermediate",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 55,
+    "tags": [
+      "Backtracking",
+      "Recursion",
+      "State Space Tree",
+      "Pruning",
+      "Subsets",
+      "N-Queens"
+    ],
+    "quickRecall": {
+      "oneLiner": "Backtracking is an algorithmic paradigm that incrementally builds candidates for solutions and abandons ('backtracks') a candidate as soon as it determines it cannot possibly lead to a valid solution.",
+      "simpleAnalogy": "Solving a physical corn maze: at every fork in the path, you choose a turn (Choose). You walk down that corridor (Explore). If you hit a dead end, you physically walk backward to the fork (Unchoose / Backtrack) and try the next path. You never wander aimlessly down dead ends!",
+      "whenToUse": "Finding all permutations, combinations, subsets, Sudoku solver, N-Queens, Word Search on a grid, and partition problems.",
+      "whyItMatters": "Pruning dead branches prevents searching millions of invalid candidate paths, turning an intractable brute force search into a fast, manageable traversal.",
+      "keyPoints": [
+        "The 3-Step Template: 1. Choose candidate element. 2. Explore recursively. 3. Unchoose (pop element or restore state).",
+        "Base Case: When current candidate path matches desired length or goal condition, record a deep copy of the path (path[:]).",
+        "Pruning (Bounding Function): Evaluating validity before exploring subtrees saves exponential computation.",
+        "Deep Copy Warning: When saving a solution path to the results list in Python/Java, always save a copy (list(path) or new ArrayList<>(path)), not the reference!",
+        "Permutations vs Subsets: Permutations track used elements with a visited boolean array; Subsets/Combinations increment a start index to avoid duplicates."
+      ],
+      "formulaOrSyntax": {
+        "label": "Universal Backtracking Template",
+        "codeOrLatex": "def backtrack(start, path):\n    if is_solution(path):\n        results.append(path[:])  # DEEP COPY!\n        return\n    for i in range(start, len(nums)):\n        if not is_valid(nums[i]): continue  # Prune\n        path.append(nums[i])      # 1. CHOOSE\n        backtrack(i + 1, path)    # 2. EXPLORE\n        path.pop()                # 3. UNCHOOSE",
+        "isLatex": false,
+        "language": "python"
+      },
+      "complexity": {
+        "time": "Subsets: O(2^N); Permutations: O(N!); N-Queens: O(N!)",
+        "space": "O(N) call stack memory proportional to recursion depth"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Appending the path reference directly to the results list: results.append(path).",
+        "fix": "Always append a deep copy: results.append(path[:])! Because path is mutated and popped back to empty [], results will end up containing all empty lists!",
+        "interviewTrap": "Question: 'How do you handle duplicates in Subsets II ([1, 2, 2])?' Answer: Sort the array first! Then inside the loop, prune if (i > start and nums[i] == nums[i-1]): continue. This ensures identical numbers are only chosen once at the same recursion depth."
+      },
+      "examCheatsheet": [
+        "Choose -> Explore -> Unchoose (Pop)",
+        "Always append a copy: results.append(path[:])",
+        "Pruning abandons dead paths early",
+        "Subsets = 2^N; Permutations = N!"
+      ]
+    },
+    "visual": {
+      "type": "flowchart",
+      "title": "Backtracking Decision Tree: Subsets of [1, 2]",
+      "caption": "Tree branches represent decisions to include or exclude elements. When a branch terminates, state unchooses back up.",
+      "visualKey": "dsa-backtracking",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Problem Type",
+            "Time Complexity",
+            "Index Management",
+            "Duplicate Prevention"
+          ],
+          "rows": [
+            [
+              "Subsets",
+              "O(2^N)",
+              "Pass i + 1 to next call",
+              "Sort + skip if nums[i] == nums[i-1]"
+            ],
+            [
+              "Combinations (k size)",
+              "O(C(N, k))",
+              "Pass i + 1, stop when len(path) == k",
+              "Sort + skip consecutive duplicates"
+            ],
+            [
+              "Permutations",
+              "O(N!)",
+              "Use visited[i] boolean array",
+              "Sort + skip if duplicate visited[i-1] is false"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "Subsets Generation Tree Progression",
+      "description": "Watch path build from [] -> [1] -> [1, 2], append copy, backtrack pop 2, then explore [2].",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Generating All Unique Subsets (Power Set) in Python",
+      "language": "python",
+      "code": "def subsets(nums):\n    result = []\n    nums.sort()\n\n    def backtrack(start, current_path):\n        # Record current subset (DEEP COPY with [:])\n        result.append(current_path[:])\n\n        for i in range(start, len(nums)):\n            # 1. CHOOSE\n            current_path.append(nums[i])\n            # 2. EXPLORE (i + 1 ensures elements are used once)\n            backtrack(i + 1, current_path)\n            # 3. UNCHOOSE (backtrack state)\n            current_path.pop()\n\n    backtrack(0, [])\n    return result\n\nitems = [1, 2, 3]\nall_subsets = subsets(items)\nprint(f\"Total Subsets (2^3 = 8): {len(all_subsets)}\")\nprint(\"Generated Subsets:\", all_subsets)",
+      "input": "nums = [1, 2, 3]",
+      "output": "Total Subsets: 8 | [[], [1], [1, 2], [1, 2, 3], [1, 3], [2], [2, 3], [3]]",
+      "explanation": "Backtracking systematically generates all 2^N combinations using choose-explore-unchoose recursion."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Why must you append 'path[:]' (a shallow/deep copy) instead of 'path' when storing a solution in backtracking?",
+        "options": [
+          "Because path is private",
+          "Because path is mutated and popped back to empty by subsequent backtracking steps, leaving an empty list",
+          "Because path cannot be converted to a string",
+          "To speed up the garbage collector"
+        ],
+        "correctIndex": 1,
+        "explanation": "In Python and Java, lists are passed by reference. Appending the reference would result in all stored solutions pointing to the same final empty list."
+      },
+      {
+        "id": "q2",
+        "question": "What is the time complexity of generating all subsets of a set with N distinct elements?",
+        "options": [
+          "O(N²)",
+          "O(N log N)",
+          "O(2^N)",
+          "O(N!)"
+        ],
+        "correctIndex": 2,
+        "explanation": "Every element has two choices (included or excluded), generating 2^N total subsets (the Power Set)."
+      },
+      {
+        "id": "q3",
+        "question": "What role does 'Pruning' play in backtracking algorithms?",
+        "options": [
+          "It removes dead code during compilation",
+          "It checks constraints to abandon subtrees that cannot lead to a valid solution without exploring them",
+          "It sorts the array in descending order",
+          "It frees memory on the Heap"
+        ],
+        "correctIndex": 1,
+        "explanation": "Pruning detects invalid partial candidates early, skipping thousands of futile recursive function calls."
+      }
+    ]
+  },
+  {
+    "id": "dsa-greedy-intervals",
+    "subject": "dsa",
+    "category": "Greedy Algorithms",
+    "title": "Greedy Strategy & Interval Activity Selection",
+    "subtitle": "Locally Optimal Choices Lead to Global Optimum, Sorting by End Time & Coin Change Trap",
+    "difficulty": "Intermediate",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 50,
+    "tags": [
+      "Greedy",
+      "Intervals",
+      "Activity Selection",
+      "Sorting",
+      "Optimization"
+    ],
+    "quickRecall": {
+      "oneLiner": "A greedy algorithm builds up a solution piece-by-piece, always choosing the next piece that offers the most immediate, local benefit without reconsidering past decisions.",
+      "simpleAnalogy": "A conference room scheduling manager: to fit the maximum number of meetings in one day, you always pick the meeting that finishes earliest! That leaves as much remaining time as possible for subsequent meetings. You sort all meetings by their end times and greedily pick the next non-overlapping meeting.",
+      "whenToUse": "Interval scheduling / merging, Fractional Knapsack, Dijkstra's shortest path, Kruskal's / Prim's Minimum Spanning Tree, and Huffman Coding.",
+      "whyItMatters": "Greedy algorithms are ultra-fast (typically O(N log N) from sorting), but they ONLY work when the problem possesses the 'Greedy Choice Property' and 'Optimal Substructure'.",
+      "keyPoints": [
+        "Greedy Choice Property: A globally optimal solution can be arrived at by making locally optimal (greedy) choices without backtracking.",
+        "Optimal Substructure: An optimal solution to the problem contains optimal solutions to subproblems.",
+        "Interval Activity Selection: Always sort intervals by END TIME (not start time!). Picking the earliest finish time maximizes remaining room availability.",
+        "The Coin Change Trap: Greedy works for canonical currency (US coins: 25, 10, 5, 1), but FAILS for arbitrary denominations (e.g. coins [1, 3, 4] for amount 6: greedy gives 4+1+1 = 3 coins, while DP gives 3+3 = 2 coins!).",
+        "Fractional vs 0/1 Knapsack: Greedy solves Fractional Knapsack (sort by value/weight ratio); 0/1 Knapsack REQUIRES Dynamic Programming."
+      ],
+      "formulaOrSyntax": {
+        "label": "Interval Activity Selection Logic",
+        "codeOrLatex": "\\text{Sort by: } \\text{interval.end}, \\quad \\text{Select if: } \\text{interval.start} \\ge \\text{last\\_selected.end}",
+        "isLatex": true
+      },
+      "complexity": {
+        "time": "O(N log N) dominated by initial sorting; O(N) linear scan to select",
+        "space": "O(1) extra space or O(N) to store sorted intervals"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Sorting intervals by start time instead of end time for Activity Selection.",
+        "fix": "Sorting by start time can select a meeting that starts early but lasts all day, blocking dozens of shorter meetings! Always sort by finish time.",
+        "interviewTrap": "Question: 'Why does greedy fail for the 0/1 Knapsack problem?' Answer: Because you cannot take fractions of an item! An item with high value-per-weight might leave an empty gap in the knapsack that cannot be filled, causing DP to outperform greedy."
+      },
+      "examCheatsheet": [
+        "Greedy makes local optimal choices without backtracking",
+        "Activity Selection: Sort by END TIME (earliest finish)",
+        "Fractional Knapsack = Greedy; 0/1 Knapsack = Dynamic Programming",
+        "Canonical coins work with greedy; arbitrary coins require DP"
+      ]
+    },
+    "visual": {
+      "type": "diagram",
+      "title": "Interval Activity Selection: Earliest Finish Time Strategy",
+      "caption": "Sorting by end times ensures each selection leaves maximum available time for future meetings.",
+      "visualKey": "dsa-greedy-intervals",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Problem",
+            "Can Use Greedy?",
+            "Sorting Criterion",
+            "Why Greedy Succeeds or Fails"
+          ],
+          "rows": [
+            [
+              "Activity Selection",
+              "YES",
+              "Sort by end time",
+              "Earliest end leaves maximum time for remaining tasks"
+            ],
+            [
+              "Fractional Knapsack",
+              "YES",
+              "Sort by value / weight ratio",
+              "Items can be split into arbitrary fractional portions"
+            ],
+            [
+              "0/1 Knapsack",
+              "NO (Requires DP)",
+              "N/A",
+              "Cannot split items; greedy creates suboptimal leftover capacity"
+            ],
+            [
+              "Non-overlapping Intervals",
+              "YES",
+              "Sort by end time",
+              "Greedily removes minimum intervals to resolve conflicts"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "Greedy Interval Selection Walkthrough",
+      "description": "Watch intervals sorted by end time: Meeting [1, 2] selected -> [2, 4] selected -> [3, 5] rejected due to overlap -> [4, 6] selected.",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Non-Overlapping Intervals (Erase Overlaps) in Python",
+      "language": "python",
+      "code": "def erase_overlap_intervals(intervals):\n    if not intervals:\n        return 0\n\n    # Step 1: Sort by END TIME (greedy choice)\n    intervals.sort(key=lambda x: x[1])\n\n    count_kept = 1\n    last_end = intervals[0][1]\n\n    # Step 2: Greedily pick non-overlapping meetings\n    for start, end in intervals[1:]:\n        if start >= last_end:\n            count_kept += 1\n            last_end = end\n\n    # Removed = total - kept\n    return len(intervals) - count_kept\n\nmeetings = [[1, 2], [2, 3], [3, 4], [1, 3]]\nremoved = erase_overlap_intervals(meetings)\nprint(f\"Minimum intervals to remove for zero overlap: {removed}\")",
+      "input": "intervals = [[1, 2], [2, 3], [3, 4], [1, 3]]",
+      "output": "Minimum intervals to remove for zero overlap: 1 (remove [1, 3])",
+      "explanation": "Sorting by end time selects [1, 2], [2, 3], and [3, 4], requiring removal of only [1, 3]."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "What is the correct sorting criterion for maximizing the number of compatible activities in Interval Scheduling?",
+        "options": [
+          "Sort by start time ascending",
+          "Sort by duration ascending",
+          "Sort by end time ascending",
+          "Sort by start time descending"
+        ],
+        "correctIndex": 2,
+        "explanation": "Selecting the activity that finishes earliest leaves the maximum possible remaining time for subsequent activities."
+      },
+      {
+        "id": "q2",
+        "question": "Why does the Greedy approach fail for the 0/1 Knapsack problem?",
+        "options": [
+          "Because 0/1 knapsack has negative weights",
+          "Because items cannot be divided, and choosing by highest density can leave unusable capacity that prevents an optimal combo",
+          "Because sorting numbers takes exponential time",
+          "Because greedy algorithms only work on graphs"
+        ],
+        "correctIndex": 1,
+        "explanation": "Without fractional division, leaving empty slack capacity can prevent achieving the global maximum value, requiring Dynamic Programming."
+      },
+      {
+        "id": "q3",
+        "question": "What two properties must a problem have for a Greedy algorithm to guarantee a globally optimal solution?",
+        "options": [
+          "NP-Complete and Polymorphic",
+          "Greedy Choice Property and Optimal Substructure",
+          "Recursion and Memoization",
+          "Convexity and Duality"
+        ],
+        "correctIndex": 1,
+        "explanation": "Greedy algorithms guarantee correctness only if local optimal choices lead to global optimum (Greedy Choice) and subproblem solutions compose optimal solutions (Optimal Substructure)."
+      }
+    ]
+  },
+  {
+    "id": "dsa-tries",
+    "subject": "dsa",
+    "category": "Tries",
+    "title": "Trie (Prefix Tree) for Fast String Retrieval",
+    "subtitle": "O(L) Word Insertion & Prefix Search, Autocomplete & Bitwise XOR Trie",
+    "difficulty": "Intermediate",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 50,
+    "tags": [
+      "Trie",
+      "Prefix Tree",
+      "Strings",
+      "Autocomplete",
+      "Prefix Search"
+    ],
+    "quickRecall": {
+      "oneLiner": "A Trie (Prefix Tree) is a tree-like data structure used to store a dynamic set of strings where characters share common prefixes, enabling O(L) searches independent of dictionary size.",
+      "simpleAnalogy": "Phone contact autocomplete or a physical dictionary thumb-tab index: when you search for 'cat', 'car', and 'card', you don't store the letter 'c' three separate times. You store 'c', branching to 'a', branching to 't' (word end) and 'r' (which branches to 'd'). All three words share the common prefix 'ca'!",
+      "whenToUse": "Search engine autocomplete, spell checkers, IP routing longest prefix match, and Maximum XOR pair queries.",
+      "whyItMatters": "Searching a word of length L in a Hash Table of N words takes O(L) on average, but Hash Tables CANNOT search by prefix ('find all words starting with app'). A Trie answers prefix queries in O(L) time effortlessly.",
+      "keyPoints": [
+        "Node Structure: Each node contains an array of 26 child pointers (for lowercase a-z) or a map, plus a boolean is_end_of_word flag.",
+        "Shared Prefixes: Words with identical starting characters share ancestor nodes, saving redundant prefix comparisons.",
+        "Operations: insert(word), search(word), and startsWith(prefix) all execute in O(L) time where L is word length.",
+        "Independence from N: Lookup speed depends strictly on word length L, completely independent of how many millions of words (N) exist in the Trie!",
+        "Bitwise Trie: Stores 32-bit binary integers (0 and 1 branches) to solve Maximum XOR subarray problems in O(32 * N) time."
+      ],
+      "formulaOrSyntax": {
+        "label": "Trie Node Structure",
+        "codeOrLatex": "class TrieNode {\n    TrieNode[] children = new TrieNode[26];\n    boolean isEndOfWord = false;\n}",
+        "isLatex": false,
+        "language": "java"
+      },
+      "complexity": {
+        "time": "Insert: O(L); Search: O(L); Prefix Check: O(L) where L is string length",
+        "space": "O(Total Characters * Alphabet Size) memory for child pointer arrays"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Confusing search(word) with startsWith(prefix).",
+        "fix": "search('app') returns true ONLY if is_end_of_word is true at 'p'. startsWith('app') returns true as long as the path exists, even if 'app' itself was never inserted as a standalone word (e.g. only 'apple' was inserted).",
+        "interviewTrap": "Question: 'Why use a Trie over a HashMap for string storage?' Answer: A HashMap cannot efficiently search by prefix ('startsWith') without scanning all N keys. A Trie finds prefix matches in O(L) time and naturally provides lexicographical alphabetical ordering."
+      },
+      "examCheatsheet": [
+        "Trie = Prefix Tree (O(L) insert & search)",
+        "Lookup time is independent of dictionary size N",
+        "startsWith(prefix) checks path existence",
+        "search(word) checks path existence AND is_end_of_word == true"
+      ]
+    },
+    "visual": {
+      "type": "diagram",
+      "title": "Trie Prefix Tree: 'cat', 'car', and 'card'",
+      "caption": "Root branches to 'c' -> 'a'. The node 'a' branches to 't' (word end) and 'r' (word end), which further branches to 'd' (word end).",
+      "visualKey": "dsa-tries",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Operation",
+            "Trie Complexity",
+            "Hash Table Complexity",
+            "Sorted Array Complexity"
+          ],
+          "rows": [
+            [
+              "Insert Word (len L)",
+              "O(L)",
+              "O(L) average",
+              "O(N) array shifting"
+            ],
+            [
+              "Exact Word Search",
+              "O(L)",
+              "O(L) average",
+              "O(L log N) binary search"
+            ],
+            [
+              "Prefix Search (startsWith)",
+              "O(L)",
+              "O(N * L) linear scan of all keys",
+              "O(L log N) binary search bounds"
+            ],
+            [
+              "Memory Footprint",
+              "High (many pointer references)",
+              "Medium (table + strings)",
+              "Minimal (contiguous memory)"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "Trie Character Insertion & Path Traversal",
+      "description": "Step through inserting 'cat', following root -> 'c' -> 'a' -> 't', setting is_end = true.",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Complete Trie Implementation in Python",
+      "language": "python",
+      "code": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.is_end = False\n\nclass Trie:\n    def __init__(self):\n        self.root = TrieNode()\n\n    def insert(self, word: str) -> None:\n        curr = self.root\n        for ch in word:\n            if ch not in curr.children:\n                curr.children[ch] = TrieNode()\n            curr = curr.children[ch]\n        curr.is_end = True\n\n    def search(self, word: str) -> bool:\n        curr = self.root\n        for ch in word:\n            if ch not in curr.children:\n                return False\n            curr = curr.children[ch]\n        return curr.is_end\n\n    def starts_with(self, prefix: str) -> bool:\n        curr = self.root\n        for ch in prefix:\n            if ch not in curr.children:\n                return False\n            curr = curr.children[ch]\n        return True\n\ntrie = Trie()\ntrie.insert(\"apple\")\nprint(\"Search 'apple':\", trie.search(\"apple\"))     # True\nprint(\"Search 'app':\", trie.search(\"app\"))         # False (prefix only)\nprint(\"Starts with 'app':\", trie.starts_with(\"app\")) # True",
+      "input": "Insert 'apple'",
+      "output": "Search 'apple': True | Search 'app': False | Starts with 'app': True",
+      "explanation": "search('app') is False because is_end is False, but starts_with('app') is True because the prefix path exists."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "What is the time complexity to search for a word of length L in a Trie containing 10,000,000 words?",
+        "options": [
+          "O(log 10,000,000)",
+          "O(L)",
+          "O(N * L)",
+          "O(1)"
+        ],
+        "correctIndex": 1,
+        "explanation": "Trie search time depends strictly on the number of characters in the query word (L), completely independent of total words N."
+      },
+      {
+        "id": "q2",
+        "question": "What distinguishes search(word) from startsWith(prefix) in a Trie?",
+        "options": [
+          "search uses recursion; startsWith uses loops",
+          "search checks that is_end_of_word is true at the final node; startsWith only requires that the path exists",
+          "search is case-insensitive",
+          "startsWith returns integer indices"
+        ],
+        "correctIndex": 1,
+        "explanation": "A prefix match simply verifies that child pointers exist for all characters, whereas an exact search requires is_end == true."
+      },
+      {
+        "id": "q3",
+        "question": "What is a major trade-off when using a Trie instead of a Hash Set?",
+        "options": [
+          "Tries are slower for prefixes",
+          "Tries consume significantly more memory due to maintaining multiple child node pointers",
+          "Tries cannot store lowercase letters",
+          "Tries only work on sorted input"
+        ],
+        "correctIndex": 1,
+        "explanation": "Each Trie node contains an array or dictionary of child pointers, which can consume substantial memory for sparse vocabularies."
+      }
+    ]
+  },
+  {
+    "id": "dsa-disjoint-set-union",
+    "subject": "dsa",
+    "category": "Disjoint Set Union",
+    "title": "Disjoint Set Union (Union-Find) with Rank & Path Compression",
+    "subtitle": "Near O(1) Amortized Inverse Ackermann α(N) Time, Cycle Detection & Kruskal's MST",
+    "difficulty": "Advanced",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 55,
+    "tags": [
+      "DSU",
+      "Union-Find",
+      "Path Compression",
+      "Union by Rank",
+      "Kruskal",
+      "Graphs"
+    ],
+    "quickRecall": {
+      "oneLiner": "Disjoint Set Union (DSU / Union-Find) maintains a partition of elements into non-overlapping subsets, supporting near O(1) find and union operations via path compression and rank optimization.",
+      "simpleAnalogy": "Company mergers: each employee reports to a manager, who reports to a CEO (representative root). If Company A and Company B merge (union), the shorter CEO's tree reports to the taller CEO (union by rank). When an employee asks 'Who is my ultimate CEO?' (find), they re-route their direct phone line straight to the CEO (path compression), making future inquiries instant!",
+      "whenToUse": "Dynamic graph connectivity, cycle detection in undirected graphs, Kruskal's Minimum Spanning Tree (MST), and connected component counts.",
+      "whyItMatters": "With both optimizations, M operations on N elements run in O(M * α(N)) time, where α is the Inverse Ackermann function (effectively α(N) < 5 for all atoms in the universe!).",
+      "keyPoints": [
+        "parent[i] Array: Initially parent[i] = i (every element is its own root leader).",
+        "Path Compression: During find(x), update parent[x] = find(parent[x]). Flattens the tree so all nodes point directly to the root.",
+        "Union by Rank / Size: Attach the tree with smaller depth/size beneath the root of the larger tree, preventing deep linear chains.",
+        "Cycle Detection: If find(u) == find(v) before adding edge (u, v), adding this edge creates a cycle!",
+        "Connected Components: Each successful union of disjoint sets decreases the total number of connected components by 1."
+      ],
+      "formulaOrSyntax": {
+        "label": "DSU Find with Path Compression & Union by Rank",
+        "codeOrLatex": "int find(int i) {\n    if (parent[i] == i) return i;\n    return parent[i] = find(parent[i]); // Path compression\n}",
+        "isLatex": false,
+        "language": "java"
+      },
+      "complexity": {
+        "time": "Amortized O(α(N)) ≈ O(1) per find/union operation",
+        "space": "O(N) memory for parent and rank arrays"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Uniting the elements themselves directly instead of uniting their root leaders: parent[u] = v.",
+        "fix": "Always find root leaders first! root_u = find(u), root_v = find(v). Only connect root_u to root_v if root_u != root_v.",
+        "interviewTrap": "Question: 'What is the time complexity of DSU without path compression and without rank?' Answer: O(N) per operation! Without optimizations, trees degenerate into tall linear linked lists (e.g. 1 -> 2 -> 3 -> 4)."
+      },
+      "examCheatsheet": [
+        "Path Compression: parent[x] = find(parent[x])",
+        "Union by Rank: Attach shorter tree under taller tree",
+        "Time: O(α(N)) amortized (Inverse Ackermann, practically O(1))",
+        "Cycle detected if find(u) == find(v)"
+      ]
+    },
+    "visual": {
+      "type": "diagram",
+      "title": "DSU Path Compression: Tree Flattening",
+      "caption": "Before path compression, traversing 4 -> 3 -> 2 -> 1 takes 3 steps. Path compression re-links 4 directly to root 1.",
+      "visualKey": "dsa-disjoint-set-union",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Optimizations Applied",
+            "Find Time Complexity",
+            "Union Time Complexity",
+            "Tree Shape"
+          ],
+          "rows": [
+            [
+              "None (Naive)",
+              "O(N) worst case",
+              "O(N) worst case",
+              "Can degrade into skewed linked list"
+            ],
+            [
+              "Path Compression Only",
+              "O(log N) amortized",
+              "O(log N) amortized",
+              "Flat trees over repeated lookups"
+            ],
+            [
+              "Union by Rank Only",
+              "O(log N) guaranteed",
+              "O(log N) guaranteed",
+              "Balanced trees of depth ≤ log N"
+            ],
+            [
+              "Both (Rank + Compression)",
+              "O(α(N)) ≈ O(1)",
+              "O(α(N)) ≈ O(1)",
+              "Nearly flat trees (depth ≤ 4)"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "Union-Find Path Compression & Merging",
+      "description": "Trace union(1, 2), union(3, 4), and union(2, 4) with path compression directly flattening parent pointers to 1.",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Full Disjoint Set Union (DSU) Class in Python",
+      "language": "python",
+      "code": "class DSU:\n    def __init__(self, n):\n        self.parent = list(range(n))\n        self.rank = [0] * n\n        self.num_components = n\n\n    def find(self, x):\n        # Path compression: flattens tree on the way back up\n        if self.parent[x] != x:\n            self.parent[x] = self.find(self.parent[x])\n        return self.parent[x]\n\n    def union(self, x, y):\n        root_x, root_y = self.find(x), self.find(y)\n        if root_x == root_y:\n            return False  # Already connected -> Cycle detected!\n\n        # Union by rank: attach smaller tree under larger tree\n        if self.rank[root_x] < self.rank[root_y]:\n            self.parent[root_x] = root_y\n        elif self.rank[root_x] > self.rank[root_y]:\n            self.parent[root_y] = root_x\n        else:\n            self.parent[root_y] = root_x\n            self.rank[root_x] += 1\n\n        self.num_components -= 1\n        return True\n\ndsu = DSU(5)\ndsu.union(0, 1)\ndsu.union(1, 2)\nprint(\"Are 0 and 2 connected?\", dsu.find(0) == dsu.find(2)) # True\nprint(\"Are 0 and 4 connected?\", dsu.find(0) == dsu.find(4)) # False\nprint(\"Cycle on edge (0, 2)?\", not dsu.union(0, 2))          # True (Cycle detected!)",
+      "input": "DSU with 5 elements, connect (0-1), (1-2)",
+      "output": "0 and 2 connected: True | 0 and 4 connected: False | Cycle detected on (0, 2): True",
+      "explanation": "DSU identifies that 0 and 2 share root leader 0, confirming connectivity and cycle detection in O(1) amortized time."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "What is the amortized time complexity of a DSU operation with both Path Compression and Union by Rank?",
+        "options": [
+          "O(N log N)",
+          "O(log N)",
+          "O(α(N)) ≈ O(1) (Inverse Ackermann)",
+          "O(N)"
+        ],
+        "correctIndex": 2,
+        "explanation": "Combining path compression with union by rank achieves O(α(N)) amortized time, where α(N) is less than 5 for all conceivable universe scales."
+      },
+      {
+        "id": "q2",
+        "question": "How does DSU detect if adding an undirected edge (u, v) creates a cycle in a graph?",
+        "options": [
+          "If degree(u) + degree(v) > 2",
+          "If find(u) == find(v) before adding the edge (both already belong to the same connected component)",
+          "If u == 0 and v == 0",
+          "If the rank of u equals the rank of v"
+        ],
+        "correctIndex": 1,
+        "explanation": "If u and v already share the same representative root, a path already exists between them; adding another edge creates a cycle."
+      },
+      {
+        "id": "q3",
+        "question": "What does Path Compression do during a find(x) operation?",
+        "options": [
+          "Deletes visited nodes",
+          "Points every visited node along the path directly to the representative root",
+          "Reverses the array",
+          "Increments the rank by 1"
+        ],
+        "correctIndex": 1,
+        "explanation": "Path compression flattens the tree structure so future find queries on those nodes execute in instant O(1) time."
+      }
+    ]
+  },
+  {
+    "id": "dsa-interview-patterns",
+    "subject": "dsa",
+    "category": "Common Interview Patterns",
+    "title": "Top 8 Coding Interview Patterns (The FAANG Blueprint)",
+    "subtitle": "How to Identify the Right Pattern in 30 Seconds: Pointers, Windows, DFS/BFS, Heaps & Monotonic Stacks",
+    "difficulty": "Intermediate",
+    "isInterviewFavorite": true,
+    "readTimeSeconds": 60,
+    "tags": [
+      "Patterns",
+      "Two Pointers",
+      "Sliding Window",
+      "Monotonic Stack",
+      "BFS",
+      "DFS",
+      "Heap",
+      "Interview"
+    ],
+    "quickRecall": {
+      "oneLiner": "Mastering 8 core patterns enables solving over 80% of LeetCode algorithmic interview questions by recognizing problem triggers.",
+      "simpleAnalogy": "A master mechanic's toolbox: rather than memorizing how to fix 500 individual car models, you recognize symptom triggers: engine knocking? Check spark plug (pattern). Squeaking sound? Check brake pads (pattern). In coding: 'contiguous subarray'? Sliding window! 'Sorted array pair'? Two pointers! 'Next greater element'? Monotonic stack!",
+      "whenToUse": "Every technical coding interview in the first 60 seconds when analyzing the problem statement.",
+      "whyItMatters": "Never guess! High-performing engineers categorize the problem into its archetypal algorithmic pattern within 30 seconds of reading the prompt.",
+      "keyPoints": [
+        "1. Two Pointers: Sorted array/string, find pair, palindrome, in-place partition.",
+        "2. Sliding Window: Contiguous subarray/substring with condition (max sum, longest substring without repeats).",
+        "3. Fast & Slow Pointers (Floyd's): Cycle in linked list, middle of linked list, happy number.",
+        "4. Monotonic Stack: Next Greater Element, Daily Temperatures, Largest Rectangle in Histogram (O(N) vs O(N²)).",
+        "5. Top-K Elements (Heap): 'Kth largest/smallest', 'Top K frequent'. Use Min-Heap of size K (O(N log K)).",
+        "6. Overlapping Intervals: Merge intervals, meeting rooms. Trigger: sort by start or end time.",
+        "7. BFS vs DFS: Shortest path in unweighted graph = BFS (Queue); Path existence, exhaustive tree explore = DFS (Recursion/Stack).",
+        "8. Binary Search on Answer: 'Minimize the maximum' or 'Maximize the minimum' with monotonic boolean condition."
+      ],
+      "formulaOrSyntax": {
+        "label": "Pattern Identification Trigger Guide",
+        "codeOrLatex": "Problem Clue                 -> Recommended Pattern\nSorted array + find pair      -> Two Pointers\nContiguous subarray / window  -> Sliding Window\nNext Greater Element          -> Monotonic Stack\nKth largest / Top K           -> Min-Heap of size K\nShortest unweighted path      -> BFS (Queue)\nMinimize the maximum capacity -> Binary Search on Answer",
+        "isLatex": false
+      },
+      "complexity": {
+        "time": "Pointers/Windows/Stacks: O(N); Heaps: O(N log K); Binary Search: O(N log(Range))",
+        "space": "O(1) to O(N) depending on auxiliary hash map or stack tracking"
+      },
+      "commonMistakeOrTrap": {
+        "mistake": "Immediately coding a brute-force O(N²) solution without identifying the underlying pattern.",
+        "fix": "Pause for 60 seconds! Identify inputs, constraints (N ≤ 10^5 means O(N) or O(N log N) is required), and match with the 8 patterns.",
+        "interviewTrap": "Question: 'What pattern should you use if asked to find the minimum capacity of a boat to ship packages within D days?' Answer: Binary Search on Answer! The capacity is monotonic: if capacity C works, any capacity > C also works. Search space is [max(weights), sum(weights)]."
+      },
+      "examCheatsheet": [
+        "Contiguous subarray = Sliding Window",
+        "Sorted array pair = Two Pointers",
+        "Next greater element = Monotonic Stack",
+        "Kth largest / Top K = Min-Heap of size K",
+        "Shortest path in unweighted graph = BFS",
+        "Minimize the maximum = Binary Search on Answer"
+      ]
+    },
+    "visual": {
+      "type": "flowchart",
+      "title": "Interview Pattern Decision Matrix",
+      "caption": "Map problem cues to the optimal algorithmic pattern in 30 seconds.",
+      "visualKey": "dsa-interview-patterns",
+      "details": {
+        "comparison": {
+          "headers": [
+            "Problem Trigger / Keywords",
+            "Algorithm Pattern",
+            "Data Structure",
+            "Optimal Time Complexity"
+          ],
+          "rows": [
+            [
+              "'Contiguous subarray', 'Longest substring'",
+              "Sliding Window",
+              "Hash Map / Set",
+              "O(N)"
+            ],
+            [
+              "'Sorted array', 'Two elements sum to X'",
+              "Two Pointers",
+              "Two Index Variables",
+              "O(N)"
+            ],
+            [
+              "'Next greater', 'Histogram', 'Stock span'",
+              "Monotonic Stack",
+              "Stack",
+              "O(N)"
+            ],
+            [
+              "'Top K elements', 'Kth smallest'",
+              "Top-K Heap",
+              "Min/Max PriorityQueue",
+              "O(N log K)"
+            ],
+            [
+              "'Shortest path', 'Level order'",
+              "Breadth-First Search",
+              "Queue (FIFO)",
+              "O(V + E)"
+            ],
+            [
+              "'Connected components', 'Cycle in graph'",
+              "Disjoint Set Union",
+              "DSU Array",
+              "O(α(N)) ≈ O(1)"
+            ]
+          ]
+        }
+      }
+    },
+    "animation": {
+      "type": "interactive-step-progression",
+      "title": "Pattern Classification & Problem Matching",
+      "description": "Step through 4 sample interview prompts and see how keywords map to the exact winning pattern.",
+      "stepsTotal": 4
+    },
+    "codeSnippet": {
+      "title": "Pattern Application: Monotonic Stack for Next Greater Element",
+      "language": "python",
+      "code": "def next_greater_element(nums):\n    # Pattern: Monotonic Decreasing Stack (O(N) time)\n    n = len(nums)\n    result = [-1] * n\n    stack = []  # Stores indices\n\n    for i in range(n):\n        # While current element is greater than stack top, we found its next greater!\n        while stack and nums[i] > nums[stack[-1]]:\n            idx = stack.pop()\n            result[idx] = nums[i]\n        stack.append(i)\n\n    return result\n\nvalues = [4, 5, 2, 25, 7, 8]\nprint(\"Input:\", values)\nprint(\"Next Greater Elements:\", next_greater_element(values))",
+      "input": "nums = [4, 5, 2, 25, 7, 8]",
+      "output": "Next Greater Elements: [5, 25, 25, -1, 8, -1]",
+      "explanation": "Monotonic stack resolves Next Greater Element in single pass O(N) time and O(N) space, avoiding O(N²) nested scans."
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Which pattern should you immediately consider when asked to find the 'Next Greater Element' or 'Daily Temperatures'?",
+        "options": [
+          "Two Pointers",
+          "Monotonic Stack",
+          "Trie",
+          "Breadth-First Search"
+        ],
+        "correctIndex": 1,
+        "explanation": "Monotonic Stack maintains elements in monotonic order, finding the next greater or smaller element in O(N) time."
+      },
+      {
+        "id": "q2",
+        "question": "To find the 'Kth Largest Element' in an unsorted array of size N, what heap configuration gives the optimal O(N log K) time?",
+        "options": [
+          "Max-Heap of size N",
+          "Min-Heap of size K (the root will hold the Kth largest element)",
+          "Binary Search Tree",
+          "Two Stacks"
+        ],
+        "correctIndex": 1,
+        "explanation": "A Min-Heap of size K discards smaller elements, keeping the K largest elements so the root is the Kth largest."
+      },
+      {
+        "id": "q3",
+        "question": "If a problem asks to 'minimize the maximum shipping capacity to deliver packages within D days', what pattern is triggered?",
+        "options": [
+          "Dynamic Programming Knapsack",
+          "Binary Search on Answer Range",
+          "Breadth-First Search",
+          "Prefix Sum"
+        ],
+        "correctIndex": 1,
+        "explanation": "The capacity condition is monotonic: if capacity C is valid, any C' > C is also valid. Binary search over the answer range [max(w), sum(w)] solves it in O(N log(Range))."
+      }
+    ]
+  }
 ];

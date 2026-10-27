@@ -78,7 +78,7 @@ export const TopicSidebar: React.FC<TopicSidebarProps> = ({
           <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-400" />
           <input
             type="text"
-            placeholder="Search 40+ short notes..."
+            placeholder="Search 65+ visual short notes..."
             value={filters.searchQuery}
             onChange={(e) => onUpdateFilters({ searchQuery: e.target.value })}
             className="w-full pl-9 pr-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"

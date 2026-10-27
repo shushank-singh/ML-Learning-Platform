@@ -145,6 +145,183 @@ export const VisualDiagram: React.FC<VisualDiagramProps> = ({ data }) => {
           </div>
         );
 
+      case 'ml-regularization-geometry':
+        return (
+          <div className="w-full bg-slate-950/70 p-4 rounded-xl border border-slate-800">
+            <svg viewBox="0 0 500 220" className="w-full h-auto text-slate-300">
+              <g transform="translate(130, 110)">
+                <line x1="-90" y1="0" x2="90" y2="0" stroke="#475569" strokeWidth="1.5" />
+                <line x1="0" y1="-80" x2="0" y2="80" stroke="#475569" strokeWidth="1.5" />
+                <circle cx="0" cy="0" r="50" fill="#3B82F6" fillOpacity="0.15" stroke="#3B82F6" strokeWidth="2" />
+                <ellipse cx="50" cy="-50" rx="45" ry="28" transform="rotate(-30 50 -50)" fill="none" stroke="#F59E0B" strokeWidth="1.5" strokeDasharray="3 2" />
+                <circle cx="35" cy="-35" r="4" fill="#10B981" />
+                <text x="0" y="70" fill="#60A5FA" fontSize="11" fontWeight="bold" textAnchor="middle">Ridge (L2 Circle)</text>
+                <text x="0" y="84" fill="#94A3B8" fontSize="8" textAnchor="middle">w shrinks smoothly</text>
+              </g>
+              <g transform="translate(370, 110)">
+                <line x1="-90" y1="0" x2="90" y2="0" stroke="#475569" strokeWidth="1.5" />
+                <line x1="0" y1="-80" x2="0" y2="80" stroke="#475569" strokeWidth="1.5" />
+                <polygon points="0,-50 50,0 0,50 -50,0" fill="#EC4899" fillOpacity="0.15" stroke="#EC4899" strokeWidth="2" />
+                <ellipse cx="50" cy="-50" rx="45" ry="28" transform="rotate(-30 50 -50)" fill="none" stroke="#F59E0B" strokeWidth="1.5" strokeDasharray="3 2" />
+                <circle cx="0" cy="-50" r="4" fill="#10B981" />
+                <text x="0" y="70" fill="#F472B6" fontSize="11" fontWeight="bold" textAnchor="middle">Lasso (L1 Diamond)</text>
+                <text x="0" y="84" fill="#34D399" fontSize="8" fontWeight="bold" textAnchor="middle">Corner hit: w₁ = 0 (Sparse!)</text>
+              </g>
+            </svg>
+          </div>
+        );
+
+      case 'ml-knn-neighborhood-viz':
+        return (
+          <div className="w-full bg-slate-950/70 p-4 rounded-xl border border-slate-800">
+            <svg viewBox="0 0 500 200" className="w-full h-auto text-slate-300">
+              <circle cx="250" cy="100" r="55" fill="#6366F1" fillOpacity="0.12" stroke="#6366F1" strokeWidth="1.5" strokeDasharray="4 3" />
+              <circle cx="250" cy="100" r="7" fill="#F59E0B" stroke="#FFFFFF" strokeWidth="2" />
+              <text x="250" y="85" fill="#FCD34D" fontSize="10" fontWeight="bold" textAnchor="middle">Query x_q</text>
+              {/* Neighbors */}
+              <circle cx="230" cy="80" r="5" fill="#3B82F6" />
+              <circle cx="270" cy="90" r="5" fill="#3B82F6" />
+              <circle cx="240" cy="130" r="5" fill="#F43F5E" />
+              {/* Distant points */}
+              <circle cx="150" cy="50" r="5" fill="#3B82F6" />
+              <circle cx="340" cy="150" r="5" fill="#F43F5E" />
+              <circle cx="170" cy="140" r="5" fill="#3B82F6" />
+              <text x="250" y="175" fill="#94A3B8" fontSize="11" textAnchor="middle">
+                K = 3 Neighbors: 2 Blue vs 1 Red → Majority Predicts Blue Class
+              </text>
+            </svg>
+          </div>
+        );
+
+      case 'ml-decision-tree-viz':
+        return (
+          <div className="w-full bg-slate-950/70 p-4 rounded-xl border border-slate-800">
+            <svg viewBox="0 0 500 210" className="w-full h-auto text-slate-300">
+              {/* Root */}
+              <rect x="180" y="15" width="140" height="36" rx="6" fill="#1E1B4B" stroke="#6366F1" strokeWidth="2" />
+              <text x="250" y="38" fill="#C7D2FE" fontSize="11" fontWeight="bold" textAnchor="middle">Age ≤ 35 ?</text>
+              {/* Branches */}
+              <line x1="210" y1="51" x2="130" y2="85" stroke="#475569" strokeWidth="2" />
+              <text x="160" y="65" fill="#94A3B8" fontSize="9">Yes</text>
+              <line x1="290" y1="51" x2="370" y2="85" stroke="#475569" strokeWidth="2" />
+              <text x="340" y="65" fill="#94A3B8" fontSize="9">No</text>
+              {/* Level 1 Nodes */}
+              <rect x="60" y="85" width="140" height="36" rx="6" fill="#1E293B" stroke="#3B82F6" strokeWidth="1.5" />
+              <text x="130" y="108" fill="#93C5FD" fontSize="10" fontWeight="bold" textAnchor="middle">Income &gt; $50k ?</text>
+              <rect x="300" y="85" width="140" height="36" rx="6" fill="#064E3B" stroke="#10B981" strokeWidth="1.5" />
+              <text x="370" y="108" fill="#A7F3D0" fontSize="10" fontWeight="bold" textAnchor="middle">Class: Approved (100%)</text>
+              {/* Level 2 Leaves */}
+              <line x1="95" y1="121" x2="70" y2="155" stroke="#475569" strokeWidth="1.5" />
+              <line x1="165" y1="121" x2="190" y2="155" stroke="#475569" strokeWidth="1.5" />
+              <rect x="20" y="155" width="100" height="30" rx="4" fill="#064E3B" stroke="#10B981" />
+              <text x="70" y="174" fill="#D1FAE5" fontSize="9" fontWeight="bold" textAnchor="middle">Class: Approved</text>
+              <rect x="140" y="155" width="100" height="30" rx="4" fill="#7F1D1D" stroke="#EF4444" />
+              <text x="190" y="174" fill="#FEE2E2" fontSize="9" fontWeight="bold" textAnchor="middle">Class: Denied</text>
+            </svg>
+          </div>
+        );
+
+      case 'ml-svm-margin-viz':
+        return (
+          <div className="w-full bg-slate-950/70 p-4 rounded-xl border border-slate-800">
+            <svg viewBox="0 0 500 200" className="w-full h-auto text-slate-300">
+              <line x1="80" y1="180" x2="420" y2="20" stroke="#6366F1" strokeWidth="3" />
+              <line x1="40" y1="150" x2="380" y2="-10" stroke="#94A3B8" strokeWidth="1.5" strokeDasharray="4 3" />
+              <line x1="120" y1="210" x2="460" y2="50" stroke="#94A3B8" strokeWidth="1.5" strokeDasharray="4 3" />
+              <circle cx="180" cy="70" r="6" fill="#3B82F6" stroke="#F59E0B" strokeWidth="2" />
+              <text x="195" y="70" fill="#FCD34D" fontSize="10">Support Vector (+1)</text>
+              <rect x="300" y="115" width="10" height="10" fill="#F43F5E" stroke="#F59E0B" strokeWidth="2" />
+              <text x="320" y="125" fill="#FCD34D" fontSize="10">Support Vector (-1)</text>
+              <text x="250" y="185" fill="#34D399" fontSize="11" fontWeight="bold" textAnchor="middle">
+                Maximum Margin = 2 / ||w||
+              </text>
+            </svg>
+          </div>
+        );
+
+      case 'ml-metrics-roc-viz':
+        return (
+          <div className="w-full bg-slate-950/70 p-4 rounded-xl border border-slate-800">
+            <svg viewBox="0 0 500 210" className="w-full h-auto text-slate-300">
+              <line x1="70" y1="170" x2="430" y2="170" stroke="#475569" strokeWidth="2" />
+              <line x1="70" y1="20" x2="70" y2="170" stroke="#475569" strokeWidth="2" />
+              <line x1="70" y1="170" x2="430" y2="20" stroke="#64748B" strokeWidth="1.5" strokeDasharray="4 4" />
+              <text x="250" y="195" fill="#94A3B8" fontSize="11" textAnchor="middle">False Positive Rate (FPR) →</text>
+              <text x="25" y="95" fill="#94A3B8" fontSize="11" textAnchor="middle" transform="rotate(-90 25 95)">True Positive Rate (TPR) →</text>
+              {/* ROC Curve */}
+              <path d="M 70 170 C 80 40, 160 30, 430 20" fill="none" stroke="#10B981" strokeWidth="3" />
+              <text x="260" y="55" fill="#34D399" fontSize="12" fontWeight="bold">AUC = 0.94 (Excellent)</text>
+              <text x="320" y="120" fill="#94A3B8" fontSize="10">Random Guess (AUC = 0.5)</text>
+            </svg>
+          </div>
+        );
+
+      case 'ml-ensembles-architecture':
+        return (
+          <div className="w-full bg-slate-950/70 p-4 rounded-xl border border-slate-800">
+            <svg viewBox="0 0 500 200" className="w-full h-auto text-slate-300">
+              <rect x="200" y="15" width="100" height="30" rx="4" fill="#1E293B" stroke="#475569" />
+              <text x="250" y="34" fill="#FFFFFF" fontSize="10" fontWeight="bold" textAnchor="middle">Dataset X</text>
+              <line x1="220" y1="45" x2="110" y2="80" stroke="#6366F1" strokeWidth="1.5" />
+              <line x1="250" y1="45" x2="250" y2="80" stroke="#6366F1" strokeWidth="1.5" />
+              <line x1="280" y1="45" x2="390" y2="80" stroke="#6366F1" strokeWidth="1.5" />
+              <rect x="60" y="80" width="100" height="35" rx="6" fill="#1E1B4B" stroke="#6366F1" />
+              <text x="110" y="102" fill="#A5B4FC" fontSize="10" fontWeight="bold" textAnchor="middle">Model 1</text>
+              <rect x="200" y="80" width="100" height="35" rx="6" fill="#1E1B4B" stroke="#6366F1" />
+              <text x="250" y="102" fill="#A5B4FC" fontSize="10" fontWeight="bold" textAnchor="middle">Model 2</text>
+              <rect x="340" y="80" width="100" height="35" rx="6" fill="#1E1B4B" stroke="#6366F1" />
+              <text x="390" y="102" fill="#A5B4FC" fontSize="10" fontWeight="bold" textAnchor="middle">Model 3</text>
+              <rect x="150" y="145" width="200" height="35" rx="6" fill="#064E3B" stroke="#10B981" strokeWidth="1.5" />
+              <text x="250" y="167" fill="#A7F3D0" fontSize="11" fontWeight="bold" textAnchor="middle">Majority Vote / Blend → Final ŷ</text>
+            </svg>
+          </div>
+        );
+
+      case 'ml-kmeans-cluster-viz':
+        return (
+          <div className="w-full bg-slate-950/70 p-4 rounded-xl border border-slate-800">
+            <svg viewBox="0 0 500 200" className="w-full h-auto text-slate-300">
+              {/* Cluster 1 */}
+              <circle cx="140" cy="90" r="45" fill="#3B82F6" fillOpacity="0.12" stroke="#3B82F6" strokeWidth="1.5" strokeDasharray="3 3" />
+              <circle cx="140" cy="90" r="7" fill="#EF4444" stroke="#FFFFFF" strokeWidth="2" />
+              <text x="140" y="75" fill="#FCA5A5" fontSize="9" fontWeight="bold" textAnchor="middle">Centroid μ₁</text>
+              <circle cx="120" cy="80" r="4" fill="#60A5FA" />
+              <circle cx="155" cy="105" r="4" fill="#60A5FA" />
+              <circle cx="145" cy="70" r="4" fill="#60A5FA" />
+              {/* Cluster 2 */}
+              <circle cx="360" cy="110" r="50" fill="#10B981" fillOpacity="0.12" stroke="#10B981" strokeWidth="1.5" strokeDasharray="3 3" />
+              <circle cx="360" cy="110" r="7" fill="#EF4444" stroke="#FFFFFF" strokeWidth="2" />
+              <text x="360" y="95" fill="#FCA5A5" fontSize="9" fontWeight="bold" textAnchor="middle">Centroid μ₂</text>
+              <circle cx="340" cy="120" r="4" fill="#34D399" />
+              <circle cx="380" cy="95" r="4" fill="#34D399" />
+              <circle cx="370" cy="135" r="4" fill="#34D399" />
+              <text x="250" y="180" fill="#94A3B8" fontSize="11" textAnchor="middle">
+                Iteratively reassign points to nearest μ_k and recalculate center of mass
+              </text>
+            </svg>
+          </div>
+        );
+
+      case 'ml-pca-projection-viz':
+        return (
+          <div className="w-full bg-slate-950/70 p-4 rounded-xl border border-slate-800">
+            <svg viewBox="0 0 500 200" className="w-full h-auto text-slate-300">
+              <line x1="80" y1="160" x2="420" y2="40" stroke="#6366F1" strokeWidth="2.5" />
+              <text x="430" y="45" fill="#818CF8" fontSize="11" fontWeight="bold">PC1 (Max Variance)</text>
+              <line x1="210" y1="50" x2="290" y2="150" stroke="#F59E0B" strokeWidth="2" strokeDasharray="3 3" />
+              <text x="300" y="160" fill="#FCD34D" fontSize="10">PC2 (Orthogonal)</text>
+              {/* Projected Points along PC1 */}
+              <circle cx="150" cy="135" r="4" fill="#3B82F6" />
+              <circle cx="210" cy="114" r="4" fill="#3B82F6" />
+              <circle cx="270" cy="93" r="4" fill="#3B82F6" />
+              <circle cx="330" cy="72" r="4" fill="#3B82F6" />
+              <text x="250" y="190" fill="#94A3B8" fontSize="11" textAnchor="middle">
+                Project d dimensions onto top k eigenvectors to retain maximum information
+              </text>
+            </svg>
+          </div>
+        );
+
       // -------------------------------------------------------------
       // PYTHON & JAVA & DSA VISUALIZERS
       // -------------------------------------------------------------
@@ -293,6 +470,140 @@ export const VisualDiagram: React.FC<VisualDiagramProps> = ({ data }) => {
               <text x="250" y="185" fill="#94A3B8" fontSize="11" textAnchor="middle">
                 Left Halved: [0..3] discarded because 14 &lt; 23 → low = mid + 1
               </text>
+            </svg>
+          </div>
+        );
+
+      case 'ml-feature-scaling':
+        return (
+          <div className="w-full bg-slate-950/70 p-4 rounded-xl border border-slate-800">
+            <svg viewBox="0 0 500 200" className="w-full h-auto text-slate-300">
+              <rect x="20" y="20" width="210" height="150" rx="8" fill="#0F172A" stroke="#475569" strokeWidth="1" />
+              <text x="125" y="42" fill="#F87171" fontSize="11" fontWeight="bold" textAnchor="middle">Before Scaling (Salary: 30k-140k)</text>
+              <ellipse cx="125" cy="110" rx="80" ry="25" fill="#EF4444" fillOpacity="0.1" stroke="#EF4444" strokeWidth="1.5" strokeDasharray="3 2" />
+              <text x="125" y="114" fill="#FCA5A5" fontSize="10" textAnchor="middle">Distorted Gradient Ravine</text>
+
+              <path d="M 245 95 L 275 95" stroke="#6366F1" strokeWidth="2" strokeDasharray="3 2" />
+              <polygon points="273,91 281,95 273,99" fill="#6366F1" />
+
+              <rect x="290" y="20" width="190" height="150" rx="8" fill="#0F172A" stroke="#10B981" strokeWidth="1" />
+              <text x="385" y="42" fill="#34D399" fontSize="11" fontWeight="bold" textAnchor="middle">After Z-Score (Mean=0, Std=1)</text>
+              <circle cx="385" cy="105" r="45" fill="#10B981" fillOpacity="0.15" stroke="#10B981" strokeWidth="2" />
+              <text x="385" y="108" fill="#A7F3D0" fontSize="10" textAnchor="middle">Isotropic Circular Contour</text>
+              <text x="250" y="190" fill="#94A3B8" fontSize="10" textAnchor="middle">Equal scaling ensures gradient descent marches directly toward minimum</text>
+            </svg>
+          </div>
+        );
+
+      case 'ml-neural-networks':
+        return (
+          <div className="w-full bg-slate-950/70 p-4 rounded-xl border border-slate-800">
+            <svg viewBox="0 0 500 200" className="w-full h-auto text-slate-300">
+              <text x="70" y="30" fill="#60A5FA" fontSize="11" fontWeight="bold" textAnchor="middle">Input Layer x</text>
+              <text x="250" y="30" fill="#A78BFA" fontSize="11" fontWeight="bold" textAnchor="middle">Hidden Layer a = ReLU(Wx+b)</text>
+              <text x="430" y="30" fill="#34D399" fontSize="11" fontWeight="bold" textAnchor="middle">Output y = σ(z)</text>
+
+              {/* Input nodes */}
+              {[60, 110, 160].map((y, i) => (
+                <circle key={`in-${i}`} cx="70" cy={y} r="14" fill="#1E293B" stroke="#3B82F6" strokeWidth="2" />
+              ))}
+              {/* Hidden nodes */}
+              {[45, 90, 135, 175].map((y, i) => (
+                <circle key={`hid-${i}`} cx="250" cy={y} r="14" fill="#312E81" stroke="#8B5CF6" strokeWidth="2" />
+              ))}
+              {/* Output node */}
+              <circle cx="430" cy="110" r="16" fill="#064E3B" stroke="#10B981" strokeWidth="2" />
+
+              {/* Connections */}
+              {[60, 110, 160].map((y1) =>
+                [45, 90, 135, 175].map((y2, j) => (
+                  <line key={`c-${y1}-${j}`} x1="84" y1={y1} x2="236" y2={y2} stroke="#475569" strokeWidth="0.8" opacity="0.6" />
+                ))
+              )}
+              {[45, 90, 135, 175].map((y, i) => (
+                <line key={`out-${i}`} x1="264" y1={y} x2="414" y2="110" stroke="#8B5CF6" strokeWidth="1.2" opacity="0.7" />
+              ))}
+
+              <text x="250" y="196" fill="#F472B6" fontSize="10" textAnchor="middle">
+                Forward: a^[l] = ReLU(W*a^[l-1] + b)  |  Backward: ∂L/∂W via Chain Rule
+              </text>
+            </svg>
+          </div>
+        );
+
+      case 'dsa-prefix-sum':
+        return (
+          <div className="w-full bg-slate-950/70 p-4 rounded-xl border border-slate-800">
+            <svg viewBox="0 0 500 200" className="w-full h-auto text-slate-300">
+              <text x="250" y="24" fill="#94A3B8" fontSize="11" fontWeight="bold" textAnchor="middle">
+                Query: Sum of subarray [L=2 .. R=4] in O(1) Time
+              </text>
+
+              {/* Original Array */}
+              <text x="50" y="65" fill="#60A5FA" fontSize="11" fontWeight="bold">arr[i]:</text>
+              {[3, 1, 4, 2, 7].map((val, idx) => (
+                <g key={`a-${idx}`} transform={`translate(${110 + idx * 70}, 45)`}>
+                  <rect x="0" y="0" width="55" height="30" rx="5" fill={idx >= 2 && idx <= 4 ? '#1E3A8A' : '#1E293B'} stroke={idx >= 2 && idx <= 4 ? '#60A5FA' : '#475569'} />
+                  <text x="27" y="20" fill="#F1F5F9" fontSize="12" fontWeight="bold" textAnchor="middle">{val}</text>
+                  <text x="27" y="-5" fill="#64748B" fontSize="9" textAnchor="middle">i={idx}</text>
+                </g>
+              ))}
+
+              {/* Prefix Array */}
+              <text x="50" y="130" fill="#34D399" fontSize="11" fontWeight="bold">P[i]:</text>
+              {[3, 4, 8, 10, 17].map((val, idx) => {
+                const isR = idx === 4;
+                const isLminus1 = idx === 1;
+                return (
+                  <g key={`p-${idx}`} transform={`translate(${110 + idx * 70}, 110)`}>
+                    <rect x="0" y="0" width="55" height="30" rx="5" fill={isR ? '#064E3B' : isLminus1 ? '#7C2D12' : '#1E293B'} stroke={isR ? '#10B981' : isLminus1 ? '#F97316' : '#475569'} strokeWidth={isR || isLminus1 ? 2 : 1} />
+                    <text x="27" y="20" fill="#F1F5F9" fontSize="12" fontWeight="bold" textAnchor="middle">{val}</text>
+                  </g>
+                );
+              })}
+
+              <text x="250" y="180" fill="#FBBF24" fontSize="12" fontWeight="bold" textAnchor="middle">
+                Formula: P[R] - P[L - 1] = 17 - 4 = 13  (Instant O(1) subtraction!)
+              </text>
+            </svg>
+          </div>
+        );
+
+      case 'dsa-tries':
+        return (
+          <div className="w-full bg-slate-950/70 p-4 rounded-xl border border-slate-800">
+            <svg viewBox="0 0 500 200" className="w-full h-auto text-slate-300">
+              <text x="250" y="22" fill="#94A3B8" fontSize="11" fontWeight="bold" textAnchor="middle">
+                Trie Prefix Tree storing 'cat', 'car', and 'card'
+              </text>
+
+              {/* Root */}
+              <circle cx="250" cy="50" r="16" fill="#1E293B" stroke="#6366F1" strokeWidth="2" />
+              <text x="250" y="54" fill="#A5B4FC" fontSize="10" fontWeight="bold" textAnchor="middle">Root</text>
+
+              {/* Level 1: 'c' */}
+              <line x1="250" y1="66" x2="250" y2="94" stroke="#6366F1" strokeWidth="2" />
+              <circle cx="250" cy="105" r="14" fill="#1E293B" stroke="#818CF8" strokeWidth="2" />
+              <text x="250" y="109" fill="#E0E7FF" fontSize="12" fontWeight="bold" textAnchor="middle">c</text>
+
+              {/* Level 2: 'a' */}
+              <line x1="250" y1="119" x2="250" y2="140" stroke="#818CF8" strokeWidth="2" />
+              <circle cx="250" cy="150" r="14" fill="#312E81" stroke="#A78BFA" strokeWidth="2" />
+              <text x="250" y="154" fill="#EDE9FE" fontSize="12" fontWeight="bold" textAnchor="middle">a</text>
+
+              {/* Branches: 't' and 'r' */}
+              <line x1="240" y1="160" x2="180" y2="175" stroke="#10B981" strokeWidth="2" />
+              <circle cx="170" cy="180" r="14" fill="#064E3B" stroke="#10B981" strokeWidth="2.5" />
+              <text x="170" y="184" fill="#A7F3D0" fontSize="11" fontWeight="bold" textAnchor="middle">t ✓</text>
+
+              <line x1="260" y1="160" x2="320" y2="175" stroke="#10B981" strokeWidth="2" />
+              <circle cx="330" cy="180" r="14" fill="#064E3B" stroke="#10B981" strokeWidth="2.5" />
+              <text x="330" y="184" fill="#A7F3D0" fontSize="11" fontWeight="bold" textAnchor="middle">r ✓</text>
+
+              {/* 'd' child of 'r' */}
+              <line x1="344" y1="180" x2="410" y2="180" stroke="#10B981" strokeWidth="2" />
+              <circle cx="420" cy="180" r="14" fill="#064E3B" stroke="#10B981" strokeWidth="2.5" />
+              <text x="420" y="184" fill="#A7F3D0" fontSize="11" fontWeight="bold" textAnchor="middle">d ✓</text>
             </svg>
           </div>
         );
