@@ -1,32 +1,50 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Navbar } from './Navbar';
-import { Sidebar } from './Sidebar';
-import { SearchModal } from './SearchModal';
+import React from 'react';
+import { usePathname } from 'next/navigation';
+import { LandingLayout } from './LandingLayout';
+import { MLLayout } from './MLLayout';
+import { DSALayout } from './DSALayout';
+import { PythonLayout } from './PythonLayout';
+import { JavaLayout } from './JavaLayout';
 
 interface AppShellProps {
   children: React.ReactNode;
 }
 
+/**
+ * AppShell: Environment Layout Dispatcher
+ *
+ * Dispatches to dedicated, isolated layouts based on active route:
+ * - `/` -> LandingLayout (Standalone home dashboard with NO sidebar and NO topbar)
+ * - `/dsa/*` -> DSALayout (DSA-exclusive sidebar & topbar)
+ * - `/python/*` -> PythonLayout (Python-exclusive sidebar & topbar)
+ * - `/java/*` -> JavaLayout (Java-exclusive sidebar & topbar)
+ * - ML routes (`/curriculum`, `/playground`, `/formulas`, etc.) -> MLLayout (ML-exclusive sidebar & topbar)
+ */
 export const AppShell: React.FC<AppShellProps> = ({ children }) => {
-  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
-  const [searchOpen, setSearchOpen] = useState<boolean>(false);
+  const pathname = usePathname() || '/';
 
-  return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased font-sans">
-      <Navbar
-        onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
-        onOpenSearch={() => setSearchOpen(true)}
-      />
+  // 1. Home Dashboard: Standalone landing page without sidebar or topbar
+  if (pathname === '/') {
+    return <LandingLayout>{children}</LandingLayout>;
+  }
 
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+  // 2. DSA Learning Environment
+  if (pathname.startsWith('/dsa')) {
+    return <DSALayout>{children}</DSALayout>;
+  }
 
-      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+  // 3. Python Learning Environment
+  if (pathname.startsWith('/python')) {
+    return <PythonLayout>{children}</PythonLayout>;
+  }
 
-      <main className="lg:pl-64 transition-all">
-        {children}
-      </main>
-    </div>
-  );
+  // 4. Java Learning Environment
+  if (pathname.startsWith('/java')) {
+    return <JavaLayout>{children}</JavaLayout>;
+  }
+
+  // 5. Machine Learning Environment
+  return <MLLayout>{children}</MLLayout>;
 };
