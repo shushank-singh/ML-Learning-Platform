@@ -36,6 +36,7 @@ import { AuthGuard } from '@/components/auth/AuthGuard';
 
 const ML_NAV_ITEMS = [
   { name: 'ML Curriculum', href: '/curriculum', icon: BookOpen },
+  { name: 'AI Tutor Studio', href: '/ai-tutor', icon: Sparkles },
   { name: 'Visual Short Notes', href: '/revision-notes', icon: Zap },
   { name: 'ML Visual Playground', href: '/playground', icon: Sliders },
   { name: 'Python Code Lab', href: '/code-lab', icon: Terminal },

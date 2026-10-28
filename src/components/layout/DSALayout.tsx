@@ -31,6 +31,7 @@ import { AuthGuard } from '@/components/auth/AuthGuard';
 
 const DSA_NAV_ITEMS = [
   { name: 'DSA Track Overview', href: '/dsa', icon: Cpu },
+  { name: 'AI Tutor Studio', href: '/ai-tutor', icon: Sparkles },
   { name: 'Dynamic Programming', href: '/dsa/dsa-module-11', icon: TrendingUp },
   { name: 'Graph Algorithms', href: '/dsa/dsa-module-10', icon: Network },
   { name: 'Trees & BSTs', href: '/dsa/dsa-module-8', icon: TreePine },

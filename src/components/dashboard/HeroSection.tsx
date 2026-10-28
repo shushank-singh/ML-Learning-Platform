@@ -153,6 +153,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <Coffee className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
             Java Mastery
           </span>
+          <Link
+            href="/ai-tutor"
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 text-indigo-700 dark:text-indigo-300 font-medium transition-colors shadow-xs"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-500 dark:text-amber-300" />
+            <span>AI Tutor Studio</span>
+          </Link>
         </div>
       </div>
     </section>

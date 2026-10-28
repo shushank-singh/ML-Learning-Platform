@@ -6,13 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "node tests/verify.js && node tests/auth-verify.js"
+    "test": "node tests/verify.js && node tests/auth-verify.js && node tests/test-ai-tutor.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "ML Mastery Lab — Learn Machine Learning from Mathematics to Deployment",
   "dependencies": {
+    "@google/genai": "^2.31.0",
     "@monaco-editor/react": "^4.7.0",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.118.0",

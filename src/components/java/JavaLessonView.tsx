@@ -29,6 +29,7 @@ import {
 import { JavaLessonContent } from '@/lib/types';
 import { JavaVisualizerDispatcher } from './visualizers/JavaVisualizerDispatcher';
 import { JavaCodeRunner } from './JavaCodeRunner';
+import { AITutorPanel } from '@/components/tutor/AITutorPanel';
 import {
   getProgress,
   toggleLessonCompletion,
@@ -731,6 +732,16 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
           )}
         </div>
       </footer>
+
+      {/* Floating Reusable AI Coding & Concept Tutor */}
+      <AITutorPanel
+        track="java"
+        moduleId={lesson.moduleId}
+        lessonId={lesson.id}
+        lessonTitle={lesson.title}
+        language="java"
+        codeSnippet={lesson.runnableCode?.code || lesson.codeExample?.code}
+      />
     </article>
   );
 };

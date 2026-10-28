@@ -35,6 +35,7 @@ import { AuthGuard } from '@/components/auth/AuthGuard';
 
 const PYTHON_NAV_ITEMS = [
   { name: 'Python Track Overview', href: '/python', icon: Terminal },
+  { name: 'AI Tutor Studio', href: '/ai-tutor', icon: Sparkles },
   { name: 'Python Code Lab', href: '/code-lab', icon: Code2 },
   { name: 'CPython Internals', href: '/python/python-module-9', icon: Cpu },
   { name: 'Data Science with Python', href: '/python/python-module-11', icon: BarChart2 },

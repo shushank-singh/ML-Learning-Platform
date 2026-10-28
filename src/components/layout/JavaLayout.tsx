@@ -35,6 +35,7 @@ import { AuthGuard } from '@/components/auth/AuthGuard';
 
 const JAVA_NAV_ITEMS = [
   { name: 'Java Track Overview', href: '/java', icon: Coffee },
+  { name: 'AI Tutor Studio', href: '/ai-tutor', icon: Sparkles },
   { name: 'JVM Architecture', href: '/java/java-module-1', icon: Cpu },
   { name: 'Collections Framework', href: '/java/java-module-10', icon: Database },
   { name: 'Deep OOP & Patterns', href: '/java/java-module-6', icon: Boxes },

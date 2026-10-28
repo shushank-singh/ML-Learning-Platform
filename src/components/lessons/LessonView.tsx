@@ -31,6 +31,7 @@ import { LessonEvaluation } from './LessonEvaluation';
 import { LessonPractice } from './LessonPractice';
 import { LessonCheatSheet } from './LessonCheatSheet';
 import { LessonNavigation } from './LessonNavigation';
+import { AITutorPanel } from '@/components/tutor/AITutorPanel';
 
 interface LessonViewProps {
   lesson: LessonContent;
@@ -218,6 +219,16 @@ export const LessonView: React.FC<LessonViewProps> = ({ lesson }) => {
           <LessonNavigation lessonId={lesson.id} initialNote={userNote} />
         </aside>
       </div>
+
+      {/* Floating Reusable AI Coding & Concept Tutor */}
+      <AITutorPanel
+        track="ml"
+        moduleId={lesson.moduleId}
+        lessonId={lesson.id}
+        lessonTitle={lesson.title}
+        language="python"
+        codeSnippet={lesson.runnableCode?.code || lesson.scratchCode?.code}
+      />
     </div>
   );
 };

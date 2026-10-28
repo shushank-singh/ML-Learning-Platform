@@ -30,6 +30,7 @@ import { DSAVisualizerDispatcher } from './visualizers/DSAVisualizerDispatcher';
 import { ComplexityBadge } from '../shared/ComplexityBadge';
 import { PseudocodePanel } from '../shared/PseudocodePanel';
 import { CodeRunner } from '../code/CodeRunner';
+import { AITutorPanel } from '@/components/tutor/AITutorPanel';
 import {
   getProgress,
   toggleLessonCompletion,
@@ -646,6 +647,16 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
           </div>
         )}
       </section>
+
+      {/* Floating Reusable AI Coding & Concept Tutor */}
+      <AITutorPanel
+        track="dsa"
+        moduleId={lesson.moduleId}
+        lessonId={lesson.id}
+        lessonTitle={lesson.title}
+        language="python"
+        codeSnippet={lesson.pythonCode?.code}
+      />
     </div>
   );
 };

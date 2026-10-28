@@ -29,6 +29,7 @@ import {
 import { PythonLessonContent } from '@/lib/types';
 import { PythonVisualizerDispatcher } from './visualizers/PythonVisualizerDispatcher';
 import { CodeRunner } from '../code/CodeRunner';
+import { AITutorPanel } from '@/components/tutor/AITutorPanel';
 import {
   getProgress,
   toggleLessonCompletion,
@@ -754,6 +755,16 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
           </div>
         )}
       </section>
+
+      {/* Floating Reusable AI Coding & Concept Tutor */}
+      <AITutorPanel
+        track="python"
+        moduleId={lesson.moduleId}
+        lessonId={lesson.id}
+        lessonTitle={lesson.title}
+        language="python"
+        codeSnippet={lesson.codeExample?.code || lesson.runnableCode?.code}
+      />
     </div>
   );
 };
