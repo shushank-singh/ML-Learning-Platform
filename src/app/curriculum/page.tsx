@@ -27,6 +27,7 @@ import {
   MODULES_CATALOG,
   MODULES_CATALOG_ML_CORE,
   MODULES_CATALOG_DEEP_LEARNING,
+  MODULES_CATALOG_TRANSFORMERS,
   MODULES_CATALOG_NUMPY,
   MODULES_CATALOG_PANDAS,
 } from '@/data/modules/curriculum';
@@ -34,7 +35,7 @@ import { AI_ML_PHASES } from '@/data/phases/curriculumPhases';
 import { getProgress, toggleLessonCompletion } from '@/lib/storage';
 import { UserProgressState, ModuleData } from '@/lib/types';
 
-type TrackFilter = 'all' | 'deep-learning' | 'ml-core' | 'numpy' | 'pandas';
+type TrackFilter = 'all' | 'transformers' | 'deep-learning' | 'ml-core' | 'numpy' | 'pandas';
 type ViewMode = 'catalog' | 'roadmap';
 
 export default function CurriculumPage() {
@@ -46,6 +47,7 @@ export default function CurriculumPage() {
     'phase-1': true,
     'phase-2': true,
     'phase-3': true,
+    'phase-6': true,
   });
 
   useEffect(() => {
@@ -70,18 +72,28 @@ export default function CurriculumPage() {
 
   // Track counts
   const dlLessons = MODULES_CATALOG_DEEP_LEARNING.flatMap((m) => m.lessons);
+  const tfLessons = MODULES_CATALOG_TRANSFORMERS.flatMap((m) => m.lessons);
   const mlCoreLessons = MODULES_CATALOG_ML_CORE.flatMap((m) => m.lessons);
   const numpyLessons = MODULES_CATALOG_NUMPY.flatMap((m) => m.lessons);
   const pandasLessons = MODULES_CATALOG_PANDAS.flatMap((m) => m.lessons);
   const allLessons = MODULES_CATALOG.flatMap((m) => m.lessons);
 
   const dlDone = dlLessons.filter((l) => progress?.completedLessons[l.id]).length;
+  const tfDone = tfLessons.filter((l) => progress?.completedLessons[l.id]).length;
   const mlDone = mlCoreLessons.filter((l) => progress?.completedLessons[l.id]).length;
   const numpyDone = numpyLessons.filter((l) => progress?.completedLessons[l.id]).length;
   const pandasDone = pandasLessons.filter((l) => progress?.completedLessons[l.id]).length;
   const allDone = allLessons.filter((l) => progress?.completedLessons[l.id]).length;
 
   const getFilteredModules = (): { trackLabel: string; trackDesc: string; icon: any; modules: ModuleData[] }[] => {
+    if (selectedTrack === 'transformers') {
+      return [{
+        trackLabel: 'Transformers: From Fundamentals to Implementation',
+        trackDesc: '15 structured modules covering tokenization, embeddings, positional encoding, self-attention, multi-head blocks, and building a full nano-GPT model in PyTorch.',
+        icon: Sparkles,
+        modules: MODULES_CATALOG_TRANSFORMERS,
+      }];
+    }
     if (selectedTrack === 'deep-learning') {
       return [{
         trackLabel: 'Deep Learning',
@@ -118,25 +130,31 @@ export default function CurriculumPage() {
     // All tracks
     return [
       {
-        trackLabel: '1. Deep Learning',
+        trackLabel: '1. Transformers Architecture',
+        trackDesc: 'From tokenization and sinusoidal positional encoding to multi-head self-attention and building a nano-GPT block in PyTorch.',
+        icon: Sparkles,
+        modules: MODULES_CATALOG_TRANSFORMERS,
+      },
+      {
+        trackLabel: '2. Deep Learning',
         trackDesc: 'From single artificial perceptrons and backpropagation calculus to convolutional networks, regularization, and PyTorch deep networks.',
         icon: Cpu,
         modules: MODULES_CATALOG_DEEP_LEARNING,
       },
       {
-        trackLabel: '2. Core Machine Learning Algorithms',
+        trackLabel: '3. Core Machine Learning Algorithms',
         trackDesc: 'From first-principles math and loss derivations to deep networks and production microservices.',
         icon: Brain,
         modules: MODULES_CATALOG_ML_CORE,
       },
       {
-        trackLabel: '3. NumPy Mastery',
+        trackLabel: '4. NumPy Mastery',
         trackDesc: 'Numerical computing, contiguous memory structures, universal functions, broadcasting, and student analytics capstone.',
         icon: Hash,
         modules: MODULES_CATALOG_NUMPY,
       },
       {
-        trackLabel: '4. Pandas Mastery',
+        trackLabel: '5. Pandas Mastery',
         trackDesc: 'Tabular data wrangling, data cleaning, GroupBy split-apply-combine, reshaping, and sales analytics capstone.',
         icon: Table,
         modules: MODULES_CATALOG_PANDAS,
@@ -362,6 +380,17 @@ export default function CurriculumPage() {
             >
               <Layers className="w-3.5 h-3.5" />
               <span>All Tracks ({MODULES_CATALOG.length} Modules)</span>
+            </button>
+            <button
+              onClick={() => setSelectedTrack('transformers')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                selectedTrack === 'transformers'
+                  ? 'bg-amber-600 text-white shadow-md shadow-amber-600/20'
+                  : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>Transformers ({MODULES_CATALOG_TRANSFORMERS.length} Modules)</span>
             </button>
             <button
               onClick={() => setSelectedTrack('deep-learning')}

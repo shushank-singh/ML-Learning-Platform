@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "node tests/verify.js && node tests/auth-verify.js && node tests/test-ai-tutor.js"
+    "test": "node tests/verify.js && node tests/auth-verify.js && node tests/test-ai-tutor.js && node tests/verify_transformers.js"
   },
   "keywords": [],
   "author": "",

@@ -21,6 +21,10 @@ import { GradientDescentPlayground } from './dl/GradientDescentPlayground';
 import { OverfittingExplorer } from './dl/OverfittingExplorer';
 import { CNNConvolutionExplorer } from './dl/CNNConvolutionExplorer';
 import { AttentionExplorer } from './dl/AttentionExplorer';
+import { TokenizationExplorer } from './transformers/TokenizationExplorer';
+import { PositionalEncodingExplorer } from './transformers/PositionalEncodingExplorer';
+import { CausalMaskExplorer } from './transformers/CausalMaskExplorer';
+import { MultiHeadAttentionExplorer } from './transformers/MultiHeadAttentionExplorer';
 
 interface VisualizerDispatcherProps {
   type: AlgorithmType;
@@ -59,6 +63,14 @@ export const VisualizerDispatcher: React.FC<VisualizerDispatcherProps> = ({ type
       return <CNNConvolutionExplorer />;
     case 'attention-explorer':
       return <AttentionExplorer />;
+    case 'tokenization-explorer':
+      return <TokenizationExplorer />;
+    case 'positional-encoding-explorer':
+      return <PositionalEncodingExplorer />;
+    case 'causal-mask-explorer':
+      return <CausalMaskExplorer />;
+    case 'multi-head-attention-explorer':
+      return <MultiHeadAttentionExplorer />;
     case 'metrics-roc':
       return <MetricsRocVisualizer />;
     case 'pca':

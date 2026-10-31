@@ -19,6 +19,10 @@ export type AlgorithmType =
   | 'overfitting-explorer'
   | 'cnn-convolution-explorer'
   | 'attention-explorer'
+  | 'tokenization-explorer'
+  | 'positional-encoding-explorer'
+  | 'causal-mask-explorer'
+  | 'multi-head-attention-explorer'
   | 'none';
 
 export interface LessonSummary {
