@@ -35,17 +35,17 @@ import { UserMenu } from '@/components/auth/UserMenu';
 import { AuthGuard } from '@/components/auth/AuthGuard';
 
 const ML_NAV_ITEMS = [
-  { name: 'ML Curriculum', href: '/curriculum', icon: BookOpen },
+  { name: 'AI & ML Curriculum', href: '/curriculum', icon: BookOpen },
   { name: 'AI Tutor Studio', href: '/ai-tutor', icon: Sparkles },
   { name: 'Visual Short Notes', href: '/revision-notes', icon: Zap },
-  { name: 'ML Visual Playground', href: '/playground', icon: Sliders },
+  { name: 'AI & ML Playground', href: '/playground', icon: Sliders },
   { name: 'Python Code Lab', href: '/code-lab', icon: Terminal },
   { name: 'Formula Explorer', href: '/formulas', icon: Calculator },
-  { name: 'ML Quiz Center', href: '/quizzes', icon: CheckSquare },
+  { name: 'AI & ML Quiz Center', href: '/quizzes', icon: CheckSquare },
   { name: 'Capstone Projects', href: '/projects', icon: Briefcase },
   { name: 'Bookmarks & Notes', href: '/notes', icon: Bookmark },
   { name: 'Learning Analytics', href: '/analytics', icon: BarChart2 },
-  { name: 'ML Settings', href: '/settings', icon: Settings },
+  { name: 'AI & ML Settings', href: '/settings', icon: Settings },
 ];
 
 export const MLLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -124,10 +124,10 @@ export const MLLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
             </div>
             <div>
               <span className="font-extrabold text-sm tracking-tight text-slate-900 dark:text-slate-100 block leading-tight">
-                ML Mastery Lab
+                Complete AI & ML Academy
               </span>
               <span className="text-[10px] text-indigo-600 dark:text-indigo-400 font-semibold block leading-tight">
-                Complete Machine Learning
+                From ML Foundations to Production AI
               </span>
             </div>
           </Link>

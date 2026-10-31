@@ -13,6 +13,14 @@ import { PCAVisualizer } from './PCAVisualizer';
 import { NeuralNetVisualizer } from './NeuralNetVisualizer';
 import { NumPyVisualizer } from './NumPyVisualizer';
 import { PandasVisualizer } from './PandasVisualizer';
+import { NeuronCalculator } from './dl/NeuronCalculator';
+import { ActivationExplorer } from './dl/ActivationExplorer';
+import { ForwardPropExplorer } from './dl/ForwardPropExplorer';
+import { LossExplorer } from './dl/LossExplorer';
+import { GradientDescentPlayground } from './dl/GradientDescentPlayground';
+import { OverfittingExplorer } from './dl/OverfittingExplorer';
+import { CNNConvolutionExplorer } from './dl/CNNConvolutionExplorer';
+import { AttentionExplorer } from './dl/AttentionExplorer';
 
 interface VisualizerDispatcherProps {
   type: AlgorithmType;
@@ -35,6 +43,22 @@ export const VisualizerDispatcher: React.FC<VisualizerDispatcherProps> = ({ type
       return <KMeansVisualizer />;
     case 'neural-net':
       return <NeuralNetVisualizer />;
+    case 'neuron-calculator':
+      return <NeuronCalculator />;
+    case 'activation-explorer':
+      return <ActivationExplorer />;
+    case 'forward-prop-explorer':
+      return <ForwardPropExplorer />;
+    case 'loss-explorer':
+      return <LossExplorer />;
+    case 'gradient-descent-playground':
+      return <GradientDescentPlayground />;
+    case 'overfitting-explorer':
+      return <OverfittingExplorer />;
+    case 'cnn-convolution-explorer':
+      return <CNNConvolutionExplorer />;
+    case 'attention-explorer':
+      return <AttentionExplorer />;
     case 'metrics-roc':
       return <MetricsRocVisualizer />;
     case 'pca':

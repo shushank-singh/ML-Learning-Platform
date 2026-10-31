@@ -640,7 +640,7 @@ fp_lesson = create_pandas_lesson(
             "Completed the entire Pandas Mastery curriculum with excellence!"
         ],
         "nextLessonId": "",
-        "nextLessonTitle": "Complete Machine Learning Curriculum",
+        "nextLessonTitle": "Complete AI & ML Curriculum",
         "nextLessonModuleId": "module-0"
     }
 )

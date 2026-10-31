@@ -165,7 +165,7 @@ export const ContinueLearningSection: React.FC<ContinueLearningSectionProps> = (
                 {/* ML Track */}
                 <div className="space-y-1">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-700 dark:text-slate-300 font-medium">Complete Machine Learning</span>
+                    <span className="text-slate-700 dark:text-slate-300 font-medium">Complete AI & ML</span>
                     <span className="font-mono text-slate-500 dark:text-slate-400">
                       {mlStats.completedLessons}/{mlStats.totalLessons} ({mlStats.percentage}%)
                     </span>
@@ -276,12 +276,12 @@ export const ContinueLearningSection: React.FC<ContinueLearningSectionProps> = (
               className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-xs transition-colors border border-slate-200 dark:border-slate-700"
             >
               <Sparkles className="w-4 h-4 text-amber-500 dark:text-amber-400" />
-              <span>Start Complete Machine Learning</span>
+              <span>Start Complete AI & ML</span>
             </Link>
           </div>
 
           <div className="pt-4 border-t border-slate-200 dark:border-slate-800/80 max-w-lg mx-auto flex items-center justify-center gap-6 text-xs text-slate-500">
-            <span>✓ Complete ML, NumPy &amp; Pandas</span>
+            <span>✓ Complete AI &amp; ML Academy</span>
             <span>✓ 626 In-Depth Lessons</span>
             <span>✓ Zero Setup Required</span>
           </div>

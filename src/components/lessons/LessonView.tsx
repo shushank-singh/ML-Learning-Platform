@@ -79,7 +79,7 @@ export const LessonView: React.FC<LessonViewProps> = ({ lesson }) => {
               href="/curriculum"
               className="hover:text-indigo-600 transition-colors font-medium"
             >
-              ML Curriculum
+              AI & ML Curriculum
             </Link>
             <ChevronRight className="w-3.5 h-3.5" />
             <Link

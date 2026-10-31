@@ -11,6 +11,14 @@ export type AlgorithmType =
   | 'svm-boundary'
   | 'numpy-interactive'
   | 'pandas-interactive'
+  | 'neuron-calculator'
+  | 'activation-explorer'
+  | 'forward-prop-explorer'
+  | 'loss-explorer'
+  | 'gradient-descent-playground'
+  | 'overfitting-explorer'
+  | 'cnn-convolution-explorer'
+  | 'attention-explorer'
   | 'none';
 
 export interface LessonSummary {

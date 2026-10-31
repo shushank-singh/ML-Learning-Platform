@@ -23,7 +23,7 @@ export default function ProjectsPage() {
           <span>Industry Capstone Portfolio</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
-          Real-World Machine Learning Project Lab
+          Real-World AI &amp; ML Project Lab
         </h1>
         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-3xl leading-relaxed">
           Step beyond synthetic toy examples. Build 10 production-quality end-to-end applications complete with business objective definitions, exploratory checklists, preprocessing pipelines, error diagnostics, and deployment blueprints.

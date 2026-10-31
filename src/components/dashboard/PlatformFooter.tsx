@@ -40,7 +40,7 @@ export const PlatformFooter: React.FC = () => {
             </Link>
 
             <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-light max-w-sm">
-              An open, production-quality educational platform designed to master machine learning, algorithms, and software engineering through first-principles mathematics, step-by-step visualizers, runnable code, and real-world architectures.
+              An open, production-quality educational platform designed to master artificial intelligence, machine learning, algorithms, and software engineering through first-principles mathematics, step-by-step visualizers, runnable code, and real-world architectures.
             </p>
 
             <div className="flex items-center gap-3 text-xs">
@@ -66,7 +66,7 @@ export const PlatformFooter: React.FC = () => {
                   className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5"
                 >
                   <Brain className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-                  <span>Complete Machine Learning</span>
+                  <span>Complete AI & ML</span>
                 </Link>
               </li>
               <li>

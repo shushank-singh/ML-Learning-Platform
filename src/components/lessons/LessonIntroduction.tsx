@@ -30,13 +30,13 @@ export const LessonIntroduction: React.FC<LessonIntroductionProps> = ({
     if (mod === 'module-4' || id.includes('classification')) return 'Supervised Learning: Classification';
     if (mod === 'module-6' || id.includes('forest') || id.includes('boost')) return 'Ensemble Learning & Boosting';
     if (mod === 'module-7' || id.includes('kmeans') || id.includes('cluster') || id.includes('pca')) return 'Unsupervised Learning & Clustering';
-    if (mod === 'module-9' || id.includes('neural') || id.includes('deep')) return 'Neural Networks & Deep Learning';
+    if (mod.startsWith('dl-module') || mod === 'module-9' || id.includes('neural') || id.includes('deep')) return 'Deep Learning';
     if (mod === 'module-1' || id.includes('math') || id.includes('vector') || id.includes('gradient')) return 'Mathematical Foundations';
     if (mod === 'module-2' || id.includes('preprocess') || id.includes('imput') || id.includes('scale')) return 'Data Engineering & Preprocessing';
     if (mod === 'module-5' || id.includes('metric') || id.includes('validation')) return 'Model Evaluation & Selection';
     if (mod === 'module-10' || id.includes('deploy') || id.includes('mlops')) return 'Production ML Engineering & MLOps';
     if (mod === 'module-11') return 'Real-World Capstone Project';
-    return 'Machine Learning Core';
+    return 'Complete AI & ML Core';
   };
 
   // Generate 3-5 structured learning objectives

@@ -66,14 +66,23 @@ export const TopicVisualizer: React.FC<TopicVisualizerProps> = ({ lesson }) => {
     if (id.includes('confusion-matrix') || id.includes('roc') || id.includes('precision-recall') || id.includes('metrics')) {
       return 'evaluation-metrics';
     }
-    if (id.includes('activation') || title.includes('activation')) {
+    if (id.includes('activation') || title.includes('activation') || lesson.visualizerType === 'activation-explorer') {
       return 'activation-functions';
     }
     if (id.includes('backprop') || title.includes('backpropagation') || id.includes('chain-rule')) {
       return 'backpropagation';
     }
-    if (id.includes('cnn') || id.includes('convolut') || title.includes('convolution')) {
+    if (id.includes('cnn') || id.includes('convolut') || title.includes('convolution') || lesson.visualizerType === 'cnn-convolution-explorer') {
       return 'cnn-kernel';
+    }
+    if (lesson.visualizerType === 'gradient-descent-playground' || lesson.visualizerType === 'loss-explorer') {
+      return 'gradient-descent-landscape';
+    }
+    if (lesson.visualizerType === 'overfitting-explorer') {
+      return 'bias-variance';
+    }
+    if (lesson.visualizerType === 'neuron-calculator' || lesson.visualizerType === 'forward-prop-explorer' || lesson.visualizerType === 'attention-explorer') {
+      return 'neural-net-architecture';
     }
     if (id.includes('dbscan') || title.includes('dbscan')) {
       return 'dbscan';

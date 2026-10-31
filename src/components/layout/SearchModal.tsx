@@ -201,7 +201,7 @@ const ML_SEARCH_ITEMS: SearchResult[] = MODULES_CATALOG.flatMap((mod) =>
     category: 'Lesson' as const,
     url: `/curriculum/${mod.id}/${lesson.id}`,
     description: lesson.description,
-    badge: mod.id.startsWith('numpy') ? 'NumPy' : mod.id.startsWith('pandas') ? 'Pandas' : `ML M${mod.number}`,
+    badge: mod.id.startsWith('dl-module') ? 'Deep Learning' : mod.id.startsWith('numpy') ? 'NumPy' : mod.id.startsWith('pandas') ? 'Pandas' : `AI & ML M${mod.number}`,
   }))
 );
 

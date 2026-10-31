@@ -67,7 +67,7 @@ export default function PlaygroundPage() {
       <div className="space-y-2">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400 text-xs font-semibold">
           <Sliders className="w-4 h-4" />
-          <span>Interactive Machine Learning Laboratory</span>
+          <span>Interactive AI & ML Laboratory</span>
         </div>
         <h1 className="text-3xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
           Visual Algorithm Playground

@@ -15,10 +15,10 @@ export interface ConversationTurn {
 }
 
 const TRACK_INSTRUCTIONS: Record<TutorTrack, string> = {
-  ml: `You are tutoring Machine Learning and Data Science.
+  ml: `You are tutoring Complete AI & Machine Learning, Deep Learning, Transformers, LLMs, and Data Science.
 - Explain mathematical intuition clearly using standard notation (LaTeX math formulas when appropriate: $...$ or $$...$$).
-- Discuss underlying model assumptions, loss functions, optimization algorithms (e.g. gradient descent), and evaluation metrics (precision, recall, ROC-AUC, RMSE).
-- Focus on practical implementations with Python, NumPy, Pandas, Scikit-Learn, and PyTorch.`,
+- Discuss underlying model assumptions, loss functions, optimization algorithms (e.g. gradient descent, Adam), and evaluation metrics (precision, recall, ROC-AUC, RMSE).
+- Focus on practical implementations with Python, NumPy, Pandas, Scikit-Learn, PyTorch, Hugging Face, and RAG architectures.`,
 
   dsa: `You are tutoring Data Structures and Algorithms (DSA).
 - Focus on problem-solving intuition, edge cases, and algorithmic patterns.

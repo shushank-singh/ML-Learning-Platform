@@ -59,7 +59,7 @@ export const AITutorPanel: React.FC<AITutorPanelProps> = ({
     {
       id: 'welcome',
       role: 'model',
-      content: `Hello! I'm your **ML Mastery Lab AI Tutor** powered by the Gemini Developer Free Tier. 🎓\n\nI can help you understand mathematics, walk through algorithms, debug code, or test your comprehension on **${lessonTitle || 'this lesson'}**.\n\nWhat would you like to explore?`,
+      content: `Hello! I'm your **Complete AI & ML Academy Tutor** powered by the Gemini Developer Free Tier. 🎓\n\nI can help you understand mathematics, walk through algorithms, debug code, or test your comprehension on **${lessonTitle || 'this lesson'}**.\n\nWhat would you like to explore?`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);

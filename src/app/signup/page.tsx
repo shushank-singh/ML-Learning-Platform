@@ -255,7 +255,7 @@ function SignUpForm() {
             Create Your Free Account
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            Master Machine Learning, Algorithms &amp; Modern Programming
+            Master Complete AI &amp; ML, Algorithms &amp; Modern Programming
           </p>
         </div>
 

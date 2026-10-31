@@ -43,7 +43,7 @@ interface MessageItem {
 }
 
 const TRACKS_METADATA: { id: TutorTrack; name: string; icon: any; color: string }[] = [
-  { id: 'ml', name: 'Machine Learning', icon: Layers, color: 'text-indigo-400' },
+  { id: 'ml', name: 'Complete AI & ML', icon: Layers, color: 'text-indigo-400' },
   { id: 'dsa', name: 'DSA Lab', icon: Cpu, color: 'text-violet-400' },
   { id: 'python', name: 'Python Lab', icon: Terminal, color: 'text-emerald-400' },
   { id: 'java', name: 'Java Lab', icon: Coffee, color: 'text-amber-400' },
@@ -58,7 +58,7 @@ export const AITutorFullView: React.FC = () => {
     {
       id: 'welcome',
       role: 'model',
-      content: `Welcome to the **ML Mastery Lab AI Concept & Coding Tutor**! 🎓\n\nI am configured under the **Google Gemini Developer API Free Tier** with zero paid fallbacks.\n\nSelect a learning track or ask any question about Machine Learning math, Data Structures & Algorithms, Python, or Java.`,
+      content: `Welcome to the **Complete AI & ML Academy Tutor**! 🎓\n\nI am configured under the **Google Gemini Developer API Free Tier** with zero paid fallbacks.\n\nSelect a learning track or ask any question about Complete AI & ML math, Deep Learning, Data Structures & Algorithms, Python, or Java.`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -289,7 +289,7 @@ export const AITutorFullView: React.FC = () => {
           </h1>
           <p className="text-xs sm:text-sm text-slate-400 max-w-2xl leading-relaxed">
             One unified, pedagogical assistant powered exclusively by Google Gemini Developer API Free Tier.
-            Supports Machine Learning, DSA, Python, and Java.
+            Supports Complete AI & ML, DSA, Python, and Java.
           </p>
         </div>
 

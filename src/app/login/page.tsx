@@ -130,7 +130,7 @@ function LoginForm() {
             Welcome Back
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            Sign in to continue your Machine Learning &amp; Algorithms mastery
+            Sign in to continue your Complete AI &amp; ML and Engineering mastery
           </p>
         </div>
 

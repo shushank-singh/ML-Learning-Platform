@@ -4,9 +4,9 @@ import { AppShell } from '@/components/layout/AppShell';
 import { AuthProvider } from '@/context/AuthContext';
 
 export const metadata: Metadata = {
-  title: 'ML Mastery Lab — Learn Machine Learning from Mathematics to Deployment',
+  title: 'Complete AI & ML Academy — From ML Foundations to Production AI',
   description:
-    'An interactive, production-quality educational platform to master machine learning through rigorous mathematics, step-by-step derivations, runnable Python code, and real-world projects.',
+    'Learn Machine Learning, Deep Learning, Transformers, LLMs, RAG, AI Agents, and MLOps through visual explanations, interactive labs, practical coding, and real-world projects.',
 };
 
 export default function RootLayout({

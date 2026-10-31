@@ -34,6 +34,15 @@ import { MODULES_CATALOG_PYTHON } from '@/data/python/curriculum';
 import { MODULES_CATALOG_JAVA } from '@/data/java/curriculum';
 import { UserProgressState } from '@/lib/types';
 
+export const CANONICAL_BRANDING = {
+  academyTitle: 'Complete AI & ML Academy',
+  trackTitle: 'Complete AI & ML',
+  shortSubtitle: 'From ML Foundations to Production AI',
+  description:
+    'Learn Machine Learning, Deep Learning, Transformers, LLMs, RAG, AI Agents, and MLOps through visual explanations, interactive labs, practical coding, and real-world projects.',
+  categoryBadge: 'Category 1 · Artificial Intelligence & Machine Learning',
+} as const;
+
 export type CategoryId = 'machine-learning' | 'algorithms' | 'programming';
 
 export interface LearningSectionStats {
@@ -272,7 +281,7 @@ export function resolveUserResumeLesson(progress: UserProgressState | null): Res
             moduleId: mod.id,
             title: found.title,
             trackId: 'ml',
-            trackTitle: 'Complete Machine Learning',
+            trackTitle: CANONICAL_BRANDING.trackTitle,
             route: `/curriculum/${mod.id}/${found.id}`,
             completionPercentage: getMLProgress(progress).percentage,
           };
@@ -340,12 +349,11 @@ export const LEARNING_SECTIONS: Record<string, LearningSectionConfig> = {
   ml: {
     id: 'ml',
     categoryId: 'machine-learning',
-    title: 'Complete Machine Learning',
-    badge: 'Category 1 · Predictive Models & AI',
-    shortDescription:
-      'The comprehensive machine learning masterclass: Core ML algorithms & math derivations, NumPy Mastery (7 modules), and Pandas Mastery (10 modules) — with live visualizers, runnable code, and production capstone projects.',
+    title: CANONICAL_BRANDING.trackTitle,
+    badge: 'Curriculum Track · Foundations to Production',
+    shortDescription: CANONICAL_BRANDING.description,
     route: '/curriculum',
-    primaryActionLabel: 'Explore Complete ML',
+    primaryActionLabel: `Explore ${CANONICAL_BRANDING.trackTitle}`,
     icon: Brain,
     theme: {
       accent: 'text-indigo-400',
@@ -361,17 +369,17 @@ export const LEARNING_SECTIONS: Record<string, LearningSectionConfig> = {
       progressBar: 'bg-gradient-to-r from-indigo-500 to-cyan-400',
     },
     highlights: [
-      '29 Modules & 299 Comprehensive Lessons',
-      'Core ML Algorithms & Math Derivations',
-      'NumPy Mastery (7 Modules & Analytics Capstone)',
-      'Pandas Mastery (10 Modules & Sales Capstone)',
-      'Live Interactive Visualizer Playground',
+      'Comprehensive AI & ML Syllabus Across 12 Structured Phases',
+      'From Foundations to Deep Learning, Transformers, LLMs & Agents',
+      'Deep Learning: 22 In-Depth Interactive Lessons (DL-01 to DL-22)',
+      'Interactive Parameter Visualizers & PyTorch Runnable Labs',
+      'NumPy & Pandas Mastery Data Science Foundations',
     ],
     features: [
-      'Core ML: Linear & Logistic Regression, Decision Trees, SVM, Ensembles, Neural Networks',
-      'NumPy Mastery: Foundations, Indexing & Reshaping, Broadcasting, Vectorization, Data Science',
-      'Pandas Mastery: Series/DataFrames, Selection, Cleaning, Transformation, GroupBy, ML Pipelines',
-      'End-to-End Capstone Projects: Student Performance Analytics & Real-World Sales Analytics',
+      'Foundations: Preprocessing, Classical ML, Regression, Classification, Ensembles, SVMs',
+      'Deep Learning: Perceptrons, Backprop, Optimizers, Regularization, PyTorch, CNNs, Attention',
+      'GenAI & Advanced AI: Transformers, LLMs, Fine-Tuning, Embeddings, RAG Pipelines & AI Agents',
+      'Production Engineering: MLOps, LLMOps, Docker, FastAPI Serving, and Real-World Capstones',
     ],
     stats: {
       totalModules: MODULES_CATALOG.length,
@@ -549,11 +557,10 @@ export const LEARNING_SECTIONS: Record<string, LearningSectionConfig> = {
 export const LEARNING_CATEGORIES: LearningCategoryConfig[] = [
   {
     id: 'machine-learning',
-    title: 'Complete Machine Learning',
-    badge: 'Category 1 · Predictive Models & AI',
-    tagline: 'Core ML, NumPy & Pandas: Mathematical Foundations to Production AI',
-    description:
-      'The comprehensive masterclass integrating Core ML algorithms, NumPy numerical mastery, and Pandas data analytics into one unified pathway.',
+    title: CANONICAL_BRANDING.academyTitle,
+    badge: CANONICAL_BRANDING.categoryBadge,
+    tagline: CANONICAL_BRANDING.shortSubtitle,
+    description: CANONICAL_BRANDING.description,
     icon: Brain,
     accentColor: 'indigo',
     sections: [LEARNING_SECTIONS.ml],
@@ -670,7 +677,7 @@ export const LEARNING_WORKFLOW_STEPS: LearningWorkflowStep[] = [
     step: 1,
     title: 'Choose a Learning Path',
     description:
-      'Select between Machine Learning, Algorithms (DSA), Python, or Java based on your personal engineering goals and career focus.',
+      'Select between Complete AI & ML, Algorithms (DSA), Python, or Java based on your personal engineering goals and career focus.',
     highlight: '4 Structured Tracks',
     icon: GitFork,
   },

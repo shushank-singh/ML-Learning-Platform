@@ -3,8 +3,8 @@ import { SubjectMeta, RevisionSubject } from './types';
 export const REVISION_SUBJECTS: Record<RevisionSubject, SubjectMeta> = {
   ml: {
     id: 'ml',
-    name: 'Machine Learning',
-    fullName: 'Machine Learning & Statistical Foundations',
+    name: 'Complete AI & ML',
+    fullName: 'Complete AI & ML Academy Revision',
     shortDescription:
       'Decision boundaries, gradient descent, loss landscapes, and evaluation metrics in 60s visuals.',
     color: {

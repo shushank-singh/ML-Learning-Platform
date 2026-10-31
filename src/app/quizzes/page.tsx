@@ -189,7 +189,7 @@ export default function QuizzesPage() {
           <span>Evaluation & Diagnostic Center</span>
         </div>
         <h1 className="text-3xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
-          Comprehensive Machine Learning Assessment
+          Comprehensive AI &amp; ML Assessment
         </h1>
         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl">
           Test your mastery across derivations, loss functions, code outputs, and diagnostic tradeoffs. Instant answers, full explanations, and spaced revision tracking.
