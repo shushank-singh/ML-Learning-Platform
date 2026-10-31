@@ -23,6 +23,15 @@ export type AlgorithmType =
   | 'positional-encoding-explorer'
   | 'causal-mask-explorer'
   | 'multi-head-attention-explorer'
+  | 'next-token-prediction-explorer'
+  | 'temperature-sampling-explorer'
+  | 'topk-topp-explorer'
+  | 'context-budget-explorer'
+  | 'embedding-similarity-explorer'
+  | 'perplexity-loss-explorer'
+  | 'lora-rank-explorer'
+  | 'quantization-size-explorer'
+  | 'llm-eval-benchmark-explorer'
   | 'none';
 
 export interface LessonSummary {

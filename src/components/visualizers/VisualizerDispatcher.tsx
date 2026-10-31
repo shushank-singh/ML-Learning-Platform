@@ -25,6 +25,15 @@ import { TokenizationExplorer } from './transformers/TokenizationExplorer';
 import { PositionalEncodingExplorer } from './transformers/PositionalEncodingExplorer';
 import { CausalMaskExplorer } from './transformers/CausalMaskExplorer';
 import { MultiHeadAttentionExplorer } from './transformers/MultiHeadAttentionExplorer';
+import { NextTokenPredictionExplorer } from './genai/NextTokenPredictionExplorer';
+import { TemperatureSamplingExplorer } from './genai/TemperatureSamplingExplorer';
+import { TopKTopPExplorer } from './genai/TopKTopPExplorer';
+import { ContextBudgetExplorer } from './genai/ContextBudgetExplorer';
+import { EmbeddingSimilarityExplorer } from './genai/EmbeddingSimilarityExplorer';
+import { PerplexityLossExplorer } from './genai/PerplexityLossExplorer';
+import { LoRARankExplorer } from './genai/LoRARankExplorer';
+import { QuantizationSizeExplorer } from './genai/QuantizationSizeExplorer';
+import { LLMEvalBenchmarkExplorer } from './genai/LLMEvalBenchmarkExplorer';
 
 interface VisualizerDispatcherProps {
   type: AlgorithmType;
@@ -71,6 +80,24 @@ export const VisualizerDispatcher: React.FC<VisualizerDispatcherProps> = ({ type
       return <CausalMaskExplorer />;
     case 'multi-head-attention-explorer':
       return <MultiHeadAttentionExplorer />;
+    case 'next-token-prediction-explorer':
+      return <NextTokenPredictionExplorer />;
+    case 'temperature-sampling-explorer':
+      return <TemperatureSamplingExplorer />;
+    case 'topk-topp-explorer':
+      return <TopKTopPExplorer />;
+    case 'context-budget-explorer':
+      return <ContextBudgetExplorer />;
+    case 'embedding-similarity-explorer':
+      return <EmbeddingSimilarityExplorer />;
+    case 'perplexity-loss-explorer':
+      return <PerplexityLossExplorer />;
+    case 'lora-rank-explorer':
+      return <LoRARankExplorer />;
+    case 'quantization-size-explorer':
+      return <QuantizationSizeExplorer />;
+    case 'llm-eval-benchmark-explorer':
+      return <LLMEvalBenchmarkExplorer />;
     case 'metrics-roc':
       return <MetricsRocVisualizer />;
     case 'pca':
