@@ -32,6 +32,16 @@ export type AlgorithmType =
   | 'lora-rank-explorer'
   | 'quantization-size-explorer'
   | 'llm-eval-benchmark-explorer'
+  | 'rag-chunking-explorer'
+  | 'rag-topk-retrieval-explorer'
+  | 'rag-chunk-tradeoff-explorer'
+  | 'rag-bm25-dense-explorer'
+  | 'rag-hybrid-rrf-explorer'
+  | 'rag-reranking-explorer'
+  | 'rag-retrieval-metrics-explorer'
+  | 'rag-citation-grounding-explorer'
+  | 'rag-context-budget-explorer'
+  | 'rag-vector-space-explorer'
   | 'none';
 
 export interface LessonSummary {

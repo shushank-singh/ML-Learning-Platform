@@ -34,6 +34,15 @@ import { PerplexityLossExplorer } from './genai/PerplexityLossExplorer';
 import { LoRARankExplorer } from './genai/LoRARankExplorer';
 import { QuantizationSizeExplorer } from './genai/QuantizationSizeExplorer';
 import { LLMEvalBenchmarkExplorer } from './genai/LLMEvalBenchmarkExplorer';
+import { DocumentChunkingExplorer } from './rag/DocumentChunkingExplorer';
+import { TopKRetrievalExplorer } from './rag/TopKRetrievalExplorer';
+import { ChunkTradeoffExplorer } from './rag/ChunkTradeoffExplorer';
+import { BM25DenseRetrievalExplorer } from './rag/BM25DenseRetrievalExplorer';
+import { HybridRRFExplorer } from './rag/HybridRRFExplorer';
+import { RerankingExplorer } from './rag/RerankingExplorer';
+import { RAGContextBudgetExplorer } from './rag/RAGContextBudgetExplorer';
+import { RetrievalMetricsExplorer } from './rag/RetrievalMetricsExplorer';
+import { GroundedCitationExplorer } from './rag/GroundedCitationExplorer';
 
 interface VisualizerDispatcherProps {
   type: AlgorithmType;
@@ -98,6 +107,25 @@ export const VisualizerDispatcher: React.FC<VisualizerDispatcherProps> = ({ type
       return <QuantizationSizeExplorer />;
     case 'llm-eval-benchmark-explorer':
       return <LLMEvalBenchmarkExplorer />;
+    case 'rag-chunking-explorer':
+      return <DocumentChunkingExplorer />;
+    case 'rag-topk-retrieval-explorer':
+    case 'rag-vector-space-explorer':
+      return <TopKRetrievalExplorer />;
+    case 'rag-chunk-tradeoff-explorer':
+      return <ChunkTradeoffExplorer />;
+    case 'rag-bm25-dense-explorer':
+      return <BM25DenseRetrievalExplorer />;
+    case 'rag-hybrid-rrf-explorer':
+      return <HybridRRFExplorer />;
+    case 'rag-reranking-explorer':
+      return <RerankingExplorer />;
+    case 'rag-context-budget-explorer':
+      return <RAGContextBudgetExplorer />;
+    case 'rag-retrieval-metrics-explorer':
+      return <RetrievalMetricsExplorer />;
+    case 'rag-citation-grounding-explorer':
+      return <GroundedCitationExplorer />;
     case 'metrics-roc':
       return <MetricsRocVisualizer />;
     case 'pca':

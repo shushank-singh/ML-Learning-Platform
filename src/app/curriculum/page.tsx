@@ -29,6 +29,7 @@ import {
   MODULES_CATALOG_DEEP_LEARNING,
   MODULES_CATALOG_TRANSFORMERS,
   MODULES_CATALOG_GENAI,
+  MODULES_CATALOG_RAG,
   MODULES_CATALOG_NUMPY,
   MODULES_CATALOG_PANDAS,
 } from '@/data/modules/curriculum';
@@ -36,7 +37,7 @@ import { AI_ML_PHASES } from '@/data/phases/curriculumPhases';
 import { getProgress, toggleLessonCompletion } from '@/lib/storage';
 import { UserProgressState, ModuleData } from '@/lib/types';
 
-type TrackFilter = 'all' | 'genai' | 'transformers' | 'deep-learning' | 'ml-core' | 'numpy' | 'pandas';
+type TrackFilter = 'all' | 'rag' | 'genai' | 'transformers' | 'deep-learning' | 'ml-core' | 'numpy' | 'pandas';
 type ViewMode = 'catalog' | 'roadmap';
 
 export default function CurriculumPage() {
@@ -50,6 +51,7 @@ export default function CurriculumPage() {
     'phase-3': true,
     'phase-6': true,
     'phase-7': true,
+    'phase-8': true,
   });
 
   useEffect(() => {
@@ -73,6 +75,7 @@ export default function CurriculumPage() {
   };
 
   // Track counts
+  const ragLessons = MODULES_CATALOG_RAG.flatMap((m) => m.lessons);
   const genaiLessons = MODULES_CATALOG_GENAI.flatMap((m) => m.lessons);
   const dlLessons = MODULES_CATALOG_DEEP_LEARNING.flatMap((m) => m.lessons);
   const tfLessons = MODULES_CATALOG_TRANSFORMERS.flatMap((m) => m.lessons);
@@ -81,6 +84,7 @@ export default function CurriculumPage() {
   const pandasLessons = MODULES_CATALOG_PANDAS.flatMap((m) => m.lessons);
   const allLessons = MODULES_CATALOG.flatMap((m) => m.lessons);
 
+  const ragDone = ragLessons.filter((l) => progress?.completedLessons[l.id]).length;
   const genaiDone = genaiLessons.filter((l) => progress?.completedLessons[l.id]).length;
   const dlDone = dlLessons.filter((l) => progress?.completedLessons[l.id]).length;
   const tfDone = tfLessons.filter((l) => progress?.completedLessons[l.id]).length;
@@ -90,6 +94,14 @@ export default function CurriculumPage() {
   const allDone = allLessons.filter((l) => progress?.completedLessons[l.id]).length;
 
   const getFilteredModules = (): { trackLabel: string; trackDesc: string; icon: any; modules: ModuleData[] }[] => {
+    if (selectedTrack === 'rag') {
+      return [{
+        trackLabel: 'Embeddings, Vector Search and RAG (Phase 8)',
+        trackDesc: '15 structured modules covering RAG architecture, document ingestion, chunking trade-offs, vector spaces, HNSW indexes, hybrid retrieval with RRF, reranking, and RAGAS evaluation.',
+        icon: Target,
+        modules: MODULES_CATALOG_RAG,
+      }];
+    }
     if (selectedTrack === 'genai') {
       return [{
         trackLabel: 'Generative AI & Large Language Models',
@@ -142,13 +154,19 @@ export default function CurriculumPage() {
     // All tracks
     return [
       {
-        trackLabel: '1. Generative AI & Large Language Models',
+        trackLabel: '1. Embeddings, Vector Search & RAG (Phase 8)',
+        trackDesc: '15 structured modules: RAG architecture, document ingestion, chunking trade-offs, vector spaces, HNSW indexes, hybrid retrieval with RRF, reranking, and RAGAS evaluation.',
+        icon: Target,
+        modules: MODULES_CATALOG_RAG,
+      },
+      {
+        trackLabel: '2. Generative AI & Large Language Models',
         trackDesc: '15 structured modules: pretraining dynamics, token budgets, sampling, prompt engineering, context memory, fine-tuning, LoRA, quantization, and evaluation.',
         icon: Zap,
         modules: MODULES_CATALOG_GENAI,
       },
       {
-        trackLabel: '2. Transformers Architecture',
+        trackLabel: '3. Transformers Architecture',
         trackDesc: 'From tokenization and sinusoidal positional encoding to multi-head self-attention and building a nano-GPT block in PyTorch.',
         icon: Sparkles,
         modules: MODULES_CATALOG_TRANSFORMERS,
@@ -398,6 +416,17 @@ export default function CurriculumPage() {
             >
               <Layers className="w-3.5 h-3.5" />
               <span>All Tracks ({MODULES_CATALOG.length} Modules)</span>
+            </button>
+            <button
+              onClick={() => setSelectedTrack('rag')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                selectedTrack === 'rag'
+                  ? 'bg-teal-600 text-white shadow-md shadow-teal-600/20'
+                  : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
+              }`}
+            >
+              <Target className="w-3.5 h-3.5 text-teal-400" />
+              <span>RAG & Vectors ({MODULES_CATALOG_RAG.length} Modules)</span>
             </button>
             <button
               onClick={() => setSelectedTrack('genai')}
