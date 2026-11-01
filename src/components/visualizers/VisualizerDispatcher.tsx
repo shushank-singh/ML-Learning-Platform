@@ -53,6 +53,16 @@ import { AgentHITLApprovalExplorer } from './agents/AgentHITLApprovalExplorer';
 import { AgentEvaluationExplorer } from './agents/AgentEvaluationExplorer';
 import { AgentSafetyGuardrailsExplorer } from './agents/AgentSafetyGuardrailsExplorer';
 import { AgentTraceBudgetExplorer } from './agents/AgentTraceBudgetExplorer';
+import { MLLifecycleExplorer } from './mlops/MLLifecycleExplorer';
+import { ExperimentComparisonExplorer } from './mlops/ExperimentComparisonExplorer';
+import { PipelineDAGExplorer } from './mlops/PipelineDAGExplorer';
+import { ModelReleaseWorkflowExplorer } from './mlops/ModelReleaseWorkflowExplorer';
+import { DataDriftExplorer } from './mlops/DataDriftExplorer';
+import { CICDQualityGateExplorer } from './mlops/CICDQualityGateExplorer';
+import { LLMEvaluationExplorer } from './mlops/LLMEvaluationExplorer';
+import { LLMTraceTimelineExplorer } from './mlops/LLMTraceTimelineExplorer';
+import { LLMCostLatencyExplorer } from './mlops/LLMCostLatencyExplorer';
+import { ProductionReadinessChecklist } from './mlops/ProductionReadinessChecklist';
 
 interface VisualizerDispatcherProps {
   type: AlgorithmType;
@@ -156,6 +166,26 @@ export const VisualizerDispatcher: React.FC<VisualizerDispatcherProps> = ({ type
       return <AgentSafetyGuardrailsExplorer />;
     case 'agent-trace-budget-explorer':
       return <AgentTraceBudgetExplorer />;
+    case 'mlops-lifecycle-explorer':
+      return <MLLifecycleExplorer />;
+    case 'mlops-experiment-comparison-explorer':
+      return <ExperimentComparisonExplorer />;
+    case 'mlops-pipeline-dag-explorer':
+      return <PipelineDAGExplorer />;
+    case 'mlops-model-release-explorer':
+      return <ModelReleaseWorkflowExplorer />;
+    case 'mlops-data-drift-explorer':
+      return <DataDriftExplorer />;
+    case 'mlops-cicd-quality-gate-explorer':
+      return <CICDQualityGateExplorer />;
+    case 'mlops-llm-evaluation-explorer':
+      return <LLMEvaluationExplorer />;
+    case 'mlops-trace-timeline-explorer':
+      return <LLMTraceTimelineExplorer />;
+    case 'mlops-cost-latency-explorer':
+      return <LLMCostLatencyExplorer />;
+    case 'mlops-production-readiness-explorer':
+      return <ProductionReadinessChecklist />;
     case 'metrics-roc':
       return <MetricsRocVisualizer />;
     case 'pca':

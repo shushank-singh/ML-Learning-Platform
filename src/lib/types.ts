@@ -52,6 +52,16 @@ export type AlgorithmType =
   | 'agent-evaluation-explorer'
   | 'agent-safety-guardrails-explorer'
   | 'agent-trace-budget-explorer'
+  | 'mlops-lifecycle-explorer'
+  | 'mlops-experiment-comparison-explorer'
+  | 'mlops-pipeline-dag-explorer'
+  | 'mlops-model-release-explorer'
+  | 'mlops-data-drift-explorer'
+  | 'mlops-cicd-quality-gate-explorer'
+  | 'mlops-llm-evaluation-explorer'
+  | 'mlops-trace-timeline-explorer'
+  | 'mlops-cost-latency-explorer'
+  | 'mlops-production-readiness-explorer'
   | 'none';
 
 export interface LessonSummary {
