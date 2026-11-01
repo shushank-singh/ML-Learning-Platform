@@ -62,6 +62,16 @@ export type AlgorithmType =
   | 'mlops-trace-timeline-explorer'
   | 'mlops-cost-latency-explorer'
   | 'mlops-production-readiness-explorer'
+  | 'deploy-architecture-explorer'
+  | 'deploy-http-journey-explorer'
+  | 'deploy-docker-layer-explorer'
+  | 'deploy-cloud-comparison-explorer'
+  | 'deploy-scaling-lb-explorer'
+  | 'deploy-async-job-queue-explorer'
+  | 'deploy-gpu-resource-explorer'
+  | 'deploy-llm-serving-latency-explorer'
+  | 'deploy-observability-dashboard'
+  | 'deploy-readiness-checklist'
   | 'none';
 
 export interface LessonSummary {

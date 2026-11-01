@@ -23,6 +23,7 @@ import {
   Target,
   Zap,
   Bot,
+  Server,
 } from 'lucide-react';
 import {
   MODULES_CATALOG,
@@ -32,6 +33,8 @@ import {
   MODULES_CATALOG_GENAI,
   MODULES_CATALOG_RAG,
   MODULES_CATALOG_AGENTS,
+  MODULES_CATALOG_MLOPS,
+  MODULES_CATALOG_DEPLOYMENT,
   MODULES_CATALOG_NUMPY,
   MODULES_CATALOG_PANDAS,
 } from '@/data/modules/curriculum';
@@ -39,7 +42,7 @@ import { AI_ML_PHASES } from '@/data/phases/curriculumPhases';
 import { getProgress, toggleLessonCompletion } from '@/lib/storage';
 import { UserProgressState, ModuleData } from '@/lib/types';
 
-type TrackFilter = 'all' | 'agents' | 'rag' | 'genai' | 'transformers' | 'deep-learning' | 'ml-core' | 'numpy' | 'pandas';
+type TrackFilter = 'all' | 'deployment' | 'mlops' | 'agents' | 'rag' | 'genai' | 'transformers' | 'deep-learning' | 'ml-core' | 'numpy' | 'pandas';
 type ViewMode = 'catalog' | 'roadmap';
 
 export default function CurriculumPage() {
@@ -55,6 +58,9 @@ export default function CurriculumPage() {
     'phase-7': true,
     'phase-8': true,
     'phase-9': true,
+    'phase-10': true,
+    'phase-11': true,
+    'phase-12': true,
   });
 
   useEffect(() => {
@@ -78,6 +84,7 @@ export default function CurriculumPage() {
   };
 
   // Track counts
+  const deployLessons = MODULES_CATALOG_DEPLOYMENT.flatMap((m) => m.lessons);
   const ragLessons = MODULES_CATALOG_RAG.flatMap((m) => m.lessons);
   const agentLessons = MODULES_CATALOG_AGENTS.flatMap((m) => m.lessons);
   const genaiLessons = MODULES_CATALOG_GENAI.flatMap((m) => m.lessons);
@@ -88,6 +95,7 @@ export default function CurriculumPage() {
   const pandasLessons = MODULES_CATALOG_PANDAS.flatMap((m) => m.lessons);
   const allLessons = MODULES_CATALOG.flatMap((m) => m.lessons);
 
+  const deployDone = deployLessons.filter((l) => progress?.completedLessons[l.id]).length;
   const ragDone = ragLessons.filter((l) => progress?.completedLessons[l.id]).length;
   const agentDone = agentLessons.filter((l) => progress?.completedLessons[l.id]).length;
   const genaiDone = genaiLessons.filter((l) => progress?.completedLessons[l.id]).length;
@@ -99,6 +107,14 @@ export default function CurriculumPage() {
   const allDone = allLessons.filter((l) => progress?.completedLessons[l.id]).length;
 
   const getFilteredModules = (): { trackLabel: string; trackDesc: string; icon: any; modules: ModuleData[] }[] => {
+    if (selectedTrack === 'deployment') {
+      return [{
+        trackLabel: 'AI Deployment, Cloud & Production Engineering (Phase 11)',
+        trackDesc: '15 complete modules: AI deployment fundamentals, Linux & server administration, HTTP/DNS networking, Docker containers, FastAPI engineering, cloud computing, storage with Safetensors, scaling, background jobs, GPU serving, production LLM streaming, security & privacy, observability, and full-stack capstone.',
+        icon: Server,
+        modules: MODULES_CATALOG_DEPLOYMENT,
+      }];
+    }
     if (selectedTrack === 'agents') {
       return [{
         trackLabel: 'AI Agents & Agentic Systems (Phase 9)',
@@ -167,7 +183,13 @@ export default function CurriculumPage() {
     // All tracks
     return [
       {
-        trackLabel: '1. AI Agents & Agentic Systems (Phase 9)',
+        trackLabel: '1. AI Deployment & Production (Phase 11)',
+        trackDesc: '15 structured modules: Linux server fundamentals, Docker multi-stage builds, production FastAPI engineering, cloud architectures, scaling, async jobs, GPU serving, LLMs, and capstone.',
+        icon: Server,
+        modules: MODULES_CATALOG_DEPLOYMENT,
+      },
+      {
+        trackLabel: '2. AI Agents & Agentic Systems (Phase 9)',
         trackDesc: '15 structured modules: Agentic systems fundamentals, ReAct loops, tool calling, memory compaction, DAG planning, workflow orchestration, multi-agent teams, HITL safeguards, and capstone.',
         icon: Bot,
         modules: MODULES_CATALOG_AGENTS,
@@ -257,7 +279,7 @@ export default function CurriculumPage() {
               }`}
             >
               <Compass className="w-3.5 h-3.5" />
-              <span>Phased Roadmap (Phases 0–11)</span>
+              <span>Phased Roadmap (Phases 0–12)</span>
             </button>
           </div>
           <span className="text-xs text-slate-500 hidden sm:inline">
@@ -437,6 +459,17 @@ export default function CurriculumPage() {
               <span>All Tracks ({MODULES_CATALOG.length} Modules)</span>
             </button>
             <button
+              onClick={() => setSelectedTrack('deployment')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                selectedTrack === 'deployment'
+                  ? 'bg-purple-600 text-white shadow-md shadow-purple-600/20'
+                  : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
+              }`}
+            >
+              <Server className="w-3.5 h-3.5 text-purple-400" />
+              <span>AI Deployment ({MODULES_CATALOG_DEPLOYMENT.length} Modules)</span>
+            </button>
+            <button
               onClick={() => setSelectedTrack('agents')}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
                 selectedTrack === 'agents'
@@ -536,9 +569,9 @@ export default function CurriculumPage() {
           <div className="p-4 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800 text-xs text-indigo-900 dark:text-indigo-200 flex items-start gap-3">
             <Compass className="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" />
             <div>
-              <p className="font-semibold text-sm">Correct Pedagogical Sequencing (Phases 0 through 11)</p>
+              <p className="font-semibold text-sm">Correct Pedagogical Sequencing (Phases 0 through 12)</p>
               <p className="mt-1 text-slate-600 dark:text-slate-400 leading-relaxed">
-                The Complete AI &amp; ML Academy curriculum is organized in strict dependency order: from self-assessments (Phase 0) to Machine Learning foundations (Phase 1), Mathematics for Deep Learning (Phase 2), Deep Learning (Phase 3), Computer Vision (Phase 4), Sequence Models (Phase 5), Transformers (Phase 6), Generative AI &amp; LLMs (Phase 7), RAG (Phase 8), AI Agents (Phase 9), MLOps (Phase 10), and Real-World Capstones (Phase 11).
+                The Complete AI &amp; ML Academy curriculum is organized in strict dependency order: from self-assessments (Phase 0) to Machine Learning foundations (Phase 1), Mathematics for Deep Learning (Phase 2), Deep Learning (Phase 3), Computer Vision (Phase 4), Sequence Models (Phase 5), Transformers (Phase 6), Generative AI &amp; LLMs (Phase 7), RAG (Phase 8), AI Agents (Phase 9), MLOps (Phase 10), AI Deployment &amp; Cloud (Phase 11), and Real-World Capstones (Phase 12).
               </p>
             </div>
           </div>

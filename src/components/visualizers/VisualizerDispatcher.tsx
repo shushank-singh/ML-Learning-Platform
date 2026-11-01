@@ -63,6 +63,16 @@ import { LLMEvaluationExplorer } from './mlops/LLMEvaluationExplorer';
 import { LLMTraceTimelineExplorer } from './mlops/LLMTraceTimelineExplorer';
 import { LLMCostLatencyExplorer } from './mlops/LLMCostLatencyExplorer';
 import { ProductionReadinessChecklist } from './mlops/ProductionReadinessChecklist';
+import { DeploymentArchitectureExplorer } from './deployment/DeploymentArchitectureExplorer';
+import { HttpRequestJourneyExplorer } from './deployment/HttpRequestJourneyExplorer';
+import { DockerLayerExplorer } from './deployment/DockerLayerExplorer';
+import { CloudServiceComparisonExplorer } from './deployment/CloudServiceComparisonExplorer';
+import { ScalingLoadBalancerExplorer } from './deployment/ScalingLoadBalancerExplorer';
+import { AsyncJobQueueExplorer } from './deployment/AsyncJobQueueExplorer';
+import { GpuInferenceResourceExplorer } from './deployment/GpuInferenceResourceExplorer';
+import { LLMServingLatencyExplorer } from './deployment/LLMServingLatencyExplorer';
+import { ProductionObservabilityDashboard } from './deployment/ProductionObservabilityDashboard';
+import { DeploymentReadinessChecklist } from './deployment/DeploymentReadinessChecklist';
 
 interface VisualizerDispatcherProps {
   type: AlgorithmType;
@@ -186,6 +196,26 @@ export const VisualizerDispatcher: React.FC<VisualizerDispatcherProps> = ({ type
       return <LLMCostLatencyExplorer />;
     case 'mlops-production-readiness-explorer':
       return <ProductionReadinessChecklist />;
+    case 'deploy-architecture-explorer':
+      return <DeploymentArchitectureExplorer />;
+    case 'deploy-http-journey-explorer':
+      return <HttpRequestJourneyExplorer />;
+    case 'deploy-docker-layer-explorer':
+      return <DockerLayerExplorer />;
+    case 'deploy-cloud-comparison-explorer':
+      return <CloudServiceComparisonExplorer />;
+    case 'deploy-scaling-lb-explorer':
+      return <ScalingLoadBalancerExplorer />;
+    case 'deploy-async-job-queue-explorer':
+      return <AsyncJobQueueExplorer />;
+    case 'deploy-gpu-resource-explorer':
+      return <GpuInferenceResourceExplorer />;
+    case 'deploy-llm-serving-latency-explorer':
+      return <LLMServingLatencyExplorer />;
+    case 'deploy-observability-dashboard':
+      return <ProductionObservabilityDashboard />;
+    case 'deploy-readiness-checklist':
+      return <DeploymentReadinessChecklist />;
     case 'metrics-roc':
       return <MetricsRocVisualizer />;
     case 'pca':
