@@ -17,6 +17,7 @@ import { MODULES_CATALOG_DEEP_LEARNING, DEEP_LEARNING_FULL_LESSONS } from '@/dat
 import { MODULES_CATALOG_TRANSFORMERS, TRANSFORMERS_FULL_LESSONS } from '@/data/transformers/curriculum';
 import { MODULES_CATALOG_GENAI, GENAI_FULL_LESSONS } from '@/data/genai/curriculum';
 import { MODULES_CATALOG_RAG, RAG_FULL_LESSONS } from '@/data/rag/curriculum';
+import { MODULES_CATALOG_AGENTS, AGENTS_FULL_LESSONS } from '@/data/agents/curriculum';
 
 export { MODULES_CATALOG_NUMPY, NUMPY_FULL_LESSONS } from '@/data/numpy/curriculum';
 export { MODULES_CATALOG_PANDAS, PANDAS_FULL_LESSONS } from '@/data/pandas/curriculum';
@@ -24,6 +25,7 @@ export { MODULES_CATALOG_DEEP_LEARNING, DEEP_LEARNING_FULL_LESSONS } from '@/dat
 export { MODULES_CATALOG_TRANSFORMERS, TRANSFORMERS_FULL_LESSONS } from '@/data/transformers/curriculum';
 export { MODULES_CATALOG_GENAI, GENAI_FULL_LESSONS } from '@/data/genai/curriculum';
 export { MODULES_CATALOG_RAG, RAG_FULL_LESSONS } from '@/data/rag/curriculum';
+export { MODULES_CATALOG_AGENTS, AGENTS_FULL_LESSONS } from '@/data/agents/curriculum';
 
 export const MODULES_CATALOG_ML_CORE: ModuleData[] = [
   module0Data,
@@ -46,6 +48,7 @@ export const MODULES_CATALOG: ModuleData[] = [
   ...MODULES_CATALOG_TRANSFORMERS,
   ...MODULES_CATALOG_GENAI,
   ...MODULES_CATALOG_RAG,
+  ...MODULES_CATALOG_AGENTS,
   ...MODULES_CATALOG_NUMPY,
   ...MODULES_CATALOG_PANDAS,
 ];
@@ -67,6 +70,7 @@ export const FULL_LESSONS: Record<string, LessonContent> = {
   ...TRANSFORMERS_FULL_LESSONS,
   ...GENAI_FULL_LESSONS,
   ...RAG_FULL_LESSONS,
+  ...AGENTS_FULL_LESSONS,
   ...NUMPY_FULL_LESSONS,
   ...PANDAS_FULL_LESSONS,
 };

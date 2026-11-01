@@ -22,6 +22,7 @@ import {
   Check,
   Target,
   Zap,
+  Bot,
 } from 'lucide-react';
 import {
   MODULES_CATALOG,
@@ -30,6 +31,7 @@ import {
   MODULES_CATALOG_TRANSFORMERS,
   MODULES_CATALOG_GENAI,
   MODULES_CATALOG_RAG,
+  MODULES_CATALOG_AGENTS,
   MODULES_CATALOG_NUMPY,
   MODULES_CATALOG_PANDAS,
 } from '@/data/modules/curriculum';
@@ -37,7 +39,7 @@ import { AI_ML_PHASES } from '@/data/phases/curriculumPhases';
 import { getProgress, toggleLessonCompletion } from '@/lib/storage';
 import { UserProgressState, ModuleData } from '@/lib/types';
 
-type TrackFilter = 'all' | 'rag' | 'genai' | 'transformers' | 'deep-learning' | 'ml-core' | 'numpy' | 'pandas';
+type TrackFilter = 'all' | 'agents' | 'rag' | 'genai' | 'transformers' | 'deep-learning' | 'ml-core' | 'numpy' | 'pandas';
 type ViewMode = 'catalog' | 'roadmap';
 
 export default function CurriculumPage() {
@@ -52,6 +54,7 @@ export default function CurriculumPage() {
     'phase-6': true,
     'phase-7': true,
     'phase-8': true,
+    'phase-9': true,
   });
 
   useEffect(() => {
@@ -76,6 +79,7 @@ export default function CurriculumPage() {
 
   // Track counts
   const ragLessons = MODULES_CATALOG_RAG.flatMap((m) => m.lessons);
+  const agentLessons = MODULES_CATALOG_AGENTS.flatMap((m) => m.lessons);
   const genaiLessons = MODULES_CATALOG_GENAI.flatMap((m) => m.lessons);
   const dlLessons = MODULES_CATALOG_DEEP_LEARNING.flatMap((m) => m.lessons);
   const tfLessons = MODULES_CATALOG_TRANSFORMERS.flatMap((m) => m.lessons);
@@ -85,6 +89,7 @@ export default function CurriculumPage() {
   const allLessons = MODULES_CATALOG.flatMap((m) => m.lessons);
 
   const ragDone = ragLessons.filter((l) => progress?.completedLessons[l.id]).length;
+  const agentDone = agentLessons.filter((l) => progress?.completedLessons[l.id]).length;
   const genaiDone = genaiLessons.filter((l) => progress?.completedLessons[l.id]).length;
   const dlDone = dlLessons.filter((l) => progress?.completedLessons[l.id]).length;
   const tfDone = tfLessons.filter((l) => progress?.completedLessons[l.id]).length;
@@ -94,6 +99,14 @@ export default function CurriculumPage() {
   const allDone = allLessons.filter((l) => progress?.completedLessons[l.id]).length;
 
   const getFilteredModules = (): { trackLabel: string; trackDesc: string; icon: any; modules: ModuleData[] }[] => {
+    if (selectedTrack === 'agents') {
+      return [{
+        trackLabel: 'AI Agents & Agentic Systems (Phase 9)',
+        trackDesc: '15 comprehensive modules: Agentic fundamentals, ReAct control loops, tool calling schemas, state & memory compaction, DAG task planning, workflow orchestration, multi-agent teams, human-in-the-loop safeguards, and production observability.',
+        icon: Bot,
+        modules: MODULES_CATALOG_AGENTS,
+      }];
+    }
     if (selectedTrack === 'rag') {
       return [{
         trackLabel: 'Embeddings, Vector Search and RAG (Phase 8)',
@@ -154,7 +167,13 @@ export default function CurriculumPage() {
     // All tracks
     return [
       {
-        trackLabel: '1. Embeddings, Vector Search & RAG (Phase 8)',
+        trackLabel: '1. AI Agents & Agentic Systems (Phase 9)',
+        trackDesc: '15 structured modules: Agentic systems fundamentals, ReAct loops, tool calling, memory compaction, DAG planning, workflow orchestration, multi-agent teams, HITL safeguards, and capstone.',
+        icon: Bot,
+        modules: MODULES_CATALOG_AGENTS,
+      },
+      {
+        trackLabel: '2. Embeddings, Vector Search & RAG (Phase 8)',
         trackDesc: '15 structured modules: RAG architecture, document ingestion, chunking trade-offs, vector spaces, HNSW indexes, hybrid retrieval with RRF, reranking, and RAGAS evaluation.',
         icon: Target,
         modules: MODULES_CATALOG_RAG,
@@ -416,6 +435,17 @@ export default function CurriculumPage() {
             >
               <Layers className="w-3.5 h-3.5" />
               <span>All Tracks ({MODULES_CATALOG.length} Modules)</span>
+            </button>
+            <button
+              onClick={() => setSelectedTrack('agents')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                selectedTrack === 'agents'
+                  ? 'bg-sky-600 text-white shadow-md shadow-sky-600/20'
+                  : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
+              }`}
+            >
+              <Bot className="w-3.5 h-3.5 text-sky-400" />
+              <span>AI Agents ({MODULES_CATALOG_AGENTS.length} Modules)</span>
             </button>
             <button
               onClick={() => setSelectedTrack('rag')}

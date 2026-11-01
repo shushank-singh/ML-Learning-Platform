@@ -43,6 +43,16 @@ import { RerankingExplorer } from './rag/RerankingExplorer';
 import { RAGContextBudgetExplorer } from './rag/RAGContextBudgetExplorer';
 import { RetrievalMetricsExplorer } from './rag/RetrievalMetricsExplorer';
 import { GroundedCitationExplorer } from './rag/GroundedCitationExplorer';
+import { AgentControlLoopExplorer } from './agents/AgentControlLoopExplorer';
+import { AgentToolCallingExplorer } from './agents/AgentToolCallingExplorer';
+import { AgentMemoryStateExplorer } from './agents/AgentMemoryStateExplorer';
+import { AgentPlanningExplorer } from './agents/AgentPlanningExplorer';
+import { AgentWorkflowGraphExplorer } from './agents/AgentWorkflowGraphExplorer';
+import { AgentMultiAgentHandoffExplorer } from './agents/AgentMultiAgentHandoffExplorer';
+import { AgentHITLApprovalExplorer } from './agents/AgentHITLApprovalExplorer';
+import { AgentEvaluationExplorer } from './agents/AgentEvaluationExplorer';
+import { AgentSafetyGuardrailsExplorer } from './agents/AgentSafetyGuardrailsExplorer';
+import { AgentTraceBudgetExplorer } from './agents/AgentTraceBudgetExplorer';
 
 interface VisualizerDispatcherProps {
   type: AlgorithmType;
@@ -126,6 +136,26 @@ export const VisualizerDispatcher: React.FC<VisualizerDispatcherProps> = ({ type
       return <RetrievalMetricsExplorer />;
     case 'rag-citation-grounding-explorer':
       return <GroundedCitationExplorer />;
+    case 'agent-control-loop-explorer':
+      return <AgentControlLoopExplorer />;
+    case 'agent-tool-calling-explorer':
+      return <AgentToolCallingExplorer />;
+    case 'agent-memory-state-explorer':
+      return <AgentMemoryStateExplorer />;
+    case 'agent-planning-explorer':
+      return <AgentPlanningExplorer />;
+    case 'agent-workflow-graph-explorer':
+      return <AgentWorkflowGraphExplorer />;
+    case 'agent-multiagent-handoff-explorer':
+      return <AgentMultiAgentHandoffExplorer />;
+    case 'agent-hitl-approval-explorer':
+      return <AgentHITLApprovalExplorer />;
+    case 'agent-evaluation-explorer':
+      return <AgentEvaluationExplorer />;
+    case 'agent-safety-guardrails-explorer':
+      return <AgentSafetyGuardrailsExplorer />;
+    case 'agent-trace-budget-explorer':
+      return <AgentTraceBudgetExplorer />;
     case 'metrics-roc':
       return <MetricsRocVisualizer />;
     case 'pca':

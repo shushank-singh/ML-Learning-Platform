@@ -42,6 +42,16 @@ export type AlgorithmType =
   | 'rag-citation-grounding-explorer'
   | 'rag-context-budget-explorer'
   | 'rag-vector-space-explorer'
+  | 'agent-control-loop-explorer'
+  | 'agent-tool-calling-explorer'
+  | 'agent-memory-state-explorer'
+  | 'agent-planning-explorer'
+  | 'agent-workflow-graph-explorer'
+  | 'agent-multiagent-handoff-explorer'
+  | 'agent-hitl-approval-explorer'
+  | 'agent-evaluation-explorer'
+  | 'agent-safety-guardrails-explorer'
+  | 'agent-trace-budget-explorer'
   | 'none';
 
 export interface LessonSummary {
