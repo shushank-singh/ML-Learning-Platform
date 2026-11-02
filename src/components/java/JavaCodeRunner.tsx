@@ -218,6 +218,7 @@ export const JavaCodeRunner: React.FC<JavaCodeRunnerProps> = ({
             lineNumbers: 'on',
             scrollBeyondLastLine: false,
             automaticLayout: true,
+            wordWrap: 'on',
             tabSize: 4,
             padding: { top: 12, bottom: 12 },
           }}
