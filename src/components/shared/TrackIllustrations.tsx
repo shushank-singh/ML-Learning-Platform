@@ -550,3 +550,208 @@ export const Phase0Illustration: React.FC<IllustrationProps> = ({ className = 'w
     </g>
   </svg>
 );
+
+/**
+ * 10. Data Structures & Algorithms (DSA) Illustration
+ * Features: Binary search tree, array indices with two pointers, and stack/queue buffer.
+ */
+export const DSAIllustration: React.FC<IllustrationProps> = ({ className = 'w-full h-full' }) => (
+  <svg
+    viewBox="0 0 320 180"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    role="img"
+    aria-label="Data Structures and Algorithms Trees and Pointers Diagram"
+  >
+    <rect width="320" height="180" rx="16" fill="currentColor" className="text-slate-100/60 dark:text-slate-800/40" />
+
+    {/* Array with Two Pointers (Left: 0, Right: 5) */}
+    <g transform="translate(30, 25)">
+      {[0, 1, 2, 3, 4, 5].map((idx) => (
+        <g key={idx} transform={`translate(${idx * 42}, 0)`}>
+          <rect
+            x="0"
+            y="0"
+            width="38"
+            height="32"
+            rx="6"
+            className={idx === 1 || idx === 4 ? 'fill-violet-100 dark:fill-violet-950/80 stroke-violet-500' : 'fill-white dark:fill-slate-900 stroke-slate-300 dark:stroke-slate-700'}
+            strokeWidth="1.5"
+          />
+          <text
+            x="19"
+            y="20"
+            textAnchor="middle"
+            className={`text-[11px] font-mono font-bold ${idx === 1 || idx === 4 ? 'fill-violet-600 dark:fill-violet-400' : 'fill-slate-700 dark:fill-slate-300'}`}
+          >
+            {[2, 7, 11, 15, 19, 23][idx]}
+          </text>
+        </g>
+      ))}
+      {/* Pointer labels */}
+      <text x="61" y="44" textAnchor="middle" fill="#8b5cf6" className="text-[9px] font-mono font-bold">▲ L (p1)</text>
+      <text x="187" y="44" textAnchor="middle" fill="#8b5cf6" className="text-[9px] font-mono font-bold">▲ R (p2)</text>
+    </g>
+
+    {/* Binary Search Tree Nodes & Branches */}
+    <g transform="translate(40, 80)">
+      {/* Edges */}
+      <line x1="120" y1="18" x2="65" y2="48" stroke="#a78bfa" strokeWidth="2" />
+      <line x1="120" y1="18" x2="175" y2="48" stroke="#a78bfa" strokeWidth="2" />
+      <line x1="65" y1="48" x2="35" y2="78" stroke="#c4b5fd" strokeWidth="1.5" strokeDasharray="2 2" />
+      <line x1="65" y1="48" x2="95" y2="78" stroke="#c4b5fd" strokeWidth="1.5" strokeDasharray="2 2" />
+      <line x1="175" y1="48" x2="145" y2="78" stroke="#c4b5fd" strokeWidth="1.5" strokeDasharray="2 2" />
+      <line x1="175" y1="48" x2="205" y2="78" stroke="#c4b5fd" strokeWidth="1.5" strokeDasharray="2 2" />
+
+      {/* Root Node */}
+      <circle cx="120" cy="18" r="14" fill="#7c3aed" />
+      <text x="120" y="22" textAnchor="middle" fill="#ffffff" className="text-[10px] font-mono font-bold">50</text>
+
+      {/* Level 1 Nodes */}
+      <circle cx="65" cy="48" r="12" fill="#8b5cf6" />
+      <text x="65" y="52" textAnchor="middle" fill="#ffffff" className="text-[9px] font-mono font-bold">25</text>
+
+      <circle cx="175" cy="48" r="12" fill="#8b5cf6" />
+      <text x="175" y="52" textAnchor="middle" fill="#ffffff" className="text-[9px] font-mono font-bold">75</text>
+
+      {/* Level 2 Leaf Nodes */}
+      <circle cx="35" cy="78" r="9" fill="#c4b5fd" />
+      <text x="35" y="81" textAnchor="middle" fill="#5b21b6" className="text-[8px] font-mono font-bold">12</text>
+
+      <circle cx="95" cy="78" r="9" fill="#c4b5fd" />
+      <text x="95" y="81" textAnchor="middle" fill="#5b21b6" className="text-[8px] font-mono font-bold">38</text>
+
+      <circle cx="145" cy="78" r="9" fill="#c4b5fd" />
+      <text x="145" y="81" textAnchor="middle" fill="#5b21b6" className="text-[8px] font-mono font-bold">62</text>
+
+      <circle cx="205" cy="78" r="9" fill="#c4b5fd" />
+      <text x="205" y="81" textAnchor="middle" fill="#5b21b6" className="text-[8px] font-mono font-bold">90</text>
+    </g>
+
+    {/* Time Complexity Badge */}
+    <g transform="translate(230, 140)">
+      <rect x="0" y="0" width="75" height="24" rx="6" fill="#f5f3ff" className="dark:fill-slate-900" stroke="#8b5cf6" strokeWidth="1.2" />
+      <text x="37.5" y="15" textAnchor="middle" fill="#7c3aed" className="text-[9px] font-mono font-bold">O(log N) BST</text>
+    </g>
+  </svg>
+);
+
+/**
+ * 11. Python Language & Execution Mechanics Illustration
+ * Features: Python memory references, bytecode compilation, objects, and list/dict mapping.
+ */
+export const PythonIllustration: React.FC<IllustrationProps> = ({ className = 'w-full h-full' }) => (
+  <svg
+    viewBox="0 0 320 180"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    role="img"
+    aria-label="Python Language Execution and Memory Mechanics Diagram"
+  >
+    <rect width="320" height="180" rx="16" fill="currentColor" className="text-slate-100/60 dark:text-slate-800/40" />
+
+    {/* Variable Names (Stack / Symbol Table) */}
+    <g transform="translate(30, 30)">
+      <rect x="0" y="0" width="80" height="120" rx="8" className="fill-white dark:fill-slate-900 stroke-emerald-500/50" strokeWidth="1.5" />
+      <text x="40" y="22" textAnchor="middle" fill="#059669" className="text-[10px] font-mono font-bold">Stack Scope</text>
+      <line x1="8" y1="30" x2="72" y2="30" stroke="#10b981" strokeWidth="1" strokeDasharray="2 2" />
+
+      {/* Variables */}
+      <rect x="10" y="40" width="60" height="24" rx="4" fill="#ecfdf5" className="dark:fill-emerald-950/60" stroke="#10b981" strokeWidth="1" />
+      <text x="40" y="55" textAnchor="middle" fill="#047857" className="text-[9px] font-mono font-bold">x: id(0x1a)</text>
+
+      <rect x="10" y="75" width="60" height="24" rx="4" fill="#ecfdf5" className="dark:fill-emerald-950/60" stroke="#10b981" strokeWidth="1" />
+      <text x="40" y="90" textAnchor="middle" fill="#047857" className="text-[9px] font-mono font-bold">data: list</text>
+    </g>
+
+    {/* Pointer Arrows */}
+    <path d="M100 82 H140" stroke="#10b981" strokeWidth="2" />
+    <polygon points="140,79 146,82 140,85" fill="#10b981" />
+
+    <path d="M100 117 C 120 117, 125 125, 140 125" stroke="#059669" strokeWidth="2" />
+    <polygon points="140,122 146,125 140,128" fill="#059669" />
+
+    {/* CPython Heap Memory / PyObject Boxes */}
+    <g transform="translate(150, 45)">
+      {/* PyObject Int */}
+      <rect x="0" y="10" width="140" height="34" rx="6" fill="#f0fdf4" className="dark:fill-slate-900" stroke="#16a34a" strokeWidth="1.5" />
+      <text x="12" y="28" fill="#15803d" className="text-[9px] font-mono font-bold">PyLongObject</text>
+      <text x="12" y="38" fill="#475569" className="text-[8px] font-mono">ob_refcnt: 2 · val: 42</text>
+
+      {/* PyListObject */}
+      <rect x="0" y="55" width="140" height="50" rx="6" fill="#f0fdf4" className="dark:fill-slate-900" stroke="#16a34a" strokeWidth="1.5" />
+      <text x="12" y="73" fill="#15803d" className="text-[9px] font-mono font-bold">PyListObject [items]</text>
+      <text x="12" y="86" fill="#475569" className="text-[8px] font-mono">size: 3 · allocated: 4</text>
+      <text x="12" y="97" fill="#059669" className="text-[8px] font-mono">[0x1a, 0x1b, 0x1c]</text>
+    </g>
+
+    {/* CPython Badge */}
+    <g transform="translate(200, 15)">
+      <rect x="0" y="0" width="100" height="22" rx="4" fill="#065f46" />
+      <text x="50" y="15" textAnchor="middle" fill="#ffffff" className="text-[9px] font-mono font-bold">Python 3.12+ AST</text>
+    </g>
+  </svg>
+);
+
+/**
+ * 12. Core Java & JVM Architecture Illustration
+ * Features: JVM classloader, Heap (Young/Old gen), Metaspace, and Stack frames.
+ */
+export const JavaIllustration: React.FC<IllustrationProps> = ({ className = 'w-full h-full' }) => (
+  <svg
+    viewBox="0 0 320 180"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    role="img"
+    aria-label="JVM Architecture Stack and Garbage Collection Diagram"
+  >
+    <rect width="320" height="180" rx="16" fill="currentColor" className="text-slate-100/60 dark:text-slate-800/40" />
+
+    {/* JVM Runtime Container */}
+    <rect x="25" y="20" width="270" height="140" rx="10" className="fill-white dark:fill-slate-900 stroke-amber-500/60" strokeWidth="1.5" />
+    <text x="40" y="38" fill="#d97706" className="text-[10px] font-mono font-bold">Java Virtual Machine (OpenJDK 21 LTS)</text>
+
+    {/* JVM Heap Area */}
+    <g transform="translate(35, 48)">
+      <rect x="0" y="0" width="160" height="60" rx="6" fill="#fffbeb" className="dark:fill-amber-950/30" stroke="#f59e0b" strokeWidth="1.2" />
+      <text x="10" y="16" fill="#b45309" className="text-[9px] font-mono font-bold">JVM Heap Memory</text>
+
+      {/* Eden / Survivor / Tenured partitions */}
+      <rect x="10" y="24" width="40" height="28" rx="4" fill="#fef3c7" stroke="#d97706" strokeWidth="1" />
+      <text x="30" y="41" textAnchor="middle" fill="#92400e" className="text-[8px] font-mono font-bold">Eden</text>
+
+      <rect x="54" y="24" width="40" height="28" rx="4" fill="#fef3c7" stroke="#d97706" strokeWidth="1" />
+      <text x="74" y="41" textAnchor="middle" fill="#92400e" className="text-[8px] font-mono font-bold">S0 / S1</text>
+
+      <rect x="98" y="24" width="52" height="28" rx="4" fill="#fed7aa" stroke="#ea580c" strokeWidth="1" />
+      <text x="124" y="41" textAnchor="middle" fill="#9a3412" className="text-[8px] font-mono font-bold">Old Gen</text>
+    </g>
+
+    {/* Thread Stack Area */}
+    <g transform="translate(205, 48)">
+      <rect x="0" y="0" width="80" height="60" rx="6" fill="#fef2f2" className="dark:fill-rose-950/30" stroke="#ef4444" strokeWidth="1.2" />
+      <text x="8" y="16" fill="#b91c1c" className="text-[9px] font-mono font-bold">Thread Stack</text>
+
+      <rect x="8" y="24" width="64" height="14" rx="3" fill="#fee2e2" stroke="#dc2626" strokeWidth="0.8" />
+      <text x="40" y="34" textAnchor="middle" fill="#991b1b" className="text-[7px] font-mono">Frame: main()</text>
+
+      <rect x="8" y="40" width="64" height="14" rx="3" fill="#fee2e2" stroke="#dc2626" strokeWidth="0.8" />
+      <text x="40" y="50" textAnchor="middle" fill="#991b1b" className="text-[7px] font-mono">Frame: run()</text>
+    </g>
+
+    {/* JIT Compiler & Metaspace bar */}
+    <g transform="translate(35, 116)">
+      <rect x="0" y="0" width="160" height="32" rx="6" fill="#f0fdf4" className="dark:fill-emerald-950/20" stroke="#10b981" strokeWidth="1" />
+      <text x="80" y="20" textAnchor="middle" fill="#047857" className="text-[9px] font-mono font-bold">JIT C2 Compiler + Metaspace</text>
+    </g>
+
+    {/* GC Indicator */}
+    <g transform="translate(205, 116)">
+      <rect x="0" y="0" width="80" height="32" rx="6" fill="#e0f2fe" className="dark:fill-sky-950/20" stroke="#0284c7" strokeWidth="1" />
+      <text x="40" y="20" textAnchor="middle" fill="#0369a1" className="text-[8px] font-mono font-bold">ZGC Concurrent</text>
+    </g>
+  </svg>
+);

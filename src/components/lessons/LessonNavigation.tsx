@@ -86,18 +86,18 @@ export const LessonNavigation: React.FC<LessonNavigationProps> = ({
   };
 
   const navItems = [
-    { id: 'intro', label: 'A. Overview & Objectives', icon: Sparkles },
-    { id: 'analogy', label: 'B. Intuitive Analogy', icon: Lightbulb },
-    { id: 'concept', label: 'C. Plain English Concept', icon: BookOpen },
-    { id: 'visuals', label: 'D. Interactive Diagrams', icon: Sparkles },
-    { id: 'animation', label: 'E. Step-by-Step Animation', icon: Workflow },
-    { id: 'mathematics', label: 'F. Math Intuition & Numbers', icon: Calculator },
-    { id: 'workflow', label: 'G. Algorithm Pipeline', icon: Workflow },
-    { id: 'python', label: 'H. Practical Python Code', icon: Code2 },
-    { id: 'results', label: 'I. Output Diagnostics', icon: BarChart2 },
-    { id: 'evaluation', label: 'J & K. Assumptions & Metrics', icon: Scale },
-    { id: 'practice', label: 'L. Active Practice & MCQs', icon: Award },
-    { id: 'cheatsheet', label: 'M. 60-Sec Revision Sheet', icon: FileText },
+    { id: 'intro', label: '🎯 A. Overview & Objectives', icon: Sparkles },
+    { id: 'analogy', label: '🌍 B. Intuitive Analogy', icon: Lightbulb },
+    { id: 'concept', label: '🧠 C. Plain English Concept', icon: BookOpen },
+    { id: 'visuals', label: '📊 D. Interactive Diagrams', icon: Sparkles },
+    { id: 'animation', label: '⚡ E. Step-by-Step Animation', icon: Workflow },
+    { id: 'mathematics', label: '📐 F. Math Intuition & Numbers', icon: Calculator },
+    { id: 'workflow', label: '⚙️ G. Algorithm Pipeline', icon: Workflow },
+    { id: 'python', label: '💻 H. Practical Python Code', icon: Code2 },
+    { id: 'results', label: '📈 I. Output Diagnostics', icon: BarChart2 },
+    { id: 'evaluation', label: '⚖️ J & K. Assumptions & Metrics', icon: Scale },
+    { id: 'practice', label: '🧪 L. Active Practice & MCQs', icon: Award },
+    { id: 'cheatsheet', label: '📝 M. 60-Sec Revision Sheet', icon: FileText },
   ];
 
   return (
@@ -108,7 +108,7 @@ export const LessonNavigation: React.FC<LessonNavigationProps> = ({
           <div className="flex items-center justify-between text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
             <span className="flex items-center gap-1.5">
               <List className="w-3.5 h-3.5 text-indigo-500" />
-              <span>Lesson Structure</span>
+              <span>📖 Lesson Navigation</span>
             </span>
             <span className="font-mono text-indigo-600 dark:text-indigo-400 font-semibold">
               {scrollProgress}%
@@ -156,11 +156,11 @@ export const LessonNavigation: React.FC<LessonNavigationProps> = ({
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider flex items-center gap-1.5">
             <FileText className="w-3.5 h-3.5 text-indigo-500" />
-            Study Notes Vault
+            <span>📝 Study Notes Vault</span>
           </span>
           {noteSaved && (
             <span className="text-[10px] text-emerald-500 font-bold animate-pulse">
-              Saved!
+              ✅ Saved!
             </span>
           )}
         </div>
@@ -177,7 +177,7 @@ export const LessonNavigation: React.FC<LessonNavigationProps> = ({
           className="w-full py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors border border-slate-200 dark:border-slate-700"
         >
           <Save className="w-3.5 h-3.5" />
-          <span>Save Lesson Notes</span>
+          <span>💾 Save Lesson Notes</span>
         </button>
       </div>
     </div>

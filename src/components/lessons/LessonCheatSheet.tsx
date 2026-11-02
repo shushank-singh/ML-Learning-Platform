@@ -52,16 +52,16 @@ export const LessonCheatSheet: React.FC<LessonCheatSheetProps> = ({ lesson }) =>
           </span>
           <div>
             <span className="text-[10px] font-mono font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block">
-              Section M · Quick Review
+              📝 Section M · Quick Review
             </span>
             <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-              60-Second Revision Notes & Cheat Sheet
+              60-Second Revision Notes & Cheat Sheet 📝
             </h2>
           </div>
         </div>
 
         <span className="text-xs px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 font-semibold">
-          Exam & Interview Ready
+          🎓 Exam & Interview Ready
         </span>
       </div>
 
@@ -70,7 +70,7 @@ export const LessonCheatSheet: React.FC<LessonCheatSheetProps> = ({ lesson }) =>
         {/* Core Idea in 2 Sentences */}
         <div className="space-y-2">
           <span className="text-[10px] font-mono font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider block">
-            1. Core Idea Snapshot
+            💡 1. Core Idea Snapshot
           </span>
           <p className="text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-100 leading-relaxed">
             {lesson.intuition.overview}
@@ -81,7 +81,7 @@ export const LessonCheatSheet: React.FC<LessonCheatSheetProps> = ({ lesson }) =>
         <div className="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-900/50 text-xs space-y-1.5">
           <div className="flex items-center gap-2 font-bold text-amber-950 dark:text-amber-300">
             <Lightbulb className="w-4 h-4 text-amber-500" />
-            <span>Memorable Analogy Takeaway:</span>
+            <span>🌍 2. Memorable Analogy Quick Recall:</span>
           </div>
           <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
             {analogy.metaphor}
@@ -92,7 +92,7 @@ export const LessonCheatSheet: React.FC<LessonCheatSheetProps> = ({ lesson }) =>
         {mathematics.foundations.length > 0 && (
           <div className="space-y-2.5">
             <span className="text-[10px] font-mono font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider block">
-              2. Key Mathematical Formulas
+              📐 3. Key Mathematical Formulas
             </span>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {mathematics.foundations.slice(0, 2).map((found, idx) => (
@@ -118,7 +118,7 @@ export const LessonCheatSheet: React.FC<LessonCheatSheetProps> = ({ lesson }) =>
         {/* Key Takeaways Bullet List */}
         <div className="space-y-2.5">
           <span className="text-[10px] font-mono font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider block">
-            3. Executive Concept Takeaways
+            ✅ 4. Executive Concept Takeaways
           </span>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
             {summary.keyTakeaways.map((takeaway, idx) => (
@@ -138,7 +138,7 @@ export const LessonCheatSheet: React.FC<LessonCheatSheetProps> = ({ lesson }) =>
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider flex items-center gap-1.5">
               <CheckSquare className="w-4 h-4 text-emerald-500" />
-              <span>Self-Assessment Checklist ({checkedCount}/{checklistItems.length} Mastered)</span>
+              <span>🎯 Self-Assessment Mastery Checklist ({checkedCount}/{checklistItems.length} Mastered)</span>
             </span>
             <span className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
               {Math.round((checkedCount / checklistItems.length) * 100)}% Complete
@@ -178,7 +178,7 @@ export const LessonCheatSheet: React.FC<LessonCheatSheetProps> = ({ lesson }) =>
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 font-semibold text-xs shadow-xs transition-colors self-start sm:self-auto max-w-sm truncate"
             >
               <ArrowLeft className="w-4 h-4 shrink-0" />
-              <span className="truncate">Previous: {lesson.previousLesson.title}</span>
+              <span className="truncate">⏮️ Previous: {lesson.previousLesson.title}</span>
             </Link>
           ) : (
             <Link
@@ -186,14 +186,14 @@ export const LessonCheatSheet: React.FC<LessonCheatSheetProps> = ({ lesson }) =>
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 font-semibold text-xs shadow-xs transition-colors self-start sm:self-auto"
             >
               <ArrowLeft className="w-4 h-4 shrink-0" />
-              <span>Back to Module Overview</span>
+              <span>⏮️ Back to Module Overview</span>
             </Link>
           )}
 
           {summary.nextLessonId ? (
             <div className="flex flex-col sm:items-end gap-1.5 self-start sm:self-auto">
               <span className="text-[10px] font-mono font-bold text-slate-500 uppercase tracking-wider block">
-                Next Logical Topic:
+                🚀 Next Logical Topic:
               </span>
               <Link
                 href={getLessonUrl(summary.nextLessonModuleId || moduleId, summary.nextLessonId)}
@@ -208,7 +208,7 @@ export const LessonCheatSheet: React.FC<LessonCheatSheetProps> = ({ lesson }) =>
               href="/curriculum"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs shadow-md transition-colors self-start sm:self-auto"
             >
-              <span>Explore More Modules</span>
+              <span>🚀 Explore More Modules</span>
               <ArrowRight className="w-4 h-4 shrink-0" />
             </Link>
           )}

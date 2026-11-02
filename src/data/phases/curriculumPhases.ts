@@ -32,7 +32,7 @@ export const AI_ML_PHASES: CurriculumPhase[] = [
     id: 'phase-0',
     number: 0,
     title: 'Orientation & Prerequisite Diagnostics',
-    subtitle: 'Self-Assessments, Mathematics Check & Platform Mastery',
+    subtitle: '🧭 Self-Assessments, Mathematics Check & Platform Mastery',
     description:
       'Evaluate your mathematical foundations and Python fluency before diving into machine learning. Receive personalized recommendations to bridge prerequisite gaps.',
     badge: 'Phase 0 · Orientation',
@@ -115,7 +115,7 @@ export const AI_ML_PHASES: CurriculumPhase[] = [
     id: 'phase-1',
     number: 1,
     title: 'Machine Learning Foundations',
-    subtitle: 'From Preprocessing & Supervised Models to Ensembles & Unsupervised Learning',
+    subtitle: '🤖 From Preprocessing & Supervised Models to Ensembles & Unsupervised Learning',
     description:
       'Master the classical machine learning canon: data preparation, regression, classification, decision trees, boosting ensembles, clustering, and production ML pipelines.',
     badge: 'Phase 1 · Foundations',
@@ -154,7 +154,7 @@ export const AI_ML_PHASES: CurriculumPhase[] = [
     id: 'phase-2',
     number: 2,
     title: 'Mathematics for Deep Learning',
-    subtitle: 'Linear Algebra, Multivariate Calculus & Optimization Intuition',
+    subtitle: '📐 Linear Algebra, Multivariate Calculus & Optimization Intuition',
     description:
       'Develop the mathematical intuition powering neural networks: tensors, matrix calculus, computational graphs, probability density functions, and loss landscape geometry.',
     badge: 'Phase 2 · Neural Math',
@@ -185,7 +185,7 @@ export const AI_ML_PHASES: CurriculumPhase[] = [
     id: 'phase-3',
     number: 3,
     title: 'Deep Learning',
-    subtitle: 'From Neural Network Fundamentals to Modern Deep Learning',
+    subtitle: '🧠 From Neural Network Fundamentals to Modern Deep Learning',
     description:
       'Learn neural networks, backpropagation, optimization, PyTorch, CNNs, sequence models, attention, and practical Deep Learning deployment through visual explanations, interactive labs, and hands-on projects.',
     badge: 'Phase 3 · Deep Learning',
@@ -218,7 +218,7 @@ export const AI_ML_PHASES: CurriculumPhase[] = [
     id: 'phase-4',
     number: 4,
     title: 'Computer Vision',
-    subtitle: 'From Pixels and Kernels to Object Detection & Modern Vision Transformers',
+    subtitle: '👁️ From Pixels and Kernels to Object Detection & Modern Vision Transformers',
     description:
       'Delve into modern vision systems: image preprocessing, convolution filtering, residual vision backbones (ResNet, ConvNeXt), object detection (YOLO, Faster R-CNN), and segmentation (U-Net).',
     badge: 'Phase 4 · Vision',
@@ -248,7 +248,7 @@ export const AI_ML_PHASES: CurriculumPhase[] = [
     id: 'phase-5',
     number: 5,
     title: 'Sequence Models and Attention',
-    subtitle: 'From Recurrence & Gated Memories to Sequence-to-Sequence Modeling',
+    subtitle: '🔄 From Recurrence & Gated Memories to Sequence-to-Sequence Modeling',
     description:
       'Master sequential data modeling: time-series forecasting, Recurrent Neural Networks, bidirectional LSTMs, encoder-decoder architectures, and additive Bahdanau attention.',
     badge: 'Phase 5 · Sequences',
@@ -277,7 +277,7 @@ export const AI_ML_PHASES: CurriculumPhase[] = [
     id: 'phase-6',
     number: 6,
     title: 'Transformers: From Fundamentals to Implementation',
-    subtitle: 'Self-Attention, Multi-Head Blocks, Positional Encodings & PyTorch Transformer Coding',
+    subtitle: '🔗 Self-Attention, Multi-Head Blocks, Positional Encodings & PyTorch Transformer Coding',
     description:
       'Understand the architecture that powers modern AI: tokenization, embedding spaces, scaled dot-product attention, multi-head attention, layer normalization, and building a full Transformer in PyTorch.',
     badge: 'Phase 6 · Transformers',
@@ -315,7 +315,7 @@ export const AI_ML_PHASES: CurriculumPhase[] = [
     id: 'phase-7',
     number: 7,
     title: 'Generative AI and Large Language Models',
-    subtitle: 'Pretraining, Token Budgets, SFT, RLHF, DPO, LoRA & Model Serving',
+    subtitle: '🔤 Pretraining, Token Budgets, SFT, RLHF, DPO, LoRA & Model Serving',
     description:
       'Navigate the state of the art in Generative AI: pretraining dynamics, context windows, sampling strategies, structured output function calling, parameter-efficient fine-tuning (LoRA, QLoRA), and quantization (GGUF, AWQ).',
     badge: 'Phase 7 · GenAI & LLMs',
@@ -353,7 +353,7 @@ export const AI_ML_PHASES: CurriculumPhase[] = [
     id: 'phase-8',
     number: 8,
     title: 'Embeddings, Vector Search and RAG',
-    subtitle: 'Retrieval-Augmented Generation, Vector Databases & Grounded Search',
+    subtitle: '🔎 Retrieval-Augmented Generation, Vector Databases & Grounded Search',
     description:
       'Engineer robust enterprise RAG systems: chunking strategies, embedding models, approximate nearest-neighbor indexing (HNSW), hybrid search, rerankers, and RAG evaluation metrics (RAGAS).',
     badge: 'Phase 8 · RAG & Vectors',
@@ -512,7 +512,7 @@ export const AI_ML_PHASES: CurriculumPhase[] = [
     id: 'phase-9',
     number: 9,
     title: 'AI Agents and Agentic Systems',
-    subtitle: 'Autonomous Loops, Tool Calling, Planning, Multi-Agent Teams & Production Engineering',
+    subtitle: '🛠️ Autonomous Loops, Tool Calling, Planning, Multi-Agent Teams & Production Engineering',
     description:
       'Master autonomous AI agent engineering: Observe-Decide-Act-Evaluate loops, JSON schema tool calling, hierarchical memory, DAG task planning, multi-agent supervisor handoffs, human-in-the-loop approval gates, and production observability.',
     badge: 'Phase 9 · AI Agents',
@@ -673,7 +673,7 @@ export const AI_ML_PHASES: CurriculumPhase[] = [
     id: 'phase-10',
     number: 10,
     title: 'MLOps & LLMOps',
-    subtitle: 'From ML Experiments to Reliable Production AI',
+    subtitle: '⚙️ From ML Experiments to Reliable Production AI',
     description:
       'Master the complete production lifecycle for classical machine learning and generative foundation models: experiment tracking, data versioning, DAG pipelines, containerized serving, CI/CD quality gates, drift monitoring, LLM evaluation, and observability.',
     badge: 'Phase 10 · MLOps & LLMOps',
@@ -838,7 +838,7 @@ export const AI_ML_PHASES: CurriculumPhase[] = [
     id: 'phase-11',
     number: 11,
     title: 'AI Deployment, Cloud & Production Engineering',
-    subtitle: 'From Local AI Projects to Scalable Production Systems',
+    subtitle: '☁️ From Local AI Projects to Scalable Production Systems',
     description:
       'Deconstruct the complete lifecycle of deploying, scaling, securing, and operating production machine learning, deep learning, and large language model systems. Master Linux servers, networking, Docker containers, FastAPI microservices, cloud architectures, asynchronous job queues, GPU acceleration, and production observability.',
     badge: 'Phase 11 · AI Deployment',
@@ -1004,7 +1004,7 @@ export const AI_ML_PHASES: CurriculumPhase[] = [
     id: 'phase-12',
     number: 12,
     title: 'Capstone Projects Portfolio',
-    subtitle: 'Beginner, Intermediate & Advanced End-to-End Real-World Blueprints',
+    subtitle: '🏆 Beginner, Intermediate & Advanced End-to-End Real-World Blueprints',
     description:
       'A comprehensive portfolio of end-to-end projects spanning all difficulty tiers. Each project features clear business requirements, prerequisites, starter architectures, test criteria, and deployment checklists.',
     badge: 'Phase 12 · Capstones',

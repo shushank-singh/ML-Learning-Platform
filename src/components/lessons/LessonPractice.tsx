@@ -102,16 +102,16 @@ export const LessonPractice: React.FC<LessonPracticeProps> = ({ lesson }) => {
           </span>
           <div>
             <span className="text-[10px] font-mono font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block">
-              Section L · Active Recall
+              🧪 Section L · Active Recall & Testing
             </span>
             <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-              Interactive Practice & Concept Mastery
+              Interactive Practice & Concept Mastery 🏆
             </h2>
           </div>
         </div>
 
         <span className="text-xs px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold">
-          4-Tier Practice Suite
+          🏆 4-Tier Practice Suite
         </span>
       </div>
 
@@ -122,7 +122,7 @@ export const LessonPractice: React.FC<LessonPracticeProps> = ({ lesson }) => {
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div>
             <span className="text-[10px] font-mono text-indigo-600 dark:text-indigo-400 font-bold uppercase tracking-wider block">
-              Part 1 of 4 · Conceptual Recall
+              ❓ Part 1 of 4 · Conceptual Recall
             </span>
             <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
               Diagnostic Multiple-Choice Questions ({conceptualMCQs.length} Questions)
@@ -198,12 +198,12 @@ export const LessonPractice: React.FC<LessonPracticeProps> = ({ lesson }) => {
                   <div className="ml-7 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 text-xs text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700/80 space-y-1.5 leading-relaxed">
                     <div className="font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
-                      <span>Conceptual Explanation:</span>
+                      <span>💡 Conceptual Explanation:</span>
                     </div>
                     <p>{q.explanation}</p>
                     {selected !== q.correctIndex && (
                       <p className="text-rose-600 dark:text-rose-400 font-medium pt-1">
-                        Misconception alert: The selected answer overlooks that the algorithm relies on specific objective functions and assumptions.
+                        ⚠️ Misconception alert: The selected answer overlooks that the algorithm relies on specific objective functions and assumptions.
                       </p>
                     )}
                   </div>
@@ -221,12 +221,12 @@ export const LessonPractice: React.FC<LessonPracticeProps> = ({ lesson }) => {
               disabled={Object.keys(selectedAnswers).length < conceptualMCQs.length}
               className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white font-semibold text-xs shadow-md transition-colors"
             >
-              Grade Answers & Reveal Explanations
+              ✅ Grade Answers & Reveal Explanations
             </button>
           ) : (
             <div className="flex items-center justify-between w-full">
               <span className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                <span>Quiz Score:</span>
+                <span>🏆 Quiz Score:</span>
                 <span className="font-mono text-indigo-600 dark:text-indigo-400 text-base">
                   {quizScore} / {conceptualMCQs.length}
                 </span>
@@ -239,7 +239,7 @@ export const LessonPractice: React.FC<LessonPracticeProps> = ({ lesson }) => {
                 className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 flex items-center gap-1.5"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span>Retry Quiz</span>
+                <span>🔄 Retry Quiz</span>
               </button>
             </div>
           )}
@@ -254,10 +254,10 @@ export const LessonPractice: React.FC<LessonPracticeProps> = ({ lesson }) => {
           <div className="flex items-center justify-between">
             <div>
               <span className="text-[10px] font-mono text-cyan-600 dark:text-cyan-400 font-bold uppercase tracking-wider block">
-                Part 2 of 4 · Numerical & Code Output
+                🧠 Part 2 of 4 · Numerical & Code Output
               </span>
               <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
-                Analytical Calculation Question
+                Analytical Calculation Question 🔢
               </h3>
             </div>
           </div>
@@ -277,7 +277,7 @@ export const LessonPractice: React.FC<LessonPracticeProps> = ({ lesson }) => {
                   <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-900/40 text-amber-900 dark:text-amber-200">
                     <span className="font-bold flex items-center gap-1.5 mb-0.5">
                       <Lightbulb className="w-3.5 h-3.5 text-amber-500" />
-                      Guided Hint:
+                      💡 Guided Hint:
                     </span>
                     {pq.hint}
                   </div>
@@ -295,7 +295,7 @@ export const LessonPractice: React.FC<LessonPracticeProps> = ({ lesson }) => {
 
                 {isRevealed && (
                   <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 text-emerald-950 dark:text-emerald-200 leading-relaxed space-y-1">
-                    <span className="font-bold block">Worked Solution & Interpretation:</span>
+                    <span className="font-bold block">✅ Worked Solution & Interpretation:</span>
                     <p>{pq.answer}</p>
                   </div>
                 )}
@@ -312,10 +312,10 @@ export const LessonPractice: React.FC<LessonPracticeProps> = ({ lesson }) => {
         <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
           <div>
             <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider block">
-              Part 3 of 4 · Industry Scenario
+              🏢 Part 3 of 4 · Industry Scenario
             </span>
             <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
-              Real-World System Application Challenge
+              Real-World System Application Challenge 💼
             </h3>
           </div>
 
@@ -343,7 +343,7 @@ export const LessonPractice: React.FC<LessonPracticeProps> = ({ lesson }) => {
             {showCaseStudy && (
               <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
                 <span className="font-bold text-slate-900 dark:text-slate-100 block">
-                  Authoritative Production Recommendation:
+                  💡 Authoritative Production Recommendation:
                 </span>
                 <p>
                   Deploy this model as the primary production baseline. It delivers {(realWorldUseCases[0]?.benefit || realWorldUseCases[0]?.description || 'measurable predictive performance').toLowerCase()} with millisecond latency and clear parameter interpretability. Only transition to more complex ensembles if validation metrics prove a statistically significant uplift on real traffic.
@@ -361,10 +361,10 @@ export const LessonPractice: React.FC<LessonPracticeProps> = ({ lesson }) => {
         <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
           <div>
             <span className="text-[10px] font-mono text-amber-600 dark:text-amber-400 font-bold uppercase tracking-wider block">
-              Part 4 of 4 · Hands-On Code
+              💻 Part 4 of 4 · Hands-On Code
             </span>
             <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
-              {independentExercise.title}
+              🧪 {independentExercise.title}
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
               Solve this problem independently in the Python sandbox below:
@@ -379,7 +379,7 @@ export const LessonPractice: React.FC<LessonPracticeProps> = ({ lesson }) => {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                Progressive Hints:
+                💡 Progressive Hints:
               </span>
               <button
                 onClick={() =>
@@ -401,7 +401,7 @@ export const LessonPractice: React.FC<LessonPracticeProps> = ({ lesson }) => {
                     key={i}
                     className="p-3 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900 text-xs text-amber-900 dark:text-amber-300"
                   >
-                    <span className="font-bold">Hint {i + 1}: </span>
+                    <span className="font-bold">💡 Hint {i + 1}: </span>
                     {h}
                   </div>
                 ))}
@@ -412,7 +412,7 @@ export const LessonPractice: React.FC<LessonPracticeProps> = ({ lesson }) => {
           {/* Interactive Sandbox */}
           <div>
             <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-2">
-              Solve Directly in this Interactive Sandbox:
+              ▶️ Solve Directly in this Interactive Sandbox:
             </span>
             <CodeRunner
               initialCode={independentExercise.starterCode}
@@ -427,7 +427,7 @@ export const LessonPractice: React.FC<LessonPracticeProps> = ({ lesson }) => {
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-indigo-600"
             >
               {showSolution ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
-              <span>{showSolution ? 'Hide Author Reference Solution' : 'Reveal Complete Verified Reference Solution'}</span>
+              <span>{showSolution ? 'Hide Reference Solution' : '🏆 Reveal Complete Verified Reference Solution'}</span>
             </button>
 
             {showSolution && (

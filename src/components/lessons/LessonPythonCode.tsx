@@ -44,10 +44,10 @@ export const LessonPythonCode: React.FC<LessonPythonCodeProps> = ({ lesson }) =>
           </span>
           <div>
             <span className="text-[10px] font-mono font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block">
-              Section H · Production & Scratch Code
+              💻 Section H · Code Implementation
             </span>
             <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-              Practical Python Implementation
+              Production & Scratch Python Implementation 💻
             </h2>
           </div>
         </div>
@@ -57,7 +57,7 @@ export const LessonPythonCode: React.FC<LessonPythonCodeProps> = ({ lesson }) =>
           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-50 transition-colors shadow-sm"
         >
           {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-          <span>{copied ? 'Copied to Clipboard!' : 'Copy Code'}</span>
+          <span>{copied ? '✅ Copied to Clipboard!' : '📋 Copy Code'}</span>
         </button>
       </div>
 
@@ -75,7 +75,7 @@ export const LessonPythonCode: React.FC<LessonPythonCodeProps> = ({ lesson }) =>
             >
               <Code2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
               <span className="sm:hidden">Scratch</span>
-              <span className="hidden sm:inline">1. NumPy From Scratch</span>
+              <span className="hidden sm:inline">💻 1. NumPy From Scratch</span>
             </button>
 
             <button
@@ -88,7 +88,7 @@ export const LessonPythonCode: React.FC<LessonPythonCodeProps> = ({ lesson }) =>
             >
               <Cpu className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
               <span className="sm:hidden">Scikit-Learn</span>
-              <span className="hidden sm:inline">2. Production Scikit-Learn</span>
+              <span className="hidden sm:inline">⚙️ 2. Production Scikit-Learn</span>
             </button>
 
             <button
@@ -101,12 +101,12 @@ export const LessonPythonCode: React.FC<LessonPythonCodeProps> = ({ lesson }) =>
             >
               <Terminal className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
               <span className="sm:hidden">Sandbox</span>
-              <span className="hidden sm:inline">3. Full Runnable Sandbox</span>
+              <span className="hidden sm:inline">▶️ 3. Full Runnable Sandbox</span>
             </button>
           </div>
 
           <span className="text-[11px] font-mono text-slate-400 hidden sm:inline">
-            Python 3.10+ Compatible
+            🐍 Python 3.10+ Compatible
           </span>
         </div>
 
@@ -186,7 +186,7 @@ export const LessonPythonCode: React.FC<LessonPythonCodeProps> = ({ lesson }) =>
               <FileText className="w-4 h-4" />
             </span>
             <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
-              Line-by-Line Code Breakdown
+              🔍 Line-by-Line Code Breakdown
             </h3>
           </div>
           <p className="text-xs text-slate-500 dark:text-slate-400">

@@ -58,16 +58,16 @@ export const LightweightQuiz: React.FC<LightweightQuizProps> = ({ topicId, quest
           </div>
           <div>
             <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 block">
-              Quick Recall Check • 3 Questions
+              ❓ Quick Recall Check • 3 Questions
             </span>
-            <h4 className="text-sm font-bold text-slate-100">Test Your Immediate Retention</h4>
+            <h4 className="text-sm font-bold text-slate-100">🧠 Test Your Immediate Retention</h4>
           </div>
         </div>
 
         {answeredCount > 0 && (
           <div className="flex items-center gap-2">
             <span className="text-xs font-mono font-bold text-slate-300">
-              Score: {correctCount}/{questions.length}
+              🏆 Score: {correctCount}/{questions.length}
             </span>
             <button
               onClick={handleReset}

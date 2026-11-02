@@ -20,10 +20,10 @@ export default function ProjectsPage() {
       <div className="space-y-3">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-50 dark:bg-violet-950/60 border border-violet-200 dark:border-violet-800 text-violet-600 dark:text-violet-400 text-xs font-semibold">
           <Briefcase className="w-4 h-4" />
-          <span>Industry Capstone Portfolio</span>
+          <span>🏆 Industry Capstone Portfolio</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
-          Real-World AI &amp; ML Project Lab
+          Real-World AI &amp; ML Project Lab 🏆
         </h1>
         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-3xl leading-relaxed">
           Step beyond synthetic toy examples. Build 10 production-quality end-to-end applications complete with business objective definitions, exploratory checklists, preprocessing pipelines, error diagnostics, and deployment blueprints.
@@ -44,7 +44,7 @@ export default function ProjectsPage() {
                 </span>
                 <span className="text-xs text-slate-400 flex items-center gap-1">
                   <Clock className="w-3.5 h-3.5" />
-                  {proj.duration}
+                  ⏱️ {proj.duration}
                 </span>
               </div>
 
@@ -59,7 +59,7 @@ export default function ProjectsPage() {
               <div className="mt-4 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 text-xs space-y-1.5">
                 <div className="flex items-center gap-1.5 font-semibold text-slate-800 dark:text-slate-200">
                   <Database className="w-3.5 h-3.5 text-indigo-500" />
-                  <span>Dataset: {proj.datasetInfo.name}</span>
+                  <span>📊 Dataset: {proj.datasetInfo.name}</span>
                 </div>
                 <div className="text-[11px] text-slate-500 dark:text-slate-400">
                   {proj.datasetInfo.rowsCount} · {proj.datasetInfo.featuresCount} Features · Source: {proj.datasetInfo.source}
@@ -69,7 +69,7 @@ export default function ProjectsPage() {
               {/* Deliverables summary */}
               <div className="mt-3 space-y-1">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide block">
-                  GitHub-Ready Deliverables:
+                  📦 GitHub-Ready Deliverables:
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {proj.deliverables.slice(0, 3).map((deliv, dIdx) => (
@@ -90,7 +90,7 @@ export default function ProjectsPage() {
                 href={`/projects/${proj.id}`}
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs transition-colors shadow-sm"
               >
-                <span>Open Project Workspace</span>
+                <span>🚀 Open Project Workspace</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>

@@ -94,23 +94,23 @@ export const LessonResultsVisualization: React.FC<LessonResultsVisualizationProp
           </span>
           <div>
             <span className="text-[10px] font-mono font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block">
-              Section I · Output Diagnostics
+              📈 Section I · Visual Diagnostics
             </span>
             <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-              Results & Visualization Interpretation Guide
+              Results & Visualization Interpretation Guide 📊
             </h2>
           </div>
         </div>
 
         <span className="text-xs px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold">
-          What the Charts Mean
+          📊 Interpreting Visual Outputs
         </span>
       </div>
 
       <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5">
         <div>
           <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 mb-1">
-            Visual Diagnostic Standard: {guide.chartType}
+            📊 Visual Diagnostic Standard: {guide.chartType}
           </h3>
           <p className="text-xs text-slate-500 dark:text-slate-400">
             When running this model, these are the visual cues and coordinate axes you must inspect:
@@ -121,7 +121,7 @@ export const LessonResultsVisualization: React.FC<LessonResultsVisualizationProp
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
           <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/80">
             <span className="text-[10px] font-mono text-indigo-500 uppercase font-bold block mb-1">
-              Horizontal X-Axis Represents:
+              ↔️ Horizontal X-Axis Represents:
             </span>
             <span className="font-semibold text-slate-900 dark:text-slate-100">
               {guide.xAxis}
@@ -130,7 +130,7 @@ export const LessonResultsVisualization: React.FC<LessonResultsVisualizationProp
 
           <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/80">
             <span className="text-[10px] font-mono text-indigo-500 uppercase font-bold block mb-1">
-              Vertical Y-Axis Represents:
+              ↕️ Vertical Y-Axis Represents:
             </span>
             <span className="font-semibold text-slate-900 dark:text-slate-100">
               {guide.yAxis}
@@ -142,7 +142,7 @@ export const LessonResultsVisualization: React.FC<LessonResultsVisualizationProp
         <div className="space-y-2.5">
           <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider flex items-center gap-1.5">
             <Eye className="w-4 h-4 text-emerald-500" />
-            <span>Target Diagnostic Patterns to Look For:</span>
+            <span>🔍 Target Diagnostic Patterns to Look For:</span>
           </h4>
           <div className="space-y-2">
             {guide.patternsToLookFor.map((pat, idx) => (
@@ -162,7 +162,7 @@ export const LessonResultsVisualization: React.FC<LessonResultsVisualizationProp
           <div className="p-4 rounded-xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200/80 dark:border-emerald-900/40 text-xs space-y-1.5">
             <div className="flex items-center gap-1.5 font-bold text-emerald-800 dark:text-emerald-300">
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              <span>Valid Statistical Conclusions</span>
+              <span>✅ Valid Statistical Conclusions</span>
             </div>
             <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
               {guide.validConclusions}
@@ -172,7 +172,7 @@ export const LessonResultsVisualization: React.FC<LessonResultsVisualizationProp
           <div className="p-4 rounded-xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200/80 dark:border-amber-900/40 text-xs space-y-1.5">
             <div className="flex items-center gap-1.5 font-bold text-amber-800 dark:text-amber-300">
               <AlertTriangle className="w-4 h-4 text-amber-600" />
-              <span>Unwarranted Conclusions & Traps</span>
+              <span>⚠️ Unwarranted Conclusions & Traps</span>
             </div>
             <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
               {guide.invalidConclusions}

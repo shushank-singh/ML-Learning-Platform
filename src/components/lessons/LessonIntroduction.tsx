@@ -26,29 +26,29 @@ export const LessonIntroduction: React.FC<LessonIntroductionProps> = ({
   const getCategory = () => {
     const id = lesson.id.toLowerCase();
     const mod = lesson.moduleId.toLowerCase();
-    if (mod.startsWith('phase-0') || id.startsWith('p0-')) return 'Phase 0 · Diagnostic Orientation & Self-Assessment';
-    if (mod.startsWith('deployment') || mod.startsWith('deploy') || id.includes('deploy') || id.includes('docker') || id.includes('fastapi') || id.includes('vllm')) return 'AI Deployment & Cloud Engineering';
-    if (mod.startsWith('mlops') || id.includes('mlops') || id.includes('drift') || id.includes('pipeline')) return 'MLOps & LLMOps Engineering';
-    if (mod.startsWith('agent') || id.includes('agent') || id.includes('react') || id.includes('tool-call')) return 'AI Agents & Agentic Systems';
-    if (mod.startsWith('rag') || id.includes('rag') || id.includes('vector') || id.includes('chunk') || id.includes('rerank')) return 'Retrieval-Augmented Generation (RAG)';
-    if (mod.startsWith('genai') || id.includes('genai') || id.includes('prompt') || id.includes('lora') || id.includes('sampling')) return 'Generative AI & Large Language Models';
-    if (mod.startsWith('tf-module') || id.includes('transformer') || id.includes('attention') || id.includes('positional')) return 'Transformers & Foundation Models';
-    if (mod.startsWith('dl-module') || mod === 'module-9' || id.includes('neural') || id.includes('deep')) return 'Deep Learning & Neural Architectures';
-    if (mod.startsWith('numpy') || id.startsWith('numpy')) return 'NumPy Numerical Computing';
-    if (mod.startsWith('pandas') || id.startsWith('pandas')) return 'Pandas Data Engineering';
-    if (mod.startsWith('dsa')) return 'Data Structures & Algorithms';
-    if (mod.startsWith('python')) return 'Python Mastery';
-    if (mod.startsWith('java')) return 'Java Engineering';
-    if (mod === 'module-3' || id.includes('regression')) return 'Supervised Learning: Regression';
-    if (mod === 'module-4' || id.includes('classification')) return 'Supervised Learning: Classification';
-    if (mod === 'module-6' || id.includes('forest') || id.includes('boost')) return 'Ensemble Learning & Boosting';
-    if (mod === 'module-7' || id.includes('kmeans') || id.includes('cluster') || id.includes('pca')) return 'Unsupervised Learning & Clustering';
-    if (mod === 'module-1' || id.includes('math') || id.includes('vector') || id.includes('gradient')) return 'Mathematical Foundations';
-    if (mod === 'module-2' || id.includes('preprocess') || id.includes('imput') || id.includes('scale')) return 'Data Engineering & Preprocessing';
-    if (mod === 'module-5' || id.includes('metric') || id.includes('validation')) return 'Model Evaluation & Selection';
-    if (mod === 'module-10' || id.includes('mlops')) return 'Production ML Engineering & MLOps';
-    if (mod === 'module-11') return 'Real-World Capstone Project';
-    return 'Complete AI & ML Core';
+    if (mod.startsWith('phase-0') || id.startsWith('p0-')) return '🧭 Phase 0 · Diagnostic Orientation & Self-Assessment';
+    if (mod.startsWith('deployment') || mod.startsWith('deploy') || id.includes('deploy') || id.includes('docker') || id.includes('fastapi') || id.includes('vllm')) return '☁️ AI Deployment & Cloud Engineering';
+    if (mod.startsWith('mlops') || id.includes('mlops') || id.includes('drift') || id.includes('pipeline')) return '⚙️ MLOps & LLMOps Engineering';
+    if (mod.startsWith('agent') || id.includes('agent') || id.includes('react') || id.includes('tool-call')) return '🛠️ AI Agents & Agentic Systems';
+    if (mod.startsWith('rag') || id.includes('rag') || id.includes('vector') || id.includes('chunk') || id.includes('rerank')) return '🔎 Retrieval-Augmented Generation (RAG)';
+    if (mod.startsWith('genai') || id.includes('genai') || id.includes('prompt') || id.includes('lora') || id.includes('sampling')) return '🔤 Generative AI & Large Language Models';
+    if (mod.startsWith('tf-module') || id.includes('transformer') || id.includes('attention') || id.includes('positional')) return '🔗 Transformers & Foundation Models';
+    if (mod.startsWith('dl-module') || mod === 'module-9' || id.includes('neural') || id.includes('deep')) return '🧠 Deep Learning & Neural Architectures';
+    if (mod.startsWith('numpy') || id.startsWith('numpy')) return '📊 NumPy Numerical Computing';
+    if (mod.startsWith('pandas') || id.startsWith('pandas')) return '🐼 Pandas Data Engineering';
+    if (mod.startsWith('dsa')) return '🌳 Data Structures & Algorithms';
+    if (mod.startsWith('python')) return '🐍 Python Mastery';
+    if (mod.startsWith('java')) return '☕ Java Engineering';
+    if (mod === 'module-3' || id.includes('regression')) return '📈 Supervised Learning: Regression';
+    if (mod === 'module-4' || id.includes('classification')) return '🎯 Supervised Learning: Classification';
+    if (mod === 'module-6' || id.includes('forest') || id.includes('boost')) return '🌲 Ensemble Learning & Boosting';
+    if (mod === 'module-7' || id.includes('kmeans') || id.includes('cluster') || id.includes('pca')) return '🔍 Unsupervised Learning & Clustering';
+    if (mod === 'module-1' || id.includes('math') || id.includes('vector') || id.includes('gradient')) return '📐 Mathematical Foundations';
+    if (mod === 'module-2' || id.includes('preprocess') || id.includes('imput') || id.includes('scale')) return '🧹 Data Engineering & Preprocessing';
+    if (mod === 'module-5' || id.includes('metric') || id.includes('validation')) return '📊 Model Evaluation & Selection';
+    if (mod === 'module-10' || id.includes('mlops')) return '🏭 Production ML Engineering & MLOps';
+    if (mod === 'module-11') return '🏆 Real-World Capstone Project';
+    return '🤖 Complete AI & ML Core';
   };
 
   // Generate 3-5 structured learning objectives
@@ -84,16 +84,16 @@ export const LessonIntroduction: React.FC<LessonIntroductionProps> = ({
             ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800'
             : 'bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800'
         }`}>
-          {lesson.difficulty} Level
+          📶 {lesson.difficulty} Level
         </span>
 
         <span className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800">
           <Clock className="w-3.5 h-3.5 text-slate-400" />
-          <span>{lesson.readTimeMinutes} min interactive study</span>
+          <span>⏱️ {lesson.readTimeMinutes} min interactive study</span>
         </span>
 
         <span className="text-xs font-mono text-slate-400 dark:text-slate-500">
-          Lesson {lesson.order}
+          📖 Lesson {lesson.order}
         </span>
       </div>
 
@@ -112,13 +112,13 @@ export const LessonIntroduction: React.FC<LessonIntroductionProps> = ({
         <div className="relative z-10 space-y-3">
           <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-bold text-xs uppercase tracking-wider">
             <HelpCircle className="w-4 h-4 text-indigo-600" />
-            <span>The Real-World Question: Why Does This Matter?</span>
+            <span>💡 The Real-World Question: Why Does This Matter?</span>
           </div>
           <p className="text-sm sm:text-base text-slate-800 dark:text-slate-200 leading-relaxed">
             {lesson.problemSolved.description}
           </p>
           <div className="pt-1 flex flex-wrap gap-2 text-xs text-slate-600 dark:text-slate-400">
-            <span className="font-semibold text-slate-700 dark:text-slate-300">Key challenge addressed:</span>
+            <span className="font-semibold text-slate-700 dark:text-slate-300">🎯 Key challenge addressed:</span>
             <span>{lesson.problemSolved.title}</span>
           </div>
         </div>
@@ -131,7 +131,7 @@ export const LessonIntroduction: React.FC<LessonIntroductionProps> = ({
             <Target className="w-4 h-4" />
           </span>
           <h2 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
-            Learning Objectives — What You Will Master
+            🎯 What You&apos;ll Learn — Core Learning Objectives
           </h2>
         </div>
 
@@ -149,7 +149,7 @@ export const LessonIntroduction: React.FC<LessonIntroductionProps> = ({
 
         {/* Prerequisites Bar */}
         <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center gap-2 text-xs">
-          <span className="font-semibold text-slate-500 dark:text-slate-400">Recommended Prerequisites:</span>
+          <span className="font-semibold text-slate-500 dark:text-slate-400">📌 Recommended Prerequisites:</span>
           {prerequisites.map((req, idx) => (
             <span
               key={idx}

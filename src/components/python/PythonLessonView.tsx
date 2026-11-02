@@ -222,14 +222,14 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
             <Lightbulb className="w-4 h-4" />
           </div>
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-            {lesson.analogy.title}
+            🌍 Real-World Analogy: {lesson.analogy.title}
           </h2>
         </div>
         <div className="rounded-2xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/30 dark:bg-emerald-950/10 p-5 space-y-3 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
           <p>{lesson.analogy.text}</p>
           <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-emerald-200/80 dark:border-emerald-900/60 text-xs font-mono text-emerald-700 dark:text-emerald-300">
             <span className="font-bold uppercase tracking-wider text-[10px] text-slate-400 block mb-0.5">
-              Core Metaphor
+              💡 Core Metaphor
             </span>
             {lesson.analogy.metaphor}
           </div>
@@ -243,7 +243,7 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
             <Compass className="w-4 h-4" />
           </div>
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-            {lesson.problemSolved.title}
+            🎯 Problem Solved: {lesson.problemSolved.title}
           </h2>
         </div>
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 space-y-3 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
@@ -266,7 +266,7 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
             <Layers className="w-4 h-4" />
           </div>
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-            Deep Intuition &amp; Mental Model
+            🧠 Deep Intuition &amp; Mental Model
           </h2>
         </div>
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 space-y-4">
@@ -305,10 +305,10 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
                 <Sparkles className="w-4 h-4" />
               </div>
               <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-                Interactive Visualizer
+                📊 Interactive Visualizer
               </h2>
             </div>
-            <span className="text-xs text-slate-400">Deterministic runtime engine</span>
+            <span className="text-xs text-slate-400">⚡ Deterministic runtime engine</span>
           </div>
 
           <PythonVisualizerDispatcher type={lesson.visualizerType} />
@@ -322,7 +322,7 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
             <Code2 className="w-4 h-4" />
           </div>
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-            {lesson.codeExample.title}
+            💻 {lesson.codeExample.title}
           </h2>
         </div>
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 text-slate-100 p-5 space-y-3 font-mono text-xs overflow-x-auto shadow-sm">
@@ -341,7 +341,7 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
               <Terminal className="w-4 h-4" />
             </div>
             <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-              Runnable Python Sandbox
+              ▶️ Runnable Python Sandbox
             </h2>
           </div>
           <span className="text-xs text-emerald-600 dark:text-emerald-400 font-mono">
@@ -362,7 +362,7 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
             <FileText className="w-4 h-4" />
           </div>
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-            Line-by-Line Code Breakdown
+            🔍 Line-by-Line Code Breakdown
           </h2>
         </div>
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 divide-y divide-slate-100 dark:divide-slate-800 overflow-hidden shadow-sm">
@@ -387,7 +387,7 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
             <AlertTriangle className="w-4 h-4" />
           </div>
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-            Common Mistakes &amp; Gotchas
+            ⚠️ Common Mistakes &amp; Gotchas
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -396,9 +396,9 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
               key={i}
               className="p-4 rounded-xl border border-red-200 dark:border-red-900/60 bg-red-50/30 dark:bg-red-950/10 space-y-2 text-xs"
             >
-              <h4 className="font-bold text-red-700 dark:text-red-400">{m.mistake}</h4>
+              <h4 className="font-bold text-red-700 dark:text-red-400">⚠️ {m.mistake}</h4>
               <div className="p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 font-mono text-[11px]">
-                <span className="font-bold text-slate-400 block text-[10px]">Solution:</span>
+                <span className="font-bold text-slate-400 block text-[10px]">✅ Solution:</span>
                 {m.solution}
               </div>
               {m.codeExample && (
@@ -418,7 +418,7 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
             <Check className="w-4 h-4" />
           </div>
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-            Pythonic Best Practices
+            ✨ Pythonic Best Practices
           </h2>
         </div>
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 space-y-2">
@@ -440,7 +440,7 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
             <Layers className="w-4 h-4" />
           </div>
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-            Real-World Applications
+            🏢 Real-World Applications
           </h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -472,7 +472,7 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
             <HelpCircle className="w-4 h-4" />
           </div>
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-            Practice Questions
+            ❓ Practice Questions
           </h2>
         </div>
         <div className="space-y-3">
@@ -511,7 +511,7 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
                 {isRevealed && (
                   <div className="p-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 text-slate-700 dark:text-slate-300 leading-relaxed font-sans">
                     <span className="font-bold text-emerald-700 dark:text-emerald-400 block mb-1">
-                      Solution:
+                      💡 Solution:
                     </span>
                     {q.answer}
                   </div>
@@ -530,7 +530,7 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
               <CheckCircle2 className="w-4 h-4" />
             </div>
             <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-              Interactive Concept Quiz
+              🧠 Interactive Concept Quiz
             </h2>
           </div>
           {quizSubmitted && (
@@ -618,13 +618,13 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
             <Code2 className="w-4 h-4" />
           </div>
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-            Hands-on Coding Challenge
+            🏆 Hands-on Coding Challenge
           </h2>
         </div>
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4 shadow-sm text-xs">
           <div>
             <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100">
-              {lesson.codingChallenge.title}
+              🧪 {lesson.codingChallenge.title}
             </h4>
             <p className="text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
               {lesson.codingChallenge.problem}
@@ -649,7 +649,7 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
                   disabled={hintIndex >= lesson.codingChallenge.hints.length - 1}
                   className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40 transition-colors"
                 >
-                  Need a hint? ({hintIndex + 1}/{lesson.codingChallenge.hints.length})
+                  💡 Need a hint? ({hintIndex + 1}/{lesson.codingChallenge.hints.length})
                 </button>
               </div>
 
@@ -660,7 +660,7 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
                       key={i}
                       className="p-2.5 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300"
                     >
-                      <span className="font-bold mr-1.5">Hint {i + 1}:</span>
+                      <span className="font-bold mr-1.5">💡 Hint {i + 1}:</span>
                       {h}
                     </div>
                   ))}
@@ -675,7 +675,7 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
               onClick={() => setShowSolution(!showSolution)}
               className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold hover:underline flex items-center gap-1"
             >
-              {showSolution ? 'Hide Solution' : 'Reveal Reference Solution'}
+              {showSolution ? 'Hide Solution' : '🏆 Reveal Reference Solution'}
             </button>
             {showSolution && (
               <div className="mt-2 p-3 rounded-xl bg-slate-900 text-emerald-300 font-mono text-xs overflow-x-auto">
@@ -694,12 +694,12 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
               <BookOpen className="w-4 h-4" />
             </div>
             <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-              Personal Study Notes
+              📝 Personal Study Notes
             </h2>
           </div>
           {noteSaved && (
             <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
-              Notes saved!
+              ✅ Notes saved!
             </span>
           )}
         </div>
@@ -716,7 +716,7 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
               onClick={handleSaveNote}
               className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-700 transition-colors shadow-sm"
             >
-              <Save className="w-3.5 h-3.5" /> Save Note
+              <Save className="w-3.5 h-3.5" /> 💾 Save Note
             </button>
           </div>
         </div>
@@ -725,7 +725,7 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
       {/* 16. Summary & Next Lesson Bridge */}
       <section className="rounded-2xl border border-emerald-200 dark:border-emerald-900/60 bg-gradient-to-br from-emerald-50/40 to-white dark:from-emerald-950/20 dark:to-slate-900 p-6 space-y-4">
         <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
-          Key Takeaways
+          ✅ Key Takeaways
         </h3>
         <ul className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
           {lesson.summary.keyTakeaways.map((takeaway, i) => (
@@ -740,7 +740,7 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
           <div className="pt-4 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between flex-wrap gap-3">
             <div>
               <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold block">
-                Up Next:
+                🚀 Up Next:
               </span>
               <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100">
                 {lesson.summary.nextLessonTitle}

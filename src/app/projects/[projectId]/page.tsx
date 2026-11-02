@@ -67,7 +67,7 @@ export default function ProjectDetailPage() {
           <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-3">
             <div className="flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wide">
               <Database className="w-4 h-4 text-indigo-500" />
-              Dataset Specifications
+              <span>📊 Dataset Specifications</span>
             </div>
             <p className="text-xs text-slate-600 dark:text-slate-400">
               {project.datasetInfo.description} (Source: {project.datasetInfo.source})
@@ -101,7 +101,7 @@ export default function ProjectDetailPage() {
           <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-3">
             <div className="flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wide">
               <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-              Exploratory Data Analysis Checklist
+              <span>🔍 Exploratory Data Analysis Checklist</span>
             </div>
             <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
               {project.edaChecklist.map((item, i) => (
@@ -117,12 +117,12 @@ export default function ProjectDetailPage() {
           <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-3">
             <div className="flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wide">
               <FileText className="w-4 h-4 text-amber-500" />
-              Preprocessing & Baseline Model
+              <span>⚙️ Preprocessing & Baseline Model</span>
             </div>
             <div className="text-xs text-slate-600 dark:text-slate-300 space-y-2">
               <div className="p-2.5 rounded bg-slate-50 dark:bg-slate-800/50">
                 <span className="font-semibold text-slate-900 dark:text-slate-100 block mb-1">
-                  Baseline Architecture:
+                  🏗️ Baseline Architecture:
                 </span>
                 {project.baselineModel}
               </div>
@@ -141,7 +141,7 @@ export default function ProjectDetailPage() {
           <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-3">
             <div className="flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wide">
               <Server className="w-4 h-4 text-cyan-500" />
-              Production Deployment Blueprint
+              <span>☁️ Production Deployment Blueprint</span>
             </div>
             <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
               {project.deploymentPlan.map((d, idx) => (
@@ -158,9 +158,9 @@ export default function ProjectDetailPage() {
         <div className="lg:col-span-7 space-y-6">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
-              Guided Project Milestones
+              🗺️ Guided Project Milestones
             </span>
-            <span className="text-xs text-slate-500">
+            <span className="text-xs text-slate-500 font-mono">
               Step {activeMilestone} of {project.milestones.length}
             </span>
           </div>
@@ -194,7 +194,7 @@ export default function ProjectDetailPage() {
               <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-4">
                 <div>
                   <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">
-                    Milestone {current.step}: {current.title}
+                    🏗️ Milestone {current.step}: {current.title}
                   </h3>
                   <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
                     {current.description}
@@ -204,7 +204,7 @@ export default function ProjectDetailPage() {
                 {/* Milestone Checklist */}
                 <div className="space-y-1.5 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700">
                   <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wide block">
-                    Execution Tasks:
+                    ✅ Execution Tasks:
                   </span>
                   <div className="space-y-1 text-xs">
                     {current.tasks.map((task, tIdx) => (
@@ -219,7 +219,7 @@ export default function ProjectDetailPage() {
                 {/* Interactive Code Editor for this milestone */}
                 <div>
                   <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 block mb-2">
-                    Milestone Python Script:
+                    💻 Milestone Python Script:
                   </span>
                   <CodeRunner
                     key={`${project.id}-m-${current.step}`}

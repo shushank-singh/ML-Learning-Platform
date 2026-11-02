@@ -205,7 +205,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
         <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-850">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2.5">
             <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-            <span>Learning Objectives</span>
+            <span>🎯 Learning Objectives</span>
           </div>
           <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
             {lesson.objectives.map((obj, idx) => (
@@ -220,7 +220,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
         <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-850">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2.5">
             <BookOpen className="w-4 h-4 text-amber-500" />
-            <span>Prerequisites</span>
+            <span>📌 Prerequisites</span>
           </div>
           <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
             {lesson.prerequisites.map((req, idx) => (
@@ -238,7 +238,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
         <section className="space-y-2">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
             <Sparkles className="w-4 h-4" />
-            <span>Interactive Mental Model Visualization</span>
+            <span>📊 Interactive Mental Model Visualization</span>
           </div>
           <JavaVisualizerDispatcher type={lesson.visualizerType} />
         </section>
@@ -248,20 +248,20 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
       <section className="p-6 rounded-2xl border border-amber-200 dark:border-amber-900/60 bg-gradient-to-br from-amber-50/60 via-white to-amber-50/30 dark:from-amber-950/20 dark:via-slate-900 dark:to-slate-900 shadow-xs space-y-3">
         <div className="flex items-center gap-2.5 text-amber-800 dark:text-amber-300 font-bold text-sm">
           <Lightbulb className="w-5 h-5 text-amber-500" />
-          <span>Real-World Analogy: {lesson.analogy.title}</span>
+          <span>🌍 Real-World Analogy: {lesson.analogy.title}</span>
         </div>
         <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
           {lesson.analogy.text}
         </p>
         <div className="pt-2 border-t border-amber-100 dark:border-amber-900/40 text-xs font-mono text-amber-900 dark:text-amber-300">
-          <strong>Mental Metaphor:</strong> {lesson.analogy.metaphor}
+          <strong>💡 Mental Metaphor:</strong> {lesson.analogy.metaphor}
         </div>
       </section>
 
       {/* 6. Why This Matters & Intuition */}
       <section className="space-y-4">
         <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-          The Problem This Solves & Why It Matters
+          🎯 The Problem This Solves & Why It Matters
         </h2>
         <div className="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3">
           <h3 className="text-base font-bold text-slate-800 dark:text-slate-200">
@@ -276,7 +276,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
             {lesson.problemSolved.keyPoints.map((pt, i) => (
               <li key={i} className="flex items-start gap-2">
                 <Check className="w-3.5 h-3.5 text-emerald-500 mt-0.5 shrink-0" />
-                <span>{pt}</span>
+                <span>📌 {pt}</span>
               </li>
             ))}
           </ul>
@@ -285,7 +285,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
         {/* Step-by-Step Intuition */}
         <div className="space-y-3 pt-2">
           <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
-            Step-by-Step Architectural Intuition
+            🧠 Step-by-Step Architectural Intuition
           </h3>
           <p className="text-sm text-slate-600 dark:text-slate-400">
             {lesson.intuition.overview}
@@ -317,7 +317,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
       <section className="space-y-4">
         <div>
           <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-            Hands-on Executable Java Studio
+            💻 Hands-on Executable Java Studio
           </h2>
           <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
             {lesson.codeExample.explanation}
@@ -334,7 +334,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
       {/* 8. Line-by-Line Code Breakdown */}
       <section className="space-y-4">
         <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-          Line-by-Line Code Explanation
+          🔍 Line-by-Line Code Explanation
         </h2>
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden divide-y divide-slate-100 dark:divide-slate-800 text-xs">
           {lesson.lineByLineExplanation.map((item, idx) => (
@@ -364,7 +364,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
           <div className="flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-rose-500" />
             <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-              Common Beginner Mistakes & Solutions
+              ⚠️ Common Beginner Mistakes & Solutions
             </h2>
           </div>
 
@@ -376,7 +376,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
               >
                 <div className="flex items-center gap-2 text-rose-700 dark:text-rose-400 font-bold text-xs">
                   <ShieldAlert className="w-4 h-4 shrink-0" />
-                  <span>The Pitfall:</span>
+                  <span>⚠️ The Pitfall:</span>
                 </div>
                 <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                   {mistake.mistake}
@@ -384,13 +384,13 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
 
                 {mistake.whyWrong && (
                   <p className="text-xs text-rose-600 dark:text-rose-400 italic">
-                    Why it fails: {mistake.whyWrong}
+                    ❌ Why it fails: {mistake.whyWrong}
                   </p>
                 )}
 
                 <div className="pt-2 border-t border-rose-100 dark:border-rose-900/40 text-xs text-slate-600 dark:text-slate-300">
                   <span className="font-bold text-emerald-600 dark:text-emerald-400 block mb-0.5">
-                    How to fix it:
+                    ✅ How to fix it:
                   </span>
                   {mistake.solution || mistake.howToFix}
                 </div>
@@ -406,7 +406,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
           <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-850 space-y-2.5">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
               <Award className="w-4 h-4 text-indigo-500" />
-              <span>Production Best Practices</span>
+              <span>🏆 Production Best Practices</span>
             </div>
             <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
               {lesson.bestPractices.map((bp, i) => (
@@ -423,7 +423,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
           <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-850 space-y-2.5">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
               <Cpu className="w-4 h-4 text-emerald-500" />
-              <span>Real-World Systems</span>
+              <span>🏢 Real-World Systems</span>
             </div>
             <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
               {lesson.applications.map((app, i) => (
@@ -445,7 +445,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
           <div className="flex items-center gap-2">
             <HelpCircle className="w-5 h-5 text-indigo-500" />
             <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-              Conceptual Practice Checkpoints
+              ❓ Conceptual Practice Checkpoints
             </h2>
           </div>
 
@@ -466,14 +466,14 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
                       className="px-2.5 py-1 text-xs font-semibold rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0 flex items-center gap-1.5"
                     >
                       {isRevealed ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
-                      <span>{isRevealed ? 'Hide' : 'Reveal Answer'}</span>
+                      <span>{isRevealed ? 'Hide Answer' : '💡 Reveal Answer'}</span>
                     </button>
                   </div>
 
                   {isRevealed && (
                     <div className="pt-2 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5 bg-slate-50 dark:bg-slate-850 p-3 rounded-lg">
                       <div className="font-bold text-indigo-600 dark:text-indigo-400">
-                        {q.answer}
+                        ✅ {q.answer}
                       </div>
                       <p className="text-slate-500 dark:text-slate-400">{q.explanation}</p>
                     </div>
@@ -490,11 +490,11 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
         <section className="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-              Interactive Lesson Quiz
+              🧠 Interactive Lesson Quiz
             </h2>
             {quizSubmitted && (
               <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400">
-                Score: {quizScore} / {lesson.quiz.length}
+                🏆 Score: {quizScore} / {lesson.quiz.length}
               </span>
             )}
           </div>
@@ -547,7 +547,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
 
                 {quizSubmitted && (
                   <div className="text-xs text-slate-500 dark:text-slate-400 italic pt-1">
-                    {q.explanation}
+                    💡 {q.explanation}
                   </div>
                 )}
               </div>
@@ -561,14 +561,14 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
                 disabled={Object.keys(quizAnswers).length < lesson.quiz.length}
                 className="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-sm transition-colors disabled:opacity-40"
               >
-                Submit Answers for Grading
+                ✅ Submit Answers for Grading
               </button>
             ) : (
               <button
                 onClick={handleResetQuiz}
                 className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold hover:bg-slate-100 dark:hover:bg-slate-800"
               >
-                Retake Quiz
+                🔄 Retake Quiz
               </button>
             )}
           </div>
@@ -582,7 +582,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
             <div className="flex items-center gap-2">
               <Code2 className="w-5 h-5 text-amber-500" />
               <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-                End-of-Lesson Coding Challenge
+                🏆 End-of-Lesson Coding Challenge
               </h2>
             </div>
             <span className="text-xs font-mono px-2.5 py-0.5 rounded bg-slate-200 dark:bg-slate-750 text-slate-700 dark:text-slate-300 font-semibold">
@@ -617,8 +617,8 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
                         className="px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-750"
                       >
                         {hintIndex >= 0
-                          ? `Hint ${hintIndex + 1} of ${lesson.codingChallenge.hints.length}`
-                          : 'Need a Hint?'}
+                          ? `💡 Hint ${hintIndex + 1} of ${lesson.codingChallenge.hints.length}`
+                          : '💡 Need a Hint?'}
                       </button>
                     )}
 
@@ -627,7 +627,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
                         onClick={() => setShowSolution(!showSolution)}
                         className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-amber-600 hover:bg-amber-500 text-white transition-colors"
                       >
-                        {showSolution ? 'Hide Solution' : 'View Complete Solution'}
+                        {showSolution ? 'Hide Solution' : '🏆 View Complete Solution'}
                       </button>
                     )}
                   </div>
@@ -641,7 +641,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
                   {showSolution && challengeSolution && (
                     <div className="rounded-xl border border-slate-800 bg-slate-950 p-4 text-xs font-mono overflow-x-auto text-emerald-400">
                       <div className="text-slate-400 mb-2 font-bold uppercase tracking-wider text-[10px]">
-                        Reference Implementation Solution:
+                        🏆 Reference Implementation Solution:
                       </div>
                       <pre>{challengeSolution}</pre>
                     </div>
@@ -658,12 +658,12 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
             <FileText className="w-4 h-4 text-amber-500" />
-            <span>My Personal Lesson Notes</span>
+            <span>📝 My Personal Lesson Notes</span>
           </div>
           {noteSaved && (
             <span className="text-xs font-mono text-emerald-500 flex items-center gap-1 font-semibold">
               <Check className="w-3.5 h-3.5" />
-              Saved to LocalStorage!
+              ✅ Saved to LocalStorage!
             </span>
           )}
         </div>
@@ -679,7 +679,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
           className="px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 dark:bg-slate-100 dark:hover:bg-white text-white dark:text-slate-900 text-xs font-semibold flex items-center gap-1.5 transition-colors"
         >
           <Save className="w-3.5 h-3.5" />
-          <span>Save Note</span>
+          <span>💾 Save Note</span>
         </button>
       </section>
 
@@ -687,7 +687,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
       <footer className="border-t border-slate-200 dark:border-slate-800 pt-8 space-y-6">
         <div className="p-5 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
           <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
-            Core Lesson Takeaways:
+            ✅ Core Lesson Takeaways:
           </h3>
           <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
             {lesson.summary.keyTakeaways.map((point, idx) => (
@@ -707,7 +707,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
               className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2 transition-colors"
             >
               <ChevronLeft className="w-4 h-4" />
-              <span>Previous: {lesson.previousLesson.title}</span>
+              <span>⏮️ Previous: {lesson.previousLesson.title}</span>
             </Link>
           ) : (
             <div />
@@ -718,7 +718,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
               href={`/java/${lesson.summary.nextLessonModuleId || lesson.moduleId}/${lesson.summary.nextLessonId}`}
               className="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold flex items-center gap-2 shadow-sm transition-colors"
             >
-              <span>Next Lesson: {lesson.summary.nextLessonTitle}</span>
+              <span>🚀 Next Lesson: {lesson.summary.nextLessonTitle}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           ) : (
@@ -726,7 +726,7 @@ export const JavaLessonView: React.FC<JavaLessonViewProps> = ({ lesson }) => {
               href="/java"
               className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-2 shadow-sm transition-colors"
             >
-              <span>Back to Java Mastery Lab</span>
+              <span>🏆 Back to Java Mastery Lab</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           )}

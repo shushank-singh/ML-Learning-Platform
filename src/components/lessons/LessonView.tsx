@@ -151,10 +151,10 @@ export const LessonView: React.FC<LessonViewProps> = ({ lesson }) => {
               <div className="flex items-center justify-between">
                 <div>
                   <span className="text-[10px] font-mono font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block">
-                    Section D · Visual Understanding
+                    📊 Section D · Visual Understanding
                   </span>
                   <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-                    Interactive Diagrams & Topic Visualizer
+                    Interactive Diagrams & Topic Visualizer 🔍
                   </h2>
                 </div>
               </div>
@@ -168,10 +168,10 @@ export const LessonView: React.FC<LessonViewProps> = ({ lesson }) => {
               <div className="flex items-center justify-between">
                 <div>
                   <span className="text-[10px] font-mono font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block">
-                    Section E · Dynamic Simulation
+                    ⚡ Section E · Dynamic Simulation
                   </span>
                   <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-                    Step-by-Step Algorithm Animation
+                    Step-by-Step Algorithm Animation 🎬
                   </h2>
                 </div>
               </div>

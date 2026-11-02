@@ -51,7 +51,7 @@ export const QuickRecall: React.FC<QuickRecallProps> = ({
           <div className="flex items-center gap-2">
             <HelpCircle className="w-4 h-4 text-purple-400 shrink-0" />
             <span className="font-semibold">
-              Exam Mode Active — Test your recall before revealing answers!
+              🎓 Exam Mode Active — Test your recall before revealing answers!
             </span>
           </div>
           <button
@@ -59,7 +59,7 @@ export const QuickRecall: React.FC<QuickRecallProps> = ({
             className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-600/80 hover:bg-purple-600 text-white font-medium text-xs transition-colors"
           >
             {revealed ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
-            <span>{revealed ? 'Conceal Answers' : 'Reveal Answers'}</span>
+            <span>{revealed ? 'Conceal Answers' : '💡 Reveal Answers'}</span>
           </button>
         </div>
       )}
@@ -72,8 +72,8 @@ export const QuickRecall: React.FC<QuickRecallProps> = ({
           </div>
           <div className="flex-1 min-w-0">
             <div className="text-[10px] font-bold uppercase tracking-wider text-indigo-400 mb-1 flex items-center gap-1">
-              <span>One-Sentence Recall</span>
-              <span className="text-slate-500">• 20s Scan</span>
+              <span>⚡ One-Sentence Recall</span>
+              <span className="text-slate-500">• ⏱️ 20s Scan</span>
             </div>
             <p className="text-sm font-semibold text-slate-100 leading-snug">
               {data.oneLiner}
@@ -88,7 +88,7 @@ export const QuickRecall: React.FC<QuickRecallProps> = ({
           <Lightbulb className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
           <div className="space-y-0.5">
             <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wider block">
-              Simple Everyday Analogy
+              🌍 Simple Everyday Analogy
             </span>
             <p className="text-xs text-amber-100/90 leading-relaxed font-medium">
               {data.simpleAnalogy}
@@ -108,13 +108,13 @@ export const QuickRecall: React.FC<QuickRecallProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
               <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider block">
-                When to Use
+                ✅ When to Use
               </span>
               <p className="text-xs text-slate-300 leading-relaxed">{data.whenToUse}</p>
             </div>
             <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
               <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block">
-                Why It Matters
+                💡 Why It Matters
               </span>
               <p className="text-xs text-slate-300 leading-relaxed">{data.whyItMatters}</p>
             </div>
@@ -125,7 +125,7 @@ export const QuickRecall: React.FC<QuickRecallProps> = ({
         <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2.5">
           <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-            Core Revision Points
+            ✨ Core Revision Points
           </span>
           <ul className="space-y-2">
             {data.keyPoints.map((point, idx) => (
@@ -142,7 +142,7 @@ export const QuickRecall: React.FC<QuickRecallProps> = ({
           <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-bold text-indigo-400 uppercase tracking-wider">
-                {data.formulaOrSyntax.label}
+                📐 {data.formulaOrSyntax.label}
               </span>
               <button
                 onClick={() => copyFormula(data.formulaOrSyntax?.codeOrLatex || '')}
@@ -150,7 +150,7 @@ export const QuickRecall: React.FC<QuickRecallProps> = ({
                 title="Copy to clipboard"
               >
                 {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                <span>{copied ? 'Copied' : 'Copy'}</span>
+                <span>{copied ? '✅ Copied' : '📋 Copy'}</span>
               </button>
             </div>
 
@@ -173,7 +173,7 @@ export const QuickRecall: React.FC<QuickRecallProps> = ({
               </div>
               <div className="min-w-0">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Time Complexity
+                  ⏱️ Time Complexity
                 </span>
                 <span className="font-mono text-xs font-semibold text-amber-300">
                   {data.complexity.time}
@@ -187,7 +187,7 @@ export const QuickRecall: React.FC<QuickRecallProps> = ({
               </div>
               <div className="min-w-0">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Space Complexity
+                  💾 Space Complexity
                 </span>
                 <span className="font-mono text-xs font-semibold text-cyan-300">
                   {data.complexity.space}
@@ -201,20 +201,20 @@ export const QuickRecall: React.FC<QuickRecallProps> = ({
         <div className="p-4 rounded-xl bg-rose-950/20 border border-rose-500/30 space-y-2">
           <div className="flex items-center gap-2 text-rose-400 text-xs font-bold uppercase tracking-wider">
             <AlertTriangle className="w-4 h-4 shrink-0" />
-            <span>Common Trap & Fix</span>
+            <span>⚠️ Common Trap & Fix</span>
           </div>
           <div className="space-y-1.5 text-xs">
             <div className="text-slate-300">
-              <span className="font-bold text-rose-300">Mistake: </span>
+              <span className="font-bold text-rose-300">⚠️ Mistake: </span>
               {data.commonMistakeOrTrap.mistake}
             </div>
             <div className="text-slate-300">
-              <span className="font-bold text-emerald-400">Fix: </span>
+              <span className="font-bold text-emerald-400">✅ Fix: </span>
               {data.commonMistakeOrTrap.fix}
             </div>
             {data.commonMistakeOrTrap.interviewTrap && (
               <div className="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800 text-[11px] text-amber-300/90 leading-relaxed mt-2">
-                <span className="font-bold text-amber-400">Interview Question: </span>
+                <span className="font-bold text-amber-400">🎯 Interview Trap: </span>
                 {data.commonMistakeOrTrap.interviewTrap}
               </div>
             )}

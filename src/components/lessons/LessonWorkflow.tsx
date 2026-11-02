@@ -25,7 +25,7 @@ export const LessonWorkflow: React.FC<LessonWorkflowProps> = ({ lesson }) => {
   const defaultStages = [
     {
       num: 1,
-      title: 'Data Preparation & Encoding',
+      title: '📊 Data Preparation & Encoding',
       action: 'Construct feature design matrix X and target vector y. Verify missing values, apply scaling, and split into train/validation sets.',
       input: 'Raw feature columns & records',
       output: 'Clean normalized arrays X ∈ ℝ^{N×D}, y ∈ ℝ^N',
@@ -33,7 +33,7 @@ export const LessonWorkflow: React.FC<LessonWorkflowProps> = ({ lesson }) => {
     },
     {
       num: 2,
-      title: 'Parameter Initialization',
+      title: '🎯 Parameter Initialization',
       action: 'Initialize weights W, biases b, cluster centroids, or tree root nodes according to the initialization protocol (e.g. zeros, random Gaussian, or K-Means++).',
       input: 'Hyperparameters & feature dimensionality D',
       output: 'Initial state vector W_0, b_0',
@@ -41,7 +41,7 @@ export const LessonWorkflow: React.FC<LessonWorkflowProps> = ({ lesson }) => {
     },
     {
       num: 3,
-      title: 'Forward Projection & Hypothesis',
+      title: '⚡ Forward Projection & Hypothesis',
       action: 'Pass training instances through the model hypothesis function to calculate continuous projections ŷ or class probabilities P(y=1|x).',
       input: 'Batch features X and current parameters W',
       output: 'Model predictions ŷ = f(X; W)',
@@ -49,7 +49,7 @@ export const LessonWorkflow: React.FC<LessonWorkflowProps> = ({ lesson }) => {
     },
     {
       num: 4,
-      title: 'Loss / Objective Evaluation',
+      title: '📉 Loss / Objective Evaluation',
       action: 'Compare predictions ŷ against ground truth y using the loss objective (MSE, Log Loss, Gini Impurity, or Margin Slack).',
       input: 'Predictions ŷ and true labels y',
       output: 'Scalar loss J(W) or split quality criterion',
@@ -57,7 +57,7 @@ export const LessonWorkflow: React.FC<LessonWorkflowProps> = ({ lesson }) => {
     },
     {
       num: 5,
-      title: 'Optimization & Weight Update',
+      title: '🔄 Optimization & Weight Update',
       action: 'Compute analytical gradient ∇J or analytical Normal Equation solution, and adjust parameter state in the direction of steepest descent.',
       input: 'Gradient vector ∇_W J and learning rate η',
       output: 'Updated parameters W_{t+1} ← W_t - η ∇J',
@@ -65,7 +65,7 @@ export const LessonWorkflow: React.FC<LessonWorkflowProps> = ({ lesson }) => {
     },
     {
       num: 6,
-      title: 'Convergence Check & Stopping',
+      title: '✅ Convergence Check & Stopping',
       action: 'Test if change in loss ||J_{t+1} - J_t|| < ε or maximum iterations reached. Early stop if validation loss starts climbing.',
       input: 'Loss trajectory over epochs',
       output: 'Optimal parameter weights W*',
@@ -73,7 +73,7 @@ export const LessonWorkflow: React.FC<LessonWorkflowProps> = ({ lesson }) => {
     },
     {
       num: 7,
-      title: 'Inference & Generalization',
+      title: '🚀 Inference & Generalization',
       action: 'Apply the trained model W* to previously unseen test data to calculate final evaluation metrics and confidence intervals.',
       input: 'Unseen test matrix X_test',
       output: 'Final predictions ŷ_test & diagnostic scores',
@@ -90,16 +90,16 @@ export const LessonWorkflow: React.FC<LessonWorkflowProps> = ({ lesson }) => {
           </span>
           <div>
             <span className="text-[10px] font-mono font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block">
-              Section G · Execution Pipeline
+              ⚙️ Section G · Execution Pipeline
             </span>
             <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-              Step-by-Step Algorithm Workflow
+              Step-by-Step Algorithm Workflow 🔄
             </h2>
           </div>
         </div>
 
         <span className="text-xs px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold">
-          7-Stage Ordered Pipeline
+          🔄 7-Stage Ordered Pipeline
         </span>
       </div>
 
@@ -143,7 +143,7 @@ export const LessonWorkflow: React.FC<LessonWorkflowProps> = ({ lesson }) => {
           <div className="p-5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/80 space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">
-                Stage {defaultStages[activeStage].num} of 7: {defaultStages[activeStage].title}
+                ⚙️ Stage {defaultStages[activeStage].num} of 7: {defaultStages[activeStage].title}
               </span>
               <span className="text-[10px] font-mono text-slate-400">
                 Data Transformation
@@ -157,7 +157,7 @@ export const LessonWorkflow: React.FC<LessonWorkflowProps> = ({ lesson }) => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs">
               <div className="p-3 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
                 <span className="text-[10px] font-mono text-slate-400 uppercase block mb-1">
-                  Input State:
+                  📥 Input State:
                 </span>
                 <span className="font-mono text-slate-700 dark:text-slate-300 font-semibold">
                   {defaultStages[activeStage].input}
@@ -165,7 +165,7 @@ export const LessonWorkflow: React.FC<LessonWorkflowProps> = ({ lesson }) => {
               </div>
               <div className="p-3 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
                 <span className="text-[10px] font-mono text-emerald-500 uppercase block mb-1">
-                  Output State:
+                  📤 Output State:
                 </span>
                 <span className="font-mono text-emerald-700 dark:text-emerald-300 font-semibold">
                   {defaultStages[activeStage].output}

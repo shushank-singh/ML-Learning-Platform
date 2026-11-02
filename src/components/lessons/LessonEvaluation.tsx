@@ -47,16 +47,16 @@ export const LessonEvaluation: React.FC<LessonEvaluationProps> = ({ lesson }) =>
             </span>
             <div>
               <span className="text-[10px] font-mono font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block">
-                Section J · Practical Considerations
+                ⚖️ Section J · Practical Considerations
               </span>
               <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-                Assumptions, Advantages, Limitations & Common Traps
+                Assumptions, Advantages, Limitations & Common Traps ⚖️
               </h2>
             </div>
           </div>
 
           <span className="text-xs px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold">
-            Engineering Tradeoffs
+            ⚖️ Engineering Tradeoffs
           </span>
         </div>
 
@@ -67,7 +67,7 @@ export const LessonEvaluation: React.FC<LessonEvaluationProps> = ({ lesson }) =>
               <AlertTriangle className="w-4 h-4" />
             </span>
             <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
-              Core Theoretical Assumptions & How to Verify Them
+              ⚠️ Core Theoretical Assumptions & How to Verify Them
             </h3>
           </div>
           <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -82,15 +82,15 @@ export const LessonEvaluation: React.FC<LessonEvaluationProps> = ({ lesson }) =>
               >
                 <div className="font-semibold text-slate-900 dark:text-slate-100 text-sm flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-rose-500 shrink-0" />
-                  <span>Assumption {idx + 1}: {item.assumption}</span>
+                  <span>⚠️ Assumption {idx + 1}: {item.assumption}</span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                   <div className="p-3 rounded-lg bg-rose-50/50 dark:bg-rose-950/20 text-rose-900 dark:text-rose-300 border border-rose-100 dark:border-rose-900/40">
-                    <span className="font-bold block mb-1">Why It Matters:</span>
+                    <span className="font-bold block mb-1">⚠️ Why It Matters:</span>
                     <span className="leading-relaxed">{item.whyItMatters}</span>
                   </div>
                   <div className="p-3 rounded-lg bg-slate-100/70 dark:bg-slate-800/70 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
-                    <span className="font-bold block mb-1">How to Test & Verify in Code:</span>
+                    <span className="font-bold block mb-1">🧪 How to Test & Verify in Code:</span>
                     <span className="leading-relaxed">{item.howToVerify}</span>
                   </div>
                 </div>
@@ -104,13 +104,13 @@ export const LessonEvaluation: React.FC<LessonEvaluationProps> = ({ lesson }) =>
           <div className="p-5 rounded-2xl bg-emerald-50/40 dark:bg-emerald-950/20 border border-emerald-200/80 dark:border-emerald-900/40 space-y-3 shadow-sm">
             <div className="flex items-center gap-2 text-emerald-800 dark:text-emerald-300 font-bold text-sm">
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              <span>Key Advantages</span>
+              <span>✅ Key Advantages</span>
             </div>
             <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
               {advantages.map((adv, idx) => (
                 <li key={idx} className="flex items-start gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
-                  <span className="leading-relaxed">{adv}</span>
+                  <span className="leading-relaxed">✅ {adv}</span>
                 </li>
               ))}
             </ul>
@@ -119,13 +119,13 @@ export const LessonEvaluation: React.FC<LessonEvaluationProps> = ({ lesson }) =>
           <div className="p-5 rounded-2xl bg-amber-50/40 dark:bg-amber-950/20 border border-amber-200/80 dark:border-amber-900/40 space-y-3 shadow-sm">
             <div className="flex items-center gap-2 text-amber-800 dark:text-amber-300 font-bold text-sm">
               <AlertTriangle className="w-4 h-4 text-amber-600" />
-              <span>Key Limitations</span>
+              <span>⚠️ Key Limitations</span>
             </div>
             <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
               {limitations.map((lim, idx) => (
                 <li key={idx} className="flex items-start gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
-                  <span className="leading-relaxed">{lim}</span>
+                  <span className="leading-relaxed">⚠️ {lim}</span>
                 </li>
               ))}
             </ul>
@@ -139,7 +139,7 @@ export const LessonEvaluation: React.FC<LessonEvaluationProps> = ({ lesson }) =>
               <ShieldAlert className="w-4 h-4" />
             </span>
             <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
-              Common Implementation Mistakes & Interview Traps
+              🛡️ Common Implementation Mistakes & Interview Traps
             </h3>
           </div>
 
@@ -153,7 +153,7 @@ export const LessonEvaluation: React.FC<LessonEvaluationProps> = ({ lesson }) =>
                   <span>⚠️ Pitfall {idx + 1}: {mistake.mistake}</span>
                 </div>
                 <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-                  <span className="font-bold text-slate-900 dark:text-slate-100">Correct Engineering Fix: </span>
+                  <span className="font-bold text-slate-900 dark:text-slate-100">✅ Correct Engineering Fix: </span>
                   {mistake.solution}
                 </p>
                 {mistake.codeExample && (
@@ -174,7 +174,7 @@ export const LessonEvaluation: React.FC<LessonEvaluationProps> = ({ lesson }) =>
                 <Sliders className="w-4 h-4" />
               </span>
               <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
-                Hyperparameters Tuning Guide
+                🎛️ Hyperparameters Tuning Guide
               </h3>
             </div>
             <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
@@ -220,28 +220,28 @@ export const LessonEvaluation: React.FC<LessonEvaluationProps> = ({ lesson }) =>
             </span>
             <div>
               <span className="text-[10px] font-mono font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block">
-                Section K · Validation & Metrics
+                📊 Section K · Validation & Metrics
               </span>
               <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-                Model Evaluation & Interpretation
+                Model Evaluation & Interpretation 📈
               </h2>
             </div>
           </div>
 
           <span className="text-xs px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold">
-            Preventing Leakage
+            🛡️ Preventing Leakage
           </span>
         </div>
 
         <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
           <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
-            Appropriate Evaluation Metrics & Anti-Leakage Protocol
+            📊 Appropriate Evaluation Metrics & Anti-Leakage Protocol
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
             <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 space-y-1.5">
               <span className="font-bold text-indigo-600 dark:text-indigo-400 block">
-                1. Split Strategy
+                1. ✂️ Split Strategy
               </span>
               <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                 Always fit preprocessing scalers, imputers, and encoders strictly on the training partition only. Transforming test data with train parameters avoids data snooping bias.
@@ -250,7 +250,7 @@ export const LessonEvaluation: React.FC<LessonEvaluationProps> = ({ lesson }) =>
 
             <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 space-y-1.5">
               <span className="font-bold text-indigo-600 dark:text-indigo-400 block">
-                2. Metric Selection
+                2. 📏 Metric Selection
               </span>
               <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                 Never evaluate imbalanced datasets using Accuracy alone. Prefer PR-AUC or F1 with macro-averaging, and pair MSE with MAE to detect outlier impact.
@@ -259,7 +259,7 @@ export const LessonEvaluation: React.FC<LessonEvaluationProps> = ({ lesson }) =>
 
             <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 space-y-1.5">
               <span className="font-bold text-indigo-600 dark:text-indigo-400 block">
-                3. Cross-Validation
+                3. 🔄 Cross-Validation
               </span>
               <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                 Use 5-Fold or 10-Fold Stratified Cross-Validation inside a Scikit-Learn Pipeline so every fold executes isolated preprocessing.

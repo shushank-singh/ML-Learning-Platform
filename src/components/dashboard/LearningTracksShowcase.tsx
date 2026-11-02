@@ -18,6 +18,12 @@ import {
   Layers,
   Terminal,
   Coffee,
+  TreePine,
+  Code2,
+  Sliders,
+  Briefcase,
+  CheckSquare,
+  FileText,
 } from 'lucide-react';
 import {
   MODULES_CATALOG_ML_CORE,
@@ -33,13 +39,18 @@ import { MODULES_CATALOG_DSA } from '@/data/dsa/curriculum';
 import { MODULES_CATALOG_PYTHON } from '@/data/python/curriculum';
 import { MODULES_CATALOG_JAVA } from '@/data/java/curriculum';
 import { UserProgressState } from '@/lib/types';
+import {
+  DSAIllustration,
+  PythonIllustration,
+  JavaIllustration,
+} from '@/components/shared/TrackIllustrations';
 
 interface LearningTracksShowcaseProps {
   progress: UserProgressState | null;
 }
 
 export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ progress }) => {
-  const [activeTab, setActiveTab] = useState<'ai-ml' | 'engineering'>('ai-ml');
+  const [activeTab, setActiveTab] = useState<'all' | 'ai-ml' | 'programming' | 'practice'>('all');
 
   // Compute lesson counts and real user progress
   const getProgressStats = (lessons: { id: string }[]) => {
@@ -267,29 +278,31 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
   const ENGINEERING_TRACKS = [
     {
       id: 'dsa-track',
-      title: 'DSA Mastery Lab',
-      subtitle: 'Algorithms & Problem Solving',
+      title: 'Data Structures & Algorithms',
+      subtitle: 'Trees, Graphs, DP & Problem Solving',
       description: 'Arrays, Linked Lists, Trees, Graphs, Sorting visualizers, and Dynamic Programming with visual step tracers.',
       route: '/dsa',
-      icon: Cpu,
+      icon: TreePine,
       badge: 'Algorithms',
       modulesCount: MODULES_CATALOG_DSA.length,
       stats: getProgressStats(dsaLessons),
+      illustration: <DSAIllustration className="w-full h-full object-cover" />,
     },
     {
       id: 'python-track',
-      title: 'Python Mastery Lab',
+      title: 'Python Programming',
       subtitle: 'Python 3.12+ & CPython Internals',
       description: 'Language mechanics, memory addresses, OOP architecture, closures, Pyodide code lab, and data science tooling.',
       route: '/python',
-      icon: Terminal,
+      icon: Code2,
       badge: 'Programming',
       modulesCount: MODULES_CATALOG_PYTHON.length,
       stats: getProgressStats(pyLessons),
+      illustration: <PythonIllustration className="w-full h-full object-cover" />,
     },
     {
       id: 'java-track',
-      title: 'Java Mastery Lab',
+      title: 'Java Programming',
       subtitle: 'Java 21 LTS & Enterprise',
       description: 'JVM internal architecture, heap vs stack memory, collections framework, multithreading, and live code compiler.',
       route: '/java',
@@ -297,8 +310,102 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
       badge: 'Enterprise',
       modulesCount: MODULES_CATALOG_JAVA.length,
       stats: getProgressStats(javaLessons),
+      illustration: <JavaIllustration className="w-full h-full object-cover" />,
     },
   ];
+
+  const PRACTICE_TRACKS = [
+    {
+      id: 'playground-hub',
+      title: 'Interactive ML Playground',
+      subtitle: '5 Real-Time Algorithmic Simulators',
+      description: 'Interact with Ordinary Least Squares, Gradient Descent step rates, Logistic boundaries, and K-Means clusters.',
+      route: '/playground',
+      icon: Sliders,
+      badge: 'Interactive Lab',
+      modulesCount: 5,
+      stats: { total: 5, completed: 0, pct: 0 },
+      illustration: (
+        <svg className="w-full h-full" viewBox="0 0 240 120" fill="none">
+          <rect x="20" y="20" width="200" height="80" rx="8" fill="#f0fdf4" stroke="#22c55e" strokeWidth="1.5" />
+          <path d="M40 80 Q 90 30 140 70 T 200 40" stroke="#16a34a" strokeWidth="2.5" fill="none" />
+          <circle cx="90" cy="48" r="4" fill="#15803d" />
+          <circle cx="140" cy="70" r="4" fill="#15803d" />
+          <text x="50" y="94" fontSize="9" fontWeight="bold" fill="#166534">Real-Time Simulation</text>
+        </svg>
+      ),
+    },
+    {
+      id: 'code-lab-hub',
+      title: 'Python Code Lab',
+      subtitle: 'In-Browser Pyodide Execution Studio',
+      description: 'Run NumPy, Scikit-learn, and math proofs from scratch without installing any local packages.',
+      route: '/code-lab',
+      icon: Terminal,
+      badge: 'Browser Sandbox',
+      modulesCount: 1,
+      stats: { total: 10, completed: 0, pct: 0 },
+      illustration: (
+        <svg className="w-full h-full" viewBox="0 0 240 120" fill="none">
+          <rect x="25" y="20" width="190" height="80" rx="8" fill="#0f172a" />
+          <text x="40" y="45" fontSize="10" fontFamily="monospace" fill="#38bdf8">&gt; import numpy as np</text>
+          <text x="40" y="65" fontSize="10" fontFamily="monospace" fill="#a7f3d0">&gt; w = np.linalg.inv(X.T@X)@X.T@y</text>
+          <text x="40" y="85" fontSize="10" fontFamily="monospace" fill="#fde047">R² Score: 0.9842 [Pass]</text>
+        </svg>
+      ),
+    },
+    {
+      id: 'projects-hub',
+      title: 'Industry Capstone Portfolio',
+      subtitle: 'Production Machine Learning Blueprints',
+      description: 'Build portfolio projects: Housing Valuation, Credit Risk, Clinical Cancer Diagnostics, and RAG search.',
+      route: '/projects',
+      icon: Briefcase,
+      badge: 'Projects',
+      modulesCount: 5,
+      stats: { total: 5, completed: 0, pct: 0 },
+      illustration: (
+        <svg className="w-full h-full" viewBox="0 0 240 120" fill="none">
+          <rect x="30" y="25" width="180" height="70" rx="8" fill="#eff6ff" stroke="#3b82f6" strokeWidth="1.5" />
+          <rect x="45" y="40" width="40" height="25" rx="4" fill="#dbeafe" />
+          <rect x="95" y="40" width="40" height="25" rx="4" fill="#dbeafe" />
+          <rect x="145" y="40" width="50" height="25" rx="4" fill="#bfdbfe" />
+          <text x="70" y="85" fontSize="9" fontWeight="bold" fill="#1e40af">GitHub Ready Portfolio</text>
+        </svg>
+      ),
+    },
+    {
+      id: 'quizzes-hub',
+      title: 'Quizzes & Checkpoints',
+      subtitle: 'Active Recall & Topic Mastery Checks',
+      description: '1,745 interactive concept quizzes, algorithmic output questions, and interview traps.',
+      route: '/quizzes',
+      icon: CheckSquare,
+      badge: 'Assessments',
+      modulesCount: 12,
+      stats: { total: 1745, completed: progress?.quizScores ? Object.keys(progress.quizScores).length : 0, pct: 0 },
+      illustration: (
+        <svg className="w-full h-full" viewBox="0 0 240 120" fill="none">
+          <rect x="35" y="20" width="170" height="80" rx="8" fill="#faf5ff" stroke="#a855f7" strokeWidth="1.5" />
+          <circle cx="55" cy="45" r="7" fill="#9333ea" />
+          <path d="M52 45 L54 48 L59 42" stroke="#ffffff" strokeWidth="1.5" />
+          <line x1="70" y1="45" x2="180" y2="45" stroke="#cbd5e1" strokeWidth="2" />
+          <circle cx="55" cy="70" r="7" fill="#e9d5ff" />
+          <line x1="70" y1="70" x2="150" y2="70" stroke="#cbd5e1" strokeWidth="2" />
+          <text x="70" y="92" fontSize="9" fontWeight="bold" fill="#7e22ce">1,745 Checkpoint Questions</text>
+        </svg>
+      ),
+    },
+  ];
+
+  const visibleTracks =
+    activeTab === 'all'
+      ? [...AI_ML_TRACKS, ...ENGINEERING_TRACKS]
+      : activeTab === 'ai-ml'
+      ? AI_ML_TRACKS
+      : activeTab === 'programming'
+      ? ENGINEERING_TRACKS
+      : PRACTICE_TRACKS;
 
   return (
     <section id="learning-tracks" className="space-y-8 scroll-mt-24">
@@ -307,182 +414,132 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
         <div className="space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-400 text-xs font-semibold">
             <BookOpen className="w-3.5 h-3.5" />
-            <span>Curriculum Catalog</span>
+            <span>🗺️ Visual Learning Track Explorer</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
-            Explore Learning Tracks
+            Explore All Learning Tracks
           </h2>
           <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-2xl">
-            Choose your learning path. Every track includes interactive visualizers, rigorous theory, browser-based coding labs, and production capstone projects.
+            Machine Learning, Deep Learning, Generative AI, DSA, Python, and Java — discover structured curricula with interactive visualizers, browser coding labs, and real capstone projects.
           </p>
         </div>
 
         {/* Tab switchers */}
         <div className="w-full sm:w-auto grid grid-cols-2 sm:flex sm:items-center p-1 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
           <button
+            onClick={() => setActiveTab('all')}
+            className={`px-3 py-2 rounded-lg text-xs font-semibold text-center flex items-center justify-center min-h-[40px] transition-all ${
+              activeTab === 'all'
+                ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+            }`}
+          >
+            <span>All Tracks (11)</span>
+          </button>
+          <button
             onClick={() => setActiveTab('ai-ml')}
-            className={`px-2.5 sm:px-4 py-2 rounded-lg text-xs font-semibold text-center flex items-center justify-center min-h-[44px] transition-all ${
+            className={`px-3 py-2 rounded-lg text-xs font-semibold text-center flex items-center justify-center min-h-[40px] transition-all ${
               activeTab === 'ai-ml'
                 ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
             }`}
           >
-            <span className="sm:hidden">AI &amp; ML (8)</span>
-            <span className="hidden sm:inline">AI &amp; Machine Learning (8 Tracks)</span>
+            <span>🤖 AI &amp; ML (8)</span>
           </button>
           <button
-            onClick={() => setActiveTab('engineering')}
-            className={`px-2.5 sm:px-4 py-2 rounded-lg text-xs font-semibold text-center flex items-center justify-center min-h-[44px] transition-all ${
-              activeTab === 'engineering'
+            onClick={() => setActiveTab('programming')}
+            className={`px-3 py-2 rounded-lg text-xs font-semibold text-center flex items-center justify-center min-h-[40px] transition-all ${
+              activeTab === 'programming'
                 ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
             }`}
           >
-            <span className="sm:hidden">Labs</span>
-            <span className="hidden sm:inline">Complementary Labs (DSA, Python, Java)</span>
+            <span>💻 DSA, Python, Java (3)</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('practice')}
+            className={`px-3 py-2 rounded-lg text-xs font-semibold text-center flex items-center justify-center min-h-[40px] transition-all ${
+              activeTab === 'practice'
+                ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+            }`}
+          >
+            <span>🧪 Practice &amp; Labs</span>
           </button>
         </div>
       </div>
 
-      {/* Grid of AI & ML Tracks */}
-      {activeTab === 'ai-ml' && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {AI_ML_TRACKS.map((track) => {
-            const Icon = track.icon;
+      {/* Unified Grid of Tracks */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        {visibleTracks.map((track) => {
+          const Icon = track.icon;
 
-            return (
-              <div
-                key={track.id}
-                className="group relative rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-xl hover:border-indigo-500/60 dark:hover:border-indigo-500/60 transition-all duration-300 flex flex-col justify-between overflow-hidden"
-              >
-                {/* Visual Header / Illustration Banner */}
-                <div className="h-32 w-full bg-slate-50 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800 flex items-center justify-center p-2 relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
-                  {track.illustration}
-                  {/* Category Badge on illustration */}
-                  <span className="absolute top-3 left-3 px-2 py-0.5 rounded-md bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700 text-[10px] font-bold text-slate-700 dark:text-slate-300 backdrop-blur-xs">
-                    {track.badge}
-                  </span>
-                </div>
-
-                {/* Body Content */}
-                <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
-                        <Icon className="w-4 h-4" />
-                      </div>
-                      <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                        {track.title}
-                      </h3>
-                    </div>
-
-                    <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
-                      {track.description}
-                    </p>
-                  </div>
-
-                  {/* Modules & Lessons Count + User Progress */}
-                  <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-                    <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 font-medium">
-                      <span>{track.modulesCount} Modules · {track.stats.total} Lessons</span>
-                      {track.stats.completed > 0 ? (
-                        <span className="font-semibold text-emerald-600 dark:text-emerald-400 font-mono">
-                          {track.stats.pct}%
-                        </span>
-                      ) : (
-                        <span className="text-slate-400">Available</span>
-                      )}
-                    </div>
-
-                    {/* Progress Bar (always rendered cleanly) */}
-                    <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                      <div
-                        className="bg-indigo-600 h-1.5 rounded-full transition-all duration-300"
-                        style={{ width: `${track.stats.pct}%` }}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Action Link */}
-                  <Link
-                    href={track.route}
-                    className="inline-flex items-center justify-between w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-indigo-600 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-300 hover:text-white dark:hover:text-white text-xs font-semibold transition-all group/btn"
-                  >
-                    <span>Explore Track</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
-                  </Link>
-                </div>
+          return (
+            <div
+              key={track.id}
+              className="group relative rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-xl hover:border-indigo-500/60 dark:hover:border-indigo-500/60 transition-all duration-300 flex flex-col justify-between overflow-hidden"
+            >
+              {/* Visual Header / Illustration Banner */}
+              <div className="h-32 w-full bg-slate-50 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800 flex items-center justify-center p-2 relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
+                {track.illustration}
+                {/* Category Badge on illustration */}
+                <span className="absolute top-3 left-3 px-2 py-0.5 rounded-md bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700 text-[10px] font-bold text-slate-700 dark:text-slate-300 backdrop-blur-xs">
+                  {track.badge}
+                </span>
               </div>
-            );
-          })}
-        </div>
-      )}
 
-      {/* Grid of Complementary Engineering Tracks */}
-      {activeTab === 'engineering' && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {ENGINEERING_TRACKS.map((track) => {
-            const Icon = track.icon;
-
-            return (
-              <div
-                key={track.id}
-                className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 sm:p-6 shadow-sm hover:shadow-xl hover:border-indigo-500/60 transition-all flex flex-col justify-between space-y-4"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-300">
-                      {track.badge}
-                    </span>
-                    <span className="text-xs font-medium text-slate-500">
-                      {track.modulesCount} Modules · {track.stats.total} Lessons
-                    </span>
+              {/* Body Content */}
+              <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
+                      <Icon className="w-4 h-4" />
+                    </div>
+                    <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                      {track.title}
+                    </h3>
                   </div>
 
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
-                        {track.title}
-                      </h3>
-                      <p className="text-xs text-slate-500">{track.subtitle}</p>
-                    </div>
-                  </div>
-
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
                     {track.description}
                   </p>
                 </div>
 
-                <div className="space-y-3 pt-3 border-t border-slate-100 dark:border-slate-800">
-                  <div className="flex items-center justify-between text-xs text-slate-500">
-                    <span>Progress</span>
-                    <span className="font-mono font-semibold text-emerald-600 dark:text-emerald-400">
-                      {track.stats.pct}%
-                    </span>
+                {/* Modules & Lessons Count + User Progress */}
+                <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                  <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+                    <span>{track.modulesCount} Modules · {track.stats.total} Lessons</span>
+                    {track.stats.completed > 0 ? (
+                      <span className="font-semibold text-emerald-600 dark:text-emerald-400 font-mono">
+                        {track.stats.pct}%
+                      </span>
+                    ) : (
+                      <span className="text-slate-400">Available</span>
+                    )}
                   </div>
+
+                  {/* Progress Bar (always rendered cleanly) */}
                   <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
                     <div
-                      className="bg-indigo-600 h-1.5 rounded-full"
+                      className="bg-indigo-600 h-1.5 rounded-full transition-all duration-300"
                       style={{ width: `${track.stats.pct}%` }}
                     />
                   </div>
-
-                  <Link
-                    href={track.route}
-                    className="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 text-slate-800 dark:text-slate-200 text-xs font-semibold transition-colors"
-                  >
-                    <span>Open Laboratory</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
                 </div>
+
+                {/* Action Link */}
+                <Link
+                  href={track.route}
+                  className="inline-flex items-center justify-between w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-indigo-600 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-300 hover:text-white dark:hover:text-white text-xs font-semibold transition-all group/btn"
+                >
+                  <span>Explore Track</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+                </Link>
               </div>
-            );
-          })}
-        </div>
-      )}
+            </div>
+          );
+        })}
+      </div>
     </section>
   );
 };

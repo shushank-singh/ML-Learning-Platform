@@ -54,10 +54,10 @@ export default function FormulasPage() {
       <div className="space-y-3">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 text-amber-600 dark:text-amber-400 text-xs font-semibold">
           <Calculator className="w-4 h-4" />
-          <span>Interactive Mathematical Reference</span>
+          <span>📐 Interactive Mathematical Reference</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
-          Mathematical Formula Explorer
+          Mathematical Formula Explorer 📐
         </h1>
         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-3xl leading-relaxed">
           Searchable catalog of core machine learning equations rendered in KaTeX. Every formula includes variable definitions, geometric intuitions, and derivation proofs.
@@ -87,7 +87,7 @@ export default function FormulasPage() {
                     : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
                 }`}
               >
-                {cat}
+                {cat === 'All' ? '🌐 All' : cat === 'Linear Algebra' ? '📐 Linear Algebra' : cat === 'Calculus' ? '📈 Calculus' : cat === 'Probability & Stats' ? '🎲 Probability & Stats' : cat === 'Loss Functions' ? '📉 Loss Functions' : cat === 'Optimization' ? '⚡ Optimization' : cat === 'Metrics' ? '🎯 Metrics' : cat}
               </button>
             ))}
           </div>
@@ -135,7 +135,7 @@ export default function FormulasPage() {
               {/* Variable Dictionary */}
               <div className="space-y-1.5 pt-2 border-t border-slate-100 dark:border-slate-800">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide block">
-                  Symbol Definitions:
+                  📖 Symbol Definitions:
                 </span>
                 <div className="space-y-1 text-xs">
                   {formula.variables.map((v, i) => (
@@ -153,7 +153,7 @@ export default function FormulasPage() {
 
               {/* Derivation Notes */}
               <div className="mt-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 text-[11px] text-slate-600 dark:text-slate-400">
-                <span className="font-semibold text-slate-800 dark:text-slate-200">Mathematical Insight: </span>
+                <span className="font-semibold text-slate-800 dark:text-slate-200">💡 Mathematical Insight: </span>
                 {formula.derivationNotes}
               </div>
             </div>
@@ -165,7 +165,7 @@ export default function FormulasPage() {
                   href={`/curriculum/${formula.relatedModuleId || 'module-3'}/${formula.relatedLessonId}`}
                   className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center gap-1"
                 >
-                  <span>Explore in Lesson</span>
+                  <span>🚀 Explore in Lesson</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>

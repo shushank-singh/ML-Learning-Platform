@@ -31,16 +31,16 @@ export const LessonMathematics: React.FC<LessonMathematicsProps> = ({ lesson }) 
           </span>
           <div>
             <span className="text-[10px] font-mono font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block">
-              Section F · Rigorous Intuition
+              📐 Section F · Mathematical Foundations
             </span>
             <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-              Mathematical Intuition & Hand Calculation
+              Mathematical Intuition & Hand Calculations 🔬
             </h2>
           </div>
         </div>
 
         <span className="text-xs px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold">
-          From Simple Intuition to Formal Equation
+          📐 Intuition to Formal Equation
         </span>
       </div>
 
@@ -59,7 +59,7 @@ export const LessonMathematics: React.FC<LessonMathematicsProps> = ({ lesson }) 
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">
-                  Formula {idx + 1}: {found.name}
+                  📐 Formula {idx + 1}: {found.name}
                 </span>
                 <span className="text-[10px] font-mono text-slate-400 uppercase">
                   Mathematical Definition
@@ -69,7 +69,7 @@ export const LessonMathematics: React.FC<LessonMathematicsProps> = ({ lesson }) 
                 <MathBlock math={found.latex} />
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                <span className="font-semibold text-slate-800 dark:text-slate-200">What this calculates: </span>
+                <span className="font-semibold text-slate-800 dark:text-slate-200">💡 What this calculates: </span>
                 {found.explanation}
               </p>
             </div>
@@ -84,7 +84,7 @@ export const LessonMathematics: React.FC<LessonMathematicsProps> = ({ lesson }) 
             <Table className="w-4 h-4" />
           </span>
           <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
-            Symbol-by-Symbol Variable Reference
+            📖 Symbol-by-Symbol Variable Reference
           </h3>
         </div>
         <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -132,16 +132,16 @@ export const LessonMathematics: React.FC<LessonMathematicsProps> = ({ lesson }) 
                 <Calculator className="w-4 h-4" />
               </span>
               <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
-                Hand Numerical Example Solved Step-by-Step
+                🔢 Hand Numerical Example Solved Step-by-Step
               </h3>
             </div>
             <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 font-semibold border border-emerald-200 dark:border-emerald-800">
-              Verifiable Math
+              ✅ Verifiable Math
             </span>
           </div>
 
           <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium leading-relaxed">
-            <span className="font-bold text-slate-900 dark:text-slate-100">Scenario: </span>
+            <span className="font-bold text-slate-900 dark:text-slate-100">💡 Scenario: </span>
             {numericalExample.scenario}
           </p>
 
@@ -176,7 +176,7 @@ export const LessonMathematics: React.FC<LessonMathematicsProps> = ({ lesson }) 
           {/* Hand Calculation Steps */}
           <div className="space-y-2.5 pt-1">
             <span className="text-xs font-bold text-slate-900 dark:text-slate-200 uppercase tracking-wider block">
-              Step-by-Step Substitution:
+              ⚙️ Step-by-Step Substitution:
             </span>
             {numericalExample.calculations.map((calc, idx) => (
               <div
@@ -199,7 +199,7 @@ export const LessonMathematics: React.FC<LessonMathematicsProps> = ({ lesson }) 
           </div>
 
           <div className="p-4 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/50 text-xs text-emerald-950 dark:text-emerald-200 leading-relaxed">
-            <span className="font-bold">Interpretation of Final Result: </span>
+            <span className="font-bold">✅ Interpretation of Final Result: </span>
             {numericalExample.finalConclusion}
           </div>
         </div>
@@ -218,13 +218,13 @@ export const LessonMathematics: React.FC<LessonMathematicsProps> = ({ lesson }) 
               </span>
               <div>
                 <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                  <span>Step-by-Step Mathematical Derivation</span>
+                  <span>🔬 Step-by-Step Mathematical Derivation</span>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-50 dark:bg-cyan-950 text-cyan-600 dark:text-cyan-400 font-semibold">
                     Optional Deep Dive ({derivation.steps.length} Steps)
                   </span>
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  Objective: {derivation.objective}
+                  🎯 Objective: {derivation.objective}
                 </p>
               </div>
             </div>

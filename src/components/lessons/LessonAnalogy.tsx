@@ -40,16 +40,16 @@ export const LessonAnalogy: React.FC<LessonAnalogyProps> = ({ lesson }) => {
           </span>
           <div>
             <span className="text-[10px] font-mono font-bold text-amber-700 dark:text-amber-400 uppercase tracking-widest block">
-              Section B · Mental Model
+              🌍 Section B · Mental Model
             </span>
             <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-              The Real-World Intuitive Analogy
+              The Real-World Intuitive Analogy 🌍
             </h2>
           </div>
         </div>
 
         <span className="text-xs px-3 py-1 rounded-full bg-white dark:bg-slate-900 border border-amber-200 dark:border-amber-900 text-amber-800 dark:text-amber-300 font-semibold shadow-sm">
-          Think Intuition First
+          💡 Think Intuition First
         </span>
       </div>
 
@@ -66,7 +66,7 @@ export const LessonAnalogy: React.FC<LessonAnalogyProps> = ({ lesson }) => {
         <div className="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900 text-xs sm:text-sm font-medium text-amber-900 dark:text-amber-200 flex items-start gap-2.5 mt-3">
           <Sparkles className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
           <div>
-            <span className="font-bold">Core Mental Model: </span>
+            <span className="font-bold">💡 Core Mental Model: </span>
             <span>{analogy.metaphor}</span>
           </div>
         </div>
@@ -76,7 +76,7 @@ export const LessonAnalogy: React.FC<LessonAnalogyProps> = ({ lesson }) => {
       <div className="space-y-3">
         <h4 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
           <Compass className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-          <span>How This Metaphor Directly Maps to {title.split(':')[0]}</span>
+          <span>🔗 How This Metaphor Directly Maps to {title.split(':')[0]}</span>
         </h4>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -86,14 +86,14 @@ export const LessonAnalogy: React.FC<LessonAnalogyProps> = ({ lesson }) => {
               className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs space-y-2 shadow-sm"
             >
               <div className="font-semibold text-slate-900 dark:text-slate-100 flex items-center justify-between">
-                <span>{map.realWorld}</span>
+                <span>🌍 {map.realWorld}</span>
                 <ArrowRight className="w-3.5 h-3.5 text-amber-500" />
               </div>
               <p className="text-slate-500 dark:text-slate-400 text-[11px] leading-tight">
                 {map.description}
               </p>
               <div className="pt-1.5 border-t border-slate-100 dark:border-slate-800 font-mono font-bold text-indigo-600 dark:text-indigo-400 text-[11px]">
-                = {map.mlEquivalent}
+                🤖 = {map.mlEquivalent}
               </div>
             </div>
           ))}
@@ -104,7 +104,7 @@ export const LessonAnalogy: React.FC<LessonAnalogyProps> = ({ lesson }) => {
       <div className="p-3.5 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-xs flex items-start gap-2.5 text-slate-600 dark:text-slate-400">
         <AlertCircle className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
         <div>
-          <span className="font-semibold text-slate-800 dark:text-slate-200">Where the metaphor has limits: </span>
+          <span className="font-semibold text-slate-800 dark:text-slate-200">⚠️ Where the metaphor has limits: </span>
           Real-world physical systems have friction, gravity, and 3-dimensional boundaries, whereas Machine Learning models optimize in abstract $d$-dimensional vector spaces where high-dimensional geometry (the curse of dimensionality) introduces unique behaviors that human physical intuition cannot directly perceive.
         </div>
       </div>

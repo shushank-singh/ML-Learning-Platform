@@ -199,7 +199,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
       <section className="space-y-3">
         <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400 font-bold text-xs uppercase tracking-wider">
           <Lightbulb className="w-4 h-4" />
-          <span>1. Intuitive Real-World Analogy</span>
+          <span>🌍 1. Intuitive Real-World Analogy</span>
         </div>
         <div className="p-6 rounded-2xl border border-violet-200 dark:border-violet-900/60 bg-gradient-to-br from-violet-50/50 to-white dark:from-violet-950/20 dark:to-slate-900 space-y-3">
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
@@ -209,7 +209,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
             {lesson.analogy.text}
           </p>
           <div className="p-3 rounded-xl bg-violet-100/60 dark:bg-violet-900/30 text-xs font-medium text-violet-900 dark:text-violet-200">
-            <span className="font-bold">Mental Model: </span>
+            <span className="font-bold">💡 Mental Model: </span>
             {lesson.analogy.metaphor}
           </div>
         </div>
@@ -219,7 +219,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
       <section className="space-y-3">
         <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400 font-bold text-xs uppercase tracking-wider">
           <Compass className="w-4 h-4" />
-          <span>2. What Problem Does This Solve?</span>
+          <span>🎯 2. What Problem Does This Solve?</span>
         </div>
         <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3">
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
@@ -232,7 +232,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
             {lesson.problemSolved.keyPoints.map((pt, i) => (
               <li key={i} className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300">
                 <span className="w-1.5 h-1.5 rounded-full bg-violet-500 mt-1.5 shrink-0" />
-                <span>{pt}</span>
+                <span>📌 {pt}</span>
               </li>
             ))}
           </ul>
@@ -243,7 +243,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
       <section className="space-y-3">
         <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400 font-bold text-xs uppercase tracking-wider">
           <Cpu className="w-4 h-4" />
-          <span>3. Intuition &amp; Core Mechanics</span>
+          <span>🧠 3. Intuition &amp; Core Mechanics</span>
         </div>
         <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4">
           <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
@@ -273,7 +273,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
       <section className="space-y-3">
         <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400 font-bold text-xs uppercase tracking-wider">
           <Calculator className="w-4 h-4" />
-          <span>4. Time &amp; Space Complexity Analysis</span>
+          <span>⏱️ 4. Time &amp; Space Complexity Analysis</span>
         </div>
         <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4">
           <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
@@ -282,7 +282,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
           <ComplexityBadge cases={lesson.complexity.cases} />
           {lesson.complexity.spaceNote && (
             <p className="text-xs text-slate-500 dark:text-slate-400 font-mono pt-1">
-              Note on Space: {lesson.complexity.spaceNote}
+              💾 Note on Space: {lesson.complexity.spaceNote}
             </p>
           )}
         </div>
@@ -294,7 +294,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400 font-bold text-xs uppercase tracking-wider">
               <Sparkles className="w-4 h-4" />
-              <span>5. Interactive Algorithm Laboratory</span>
+              <span>📊 5. Interactive Algorithm Laboratory</span>
             </div>
           </div>
           <DSAVisualizerDispatcher type={lesson.visualizerType} />
@@ -305,14 +305,14 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
       <section className="space-y-3">
         <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400 font-bold text-xs uppercase tracking-wider">
           <FileText className="w-4 h-4" />
-          <span>6. Step-by-Step Worked Example</span>
+          <span>🔍 6. Step-by-Step Worked Example</span>
         </div>
         <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4">
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
             {lesson.workedExample.title}
           </h2>
           <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800 font-mono text-xs text-slate-600 dark:text-slate-300">
-            Input: <span className="font-bold text-violet-600 dark:text-violet-400">{lesson.workedExample.input}</span>
+            📥 Input: <span className="font-bold text-violet-600 dark:text-violet-400">{lesson.workedExample.input}</span>
           </div>
           <div className="space-y-2">
             {lesson.workedExample.steps.map((st) => (
@@ -328,7 +328,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
             ))}
           </div>
           <div className="p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs font-mono font-semibold text-emerald-800 dark:text-emerald-300">
-            Conclusion: {lesson.workedExample.finalOutput}
+            ✅ Conclusion: {lesson.workedExample.finalOutput}
           </div>
         </div>
       </section>
@@ -337,7 +337,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
       <section className="space-y-3">
         <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400 font-bold text-xs uppercase tracking-wider">
           <Code2 className="w-4 h-4" />
-          <span>7. Implementation from Scratch</span>
+          <span>💻 7. Implementation from Scratch</span>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <PseudocodePanel
@@ -356,7 +356,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
       <section className="space-y-3">
         <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400 font-bold text-xs uppercase tracking-wider">
           <Code2 className="w-4 h-4" />
-          <span>8. Live Runnable Python Execution</span>
+          <span>▶️ 8. Live Runnable Python Execution</span>
         </div>
         <CodeRunner
           initialCode={lesson.runnableCode.code}
@@ -368,7 +368,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
       <section className="space-y-3">
         <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400 font-bold text-xs uppercase tracking-wider">
           <FileText className="w-4 h-4" />
-          <span>9. Line-by-Line Code Breakdown</span>
+          <span>📝 9. Line-by-Line Code Breakdown</span>
         </div>
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 divide-y divide-slate-100 dark:divide-slate-800 overflow-hidden">
           {lesson.lineByLineExplanation.map((exp, idx) => (
@@ -393,12 +393,12 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
       <section className="space-y-3">
         <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400 font-bold text-xs uppercase tracking-wider">
           <AlertTriangle className="w-4 h-4" />
-          <span>10. Edge Cases &amp; Common Pitfalls</span>
+          <span>⚠️ 10. Edge Cases &amp; Common Pitfalls</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3">
             <h3 className="text-xs font-bold uppercase tracking-wider text-amber-600">
-              Critical Edge Cases
+              ⚠️ Critical Edge Cases
             </h3>
             <div className="space-y-2">
               {lesson.edgeCases.map((ec, i) => (
@@ -412,13 +412,13 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
 
           <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3">
             <h3 className="text-xs font-bold uppercase tracking-wider text-rose-600">
-              Common Mistakes &amp; Fixes
+              🛡️ Common Mistakes &amp; Fixes
             </h3>
             <div className="space-y-2">
               {lesson.commonMistakes.map((cm, i) => (
                 <div key={i} className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 space-y-1 text-xs">
-                  <span className="font-bold text-rose-600 block">{cm.mistake}</span>
-                  <p className="text-slate-600 dark:text-slate-400 font-sans">{cm.solution}</p>
+                  <span className="font-bold text-rose-600 block">⚠️ {cm.mistake}</span>
+                  <p className="text-slate-600 dark:text-slate-400 font-sans">✅ {cm.solution}</p>
                 </div>
               ))}
             </div>
@@ -430,7 +430,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
       <section className="space-y-3">
         <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400 font-bold text-xs uppercase tracking-wider">
           <HelpCircle className="w-4 h-4" />
-          <span>11. Practice Questions</span>
+          <span>❓ 11. Practice Questions</span>
         </div>
         <div className="space-y-3">
           {lesson.practiceQuestions.map((pq) => {
@@ -463,7 +463,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
       <section className="space-y-3">
         <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400 font-bold text-xs uppercase tracking-wider">
           <CheckCircle2 className="w-4 h-4" />
-          <span>12. Concept Check Quiz</span>
+          <span>🧠 12. Concept Check Quiz</span>
         </div>
         <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-6">
           {lesson.quiz.map((q, qIdx) => {
@@ -505,7 +505,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
                 </div>
                 {quizSubmitted && (
                   <p className="text-xs text-slate-500 italic p-2 rounded bg-slate-50 dark:bg-slate-800">
-                    Explanation: {q.explanation}
+                    💡 Explanation: {q.explanation}
                   </p>
                 )}
               </div>
@@ -519,18 +519,18 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
                 disabled={Object.keys(quizAnswers).length === 0}
                 className="px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-bold text-xs transition-colors shadow-sm disabled:opacity-40"
               >
-                Submit Answers
+                ✅ Submit Answers
               </button>
             ) : (
               <div className="flex items-center gap-4">
                 <span className="text-sm font-bold text-slate-900 dark:text-slate-100">
-                  Score: {quizScore} / {lesson.quiz.length}
+                  🏆 Score: {quizScore} / {lesson.quiz.length}
                 </span>
                 <button
                   onClick={handleResetQuiz}
                   className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold hover:bg-slate-50"
                 >
-                  Retry Quiz
+                  🔄 Retry Quiz
                 </button>
               </div>
             )}
@@ -542,11 +542,11 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
       <section className="space-y-3">
         <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400 font-bold text-xs uppercase tracking-wider">
           <Code2 className="w-4 h-4" />
-          <span>13. Independent Coding Challenge</span>
+          <span>🏆 13. Independent Coding Challenge</span>
         </div>
         <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4">
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-            {lesson.codingChallenge.title}
+            🧪 {lesson.codingChallenge.title}
           </h2>
           <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
             {lesson.codingChallenge.problem}
@@ -565,19 +565,19 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
               disabled={hintIndex >= lesson.codingChallenge.hints.length - 1}
               className="px-3.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-semibold hover:bg-slate-50 disabled:opacity-40"
             >
-              Show Hint ({hintIndex + 1}/{lesson.codingChallenge.hints.length})
+              💡 Show Hint ({hintIndex + 1}/{lesson.codingChallenge.hints.length})
             </button>
             <button
               onClick={() => setShowSolution((p) => !p)}
               className="px-3.5 py-1.5 rounded-lg bg-violet-50 dark:bg-violet-950 text-violet-600 dark:text-violet-300 font-semibold text-xs hover:bg-violet-100"
             >
-              {showSolution ? 'Hide Solution' : 'View Reference Solution'}
+              {showSolution ? 'Hide Solution' : '🏆 View Reference Solution'}
             </button>
           </div>
 
           {hintIndex >= 0 && (
             <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 text-xs text-amber-800 dark:text-amber-300">
-              Hint: {lesson.codingChallenge.hints[hintIndex]}
+              💡 Hint: {lesson.codingChallenge.hints[hintIndex]}
             </div>
           )}
 
@@ -595,11 +595,11 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
       <section className="space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-            Personal Study Notes
+            📝 Personal Study Notes
           </span>
           {noteSaved && (
             <span className="text-xs text-emerald-600 font-semibold flex items-center gap-1">
-              <CheckCircle2 className="w-3.5 h-3.5" /> Note Saved!
+              <CheckCircle2 className="w-3.5 h-3.5" /> ✅ Note Saved!
             </span>
           )}
         </div>
@@ -616,7 +616,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
             className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 text-xs font-semibold"
           >
             <Save className="w-3.5 h-3.5" />
-            <span>Save Note</span>
+            <span>💾 Save Note</span>
           </button>
         </div>
       </section>
@@ -624,7 +624,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
       {/* 15. Summary & Next Lesson */}
       <section className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 space-y-4">
         <h3 className="font-bold text-sm text-slate-900 dark:text-slate-100">
-          Key Takeaways
+          ✅ Key Takeaways
         </h3>
         <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
           {lesson.summary.keyTakeaways.map((takeaway, i) => (
@@ -641,7 +641,7 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
               href={`/dsa/${lesson.summary.nextLessonModuleId || lesson.moduleId}/${lesson.summary.nextLessonId}`}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-bold text-xs transition-colors shadow-sm"
             >
-              <span>Next Lesson: {lesson.summary.nextLessonTitle || 'Continue'}</span>
+              <span>🚀 Next Lesson: {lesson.summary.nextLessonTitle || 'Continue'}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

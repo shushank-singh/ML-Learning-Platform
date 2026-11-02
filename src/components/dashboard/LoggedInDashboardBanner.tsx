@@ -25,6 +25,9 @@ import {
   CheckSquare,
   ChevronRight,
   Layers,
+  TreePine,
+  Code2,
+  Coffee,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { UserProgressState } from '@/lib/types';
@@ -39,6 +42,9 @@ import {
   MODULES_CATALOG_MLOPS,
   MODULES_CATALOG_DEPLOYMENT,
 } from '@/data/modules/curriculum';
+import { MODULES_CATALOG_DSA } from '@/data/dsa/curriculum';
+import { MODULES_CATALOG_PYTHON } from '@/data/python/curriculum';
+import { MODULES_CATALOG_JAVA } from '@/data/java/curriculum';
 import {
   MLIllustration,
   DLIllustration,
@@ -48,6 +54,9 @@ import {
   AgentsIllustration,
   MLOpsIllustration,
   DeploymentIllustration,
+  DSAIllustration,
+  PythonIllustration,
+  JavaIllustration,
 } from '@/components/shared/TrackIllustrations';
 
 interface LoggedInDashboardBannerProps {
@@ -189,6 +198,39 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
       illustration: <DeploymentIllustration className="w-full h-32 rounded-xl object-cover" />,
       stats: getTrackStats(MODULES_CATALOG_DEPLOYMENT.flatMap((m) => m.lessons)),
       modulesCount: MODULES_CATALOG_DEPLOYMENT.length,
+    },
+    {
+      id: 'dsa',
+      title: 'Data Structures & Algorithms',
+      subtitle: 'Trees, Graphs, DP & Problem Solving',
+      icon: TreePine,
+      color: 'purple',
+      route: '/dsa',
+      illustration: <DSAIllustration className="w-full h-32 rounded-xl object-cover" />,
+      stats: getTrackStats(MODULES_CATALOG_DSA.flatMap((m) => m.lessons)),
+      modulesCount: MODULES_CATALOG_DSA.length,
+    },
+    {
+      id: 'python',
+      title: 'Python Programming',
+      subtitle: 'CPython Internals, OOP & Pyodide',
+      icon: Code2,
+      color: 'emerald',
+      route: '/python',
+      illustration: <PythonIllustration className="w-full h-32 rounded-xl object-cover" />,
+      stats: getTrackStats(MODULES_CATALOG_PYTHON.flatMap((m) => m.lessons)),
+      modulesCount: MODULES_CATALOG_PYTHON.length,
+    },
+    {
+      id: 'java',
+      title: 'Java Programming',
+      subtitle: 'JVM Architecture, Memory & Enterprise',
+      icon: Coffee,
+      color: 'amber',
+      route: '/java',
+      illustration: <JavaIllustration className="w-full h-32 rounded-xl object-cover" />,
+      stats: getTrackStats(MODULES_CATALOG_JAVA.flatMap((m) => m.lessons)),
+      modulesCount: MODULES_CATALOG_JAVA.length,
     },
   ];
 
