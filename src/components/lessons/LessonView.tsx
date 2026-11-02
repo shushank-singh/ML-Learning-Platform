@@ -71,38 +71,39 @@ export const LessonView: React.FC<LessonViewProps> = ({ lesson }) => {
       {/* ========================================================================= */}
       {/* TOP STICKY BREADCRUMB & UTILITY BAR */}
       {/* ========================================================================= */}
-      <div className="sticky top-14 z-20 border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur px-4 sm:px-8 py-3">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div className="sticky top-14 z-20 border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur px-3 sm:px-8 py-2.5 sm:py-3">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-3">
           {/* Breadcrumbs */}
-          <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+          <div className="flex items-center gap-1.5 sm:gap-2 text-xs text-slate-500 dark:text-slate-400 min-w-0 flex-1 overflow-hidden">
             <Link
               href="/curriculum"
-              className="hover:text-indigo-600 transition-colors font-medium"
+              className="hover:text-indigo-600 transition-colors font-medium shrink-0 hidden sm:inline"
             >
-              AI & ML Curriculum
+              Curriculum
             </Link>
-            <ChevronRight className="w-3.5 h-3.5" />
+            <ChevronRight className="w-3.5 h-3.5 shrink-0 hidden sm:inline" />
             <Link
               href={`/curriculum/${lesson.moduleId}`}
-              className="hover:text-indigo-600 transition-colors font-medium capitalize"
+              className="hover:text-indigo-600 transition-colors font-medium capitalize shrink-0 max-w-[85px] sm:max-w-none truncate"
             >
               {lesson.moduleId.replace('-', ' ')}
             </Link>
-            <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-slate-900 dark:text-slate-200 font-semibold truncate max-w-[200px] sm:max-w-xs">
+            <ChevronRight className="w-3.5 h-3.5 shrink-0" />
+            <span className="text-slate-900 dark:text-slate-200 font-semibold truncate max-w-[120px] sm:max-w-xs">
               {lesson.title.split(':')[0]}
             </span>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <button
               onClick={handleToggleBookmark}
-              className={`px-3 py-1.5 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm ${
+              className={`p-2 sm:px-3 sm:py-1.5 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm min-h-[38px] ${
                 isBookmarked
                   ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-800 text-amber-700 dark:text-amber-400'
                   : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50'
               }`}
+              title={isBookmarked ? 'Saved to Bookmarks' : 'Bookmark Lesson'}
             >
               <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-current' : ''}`} />
               <span className="hidden sm:inline">{isBookmarked ? 'Saved' : 'Bookmark'}</span>
@@ -110,14 +111,14 @@ export const LessonView: React.FC<LessonViewProps> = ({ lesson }) => {
 
             <button
               onClick={handleToggleComplete}
-              className={`px-3.5 py-1.5 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm ${
+              className={`px-3 py-1.5 sm:px-3.5 sm:py-1.5 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm min-h-[38px] ${
                 isCompleted
                   ? 'bg-emerald-600 border-emerald-600 text-white'
                   : 'bg-indigo-600 hover:bg-indigo-700 border-indigo-600 text-white'
               }`}
             >
-              <CheckCircle2 className="w-4 h-4" />
-              <span>{isCompleted ? 'Completed' : 'Mark Complete'}</span>
+              <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+              <span className="whitespace-nowrap">{isCompleted ? 'Done' : 'Mark Done'}</span>
             </button>
           </div>
         </div>

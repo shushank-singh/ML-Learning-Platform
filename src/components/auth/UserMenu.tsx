@@ -98,19 +98,19 @@ export const UserMenu: React.FC<UserMenuProps> = ({ className = '' }) => {
   // Unauthenticated: Compact, accessible Login/Signup buttons
   if (!user) {
     return (
-      <div className={`flex items-center gap-2 ${className}`}>
+      <div className={`flex items-center gap-1.5 sm:gap-2 shrink-0 ${className}`}>
         <Link
           href="/login"
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          className="inline-flex items-center justify-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors whitespace-nowrap shrink-0 border border-slate-200/90 dark:border-slate-800 sm:border-transparent"
         >
-          <LogIn className="w-3.5 h-3.5" />
-          <span>Sign In</span>
+          <LogIn className="w-3.5 h-3.5 shrink-0" />
+          <span className="whitespace-nowrap">Sign In</span>
         </Link>
         <Link
           href="/signup"
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 rounded-xl shadow-sm shadow-indigo-600/30 transition-all hover:shadow-indigo-600/50"
+          className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 rounded-xl shadow-sm shadow-indigo-600/30 transition-all hover:shadow-indigo-600/50 whitespace-nowrap shrink-0"
         >
-          <UserPlus className="w-3.5 h-3.5" />
+          <UserPlus className="w-3.5 h-3.5 shrink-0" />
           <span>Sign Up</span>
         </Link>
       </div>
@@ -185,7 +185,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({ className = '' }) => {
           ref={dropdownRef}
           role="menu"
           aria-orientation="vertical"
-          className="absolute right-0 mt-2 w-72 sm:w-80 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-2xl shadow-indigo-950/15 py-2.5 z-50 text-slate-800 dark:text-slate-200 animate-in fade-in zoom-in-95 duration-150 divide-y divide-slate-100 dark:divide-slate-800/80 focus:outline-none"
+          className="absolute right-0 mt-2 w-[calc(100vw-24px)] max-w-xs sm:w-80 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-2xl shadow-indigo-950/15 py-2.5 z-50 text-slate-800 dark:text-slate-200 animate-in fade-in zoom-in-95 duration-150 divide-y divide-slate-100 dark:divide-slate-800/80 focus:outline-none"
         >
           {/* Section 1: Authenticated User Header */}
           <div className="px-4 py-3.5 space-y-3">

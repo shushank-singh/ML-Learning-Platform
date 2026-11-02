@@ -318,33 +318,35 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
         </div>
 
         {/* Tab switchers */}
-        <div className="flex items-center p-1 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shrink-0">
+        <div className="w-full sm:w-auto grid grid-cols-2 sm:flex sm:items-center p-1 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
           <button
             onClick={() => setActiveTab('ai-ml')}
-            className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-2.5 sm:px-4 py-2 rounded-lg text-xs font-semibold text-center flex items-center justify-center min-h-[44px] transition-all ${
               activeTab === 'ai-ml'
                 ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
             }`}
           >
-            AI &amp; Machine Learning (8 Tracks)
+            <span className="sm:hidden">AI &amp; ML (8)</span>
+            <span className="hidden sm:inline">AI &amp; Machine Learning (8 Tracks)</span>
           </button>
           <button
             onClick={() => setActiveTab('engineering')}
-            className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-2.5 sm:px-4 py-2 rounded-lg text-xs font-semibold text-center flex items-center justify-center min-h-[44px] transition-all ${
               activeTab === 'engineering'
                 ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
             }`}
           >
-            Complementary Labs (DSA, Python, Java)
+            <span className="sm:hidden">Labs</span>
+            <span className="hidden sm:inline">Complementary Labs (DSA, Python, Java)</span>
           </button>
         </div>
       </div>
 
       {/* Grid of AI & ML Tracks */}
       {activeTab === 'ai-ml' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {AI_ML_TRACKS.map((track) => {
             const Icon = track.icon;
 
@@ -418,14 +420,14 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
 
       {/* Grid of Complementary Engineering Tracks */}
       {activeTab === 'engineering' && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {ENGINEERING_TRACKS.map((track) => {
             const Icon = track.icon;
 
             return (
               <div
                 key={track.id}
-                className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm hover:shadow-xl hover:border-indigo-500/60 transition-all flex flex-col justify-between space-y-4"
+                className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 sm:p-6 shadow-sm hover:shadow-xl hover:border-indigo-500/60 transition-all flex flex-col justify-between space-y-4"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">

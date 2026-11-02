@@ -102,14 +102,14 @@ export const WhyLearnHereSection: React.FC = () => {
       </div>
 
       {/* Feature Cards Grid (3 columns desktop, 2 tablet, 1 mobile) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {FEATURES.map((feat) => {
           const Icon = feat.icon;
 
           return (
             <div
               key={feat.id}
-              className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm hover:shadow-lg hover:border-indigo-500/50 dark:hover:border-indigo-500/50 transition-all duration-200 flex flex-col justify-between space-y-5 group"
+              className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 sm:p-6 shadow-sm hover:shadow-lg hover:border-indigo-500/50 dark:hover:border-indigo-500/50 transition-all duration-200 flex flex-col justify-between space-y-5 group"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">

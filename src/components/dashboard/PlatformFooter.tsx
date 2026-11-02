@@ -25,9 +25,9 @@ import { AzurLearnLogo } from '@/components/shared/AzurLearnLogo';
 
 export const PlatformFooter: React.FC = () => {
   return (
-    <footer className="mt-20 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-t-3xl pt-12 pb-10 px-4 sm:px-8 text-slate-600 dark:text-slate-400 transition-colors duration-200">
-      <div className="max-w-7xl mx-auto space-y-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+    <footer className="mt-14 sm:mt-20 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-t-3xl pt-8 sm:pt-12 pb-8 sm:pb-10 px-4 sm:px-8 text-slate-600 dark:text-slate-400 transition-colors duration-200">
+      <div className="max-w-7xl mx-auto space-y-8 sm:space-y-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8">
           {/* Brand & Mission Column (col-span-2) */}
           <div className="lg:col-span-2 space-y-4">
             <Link href="/" className="inline-flex items-center group">
@@ -205,7 +205,7 @@ export const PlatformFooter: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="pt-6 sm:pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 text-center sm:text-left">
           <p>© {new Date().getFullYear()} AzurLearn. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <Link href="/curriculum" className="hover:text-slate-800 dark:hover:text-slate-300 transition-colors">

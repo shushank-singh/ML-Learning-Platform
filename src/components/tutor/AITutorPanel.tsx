@@ -230,7 +230,7 @@ export const AITutorPanel: React.FC<AITutorPanelProps> = ({
         onClick={() => setIsOpen((prev) => !prev)}
         type="button"
         aria-label="Toggle AI Tutor Panel"
-        className="fixed bottom-6 right-6 z-40 group flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-semibold text-xs shadow-2xl hover:shadow-indigo-500/30 transition-all duration-200 transform hover:-translate-y-0.5 border border-indigo-400/30"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 group flex items-center gap-2 sm:gap-2.5 px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-full bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-semibold text-xs shadow-2xl hover:shadow-indigo-500/30 transition-all duration-200 transform hover:-translate-y-0.5 border border-indigo-400/30"
       >
         <div className="relative">
           <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />

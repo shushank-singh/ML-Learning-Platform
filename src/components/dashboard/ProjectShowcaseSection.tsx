@@ -34,7 +34,7 @@ export const ProjectShowcaseSection: React.FC = () => {
 
         <Link
           href="/projects"
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-all shadow-xs shrink-0"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-all shadow-xs shrink-0 w-full sm:w-auto min-h-[44px]"
         >
           <span>View All Projects</span>
           <ArrowRight className="w-3.5 h-3.5" />
@@ -42,11 +42,11 @@ export const ProjectShowcaseSection: React.FC = () => {
       </div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {REAL_WORLD_PROJECTS.slice(0, 3).map((proj) => (
           <div
             key={proj.id}
-            className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-xl hover:border-indigo-500/60 dark:hover:border-indigo-500/60 transition-all duration-300 flex flex-col justify-between p-6 space-y-4 group"
+            className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-xl hover:border-indigo-500/60 dark:hover:border-indigo-500/60 transition-all duration-300 flex flex-col justify-between p-4 sm:p-6 space-y-4 group"
           >
             <div className="space-y-3">
               {/* Category & Duration */}

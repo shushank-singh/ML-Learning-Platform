@@ -281,47 +281,47 @@ export default function CurriculumPage() {
   const trackSections = getFilteredModules();
 
   return (
-    <div className="p-4 sm:p-8 max-w-7xl mx-auto space-y-8">
+    <div className="p-3 sm:p-8 max-w-7xl mx-auto space-y-6 sm:space-y-8">
       {/* Header Banner */}
       <div className="space-y-4">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400 text-xs font-semibold">
           <GraduationCap className="w-4 h-4" />
           <span>Category 1 · Artificial Intelligence &amp; Deep Learning</span>
         </div>
-        <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
+        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
           AzurLearn AI &amp; ML Curriculum
         </h1>
-        <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+        <p className="text-xs sm:text-base text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
           Learn Machine Learning, Deep Learning, Transformers, LLMs, RAG, AI Agents, and MLOps through visual explanations, interactive labs, practical coding, and real-world projects. Every lesson pairs intuitive real-life analogies, step-by-step mathematical derivations, runnable code, expected outputs, common mistakes, practice exercises, and interactive visualizers.
         </p>
 
         {/* View Mode Switcher (Roadmap vs Catalog) */}
-        <div className="flex items-center gap-3 pt-2">
-          <div className="inline-flex p-1 rounded-xl bg-slate-200/80 dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 pt-2">
+          <div className="grid grid-cols-2 sm:inline-flex p-1 rounded-xl bg-slate-200/80 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 w-full sm:w-auto">
             <button
               onClick={() => setViewMode('catalog')}
-              className={`px-4 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition-all ${
+              className={`px-3 sm:px-4 py-2 sm:py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 sm:gap-2 transition-all min-h-[40px] ${
                 viewMode === 'catalog'
                   ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
-              <Layers className="w-3.5 h-3.5" />
+              <Layers className="w-3.5 h-3.5 shrink-0" />
               <span>Modular Catalog</span>
             </button>
             <button
               onClick={() => setViewMode('roadmap')}
-              className={`px-4 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition-all ${
+              className={`px-3 sm:px-4 py-2 sm:py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 sm:gap-2 transition-all min-h-[40px] ${
                 viewMode === 'roadmap'
                   ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
-              <Compass className="w-3.5 h-3.5" />
-              <span>Phased Roadmap (Phases 0–12)</span>
+              <Compass className="w-3.5 h-3.5 shrink-0" />
+              <span>Phased Roadmap</span>
             </button>
           </div>
-          <span className="text-xs text-slate-500 hidden sm:inline">
+          <span className="text-xs text-slate-500">
             {allDone} of {allLessons.length} lessons completed across all tracks
           </span>
         </div>
@@ -628,7 +628,7 @@ export default function CurriculumPage() {
                   {/* Phase Header */}
                   <div
                     onClick={() => togglePhase(phase.id)}
-                    className="p-5 sm:p-6 cursor-pointer bg-slate-50/60 dark:bg-slate-800/30 hover:bg-slate-100/60 dark:hover:bg-slate-800/60 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4"
+                    className="p-4 sm:p-6 cursor-pointer bg-slate-50/60 dark:bg-slate-800/30 hover:bg-slate-100/60 dark:hover:bg-slate-800/60 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4"
                   >
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 rounded-2xl bg-indigo-600 text-white font-mono font-extrabold text-base flex items-center justify-center shrink-0 shadow-sm">

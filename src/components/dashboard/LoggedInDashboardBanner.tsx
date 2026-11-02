@@ -208,7 +208,7 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
       {/* ========================================================================= */}
       {/* 1. PERSONALIZED WORKSPACE HEADER */}
       {/* ========================================================================= */}
-      <div className="relative overflow-hidden rounded-3xl border border-indigo-200/90 dark:border-indigo-900/60 bg-gradient-to-br from-indigo-50/90 via-white to-slate-50 dark:from-indigo-950/40 dark:via-slate-900 dark:to-slate-950 p-6 sm:p-8 shadow-sm">
+      <div className="relative overflow-hidden rounded-3xl border border-indigo-200/90 dark:border-indigo-900/60 bg-gradient-to-br from-indigo-50/90 via-white to-slate-50 dark:from-indigo-950/40 dark:via-slate-900 dark:to-slate-950 p-4 sm:p-8 shadow-sm">
         {/* Subtle decorative glowing blob */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
 
@@ -347,14 +347,14 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
       {/* ========================================================================= */}
       {/* 2. VISUAL LEARNING OVERVIEW CARDS (REAL DATABASE / STORAGE VALUES) */}
       {/* ========================================================================= */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-4">
         {/* Metric 1: Completed Lessons */}
-        <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs hover:border-indigo-300 dark:hover:border-indigo-800 hover:-translate-y-0.5 transition-all duration-200">
+        <div className="p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs hover:border-indigo-300 dark:hover:border-indigo-800 hover:-translate-y-0.5 transition-all duration-200">
           <div className="flex items-center justify-between text-indigo-600 dark:text-indigo-400 mb-2">
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Completed</span>
             <CheckCircle2 className="w-4 h-4 text-emerald-500" />
           </div>
-          <div className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-slate-100 font-mono">
+          <div className="text-lg sm:text-2xl font-extrabold text-slate-900 dark:text-slate-100 font-mono">
             {overallStats.completedLessons}
             <span className="text-xs font-normal text-slate-400">/{overallStats.totalLessons}</span>
           </div>
@@ -362,24 +362,24 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
         </div>
 
         {/* Metric 2: Curriculum Progress % */}
-        <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs hover:border-indigo-300 dark:hover:border-indigo-800 hover:-translate-y-0.5 transition-all duration-200">
+        <div className="p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs hover:border-indigo-300 dark:hover:border-indigo-800 hover:-translate-y-0.5 transition-all duration-200">
           <div className="flex items-center justify-between text-indigo-600 dark:text-indigo-400 mb-2">
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Progress</span>
             <TrendingUp className="w-4 h-4 text-indigo-500" />
           </div>
-          <div className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-slate-100 font-mono">
+          <div className="text-lg sm:text-2xl font-extrabold text-slate-900 dark:text-slate-100 font-mono">
             {overallStats.percentage}%
           </div>
           <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Total Completion</p>
         </div>
 
         {/* Metric 3: Active Learning Tracks */}
-        <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs hover:border-indigo-300 dark:hover:border-indigo-800 hover:-translate-y-0.5 transition-all duration-200">
+        <div className="p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs hover:border-indigo-300 dark:hover:border-indigo-800 hover:-translate-y-0.5 transition-all duration-200">
           <div className="flex items-center justify-between text-indigo-600 dark:text-indigo-400 mb-2">
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Tracks</span>
             <Brain className="w-4 h-4 text-violet-500" />
           </div>
-          <div className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-slate-100 font-mono">
+          <div className="text-lg sm:text-2xl font-extrabold text-slate-900 dark:text-slate-100 font-mono">
             {activeTracksCount}
             <span className="text-xs font-normal text-slate-400">/8</span>
           </div>
@@ -387,36 +387,36 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
         </div>
 
         {/* Metric 4: Daily Learning Streak */}
-        <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs hover:border-indigo-300 dark:hover:border-indigo-800 hover:-translate-y-0.5 transition-all duration-200">
+        <div className="p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs hover:border-indigo-300 dark:hover:border-indigo-800 hover:-translate-y-0.5 transition-all duration-200">
           <div className="flex items-center justify-between text-amber-500 mb-2">
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Streak</span>
             <Flame className="w-4 h-4 fill-current text-amber-500" />
           </div>
-          <div className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-slate-100 font-mono">
+          <div className="text-lg sm:text-2xl font-extrabold text-slate-900 dark:text-slate-100 font-mono">
             {progress?.streak?.currentStreak || 1}d
           </div>
           <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Consecutive Days</p>
         </div>
 
         {/* Metric 5: Time Invested */}
-        <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs hover:border-indigo-300 dark:hover:border-indigo-800 hover:-translate-y-0.5 transition-all duration-200">
+        <div className="p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs hover:border-indigo-300 dark:hover:border-indigo-800 hover:-translate-y-0.5 transition-all duration-200">
           <div className="flex items-center justify-between text-indigo-600 dark:text-indigo-400 mb-2">
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Time</span>
             <Clock className="w-4 h-4 text-blue-500" />
           </div>
-          <div className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-slate-100 font-mono">
+          <div className="text-lg sm:text-2xl font-extrabold text-slate-900 dark:text-slate-100 font-mono">
             {progress?.totalMinutesLearned || 45}m
           </div>
           <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Minutes Studied</p>
         </div>
 
         {/* Metric 6: Bookmarks / Quizzes */}
-        <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs hover:border-indigo-300 dark:hover:border-indigo-800 hover:-translate-y-0.5 transition-all duration-200">
+        <div className="p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs hover:border-indigo-300 dark:hover:border-indigo-800 hover:-translate-y-0.5 transition-all duration-200">
           <div className="flex items-center justify-between text-pink-500 mb-2">
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Saved</span>
             <Bookmark className="w-4 h-4 text-pink-500" />
           </div>
-          <div className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-slate-100 font-mono">
+          <div className="text-lg sm:text-2xl font-extrabold text-slate-900 dark:text-slate-100 font-mono">
             {bookmarkedCount}
           </div>
           <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Saved Formulas &amp; Topics</p>
@@ -464,7 +464,7 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
         </div>
 
         {/* Tracks Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {displayedTracks.map((track) => {
             const Icon = track.icon;
             return (

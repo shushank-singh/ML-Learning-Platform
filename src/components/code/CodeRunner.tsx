@@ -67,10 +67,10 @@ export const CodeRunner: React.FC<CodeRunnerProps> = ({
   return (
     <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm overflow-hidden my-6">
       {/* Top Toolbar */}
-      <div className="flex flex-wrap items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 px-4 py-2.5">
-        <div className="flex items-center gap-2">
-          <Terminal className="w-4 h-4 text-indigo-500" />
-          <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 font-mono">
+      <div className="flex flex-wrap items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 px-3 sm:px-4 py-2 sm:py-2.5 gap-2">
+        <div className="flex items-center gap-2 min-w-0 max-w-full">
+          <Terminal className="w-4 h-4 text-indigo-500 shrink-0" />
+          <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 font-mono truncate max-w-[200px] sm:max-w-none">
             {title}
           </span>
           {isLoading && (

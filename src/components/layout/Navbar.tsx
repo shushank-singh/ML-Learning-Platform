@@ -97,10 +97,10 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
             : 'bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200/60 dark:border-slate-800/60'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16 gap-1.5 sm:gap-4">
             {/* Left: AzurLearn Brand Logo */}
-            <div className="flex items-center gap-3 shrink-0">
+            <div className="flex items-center shrink-0 min-w-0">
               <Link
                 href="/"
                 className="flex items-center group focus:outline-none"
@@ -208,7 +208,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
             )}
 
             {/* Right: Actions, Search, Theme, Auth */}
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-1 sm:gap-2 shrink-0">
               {/* Global Search Button */}
               {!isAuthPage && (
                 <button
@@ -228,7 +228,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
               {!isAuthPage && (
                 <button
                   onClick={() => setSearchOpen(true)}
-                  className="md:hidden p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl"
+                  className="md:hidden w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors shrink-0"
                   aria-label="Search"
                 >
                   <Search className="w-4 h-4" />
@@ -256,11 +256,11 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
               )}
 
               {/* Theme Switcher */}
-              <ThemeToggle showLabel={false} />
+              <ThemeToggle showLabel={false} className="w-8 h-8 sm:w-auto sm:h-auto p-1.5 sm:p-2.5 rounded-xl justify-center shrink-0" />
 
               {/* User Account or Sign In */}
               {!isAuthPage && (
-                <div className="flex items-center">
+                <div className="flex items-center shrink-0">
                   <UserMenu />
                 </div>
               )}
@@ -269,11 +269,11 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
               {!isAuthPage && (
                 <button
                   onClick={() => setMobileMenuOpen((prev) => !prev)}
-                  className="xl:hidden p-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                  className="xl:hidden w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0"
                   aria-label="Toggle navigation menu"
                   aria-expanded={mobileMenuOpen}
                 >
-                  {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                  {mobileMenuOpen ? <X className="w-4 h-4 sm:w-5 sm:h-5" /> : <Menu className="w-4 h-4 sm:w-5 sm:h-5" />}
                 </button>
               )}
             </div>
@@ -333,7 +333,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
                   <Link
                     href="/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 rounded-xl transition-colors"
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 rounded-xl transition-colors min-h-[44px]"
                   >
                     <LogIn className="w-3.5 h-3.5" />
                     <span>Sign In</span>
@@ -341,7 +341,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
                   <Link
                     href="/signup"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition-colors"
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition-colors min-h-[44px]"
                   >
                     <UserPlus className="w-3.5 h-3.5" />
                     <span>Sign Up</span>

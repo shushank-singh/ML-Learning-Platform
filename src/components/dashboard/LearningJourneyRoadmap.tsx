@@ -113,14 +113,14 @@ export const LearningJourneyRoadmap: React.FC = () => {
         {/* Connecting Line (desktop only) */}
         <div className="hidden lg:block absolute top-1/2 left-8 right-8 h-0.5 bg-slate-200 dark:bg-slate-800 -translate-y-1/2 z-0" />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 relative z-10">
           {ROADMAP_STEPS.map((step, idx) => {
             const Icon = step.icon;
 
             return (
               <div
                 key={step.step}
-                className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm hover:shadow-lg hover:border-indigo-500/60 dark:hover:border-indigo-500/60 transition-all duration-200 flex flex-col justify-between space-y-4 group"
+                className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 sm:p-5 shadow-sm hover:shadow-lg hover:border-indigo-500/60 dark:hover:border-indigo-500/60 transition-all duration-200 flex flex-col justify-between space-y-4 group"
               >
                 <div className="space-y-3">
                   {/* Step pill and number */}

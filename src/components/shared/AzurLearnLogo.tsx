@@ -17,16 +17,16 @@ export const AzurLearnLogo: React.FC<AzurLearnLogoProps> = ({
 }) => {
   const iconSizes = {
     sm: 'w-7 h-7',
-    md: 'w-10 h-10',
-    lg: 'w-12 h-12',
-    xl: 'w-16 h-16',
+    md: 'w-8 h-8 sm:w-9 sm:h-9',
+    lg: 'w-10 h-10 sm:w-12 sm:h-12',
+    xl: 'w-14 h-14 sm:w-16 sm:h-16',
   };
 
   const textSizes = {
     sm: 'text-sm',
     md: 'text-base sm:text-lg',
-    lg: 'text-xl sm:text-2xl',
-    xl: 'text-3xl sm:text-4xl',
+    lg: 'text-lg sm:text-2xl',
+    xl: 'text-2xl sm:text-4xl',
   };
 
   const subtitleSizes = {
@@ -37,12 +37,12 @@ export const AzurLearnLogo: React.FC<AzurLearnLogoProps> = ({
   };
 
   return (
-    <div className={`inline-flex items-center gap-3 ${className}`}>
+    <div className={`inline-flex items-center gap-2 sm:gap-2.5 shrink-0 min-w-0 max-w-full ${className}`}>
       {/* AzurLearn Mark / Icon */}
       <div
-        className={`${iconSizes[size]} relative shrink-0 rounded-xl bg-gradient-to-tr from-sky-500 via-indigo-600 to-cyan-400 p-[1.5px] shadow-md shadow-sky-500/20 group-hover:shadow-sky-500/35 transition-all`}
+        className={`${iconSizes[size]} relative shrink-0 rounded-xl bg-gradient-to-tr from-sky-500 via-indigo-600 to-cyan-400 p-[1.5px] shadow-sm shadow-sky-500/20 group-hover:shadow-sky-500/35 transition-all`}
       >
-        <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center p-1.5 overflow-hidden relative">
+        <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center p-1 sm:p-1.5 overflow-hidden relative">
           {/* Subtle inner background glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-transparent to-indigo-500/30 pointer-events-none" />
 
@@ -101,17 +101,17 @@ export const AzurLearnLogo: React.FC<AzurLearnLogoProps> = ({
         </div>
       </div>
 
-      {/* Brand Typography */}
+      {/* Brand Typography: Clean single-line on small phones, full subtitle on sm+ screens */}
       {showText && (
-        <div className="flex flex-col text-left leading-tight">
-          <div className={`${textSizes[size]} font-black tracking-tight text-slate-900 dark:text-slate-100 flex items-center`}>
+        <div className="flex flex-col text-left leading-tight shrink-0 min-w-0">
+          <div className={`${textSizes[size]} font-black tracking-tight text-slate-900 dark:text-slate-100 flex items-center whitespace-nowrap`}>
             <span>Azur</span>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 via-indigo-600 to-cyan-500 dark:from-sky-400 dark:via-cyan-300 dark:to-indigo-400">
               Learn
             </span>
           </div>
           {showSubtitle && (
-            <span className={`${subtitleSizes[size]} font-semibold text-slate-500 dark:text-slate-400 tracking-wide mt-0.5`}>
+            <span className={`${subtitleSizes[size]} font-semibold text-slate-500 dark:text-slate-400 tracking-wide mt-0.5 hidden sm:block whitespace-nowrap`}>
               AI &amp; Machine Learning Academy
             </span>
           )}
@@ -120,4 +120,3 @@ export const AzurLearnLogo: React.FC<AzurLearnLogoProps> = ({
     </div>
   );
 };
-

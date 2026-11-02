@@ -63,42 +63,45 @@ export const LessonPythonCode: React.FC<LessonPythonCodeProps> = ({ lesson }) =>
 
       {/* Code Tabs Header */}
       <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm overflow-hidden">
-        <div className="p-3 sm:px-6 border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/70 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
+        <div className="p-3 sm:px-6 border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/70 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
             <button
               onClick={() => setActiveCodeTab('scratch')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+              className={`px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 sm:gap-2 transition-all min-h-[38px] ${
                 activeCodeTab === 'scratch'
                   ? 'bg-emerald-600 text-white shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
-              <Code2 className="w-4 h-4" />
-              <span>1. NumPy From Scratch</span>
+              <Code2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+              <span className="sm:hidden">Scratch</span>
+              <span className="hidden sm:inline">1. NumPy From Scratch</span>
             </button>
 
             <button
               onClick={() => setActiveCodeTab('sklearn')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+              className={`px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 sm:gap-2 transition-all min-h-[38px] ${
                 activeCodeTab === 'sklearn'
                   ? 'bg-indigo-600 text-white shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
-              <Cpu className="w-4 h-4" />
-              <span>2. Production Scikit-Learn</span>
+              <Cpu className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+              <span className="sm:hidden">Scikit-Learn</span>
+              <span className="hidden sm:inline">2. Production Scikit-Learn</span>
             </button>
 
             <button
               onClick={() => setActiveCodeTab('sandbox')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+              className={`px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 sm:gap-2 transition-all min-h-[38px] ${
                 activeCodeTab === 'sandbox'
                   ? 'bg-violet-600 text-white shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
-              <Terminal className="w-4 h-4" />
-              <span>3. Full Runnable Sandbox</span>
+              <Terminal className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+              <span className="sm:hidden">Sandbox</span>
+              <span className="hidden sm:inline">3. Full Runnable Sandbox</span>
             </button>
           </div>
 
