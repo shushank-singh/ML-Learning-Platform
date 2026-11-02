@@ -9,10 +9,12 @@ import {
   ResumeLessonInfo,
 } from '@/data/learningPlatformConfig';
 import { HeroSection } from '@/components/dashboard/HeroSection';
-import { PlatformFeaturesSection } from '@/components/dashboard/PlatformFeaturesSection';
-import { LearningPathsSection } from '@/components/dashboard/LearningPathsSection';
-import { PlatformOverviewSection } from '@/components/dashboard/PlatformOverviewSection';
-import { ContinueLearningSection } from '@/components/dashboard/ContinueLearningSection';
+import { LoggedInDashboardBanner } from '@/components/dashboard/LoggedInDashboardBanner';
+import { LearningTracksShowcase } from '@/components/dashboard/LearningTracksShowcase';
+import { WhyLearnHereSection } from '@/components/dashboard/WhyLearnHereSection';
+import { LearningJourneyRoadmap } from '@/components/dashboard/LearningJourneyRoadmap';
+import { ProjectShowcaseSection } from '@/components/dashboard/ProjectShowcaseSection';
+import { FinalCTASection } from '@/components/dashboard/FinalCTASection';
 import { PlatformFooter } from '@/components/dashboard/PlatformFooter';
 
 export default function PlatformDashboardPage() {
@@ -35,7 +37,18 @@ export default function PlatformDashboardPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans selection:bg-indigo-500 selection:text-white transition-colors duration-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-16 sm:space-y-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-16 sm:space-y-24">
+        {/* Section 0: Logged-in Personal Banner (Shown when authenticated) */}
+        <LoggedInDashboardBanner
+          progress={progress}
+          resumeLesson={resumeLesson}
+          overallStats={{
+            totalLessons: overallStats.totalLessons,
+            completedLessons: overallStats.completedLessons,
+            percentage: overallStats.percentage,
+          }}
+        />
+
         {/* Section A: Hero Section */}
         <HeroSection
           totalLessons={overallStats.totalLessons}
@@ -44,23 +57,23 @@ export default function PlatformDashboardPage() {
           resumeLesson={resumeLesson}
         />
 
-        {/* Section B: Platform Features (8 Capabilities) */}
-        <PlatformFeaturesSection />
+        {/* Section B: Learning Tracks Showcase (8 AI & ML Tracks + Complementary Labs) */}
+        <LearningTracksShowcase progress={progress} />
 
-        {/* Section C: Learning Paths (Machine Learning, Algorithms, Programming) */}
-        <LearningPathsSection progress={progress} />
+        {/* Section C: Why Learn Here? (6 Interactive Core Features) */}
+        <WhyLearnHereSection />
 
-        {/* Section D: Learning Platform Overview (Visual 6-Step Workflow) */}
-        <PlatformOverviewSection />
+        {/* Section D: Learning Journey Roadmap (Sequential Stepper) */}
+        <LearningJourneyRoadmap />
 
-        {/* Section E: Continue Learning (Resume Card or Friendly Empty State) */}
-        <ContinueLearningSection
-          progress={progress}
-          resumeLesson={resumeLesson}
-        />
+        {/* Section E: Real-World Project Showcase */}
+        <ProjectShowcaseSection />
+
+        {/* Section F: Final Call to Action */}
+        <FinalCTASection />
       </div>
 
-      {/* Section F: Clean Platform Footer */}
+      {/* Section G: Academy Platform Footer */}
       <PlatformFooter />
     </div>
   );

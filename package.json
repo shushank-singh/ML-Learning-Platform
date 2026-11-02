@@ -11,7 +11,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "ML Mastery Lab — Learn Machine Learning from Mathematics to Deployment",
+  "description": "AzurLearn — Learn Machine Learning from Mathematics to Production AI",
   "dependencies": {
     "@google/genai": "^2.31.0",
     "@monaco-editor/react": "^4.7.0",

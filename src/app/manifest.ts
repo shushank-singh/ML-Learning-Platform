@@ -2,8 +2,8 @@ import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Complete Tech Learning Academy',
-    short_name: 'Learning Academy',
+    name: 'AzurLearn — AI & Engineering Academy',
+    short_name: 'AzurLearn',
     description:
       'Learn Machine Learning, Deep Learning, Transformers, ,DSA, Python,Java,LLMs, RAG, AI Agents, and MLOps through visual explanations, interactive labs, practical coding, and real-world projects.',
     start_url: '/',

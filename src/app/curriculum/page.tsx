@@ -250,7 +250,7 @@ export default function CurriculumPage() {
           <span>Category 1 · Artificial Intelligence &amp; Deep Learning</span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
-          Complete AI &amp; ML Academy
+          AzurLearn AI &amp; ML Curriculum
         </h1>
         <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
           Learn Machine Learning, Deep Learning, Transformers, LLMs, RAG, AI Agents, and MLOps through visual explanations, interactive labs, practical coding, and real-world projects. Every lesson pairs intuitive real-life analogies, step-by-step mathematical derivations, runnable code, expected outputs, common mistakes, practice exercises, and interactive visualizers.
@@ -297,7 +297,7 @@ export default function CurriculumPage() {
             }}
             className={`cursor-pointer p-4 rounded-xl border transition-all ${
               selectedTrack === 'deep-learning' && viewMode === 'catalog'
-                ? 'bg-violet-950/40 border-violet-500 shadow-md shadow-violet-500/10 ring-1 ring-violet-500'
+                ? 'bg-violet-50 dark:bg-violet-950/40 border-violet-500 shadow-md shadow-violet-500/10 ring-1 ring-violet-500'
                 : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-violet-400/50'
             }`}
           >
@@ -337,7 +337,7 @@ export default function CurriculumPage() {
             }}
             className={`cursor-pointer p-4 rounded-xl border transition-all ${
               selectedTrack === 'ml-core' && viewMode === 'catalog'
-                ? 'bg-indigo-950/40 border-indigo-500 shadow-md shadow-indigo-500/10 ring-1 ring-indigo-500'
+                ? 'bg-indigo-50 dark:bg-indigo-950/40 border-indigo-500 shadow-md shadow-indigo-500/10 ring-1 ring-indigo-500'
                 : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-indigo-400/50'
             }`}
           >
@@ -371,11 +371,11 @@ export default function CurriculumPage() {
           <div
             onClick={() => {
               setViewMode('catalog');
-              setSelectedTrack(selectedTrack === 'numpy' ? 'all' : 'numpy');
+              setSelectedTrack('numpy');
             }}
             className={`cursor-pointer p-4 rounded-xl border transition-all ${
               selectedTrack === 'numpy' && viewMode === 'catalog'
-                ? 'bg-cyan-950/40 border-cyan-500 shadow-md shadow-cyan-500/10 ring-1 ring-cyan-500'
+                ? 'bg-cyan-50 dark:bg-cyan-950/40 border-cyan-500 shadow-md shadow-cyan-500/10 ring-1 ring-cyan-500'
                 : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-cyan-400/50'
             }`}
           >
@@ -409,11 +409,11 @@ export default function CurriculumPage() {
           <div
             onClick={() => {
               setViewMode('catalog');
-              setSelectedTrack(selectedTrack === 'pandas' ? 'all' : 'pandas');
+              setSelectedTrack('pandas');
             }}
             className={`cursor-pointer p-4 rounded-xl border transition-all ${
               selectedTrack === 'pandas' && viewMode === 'catalog'
-                ? 'bg-emerald-950/40 border-emerald-500 shadow-md shadow-emerald-500/10 ring-1 ring-emerald-500'
+                ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 shadow-md shadow-emerald-500/10 ring-1 ring-emerald-500'
                 : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-emerald-400/50'
             }`}
           >

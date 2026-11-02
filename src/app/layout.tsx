@@ -12,10 +12,10 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Complete Tech Learning Academy — From ML Foundations to Production AI',
+  title: 'AzurLearn — From ML Foundations to Production AI',
   description:
-    'Learn Machine Learning, Deep Learning, Transformers, ,DSA, Python,Java,LLMs, RAG, AI Agents, and MLOps through visual explanations, interactive labs, practical coding, and real-world projects.',
-  applicationName: 'Complete Tech Learning Academy',
+    'Learn Machine Learning, Deep Learning, Transformers, LLMs, RAG, AI Agents, and MLOps through visual explanations, interactive labs, practical coding, and real-world projects.',
+  applicationName: 'AzurLearn',
   manifest: '/manifest.webmanifest',
   icons: {
     icon: [
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'Learning Academy',
+    title: 'AzurLearn',
   },
   formatDetection: {
     telephone: false,
@@ -43,8 +43,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function() {
+              try {
+                var saved = localStorage.getItem('ml_theme');
+                if (saved === 'dark') {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (e) {}
+            })();`,
+          }}
+        />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />

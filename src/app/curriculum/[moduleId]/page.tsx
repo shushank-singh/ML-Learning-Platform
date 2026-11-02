@@ -47,21 +47,21 @@ export default function ModuleOverviewPage() {
       </div>
 
       {/* Module Hero */}
-      <div className="rounded-2xl bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 border border-indigo-900/40 p-6 sm:p-8 text-white shadow-xl space-y-4">
+      <div className="rounded-3xl bg-gradient-to-br from-indigo-50/80 via-white to-slate-100/80 dark:from-indigo-950/80 dark:via-slate-900 dark:to-slate-950 border border-indigo-200/90 dark:border-indigo-900/40 p-6 sm:p-8 text-slate-900 dark:text-white shadow-sm dark:shadow-xl space-y-4">
         <div className="flex items-center gap-2">
-          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
+          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-400/30">
             {mod.badge}
           </span>
-          <span className="text-xs text-indigo-200/70 flex items-center gap-1">
+          <span className="text-xs text-slate-500 dark:text-indigo-200/70 flex items-center gap-1 font-mono">
             <Clock className="w-3.5 h-3.5" />
             {mod.estimatedHours} Hours of In-Depth Instruction
           </span>
         </div>
 
-        <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
+        <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
           Module {mod.number}: {mod.title}
         </h1>
-        <p className="text-base text-indigo-100/80 font-light max-w-2xl leading-relaxed">
+        <p className="text-base text-slate-600 dark:text-indigo-100/80 font-normal max-w-2xl leading-relaxed">
           {mod.description}
         </p>
 

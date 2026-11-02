@@ -10,7 +10,7 @@ interface ThemeToggleProps {
 }
 
 export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className = '', showLabel = false }) => {
-  const [theme, setLocalTheme] = useState<ThemeMode>('dark');
+  const [theme, setLocalTheme] = useState<ThemeMode>('light');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

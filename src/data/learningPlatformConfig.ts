@@ -35,7 +35,7 @@ import { MODULES_CATALOG_JAVA } from '@/data/java/curriculum';
 import { UserProgressState } from '@/lib/types';
 
 export const CANONICAL_BRANDING = {
-  academyTitle: 'Complete AI & ML Academy',
+  academyTitle: 'AzurLearn',
   trackTitle: 'Complete AI & ML',
   shortSubtitle: 'From ML Foundations to Production AI',
   description:

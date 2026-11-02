@@ -33,6 +33,7 @@ import { UserProgressState } from '@/lib/types';
 import { SearchModal } from './SearchModal';
 import { UserMenu } from '@/components/auth/UserMenu';
 import { AuthGuard } from '@/components/auth/AuthGuard';
+import { AzurLearnLogo } from '@/components/shared/AzurLearnLogo';
 
 const ML_NAV_ITEMS = [
   { name: 'AI & ML Curriculum', href: '/curriculum', icon: BookOpen },
@@ -52,7 +53,7 @@ export const MLLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const [progress, setProgress] = useState<UserProgressState | null>(null);
-  const [isDark, setIsDark] = useState<boolean>(true);
+  const [isDark, setIsDark] = useState<boolean>(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -118,18 +119,8 @@ export const MLLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
           <div className="h-4 w-px bg-slate-200 dark:bg-slate-800 hidden sm:block" />
 
-          <Link href="/curriculum" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold text-sm shadow-sm">
-              <Brain className="w-4 h-4" />
-            </div>
-            <div>
-              <span className="font-extrabold text-sm tracking-tight text-slate-900 dark:text-slate-100 block leading-tight">
-                Complete AI & ML Academy
-              </span>
-              <span className="text-[10px] text-indigo-600 dark:text-indigo-400 font-semibold block leading-tight">
-                From ML Foundations to Production AI
-              </span>
-            </div>
+          <Link href="/curriculum" className="flex items-center group">
+            <AzurLearnLogo size="sm" />
           </Link>
         </div>
 

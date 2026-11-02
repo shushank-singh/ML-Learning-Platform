@@ -5,20 +5,17 @@ export type ThemeMode = 'dark' | 'light';
 export const THEME_STORAGE_KEY = 'ml_theme';
 
 export function getInitialTheme(): ThemeMode {
-  if (typeof window === 'undefined') return 'dark';
+  if (typeof window === 'undefined') return 'light';
   try {
     const saved = localStorage.getItem(THEME_STORAGE_KEY);
     if (saved === 'dark' || saved === 'light') {
       return saved;
     }
-    // Check system preference if no saved theme
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-      return 'light';
-    }
   } catch (e) {
     console.error('Failed to read theme preference', e);
   }
-  return 'dark';
+  // Default to light mode for all new visitors
+  return 'light';
 }
 
 export function applyTheme(mode: ThemeMode): void {
@@ -38,7 +35,7 @@ export function applyTheme(mode: ThemeMode): void {
 }
 
 export function toggleTheme(): ThemeMode {
-  if (typeof window === 'undefined') return 'dark';
+  if (typeof window === 'undefined') return 'light';
   const isDark = document.documentElement.classList.contains('dark');
   const next: ThemeMode = isDark ? 'light' : 'dark';
   applyTheme(next);

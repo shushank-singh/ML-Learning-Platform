@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { usePathname } from 'next/navigation';
-import { ThemeToggle } from '@/components/shared/ThemeToggle';
+import { Navbar } from './Navbar';
 import { UserMenu } from '@/components/auth/UserMenu';
 
 interface LandingLayoutProps {
@@ -10,8 +10,8 @@ interface LandingLayoutProps {
 }
 
 /**
- * LandingLayout: Clean, standalone layout for the root home dashboard (/) and auth pages.
- * Features an elegant floating header with UserMenu & ThemeToggle.
+ * LandingLayout: Premium layout for platform home dashboard and standalone pages.
+ * Features the Academy Navigation Bar with full responsive drawer, search and UserMenu integration.
  */
 export const LandingLayout: React.FC<LandingLayoutProps> = ({ children }) => {
   const pathname = usePathname() || '/';
@@ -23,14 +23,11 @@ export const LandingLayout: React.FC<LandingLayoutProps> = ({ children }) => {
     pathname.startsWith('/auth');
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased font-sans transition-colors duration-200">
-      {/* Floating Header Actions */}
-      <div className="fixed top-4 right-4 sm:top-6 sm:right-6 z-50 flex items-center gap-2.5">
-        {!isAuthPage && <UserMenu className="shadow-lg backdrop-blur-md" />}
-        <ThemeToggle showLabel={false} className="shadow-lg backdrop-blur-md" />
-      </div>
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased font-sans transition-colors duration-200 flex flex-col">
+      {/* Primary Navigation Bar (includes UserMenu & ThemeToggle) */}
+      <Navbar isAuthPage={isAuthPage} />
 
-      <main className="w-full">
+      <main className="flex-1 w-full">
         {children}
       </main>
     </div>

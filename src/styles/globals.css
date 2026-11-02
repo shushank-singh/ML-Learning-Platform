@@ -12,7 +12,8 @@
     --primary: #4f46e5;
     --primary-foreground: #ffffff;
     --muted: #f1f5f9;
-    --muted-foreground: #64748b;
+    --muted-foreground: #475569;
+    --secondary-accent: #0ea5e9;
   }
 
   .dark {
@@ -25,6 +26,7 @@
     --primary-foreground: #ffffff;
     --muted: #1e293b;
     --muted-foreground: #94a3b8;
+    --secondary-accent: #38bdf8;
   }
 }
 

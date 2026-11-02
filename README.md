@@ -1,4 +1,4 @@
-# ML Mastery Lab — Learn Machine Learning from Mathematics to Deployment
+# AzurLearn — Learn Machine Learning from Mathematics to Deployment
 
 [![Next.js 14](https://img.shields.io/badge/Next.js-14.2-black?style=flat&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)

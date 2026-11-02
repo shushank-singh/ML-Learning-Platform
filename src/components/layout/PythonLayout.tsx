@@ -47,7 +47,7 @@ export const PythonLayout: React.FC<{ children: React.ReactNode }> = ({ children
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const [progress, setProgress] = useState<UserProgressState | null>(null);
-  const [isDark, setIsDark] = useState<boolean>(true);
+  const [isDark, setIsDark] = useState<boolean>(false);
   const pathname = usePathname();
 
   useEffect(() => {
