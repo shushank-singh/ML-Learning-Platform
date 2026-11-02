@@ -4195,7 +4195,7 @@ export const pandasModule9Lessons: Record<string, LessonContent> = {
         "Learned to write clean, idiomatic modern Pandas code.",
         "Ready to progress to the next lesson in the curriculum."
       ],
-      "nextLessonId": "pandas-project",
+      "nextLessonId": "pandas-fp-l1",
       "nextLessonTitle": "End-to-End Sales Analytics Capstone Project",
       "nextLessonModuleId": "pandas-project"
     }

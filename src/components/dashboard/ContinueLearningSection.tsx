@@ -272,7 +272,7 @@ export const ContinueLearningSection: React.FC<ContinueLearningSectionProps> = (
             </a>
 
             <Link
-              href="/curriculum/module-0/m0-l1"
+              href="/curriculum/phase-0-mod-1/p0-ai-ml-hierarchy"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-xs transition-colors border border-slate-200 dark:border-slate-700"
             >
               <Sparkles className="w-4 h-4 text-amber-500 dark:text-amber-400" />

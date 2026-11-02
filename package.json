@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "node tests/verify.js && node tests/auth-verify.js && node tests/test-ai-tutor.js && node tests/verify_transformers.js && node tests/verify_genai.js && node tests/verify_rag.js && node tests/verify_agents.js && node tests/verify_mlops.js && node tests/verify_deployment.js"
+    "test": "node tests/validate_curriculum_integrity.js && node tests/verify.js && node tests/auth-verify.js && node tests/test-ai-tutor.js && node tests/verify_transformers.js && node tests/verify_genai.js && node tests/verify_rag.js && node tests/verify_agents.js && node tests/verify_mlops.js && node tests/verify_deployment.js",
+    "test:integrity": "node tests/validate_curriculum_integrity.js"
   },
   "keywords": [],
   "author": "",

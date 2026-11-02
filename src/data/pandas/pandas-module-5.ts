@@ -13,7 +13,7 @@ export const pandasModule5Data: ModuleData = {
   "lessons": [
     {
       "id": "pandas-m5-l1",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-5",
       "title": "The Split-Apply-Combine Paradigm Explained",
       "description": "The three-step architectural lifecycle of modern grouped data operations",
       "order": 1,
@@ -23,7 +23,7 @@ export const pandasModule5Data: ModuleData = {
     },
     {
       "id": "pandas-m5-l2",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-5",
       "title": "Grouping by a Single Column",
       "description": "Basic groupby syntax, extracting group metrics, and exploring GroupBy objects",
       "order": 2,
@@ -33,7 +33,7 @@ export const pandasModule5Data: ModuleData = {
     },
     {
       "id": "pandas-m5-l3",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-5",
       "title": "Grouping by Multiple Columns",
       "description": "Hierarchical multi-index grouping across combinations of categorical attributes",
       "order": 3,
@@ -43,7 +43,7 @@ export const pandasModule5Data: ModuleData = {
     },
     {
       "id": "pandas-m5-l4",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-5",
       "title": "Standard Aggregation Functions: sum, mean, median, count, size, min, max",
       "description": "Comprehensive summary metric calculation and understanding count() vs size()",
       "order": 4,
@@ -53,7 +53,7 @@ export const pandasModule5Data: ModuleData = {
     },
     {
       "id": "pandas-m5-l5",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-5",
       "title": "Using agg() with Multiple Functions and Column Maps",
       "description": "Computing diverse custom metrics across different features in a single operation",
       "order": 5,
@@ -63,7 +63,7 @@ export const pandasModule5Data: ModuleData = {
     },
     {
       "id": "pandas-m5-l6",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-5",
       "title": "Named Aggregation for Clean Output Column Naming",
       "description": "Banishing messy MultiIndex column tuples using pd.NamedAgg syntax",
       "order": 6,
@@ -73,7 +73,7 @@ export const pandasModule5Data: ModuleData = {
     },
     {
       "id": "pandas-m5-l7",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-5",
       "title": "Broadcasting Group Calculations with transform()",
       "description": "Adding group-level statistics back to individual rows without collapsing table length",
       "order": 7,
@@ -83,7 +83,7 @@ export const pandasModule5Data: ModuleData = {
     },
     {
       "id": "pandas-m5-l8",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-5",
       "title": "Direct Comparison: transform() versus agg()",
       "description": "A rigorous side-by-side analysis of shape, return types, and usage patterns",
       "order": 8,
@@ -93,7 +93,7 @@ export const pandasModule5Data: ModuleData = {
     },
     {
       "id": "pandas-m5-l9",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-5",
       "title": "Filtering Groups by Aggregate Criteria with filter()",
       "description": "Discarding entire cohorts that fail group-level conditions (e.g. minimum member size)",
       "order": 9,
@@ -103,7 +103,7 @@ export const pandasModule5Data: ModuleData = {
     },
     {
       "id": "pandas-m5-l10",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-5",
       "title": "Sorting and Ranking Within Groups",
       "description": "Calculating within-cohort rank orders and extracting top-N records per category",
       "order": 10,
@@ -113,7 +113,7 @@ export const pandasModule5Data: ModuleData = {
     },
     {
       "id": "pandas-m5-l11",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-5",
       "title": "Creating Multi-Dimensional Pivot Tables with pivot_table()",
       "description": "Building cross-tabular summaries with index, columns, values, and margins",
       "order": 11,
@@ -123,7 +123,7 @@ export const pandasModule5Data: ModuleData = {
     },
     {
       "id": "pandas-m5-l12",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-5",
       "title": "Frequency Contingency Tables with crosstab()",
       "description": "Analyzing relationships between categorical variables, proportions, and chi-square matrices",
       "order": 12,
@@ -137,7 +137,7 @@ export const pandasModule5Data: ModuleData = {
 export const pandasModule5Lessons: Record<string, LessonContent> = {
   "pandas-m5-l1": {
     "id": "pandas-m5-l1",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-5",
     "title": "The Split-Apply-Combine Paradigm Explained",
     "subtitle": "The three-step architectural lifecycle of modern grouped data operations",
     "order": 1,
@@ -401,12 +401,12 @@ export const pandasModule5Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m5-l2",
       "nextLessonTitle": "Grouping by a Single Column",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-5"
     }
   },
   "pandas-m5-l2": {
     "id": "pandas-m5-l2",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-5",
     "title": "Grouping by a Single Column",
     "subtitle": "Basic groupby syntax, extracting group metrics, and exploring GroupBy objects",
     "order": 2,
@@ -670,12 +670,12 @@ export const pandasModule5Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m5-l3",
       "nextLessonTitle": "Grouping by Multiple Columns",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-5"
     }
   },
   "pandas-m5-l3": {
     "id": "pandas-m5-l3",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-5",
     "title": "Grouping by Multiple Columns",
     "subtitle": "Hierarchical multi-index grouping across combinations of categorical attributes",
     "order": 3,
@@ -939,12 +939,12 @@ export const pandasModule5Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m5-l4",
       "nextLessonTitle": "Standard Aggregation Functions: sum, mean, median, count, size, min, max",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-5"
     }
   },
   "pandas-m5-l4": {
     "id": "pandas-m5-l4",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-5",
     "title": "Standard Aggregation Functions: sum, mean, median, count, size, min, max",
     "subtitle": "Comprehensive summary metric calculation and understanding count() vs size()",
     "order": 4,
@@ -1208,12 +1208,12 @@ export const pandasModule5Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m5-l5",
       "nextLessonTitle": "Using agg() with Multiple Functions and Column Maps",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-5"
     }
   },
   "pandas-m5-l5": {
     "id": "pandas-m5-l5",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-5",
     "title": "Using agg() with Multiple Functions and Column Maps",
     "subtitle": "Computing diverse custom metrics across different features in a single operation",
     "order": 5,
@@ -1477,12 +1477,12 @@ export const pandasModule5Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m5-l6",
       "nextLessonTitle": "Named Aggregation for Clean Output Column Naming",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-5"
     }
   },
   "pandas-m5-l6": {
     "id": "pandas-m5-l6",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-5",
     "title": "Named Aggregation for Clean Output Column Naming",
     "subtitle": "Banishing messy MultiIndex column tuples using pd.NamedAgg syntax",
     "order": 6,
@@ -1746,12 +1746,12 @@ export const pandasModule5Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m5-l7",
       "nextLessonTitle": "Broadcasting Group Calculations with transform()",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-5"
     }
   },
   "pandas-m5-l7": {
     "id": "pandas-m5-l7",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-5",
     "title": "Broadcasting Group Calculations with transform()",
     "subtitle": "Adding group-level statistics back to individual rows without collapsing table length",
     "order": 7,
@@ -2015,12 +2015,12 @@ export const pandasModule5Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m5-l8",
       "nextLessonTitle": "Direct Comparison: transform() versus agg()",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-5"
     }
   },
   "pandas-m5-l8": {
     "id": "pandas-m5-l8",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-5",
     "title": "Direct Comparison: transform() versus agg()",
     "subtitle": "A rigorous side-by-side analysis of shape, return types, and usage patterns",
     "order": 8,
@@ -2284,12 +2284,12 @@ export const pandasModule5Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m5-l9",
       "nextLessonTitle": "Filtering Groups by Aggregate Criteria with filter()",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-5"
     }
   },
   "pandas-m5-l9": {
     "id": "pandas-m5-l9",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-5",
     "title": "Filtering Groups by Aggregate Criteria with filter()",
     "subtitle": "Discarding entire cohorts that fail group-level conditions (e.g. minimum member size)",
     "order": 9,
@@ -2553,12 +2553,12 @@ export const pandasModule5Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m5-l10",
       "nextLessonTitle": "Sorting and Ranking Within Groups",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-5"
     }
   },
   "pandas-m5-l10": {
     "id": "pandas-m5-l10",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-5",
     "title": "Sorting and Ranking Within Groups",
     "subtitle": "Calculating within-cohort rank orders and extracting top-N records per category",
     "order": 10,
@@ -2822,12 +2822,12 @@ export const pandasModule5Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m5-l11",
       "nextLessonTitle": "Creating Multi-Dimensional Pivot Tables with pivot_table()",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-5"
     }
   },
   "pandas-m5-l11": {
     "id": "pandas-m5-l11",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-5",
     "title": "Creating Multi-Dimensional Pivot Tables with pivot_table()",
     "subtitle": "Building cross-tabular summaries with index, columns, values, and margins",
     "order": 11,
@@ -3091,12 +3091,12 @@ export const pandasModule5Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m5-l12",
       "nextLessonTitle": "Frequency Contingency Tables with crosstab()",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-5"
     }
   },
   "pandas-m5-l12": {
     "id": "pandas-m5-l12",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-5",
     "title": "Frequency Contingency Tables with crosstab()",
     "subtitle": "Analyzing relationships between categorical variables, proportions, and chi-square matrices",
     "order": 12,
@@ -3360,7 +3360,7 @@ export const pandasModule5Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m6-l1",
       "nextLessonTitle": "Understanding Relational Dataset Relationships",
-      "nextLessonModuleId": "pandas-m6-l1"
+      "nextLessonModuleId": "pandas-module-6"
     }
   }
 };

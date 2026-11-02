@@ -4197,7 +4197,7 @@ export const pandasModule7Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m8-l1",
       "nextLessonTitle": "Vectorized Operations versus Python Loops in Pandas",
-      "nextLessonModuleId": "pandas-m8-l1"
+      "nextLessonModuleId": "pandas-module-8"
     }
   }
 };

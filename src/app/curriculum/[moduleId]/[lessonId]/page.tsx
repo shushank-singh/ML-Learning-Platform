@@ -64,6 +64,16 @@ export default function LessonDetailPage() {
             <span>Full Syllabus</span>
           </Link>
         </div>
+
+        <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-center gap-4 text-xs text-slate-500">
+          <Link href="/python" className="hover:text-indigo-600 transition-colors">Python Lab</Link>
+          <span>·</span>
+          <Link href="/dsa" className="hover:text-indigo-600 transition-colors">DSA Lab</Link>
+          <span>·</span>
+          <Link href="/java" className="hover:text-indigo-600 transition-colors">Java Lab</Link>
+          <span>·</span>
+          <Link href="/projects" className="hover:text-indigo-600 transition-colors">Projects</Link>
+        </div>
       </div>
     );
   }

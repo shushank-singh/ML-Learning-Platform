@@ -122,8 +122,8 @@ export const module6Lessons: Record<string, LessonContent> = {
     ],
     prerequisites: ['Probability fundamentals', 'Bias-Variance tradeoff', 'Decision Trees basics'],
     previousLesson: {
-      id: 'cost-sensitive-thresholding',
-      title: 'Cost-Sensitive Learning & Threshold Tuning',
+      id: 'threshold-tuning-cost-matrix',
+      title: 'Classification Threshold Tuning & Cost Matrix Optimization',
       moduleId: 'module-5',
     },
     analogy: {

@@ -593,7 +593,7 @@ print(f"Learned Intercept: {b:.4f}, Weights: {w}")
       'The residual vector is geometrically orthogonal to the column space spanned by the design matrix X.',
       'When features exhibit multicollinearity or when d is very large, OLS becomes unstable; regularization (Ridge, Lasso) and Gradient Descent solve these bottlenecks.',
     ],
-    nextLessonId: 'multiple-regression',
+    nextLessonId: 'multiple-linear-regression',
     nextLessonTitle: 'Multiple Linear Regression, Multicollinearity & Regularization (Ridge & Lasso)',
     nextLessonModuleId: 'module-3',
   },

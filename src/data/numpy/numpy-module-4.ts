@@ -3081,7 +3081,7 @@ export const numpyModule4Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "numpy-m5-l1",
       "nextLessonTitle": "Principles of Vectorization in Numerical Computing",
-      "nextLessonModuleId": "numpy-m5-l1"
+      "nextLessonModuleId": "numpy-module-5"
     }
   }
 };

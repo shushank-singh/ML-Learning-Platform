@@ -1,4 +1,6 @@
 import { ModuleData, LessonContent } from '@/lib/types';
+import { getCanonicalModuleId, resolveCanonicalLessonTarget } from '@/lib/routes';
+import { MODULES_CATALOG_PHASE0, PHASE0_FULL_LESSONS } from '@/data/phase0/curriculum';
 import { module0Data, module0Lessons } from './module0';
 import { module1Data, module1Lessons } from './module1';
 import { module2Data, module2Lessons } from './module2';
@@ -21,6 +23,7 @@ import { MODULES_CATALOG_AGENTS, AGENTS_FULL_LESSONS } from '@/data/agents/curri
 import { MODULES_CATALOG_MLOPS, MLOPS_FULL_LESSONS } from '@/data/mlops/curriculum';
 import { MODULES_CATALOG_DEPLOYMENT, DEPLOYMENT_FULL_LESSONS } from '@/data/deployment/curriculum';
 
+export { MODULES_CATALOG_PHASE0, PHASE0_FULL_LESSONS } from '@/data/phase0/curriculum';
 export { MODULES_CATALOG_NUMPY, NUMPY_FULL_LESSONS } from '@/data/numpy/curriculum';
 export { MODULES_CATALOG_PANDAS, PANDAS_FULL_LESSONS } from '@/data/pandas/curriculum';
 export { MODULES_CATALOG_DEEP_LEARNING, DEEP_LEARNING_FULL_LESSONS } from '@/data/deep-learning/curriculum';
@@ -47,6 +50,7 @@ export const MODULES_CATALOG_ML_CORE: ModuleData[] = [
 ];
 
 export const MODULES_CATALOG: ModuleData[] = [
+  ...MODULES_CATALOG_PHASE0,
   ...MODULES_CATALOG_ML_CORE,
   ...MODULES_CATALOG_DEEP_LEARNING,
   ...MODULES_CATALOG_TRANSFORMERS,
@@ -60,6 +64,7 @@ export const MODULES_CATALOG: ModuleData[] = [
 ];
 
 export const FULL_LESSONS: Record<string, LessonContent> = {
+  ...PHASE0_FULL_LESSONS,
   ...module0Lessons,
   ...module1Lessons,
   ...module2Lessons,
@@ -84,9 +89,21 @@ export const FULL_LESSONS: Record<string, LessonContent> = {
 };
 
 export function getModule(moduleId: string): ModuleData | undefined {
-  return MODULES_CATALOG.find((m) => m.id === moduleId);
+  if (!moduleId) return undefined;
+  const canonicalId = getCanonicalModuleId(moduleId);
+  return MODULES_CATALOG.find((m) => m.id === canonicalId || m.id === moduleId);
 }
 
 export function getLesson(moduleId: string, lessonId: string): LessonContent | undefined {
-  return FULL_LESSONS[lessonId];
+  if (!lessonId) return undefined;
+  // Direct lookup
+  if (FULL_LESSONS[lessonId]) {
+    return FULL_LESSONS[lessonId];
+  }
+  // Canonical target lookup via alias helper
+  const target = resolveCanonicalLessonTarget(moduleId, lessonId);
+  if (FULL_LESSONS[target.lessonId]) {
+    return FULL_LESSONS[target.lessonId];
+  }
+  return undefined;
 }

@@ -22,11 +22,44 @@ export default function ModuleOverviewPage() {
 
   if (!mod) {
     return (
-      <div className="p-8 text-center">
-        <h1 className="text-xl font-bold">Module not found</h1>
-        <Link href="/curriculum" className="text-indigo-600 underline text-sm mt-2 block">
-          Return to Curriculum
-        </Link>
+      <div className="p-8 sm:p-12 max-w-xl mx-auto text-center space-y-6">
+        <div className="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 flex items-center justify-center mx-auto shadow-sm">
+          <BookOpen className="w-8 h-8" />
+        </div>
+        <div className="space-y-2">
+          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-slate-100">
+            Module Not Found
+          </h1>
+          <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-light">
+            The requested module identifier <code className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono text-slate-800 dark:text-slate-200">{moduleId}</code> does not match any active curriculum module in the registry.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <Link
+            href="/curriculum"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-md transition-colors"
+          >
+            <BookOpen className="w-4 h-4" />
+            <span>Browse Full Curriculum</span>
+          </Link>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold transition-colors"
+          >
+            <span>Platform Home</span>
+          </Link>
+        </div>
+
+        <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-center gap-4 text-xs text-slate-500">
+          <Link href="/python" className="hover:text-indigo-600 transition-colors">Python Lab</Link>
+          <span>·</span>
+          <Link href="/dsa" className="hover:text-indigo-600 transition-colors">DSA Lab</Link>
+          <span>·</span>
+          <Link href="/java" className="hover:text-indigo-600 transition-colors">Java Lab</Link>
+          <span>·</span>
+          <Link href="/projects" className="hover:text-indigo-600 transition-colors">Projects</Link>
+        </div>
       </div>
     );
   }

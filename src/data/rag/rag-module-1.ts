@@ -113,7 +113,7 @@ export const ragModule1Lessons: Record<string, LessonContent> = {
       'Familiarity with vector spaces and dot product calculations',
     ],
     previousLesson: {
-      id: 'genai-15-capstone-llm-application',
+      id: 'genai-15-llm-capstone',
       title: 'GenAI-15: Production GenAI Capstone: Evaluated Multimodal Assistant',
       moduleId: 'p7-m15',
     },

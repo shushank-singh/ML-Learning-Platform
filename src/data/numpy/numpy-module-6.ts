@@ -2802,7 +2802,7 @@ export const numpyModule6Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "numpy-fp-student-analytics",
       "nextLessonTitle": "Capstone Project: Student Performance Analytics",
-      "nextLessonModuleId": "numpy-fp-student-analytics"
+      "nextLessonModuleId": "numpy-final-project"
     }
   }
 };

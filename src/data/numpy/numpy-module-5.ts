@@ -3360,7 +3360,7 @@ export const numpyModule5Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "numpy-m6-l1",
       "nextLessonTitle": "Loading and Saving Numerical Data",
-      "nextLessonModuleId": "numpy-m6-l1"
+      "nextLessonModuleId": "numpy-module-6"
     }
   }
 };

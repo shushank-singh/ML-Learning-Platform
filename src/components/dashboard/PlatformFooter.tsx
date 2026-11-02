@@ -68,37 +68,37 @@ export const PlatformFooter: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/curriculum/tf-module-1" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
+                <Link href="/curriculum/p6-m1" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5 text-pink-500" />
                   <span>Transformers</span>
                 </Link>
               </li>
               <li>
-                <Link href="/curriculum/genai-module-1" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
+                <Link href="/curriculum/p7-m1" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
                   <Zap className="w-3.5 h-3.5 text-amber-500" />
                   <span>Generative AI &amp; LLMs</span>
                 </Link>
               </li>
               <li>
-                <Link href="/curriculum/rag-module-1" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
+                <Link href="/curriculum/p8-m1" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
                   <Target className="w-3.5 h-3.5 text-cyan-500" />
                   <span>RAG &amp; Vector Search</span>
                 </Link>
               </li>
               <li>
-                <Link href="/curriculum/agent-module-1" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
+                <Link href="/curriculum/p9-m1" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
                   <Bot className="w-3.5 h-3.5 text-emerald-500" />
                   <span>AI Agents</span>
                 </Link>
               </li>
               <li>
-                <Link href="/curriculum/mlops-module-1" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
+                <Link href="/curriculum/p10-m1" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
                   <Activity className="w-3.5 h-3.5 text-blue-500" />
                   <span>MLOps &amp; LLMOps</span>
                 </Link>
               </li>
               <li>
-                <Link href="/curriculum/deployment-module-1" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
+                <Link href="/curriculum/p11-m1" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
                   <Server className="w-3.5 h-3.5 text-slate-500" />
                   <span>AI Deployment &amp; Cloud</span>
                 </Link>

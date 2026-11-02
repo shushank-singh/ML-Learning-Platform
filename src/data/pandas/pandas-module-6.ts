@@ -13,7 +13,7 @@ export const pandasModule6Data: ModuleData = {
   "lessons": [
     {
       "id": "pandas-m6-l1",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-6",
       "title": "Understanding Relational Dataset Relationships",
       "description": "Mastering 1:1, 1:Many, and Many:Many relational database topologies in Pandas",
       "order": 1,
@@ -23,7 +23,7 @@ export const pandasModule6Data: ModuleData = {
     },
     {
       "id": "pandas-m6-l2",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-6",
       "title": "Vertical & Horizontal Concatenation with pd.concat()",
       "description": "Stacking rows (axis=0) and binding columns (axis=1) across multiple DataFrames",
       "order": 2,
@@ -33,7 +33,7 @@ export const pandasModule6Data: ModuleData = {
     },
     {
       "id": "pandas-m6-l3",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-6",
       "title": "Relational Merging with pd.merge() Fundamentals",
       "description": "SQL-style joins, join keys, and table unification mechanics in Pandas",
       "order": 3,
@@ -43,7 +43,7 @@ export const pandasModule6Data: ModuleData = {
     },
     {
       "id": "pandas-m6-l4",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-6",
       "title": "Inner Joins: Intersection of Keys Across Tables",
       "description": "Retaining only records that possess matching keys in both tables (how='inner')",
       "order": 4,
@@ -53,7 +53,7 @@ export const pandasModule6Data: ModuleData = {
     },
     {
       "id": "pandas-m6-l5",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-6",
       "title": "Left Joins: Preserving Primary Records with Optional Lookups",
       "description": "Keeping all rows from the left table while attaching matching data from the right (how='left')",
       "order": 5,
@@ -63,7 +63,7 @@ export const pandasModule6Data: ModuleData = {
     },
     {
       "id": "pandas-m6-l6",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-6",
       "title": "Right Joins: Preserving Right-Side Reference Records",
       "description": "Retaining all records from the right table and matching available left-side data (how='right')",
       "order": 6,
@@ -73,7 +73,7 @@ export const pandasModule6Data: ModuleData = {
     },
     {
       "id": "pandas-m6-l7",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-6",
       "title": "Outer Joins: Full Set Union with Missing Value Fills",
       "description": "Combining all records from both tables, preserving non-matching rows on both sides (how='outer')",
       "order": 7,
@@ -83,7 +83,7 @@ export const pandasModule6Data: ModuleData = {
     },
     {
       "id": "pandas-m6-l8",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-6",
       "title": "Specifying Join Keys: on, left_on, right_on, and Index Joins",
       "description": "Navigating mismatched column names, compound keys, and index-based table merges",
       "order": 8,
@@ -93,7 +93,7 @@ export const pandasModule6Data: ModuleData = {
     },
     {
       "id": "pandas-m6-l9",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-6",
       "title": "The Duplicate Key Trap: Diagnosing Accidental Row Explosions",
       "description": "Detecting unintended Cartesian multiplications and auditing merge cardinality",
       "order": 9,
@@ -103,7 +103,7 @@ export const pandasModule6Data: ModuleData = {
     },
     {
       "id": "pandas-m6-l10",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-6",
       "title": "Validating Merge Cardinality with the validate Parameter",
       "description": "Enforcing 1:1, 1:m, m:1, and m:m constraints to prevent corrupt data joins",
       "order": 10,
@@ -113,7 +113,7 @@ export const pandasModule6Data: ModuleData = {
     },
     {
       "id": "pandas-m6-l11",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-6",
       "title": "Managing Overlapping Column Names with suffixes",
       "description": "Resolving identical feature names with custom prefixes and descriptive suffixes",
       "order": 11,
@@ -123,7 +123,7 @@ export const pandasModule6Data: ModuleData = {
     },
     {
       "id": "pandas-m6-l12",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-6",
       "title": "Index-Based Joining with DataFrame.join() vs merge()",
       "description": "High-speed index lookups using df.join() and understanding when to use each API",
       "order": 12,
@@ -133,7 +133,7 @@ export const pandasModule6Data: ModuleData = {
     },
     {
       "id": "pandas-m6-l13",
-      "moduleId": "pandas-module-4",
+      "moduleId": "pandas-module-6",
       "title": "Joining on Time-Based and Non-Exact Keys with merge_asof()",
       "description": "Matching nearest or backward timestamps for financial quotes and IoT sensor streams",
       "order": 13,
@@ -147,7 +147,7 @@ export const pandasModule6Data: ModuleData = {
 export const pandasModule6Lessons: Record<string, LessonContent> = {
   "pandas-m6-l1": {
     "id": "pandas-m6-l1",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-6",
     "title": "Understanding Relational Dataset Relationships",
     "subtitle": "Mastering 1:1, 1:Many, and Many:Many relational database topologies in Pandas",
     "order": 1,
@@ -411,12 +411,12 @@ export const pandasModule6Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m6-l2",
       "nextLessonTitle": "Vertical & Horizontal Concatenation with pd.concat()",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-6"
     }
   },
   "pandas-m6-l2": {
     "id": "pandas-m6-l2",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-6",
     "title": "Vertical & Horizontal Concatenation with pd.concat()",
     "subtitle": "Stacking rows (axis=0) and binding columns (axis=1) across multiple DataFrames",
     "order": 2,
@@ -680,12 +680,12 @@ export const pandasModule6Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m6-l3",
       "nextLessonTitle": "Relational Merging with pd.merge() Fundamentals",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-6"
     }
   },
   "pandas-m6-l3": {
     "id": "pandas-m6-l3",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-6",
     "title": "Relational Merging with pd.merge() Fundamentals",
     "subtitle": "SQL-style joins, join keys, and table unification mechanics in Pandas",
     "order": 3,
@@ -949,12 +949,12 @@ export const pandasModule6Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m6-l4",
       "nextLessonTitle": "Inner Joins: Intersection of Keys Across Tables",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-6"
     }
   },
   "pandas-m6-l4": {
     "id": "pandas-m6-l4",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-6",
     "title": "Inner Joins: Intersection of Keys Across Tables",
     "subtitle": "Retaining only records that possess matching keys in both tables (how='inner')",
     "order": 4,
@@ -1218,12 +1218,12 @@ export const pandasModule6Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m6-l5",
       "nextLessonTitle": "Left Joins: Preserving Primary Records with Optional Lookups",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-6"
     }
   },
   "pandas-m6-l5": {
     "id": "pandas-m6-l5",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-6",
     "title": "Left Joins: Preserving Primary Records with Optional Lookups",
     "subtitle": "Keeping all rows from the left table while attaching matching data from the right (how='left')",
     "order": 5,
@@ -1487,12 +1487,12 @@ export const pandasModule6Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m6-l6",
       "nextLessonTitle": "Right Joins: Preserving Right-Side Reference Records",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-6"
     }
   },
   "pandas-m6-l6": {
     "id": "pandas-m6-l6",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-6",
     "title": "Right Joins: Preserving Right-Side Reference Records",
     "subtitle": "Retaining all records from the right table and matching available left-side data (how='right')",
     "order": 6,
@@ -1756,12 +1756,12 @@ export const pandasModule6Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m6-l7",
       "nextLessonTitle": "Outer Joins: Full Set Union with Missing Value Fills",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-6"
     }
   },
   "pandas-m6-l7": {
     "id": "pandas-m6-l7",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-6",
     "title": "Outer Joins: Full Set Union with Missing Value Fills",
     "subtitle": "Combining all records from both tables, preserving non-matching rows on both sides (how='outer')",
     "order": 7,
@@ -2025,12 +2025,12 @@ export const pandasModule6Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m6-l8",
       "nextLessonTitle": "Specifying Join Keys: on, left_on, right_on, and Index Joins",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-6"
     }
   },
   "pandas-m6-l8": {
     "id": "pandas-m6-l8",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-6",
     "title": "Specifying Join Keys: on, left_on, right_on, and Index Joins",
     "subtitle": "Navigating mismatched column names, compound keys, and index-based table merges",
     "order": 8,
@@ -2294,12 +2294,12 @@ export const pandasModule6Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m6-l9",
       "nextLessonTitle": "The Duplicate Key Trap: Diagnosing Accidental Row Explosions",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-6"
     }
   },
   "pandas-m6-l9": {
     "id": "pandas-m6-l9",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-6",
     "title": "The Duplicate Key Trap: Diagnosing Accidental Row Explosions",
     "subtitle": "Detecting unintended Cartesian multiplications and auditing merge cardinality",
     "order": 9,
@@ -2563,12 +2563,12 @@ export const pandasModule6Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m6-l10",
       "nextLessonTitle": "Validating Merge Cardinality with the validate Parameter",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-6"
     }
   },
   "pandas-m6-l10": {
     "id": "pandas-m6-l10",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-6",
     "title": "Validating Merge Cardinality with the validate Parameter",
     "subtitle": "Enforcing 1:1, 1:m, m:1, and m:m constraints to prevent corrupt data joins",
     "order": 10,
@@ -2832,12 +2832,12 @@ export const pandasModule6Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m6-l11",
       "nextLessonTitle": "Managing Overlapping Column Names with suffixes",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-6"
     }
   },
   "pandas-m6-l11": {
     "id": "pandas-m6-l11",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-6",
     "title": "Managing Overlapping Column Names with suffixes",
     "subtitle": "Resolving identical feature names with custom prefixes and descriptive suffixes",
     "order": 11,
@@ -3101,12 +3101,12 @@ export const pandasModule6Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m6-l12",
       "nextLessonTitle": "Index-Based Joining with DataFrame.join() vs merge()",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-6"
     }
   },
   "pandas-m6-l12": {
     "id": "pandas-m6-l12",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-6",
     "title": "Index-Based Joining with DataFrame.join() vs merge()",
     "subtitle": "High-speed index lookups using df.join() and understanding when to use each API",
     "order": 12,
@@ -3370,12 +3370,12 @@ export const pandasModule6Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m6-l13",
       "nextLessonTitle": "Joining on Time-Based and Non-Exact Keys with merge_asof()",
-      "nextLessonModuleId": "pandas-module-4"
+      "nextLessonModuleId": "pandas-module-6"
     }
   },
   "pandas-m6-l13": {
     "id": "pandas-m6-l13",
-    "moduleId": "pandas-module-4",
+    "moduleId": "pandas-module-6",
     "title": "Joining on Time-Based and Non-Exact Keys with merge_asof()",
     "subtitle": "Matching nearest or backward timestamps for financial quotes and IoT sensor streams",
     "order": 13,
@@ -3639,7 +3639,7 @@ export const pandasModule6Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m7-l1",
       "nextLessonTitle": "Wide-Format versus Long-Format Data (Tidy Data)",
-      "nextLessonModuleId": "pandas-m7-l1"
+      "nextLessonModuleId": "pandas-module-7"
     }
   }
 };

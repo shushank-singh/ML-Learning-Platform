@@ -3081,7 +3081,7 @@ export const pandasModule4Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m5-l1",
       "nextLessonTitle": "The Split-Apply-Combine Paradigm in GroupBy",
-      "nextLessonModuleId": "pandas-m5-l1"
+      "nextLessonModuleId": "pandas-module-5"
     }
   }
 };

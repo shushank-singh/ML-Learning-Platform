@@ -3639,7 +3639,7 @@ export const numpyModule3Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "numpy-m4-l1",
       "nextLessonTitle": "Sum, Mean, Median, Minimum, and Maximum",
-      "nextLessonModuleId": "numpy-m4-l1"
+      "nextLessonModuleId": "numpy-module-4"
     }
   }
 };

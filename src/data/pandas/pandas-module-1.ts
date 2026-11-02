@@ -3360,7 +3360,7 @@ export const pandasModule1Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m2-l1",
       "nextLessonTitle": "Selecting a Single Column in Pandas",
-      "nextLessonModuleId": "pandas-m2-l1"
+      "nextLessonModuleId": "pandas-module-2"
     }
   }
 };

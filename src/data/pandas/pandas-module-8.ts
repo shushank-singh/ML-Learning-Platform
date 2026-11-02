@@ -3639,7 +3639,7 @@ export const pandasModule8Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m9-l1",
       "nextLessonTitle": "Cleanly Separating Feature Matrix X and Target Vector y",
-      "nextLessonModuleId": "pandas-m9-l1"
+      "nextLessonModuleId": "pandas-module-9"
     }
   }
 };

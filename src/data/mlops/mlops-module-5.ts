@@ -1454,7 +1454,9 @@ print(master_production_audit(ml_f1=0.88, p95_ms=52.0, psi=0.22, secrets=True, r
         'Graceful degradation decouples core ML decision availability from third-party LLM provider uptime.',
         'A comprehensive Production Readiness Review ensures enterprise systems deploy with confidence and automated rollback safety.',
       ],
-      nextLessonId: 'capstone-beginner',
+      nextLessonId: 'deploy-01-fundamentals',
+      nextLessonTitle: 'Phase 11: AI Deployment, Cloud & Production Engineering',
+      nextLessonModuleId: 'p11-m1',
     },
   },
 };

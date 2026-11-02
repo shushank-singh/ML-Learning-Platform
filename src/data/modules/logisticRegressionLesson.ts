@@ -481,8 +481,8 @@ print(f"Optimal Threshold: {best_thresh:.2f}, Best F1: {score:.4f}")
       'The Negative Log-Likelihood / Binary Cross-Entropy loss is strictly convex with no local minima.',
       'Decision threshold τ can be calibrated to meet specific business precision vs recall tradeoffs.',
     ],
-    nextLessonId: 'svm',
-    nextLessonTitle: 'Support Vector Machines: Maximum Margin Hyperplanes & The Kernel Trick',
+    nextLessonId: 'log-loss-cross-entropy',
+    nextLessonTitle: 'Binary Cross-Entropy & Log Loss Optimization',
     nextLessonModuleId: 'module-4',
   },
 };

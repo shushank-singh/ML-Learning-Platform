@@ -3918,7 +3918,7 @@ export const pandasModule3Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m4-l1",
       "nextLessonTitle": "Element-Wise Transformations with apply(), map(), and replace()",
-      "nextLessonModuleId": "pandas-m4-l1"
+      "nextLessonModuleId": "pandas-module-4"
     }
   }
 };

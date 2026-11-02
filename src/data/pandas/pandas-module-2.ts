@@ -4197,7 +4197,7 @@ export const pandasModule2Lessons: Record<string, LessonContent> = {
       ],
       "nextLessonId": "pandas-m3-l1",
       "nextLessonTitle": "Recognizing Missing Data in Pandas",
-      "nextLessonModuleId": "pandas-m3-l1"
+      "nextLessonModuleId": "pandas-module-3"
     }
   }
 };

@@ -8,6 +8,7 @@ import {
   Square,
   Sparkles,
   ArrowRight,
+  ArrowLeft,
   BookOpen,
   Calculator,
   AlertTriangle,
@@ -15,6 +16,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { LessonContent } from '@/lib/types';
+import { getLessonUrl, getModuleUrl } from '@/lib/routes';
 import { MathBlock, MathInline } from '../math/Math';
 
 interface LessonCheatSheetProps {
@@ -168,27 +170,49 @@ export const LessonCheatSheet: React.FC<LessonCheatSheetProps> = ({ lesson }) =>
           </div>
         </div>
 
-        {/* Prerequisite-Aware Next Topic Bridge */}
-        {summary.nextLessonId && (
-          <div className="pt-4 border-t border-indigo-100 dark:border-indigo-900/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <span className="text-[10px] font-mono font-bold text-slate-500 uppercase tracking-wider block">
-                Next Logical Topic in Curriculum:
-              </span>
-              <span className="text-sm font-bold text-slate-900 dark:text-slate-100">
-                {summary.nextLessonTitle}
-              </span>
-            </div>
-
+        {/* Navigation Bridge (Previous & Next Lesson) */}
+        <div className="pt-4 border-t border-indigo-100 dark:border-indigo-900/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          {lesson.previousLesson ? (
             <Link
-              href={`/curriculum/${summary.nextLessonModuleId || moduleId}/${summary.nextLessonId}`}
+              href={getLessonUrl(lesson.previousLesson.moduleId || moduleId, lesson.previousLesson.id)}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 font-semibold text-xs shadow-xs transition-colors self-start sm:self-auto max-w-sm truncate"
+            >
+              <ArrowLeft className="w-4 h-4 shrink-0" />
+              <span className="truncate">Previous: {lesson.previousLesson.title}</span>
+            </Link>
+          ) : (
+            <Link
+              href={getModuleUrl(moduleId)}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 font-semibold text-xs shadow-xs transition-colors self-start sm:self-auto"
+            >
+              <ArrowLeft className="w-4 h-4 shrink-0" />
+              <span>Back to Module Overview</span>
+            </Link>
+          )}
+
+          {summary.nextLessonId ? (
+            <div className="flex flex-col sm:items-end gap-1.5 self-start sm:self-auto">
+              <span className="text-[10px] font-mono font-bold text-slate-500 uppercase tracking-wider block">
+                Next Logical Topic:
+              </span>
+              <Link
+                href={getLessonUrl(summary.nextLessonModuleId || moduleId, summary.nextLessonId)}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs shadow-md transition-colors max-w-sm truncate"
+              >
+                <span className="truncate">{summary.nextLessonTitle ? `Continue: ${summary.nextLessonTitle}` : 'Continue to Next Lesson'}</span>
+                <ArrowRight className="w-4 h-4 shrink-0" />
+              </Link>
+            </div>
+          ) : (
+            <Link
+              href="/curriculum"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs shadow-md transition-colors self-start sm:self-auto"
             >
-              <span>Continue to Next Lesson</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>Explore More Modules</span>
+              <ArrowRight className="w-4 h-4 shrink-0" />
             </Link>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
