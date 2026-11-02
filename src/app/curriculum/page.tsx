@@ -41,9 +41,48 @@ import {
 import { AI_ML_PHASES } from '@/data/phases/curriculumPhases';
 import { getProgress, toggleLessonCompletion } from '@/lib/storage';
 import { UserProgressState, ModuleData } from '@/lib/types';
+import {
+  MLIllustration,
+  DLIllustration,
+  TransformersIllustration,
+  GenAIIllustration,
+  RAGIllustration,
+  AgentsIllustration,
+  MLOpsIllustration,
+  DeploymentIllustration,
+  Phase0Illustration,
+} from '@/components/shared/TrackIllustrations';
 
 type TrackFilter = 'all' | 'deployment' | 'mlops' | 'agents' | 'rag' | 'genai' | 'transformers' | 'deep-learning' | 'ml-core' | 'numpy' | 'pandas';
 type ViewMode = 'catalog' | 'roadmap';
+
+function getPhaseIllustration(phaseId: string) {
+  switch (phaseId) {
+    case 'phase-0':
+      return <Phase0Illustration className="w-32 h-18 object-cover" />;
+    case 'phase-1':
+    case 'phase-2':
+    case 'phase-3':
+      return <MLIllustration className="w-32 h-18 object-cover" />;
+    case 'phase-4':
+    case 'phase-5':
+    case 'phase-6':
+      return <DLIllustration className="w-32 h-18 object-cover" />;
+    case 'phase-7':
+      return <TransformersIllustration className="w-32 h-18 object-cover" />;
+    case 'phase-8':
+      return <RAGIllustration className="w-32 h-18 object-cover" />;
+    case 'phase-9':
+      return <AgentsIllustration className="w-32 h-18 object-cover" />;
+    case 'phase-10':
+      return <MLOpsIllustration className="w-32 h-18 object-cover" />;
+    case 'phase-11':
+    case 'phase-12':
+      return <DeploymentIllustration className="w-32 h-18 object-cover" />;
+    default:
+      return null;
+  }
+}
 
 export default function CurriculumPage() {
   const [progress, setProgress] = useState<UserProgressState | null>(null);
@@ -625,7 +664,10 @@ export default function CurriculumPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-3 self-end md:self-auto shrink-0">
+                    <div className="flex items-center gap-4 self-end md:self-auto shrink-0">
+                      <div className="hidden lg:block shrink-0 overflow-hidden rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-xs">
+                        {getPhaseIllustration(phase.id)}
+                      </div>
                       <button className="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                         {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
                       </button>

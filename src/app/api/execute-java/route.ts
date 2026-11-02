@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
+import { getSupabaseServerClient } from '@/lib/supabase/server';
 
 export const dynamic = 'force-dynamic';
 import { promisify } from 'util';
@@ -37,6 +38,29 @@ interface PistonResponse {
 export async function POST(req: NextRequest) {
   const startTime = Date.now();
   try {
+    // 0. Verify authenticated session when Supabase credentials are configured
+    const isConfigured = Boolean(
+      process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      !process.env.NEXT_PUBLIC_SUPABASE_URL.includes('placeholder')
+    );
+    if (isConfigured) {
+      const supabase = getSupabaseServerClient();
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
+
+      if (authError || !user) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: 'Authentication required. Please sign in to execute Java code in the sandbox.',
+          },
+          { status: 401 }
+        );
+      }
+    }
+
     const body = await req.json();
     const { code, stdin = '' } = body;
 

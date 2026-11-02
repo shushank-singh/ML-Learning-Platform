@@ -3,7 +3,9 @@ import { cookies } from 'next/headers';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 /**
- * Creates a server-side Supabase client for Route Handlers and Server Components.
+ * Creates a server-side Supabase client for Route Handlers, Server Actions, and Server Components.
+ * Enforces session-only cookie lifetime by stripping persistent maxAge so that cookies
+ * are discarded when the browser session terminates.
  */
 export function getSupabaseServerClient(): SupabaseClient {
   const cookieStore = cookies();
@@ -26,14 +28,20 @@ export function getSupabaseServerClient(): SupabaseClient {
       },
       set(name: string, value: string, options: CookieOptions) {
         try {
-          cookieStore.set({ name, value, ...options });
+          // Enforce session-only cookies: if maxAge > 0, strip maxAge and expires
+          if (options && typeof options.maxAge === 'number' && options.maxAge > 0) {
+            const { maxAge, expires, ...sessionOptions } = options;
+            cookieStore.set({ name, value, ...sessionOptions });
+          } else {
+            cookieStore.set({ name, value, ...options });
+          }
         } catch {
           // Can be safely ignored if called from a Server Component
         }
       },
       remove(name: string, options: CookieOptions) {
         try {
-          cookieStore.set({ name, value: '', ...options });
+          cookieStore.set({ name, value: '', ...options, maxAge: 0 });
         } catch {
           // Can be safely ignored if called from a Server Component
         }
@@ -41,4 +49,3 @@ export function getSupabaseServerClient(): SupabaseClient {
     },
   });
 }
-

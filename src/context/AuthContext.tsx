@@ -21,6 +21,7 @@ interface AuthContextType {
   session: Session | null;
   profile: UserProfile | null;
   isLoading: boolean;
+  isSigningOut: boolean;
   isConfigured: boolean;
   isEmailVerified: boolean;
   isOwner: boolean;
@@ -49,6 +50,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isSigningOut, setIsSigningOut] = useState<boolean>(false);
   const [isConfigured, setIsConfigured] = useState<boolean>(false);
 
   const fetchProfile = useCallback(async (userId: string, userEmail?: string, userMetaName?: string) => {
@@ -291,15 +293,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signOut = async () => {
+    setIsSigningOut(true);
     try {
       const supabase = getSupabaseBrowserClient();
       await supabase.auth.signOut();
+      if (typeof window !== 'undefined') {
+        try {
+          const keysToRemove: string[] = [];
+          for (let i = 0; i < window.localStorage.length; i++) {
+            const key = window.localStorage.key(i);
+            if (
+              key &&
+              (key.startsWith('sb-') ||
+                key.includes('auth-token') ||
+                key.includes('supabase.auth'))
+            ) {
+              keysToRemove.push(key);
+            }
+          }
+          keysToRemove.forEach((k) => window.localStorage.removeItem(k));
+          sessionStorage.removeItem('ml_session_active');
+        } catch {}
+      }
     } catch (err) {
       console.warn('[AuthContext] Sign out error:', err);
     } finally {
       setUser(null);
       setSession(null);
       setProfile(null);
+      setIsSigningOut(false);
     }
   };
 
@@ -386,6 +408,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         session,
         profile,
         isLoading,
+        isSigningOut,
         isConfigured,
         isEmailVerified,
         isOwner,
