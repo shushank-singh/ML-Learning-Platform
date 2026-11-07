@@ -24,7 +24,10 @@ import {
   Zap,
   Bot,
   Server,
+  Lock,
 } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
+import { isFreeAllowedModule } from '@/lib/entitlements/config';
 import {
   MODULES_CATALOG,
   MODULES_CATALOG_ML_CORE,
@@ -85,6 +88,7 @@ function getPhaseIllustration(phaseId: string) {
 }
 
 export default function CurriculumPage() {
+  const { isOwner, canAccessModule } = useAuth();
   const [progress, setProgress] = useState<UserProgressState | null>(null);
   const [selectedTrack, setSelectedTrack] = useState<TrackFilter>('all');
   const [viewMode, setViewMode] = useState<ViewMode>('catalog');
@@ -833,6 +837,24 @@ export default function CurriculumPage() {
                                 <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${badgeColor}`}>
                                   {mod.badge}
                                 </span>
+                                {isFreeAllowedModule(mod.id) ? (
+                                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                                    Free Tier
+                                  </span>
+                                ) : isOwner ? (
+                                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+                                    Available (Owner)
+                                  </span>
+                                ) : canAccessModule(mod.id) ? (
+                                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                                    Available
+                                  </span>
+                                ) : (
+                                  <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                                    <Lock className="w-2.5 h-2.5" />
+                                    <span>Track Locked</span>
+                                  </span>
+                                )}
                                 <span className="text-xs text-slate-400">
                                   Estimated: {mod.estimatedHours} hrs · {mod.lessons.length} lessons
                                 </span>
@@ -888,6 +910,7 @@ export default function CurriculumPage() {
                           {mod.lessons.map((lesson) => {
                             const isDone = !!progress?.completedLessons[lesson.id];
                             const hasVisualizer = lesson.visualizerType && lesson.visualizerType !== 'none';
+                            const isModuleLocked = !canAccessModule(mod.id);
 
                             return (
                               <Link
@@ -913,6 +936,12 @@ export default function CurriculumPage() {
                                       <span className="font-semibold text-sm text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors truncate">
                                         {lesson.title}
                                       </span>
+                                      {isModuleLocked && (
+                                        <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                                          <Lock className="w-2.5 h-2.5" />
+                                          <span>Locked</span>
+                                        </span>
+                                      )}
                                       <span className="text-[10px] px-2 py-0.2 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 font-mono">
                                         {lesson.difficulty}
                                       </span>
@@ -933,7 +962,11 @@ export default function CurriculumPage() {
                                     <Clock className="w-3.5 h-3.5" />
                                     {lesson.readTimeMinutes}m
                                   </span>
-                                  <ArrowRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 group-hover:translate-x-1 transition-all" />
+                                  {isModuleLocked ? (
+                                    <Lock className="w-4 h-4 text-amber-500 shrink-0" />
+                                  ) : (
+                                    <ArrowRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 group-hover:translate-x-1 transition-all" />
+                                  )}
                                 </div>
                               </Link>
                             );

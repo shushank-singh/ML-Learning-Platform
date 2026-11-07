@@ -9,6 +9,11 @@ import {
 import { checkUserRateLimit } from '@/lib/tutor/rateLimiter';
 import { generateTutorResponse } from '@/lib/tutor/geminiClient';
 import { LessonContext, ConversationTurn } from '@/lib/tutor/promptBuilder';
+import {
+  checkModuleAccessServer,
+  checkTrackAccessServer,
+  checkLessonAccessServer,
+} from '@/lib/entitlements/server';
 
 export const dynamic = 'force-dynamic';
 
@@ -126,7 +131,53 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 4. Assemble Context
+    // 4. Check Track, Module & Lesson Entitlement
+    if (track && track !== 'general') {
+      const trackAccess = await checkTrackAccessServer(track);
+      if (!trackAccess.allowed) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: `AI Tutor assistance for track "${track}" requires an upgraded plan. Free tier includes Module 0 across Machine Learning, NumPy, Pandas, Python, and Java.`,
+            locked: true,
+            requiredPlan: 'premium',
+          },
+          { status: 403 }
+        );
+      }
+    }
+
+    if (moduleId && typeof moduleId === 'string') {
+      const moduleAccess = await checkModuleAccessServer(moduleId);
+      if (!moduleAccess.allowed) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: `AI Tutor assistance for module "${moduleId}" requires an upgraded plan. Free tier includes Module 0 across Machine Learning, NumPy, Pandas, Python, and Java.`,
+            locked: true,
+            requiredPlan: 'premium',
+          },
+          { status: 403 }
+        );
+      }
+    }
+
+    if (lessonId && typeof lessonId === 'string') {
+      const lessonAccess = await checkLessonAccessServer(moduleId || '', lessonId);
+      if (!lessonAccess.allowed) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: `AI Tutor assistance for lesson "${lessonId}" requires an upgraded plan. Free tier includes Module 0 across Machine Learning, NumPy, Pandas, Python, and Java.`,
+            locked: true,
+            requiredPlan: 'premium',
+          },
+          { status: 403 }
+        );
+      }
+    }
+
+    // 5. Assemble Context
     const lessonContext: LessonContext = {
       track: track as TutorTrack,
       moduleId: typeof moduleId === 'string' ? moduleId.slice(0, 100) : undefined,
@@ -136,7 +187,7 @@ export async function POST(req: NextRequest) {
       codeSnippet: typeof codeSnippet === 'string' ? codeSnippet : undefined,
     };
 
-    // 5. Generate Tutor Response via Verified Free-Tier Gemini
+    // 6. Generate Tutor Response via Verified Free-Tier Gemini
     const result = await generateTutorResponse({
       message: message.trim(),
       context: lessonContext,

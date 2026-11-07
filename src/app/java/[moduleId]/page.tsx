@@ -12,10 +12,14 @@ import {
   Sparkles,
   ChevronRight,
   ChevronLeft,
+  Lock,
 } from 'lucide-react';
 import { MODULES_CATALOG_JAVA, getJavaModule } from '@/data/java/curriculum';
 import { getProgress, toggleLessonCompletion } from '@/lib/storage';
 import { UserProgressState } from '@/lib/types';
+import { useAuth } from '@/context/AuthContext';
+import { isFreeAllowedModule } from '@/lib/entitlements/config';
+import { LockedModuleBanner } from '@/components/entitlements/LockedModuleBanner';
 
 interface JavaModulePageProps {
   params: { moduleId: string };
@@ -24,6 +28,8 @@ interface JavaModulePageProps {
 export default function JavaModulePage({ params }: JavaModulePageProps) {
   const { moduleId } = params;
   const mod = getJavaModule(moduleId);
+  const { isOwner, canAccessModule } = useAuth();
+  const isLocked = !canAccessModule(moduleId);
   const [progress, setProgress] = useState<UserProgressState | null>(null);
 
   useEffect(() => {
@@ -131,6 +137,11 @@ export default function JavaModulePage({ params }: JavaModulePageProps) {
         </div>
       </div>
 
+      {/* Locked Module Banner if restricted */}
+      {isLocked && (
+        <LockedModuleBanner moduleTitle={mod.title} moduleId={mod.id} />
+      )}
+
       {/* Lesson List */}
       <div className="space-y-3">
         <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 px-1">
@@ -174,6 +185,12 @@ export default function JavaModulePage({ params }: JavaModulePageProps) {
                           Visualizer
                         </span>
                       )}
+                      {isLocked && (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                          <Lock className="w-2.5 h-2.5" />
+                          <span>Locked</span>
+                        </span>
+                      )}
                     </div>
                     <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1">
                       {lesson.description}
@@ -191,7 +208,11 @@ export default function JavaModulePage({ params }: JavaModulePageProps) {
                       {lesson.readTimeMinutes}m
                     </span>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-amber-500 group-hover:translate-x-0.5 transition-all" />
+                  {isLocked ? (
+                    <Lock className="w-4 h-4 text-amber-500 shrink-0" />
+                  ) : (
+                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-amber-500 group-hover:translate-x-0.5 transition-all" />
+                  )}
                 </div>
               </Link>
             );

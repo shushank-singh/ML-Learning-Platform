@@ -17,13 +17,30 @@ import {
 } from 'lucide-react';
 import { REAL_WORLD_PROJECTS } from '@/data/projects/projects';
 import { CodeRunner } from '@/components/code/CodeRunner';
+import { useAuth } from '@/context/AuthContext';
+import { LockedLessonView } from '@/components/entitlements/LockedLessonView';
 
 export default function ProjectDetailPage() {
   const params = useParams();
   const projectId = params?.projectId as string;
   const project = REAL_WORLD_PROJECTS.find((p) => p.id === projectId) || REAL_WORLD_PROJECTS[0];
 
+  const { isOwner, tier, trackGrants } = useAuth();
   const [activeMilestone, setActiveMilestone] = useState<number>(1);
+
+  const hasAccess = isOwner || tier === 'all_access' || (trackGrants && trackGrants['ml']?.status === 'active');
+
+  if (!hasAccess) {
+    return (
+      <LockedLessonView
+        moduleId="projects"
+        lessonId={projectId}
+        moduleTitle="Project Lab"
+        lessonTitle={project.title}
+        trackTitle="Industry Capstones"
+      />
+    );
+  }
 
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto space-y-8">
