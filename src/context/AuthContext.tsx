@@ -3,6 +3,8 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import type { User, Session } from '@supabase/supabase-js';
 import { getSupabaseBrowserClient, isSupabaseConfigured } from '@/lib/supabase/client';
+import type { EntitlementTier, TrackEntitlementGrant, UserEntitlements } from '@/lib/entitlements/types';
+import { isFreeAllowedModule, normalizeTrackId, getTrackFromModuleId } from '@/lib/entitlements/config';
 
 export type UserRole = 'student' | 'owner' | 'admin';
 
@@ -26,6 +28,13 @@ interface AuthContextType {
   isEmailVerified: boolean;
   isOwner: boolean;
   isAdmin: boolean;
+  tier: EntitlementTier;
+  validUntil: string | null;
+  subscriptionStatus: string;
+  trackGrants: Record<string, TrackEntitlementGrant>;
+  canAccessTrack: (trackId: string) => boolean;
+  canAccessModule: (moduleId: string) => boolean;
+  refreshEntitlements: () => Promise<void>;
   signUp: (params: {
     fullName: string;
     email: string;
@@ -52,6 +61,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isSigningOut, setIsSigningOut] = useState<boolean>(false);
   const [isConfigured, setIsConfigured] = useState<boolean>(false);
+  const [serverIsOwner, setServerIsOwner] = useState<boolean>(false);
+  const [tier, setTier] = useState<EntitlementTier>('free');
+  const [validUntil, setValidUntil] = useState<string | null>(null);
+  const [subscriptionStatus, setSubscriptionStatus] = useState<string>('none');
+  const [trackGrants, setTrackGrants] = useState<Record<string, TrackEntitlementGrant>>({});
+
+  const fetchEntitlements = useCallback(async () => {
+    try {
+      const res = await fetch('/api/entitlements/me', {
+        headers: { 'Cache-Control': 'no-cache' },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.entitlements) {
+          setServerIsOwner(Boolean(data.entitlements.isOwner));
+          setTier(data.entitlements.tier || 'free');
+          setValidUntil(data.entitlements.validUntil || null);
+          setSubscriptionStatus(data.entitlements.subscriptionStatus || (data.entitlements.isOwner ? 'active' : 'none'));
+          setTrackGrants(data.entitlements.trackGrants || {});
+        }
+      }
+    } catch (err) {
+      console.warn('[AuthContext] Failed to fetch server entitlements:', err);
+    }
+  }, []);
 
   const fetchProfile = useCallback(async (userId: string, userEmail?: string, userMetaName?: string) => {
     try {
@@ -111,6 +145,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             initialSession.user.email,
             userMeta.full_name || userMeta.name
           );
+          fetchEntitlements();
         }
       })
       .finally(() => {
@@ -132,8 +167,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           currentUser.email,
           userMeta.full_name || userMeta.name
         );
+        await fetchEntitlements();
       } else {
         setProfile(null);
+        setServerIsOwner(false);
+        setTier('free');
+        setValidUntil(null);
+        setSubscriptionStatus('none');
+        setTrackGrants({});
       }
 
       setIsLoading(false);
@@ -142,19 +183,48 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => {
       subscription.unsubscribe();
     };
-  }, [fetchProfile]);
+  }, [fetchProfile, fetchEntitlements]);
 
   const refreshProfile = useCallback(async () => {
     if (user) {
       const userMeta = user.user_metadata || {};
       await fetchProfile(user.id, user.email, userMeta.full_name || userMeta.name);
+      await fetchEntitlements();
     }
-  }, [user, fetchProfile]);
+  }, [user, fetchProfile, fetchEntitlements]);
 
-  // Derived flags
+  const refreshEntitlements = useCallback(async () => {
+    await fetchEntitlements();
+  }, [fetchEntitlements]);
+
+  // Derived flags - Trusted server owner validation takes precedence
   const isEmailVerified = Boolean(user && (user.email_confirmed_at || user.confirmed_at));
-  const isOwner = profile?.role === 'owner';
-  const isAdmin = profile?.role === 'owner' || profile?.role === 'admin';
+  const isOwner = Boolean(serverIsOwner || profile?.role === 'owner');
+  const isAdmin = Boolean(isOwner || profile?.role === 'admin');
+
+  // Client-Side Entitlement Resolution Helpers (mirroring server policy)
+  const canAccessTrackClient = useCallback(
+    (trackId: string): boolean => {
+      if (isOwner) return true;
+      if (tier === 'all_access') return true;
+      const cleanTrack = normalizeTrackId(trackId);
+      if (trackGrants[cleanTrack]?.status === 'active') return true;
+      const partiallyFreeTracks = ['ml', 'numpy', 'pandas', 'python', 'java'];
+      return partiallyFreeTracks.includes(cleanTrack);
+    },
+    [isOwner, tier, trackGrants]
+  );
+
+  const canAccessModuleClient = useCallback(
+    (moduleId: string): boolean => {
+      if (isOwner) return true;
+      if (tier === 'all_access') return true;
+      const track = normalizeTrackId(getTrackFromModuleId(moduleId));
+      if (trackGrants[track]?.status === 'active') return true;
+      return isFreeAllowedModule(moduleId);
+    },
+    [isOwner, tier, trackGrants]
+  );
 
   // --- Auth Actions ---
 
@@ -413,6 +483,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isEmailVerified,
         isOwner,
         isAdmin,
+        tier,
+        validUntil,
+        subscriptionStatus,
+        trackGrants,
+        canAccessTrack: canAccessTrackClient,
+        canAccessModule: canAccessModuleClient,
+        refreshEntitlements,
         signUp,
         signInWithEmail,
         signInWithGoogle,

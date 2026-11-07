@@ -11,9 +11,13 @@ import {
   ChevronRight,
   GraduationCap,
   Sparkles,
+  Lock,
 } from 'lucide-react';
 import { getModule } from '@/data/modules/curriculum';
 import { getProgress } from '@/lib/storage';
+import { useAuth } from '@/context/AuthContext';
+import { isFreeAllowedModule } from '@/lib/entitlements/config';
+import { LockedModuleBanner } from '@/components/entitlements/LockedModuleBanner';
 import {
   MLIllustration,
   DLIllustration,
@@ -75,6 +79,8 @@ export default function ModuleOverviewPage() {
     );
   }
 
+  const { isOwner, canAccessModule } = useAuth();
+  const isLocked = !canAccessModule(mod.id);
   const progress = getProgress();
 
   const getModuleIllustration = () => {
@@ -150,6 +156,11 @@ export default function ModuleOverviewPage() {
         </div>
       </div>
 
+      {/* Locked Module Banner if restricted */}
+      {isLocked && (
+        <LockedModuleBanner moduleTitle={mod.title} moduleId={mod.id} />
+      )}
+
       {/* Lessons List */}
       <div className="space-y-4">
         <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
@@ -167,7 +178,11 @@ export default function ModuleOverviewPage() {
                 className="p-3.5 sm:p-5 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors flex items-center justify-between gap-3 sm:gap-4 group"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-mono text-xs font-bold flex items-center justify-center shrink-0">
+                  <div className={`w-8 h-8 rounded-lg font-mono text-xs font-bold flex items-center justify-center shrink-0 ${
+                    isLocked
+                      ? 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/50'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
+                  }`}>
                     {idx + 1}
                   </div>
                   <div>
@@ -177,6 +192,12 @@ export default function ModuleOverviewPage() {
                       </h3>
                       {isCompleted && (
                         <CheckCircle2 className="w-4 h-4 text-emerald-500 fill-emerald-500/10" />
+                      )}
+                      {isLocked && (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                          <Lock className="w-2.5 h-2.5" />
+                          <span>Locked</span>
+                        </span>
                       )}
                     </div>
                     <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
@@ -193,7 +214,11 @@ export default function ModuleOverviewPage() {
                     <Clock className="w-3.5 h-3.5" />
                     {lesson.readTimeMinutes}m
                   </span>
-                  <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-indigo-600 group-hover:translate-x-1 transition-all" />
+                  {isLocked ? (
+                    <Lock className="w-4 h-4 text-amber-500 shrink-0" />
+                  ) : (
+                    <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-indigo-600 group-hover:translate-x-1 transition-all" />
+                  )}
                 </div>
               </Link>
             );

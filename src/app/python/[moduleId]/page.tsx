@@ -10,10 +10,14 @@ import {
   ArrowLeft,
   BookOpen,
   Sparkles,
+  Lock,
 } from 'lucide-react';
 import { MODULES_CATALOG_PYTHON, getPythonModule } from '@/data/python/curriculum';
 import { getProgress, toggleLessonCompletion } from '@/lib/storage';
 import { UserProgressState } from '@/lib/types';
+import { useAuth } from '@/context/AuthContext';
+import { isFreeAllowedModule } from '@/lib/entitlements/config';
+import { LockedModuleBanner } from '@/components/entitlements/LockedModuleBanner';
 
 interface PythonModulePageProps {
   params: { moduleId: string };
@@ -22,6 +26,8 @@ interface PythonModulePageProps {
 export default function PythonModulePage({ params }: PythonModulePageProps) {
   const { moduleId } = params;
   const mod = getPythonModule(moduleId);
+  const { isOwner, canAccessModule } = useAuth();
+  const isLocked = !canAccessModule(moduleId);
   const [progress, setProgress] = useState<UserProgressState | null>(null);
 
   useEffect(() => {
@@ -130,6 +136,11 @@ export default function PythonModulePage({ params }: PythonModulePageProps) {
         </div>
       </div>
 
+      {/* Locked Module Banner if restricted */}
+      {isLocked && (
+        <LockedModuleBanner moduleTitle={mod.title} moduleId={mod.id} />
+      )}
+
       {/* Lessons List */}
       <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm overflow-hidden">
         <div className="divide-y divide-slate-100 dark:divide-slate-800">
@@ -169,6 +180,12 @@ export default function PythonModulePage({ params }: PythonModulePageProps) {
                       <span className={`text-[10px] px-1.5 py-0.5 rounded font-semibold ${diffColor}`}>
                         {lesson.difficulty}
                       </span>
+                      {isLocked && (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                          <Lock className="w-2.5 h-2.5" />
+                          <span>Locked</span>
+                        </span>
+                      )}
                     </div>
                     <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">
                       {lesson.description}
@@ -181,7 +198,11 @@ export default function PythonModulePage({ params }: PythonModulePageProps) {
                     <Clock className="w-3 h-3" />
                     {lesson.readTimeMinutes}m
                   </span>
-                  <ArrowRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-emerald-500 group-hover:translate-x-0.5 transition-all" />
+                  {isLocked ? (
+                    <Lock className="w-4 h-4 text-amber-500 shrink-0" />
+                  ) : (
+                    <ArrowRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-emerald-500 group-hover:translate-x-0.5 transition-all" />
+                  )}
                 </div>
               </Link>
             );

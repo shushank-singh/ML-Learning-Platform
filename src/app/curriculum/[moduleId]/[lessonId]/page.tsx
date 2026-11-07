@@ -1,16 +1,18 @@
-'use client';
-
 import React from 'react';
-import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { BookOpen, ArrowLeft, AlertCircle } from 'lucide-react';
 import { getLesson, getModule } from '@/data/modules/curriculum';
 import { LessonView } from '@/components/lessons/LessonView';
+import { checkLessonAccessServer } from '@/lib/entitlements/server';
+import { LockedLessonView } from '@/components/entitlements/LockedLessonView';
 
-export default function LessonDetailPage() {
-  const params = useParams();
-  const moduleId = params?.moduleId as string;
-  const lessonId = params?.lessonId as string;
+interface LessonDetailPageProps {
+  params: { moduleId: string; lessonId: string };
+}
+
+export default async function LessonDetailPage({ params }: LessonDetailPageProps) {
+  const { moduleId, lessonId } = params;
 
   if (!moduleId || !lessonId) {
     return (
@@ -33,8 +35,31 @@ export default function LessonDetailPage() {
     );
   }
 
-  const lesson = getLesson(moduleId, lessonId);
+  // 1. Authoritative Server-Side Entitlement & Access Check
+  const access = await checkLessonAccessServer(moduleId, lessonId);
+
+  // If unauthenticated, redirect to login with return destination
+  if (!access.allowed && access.reason === 'unauthenticated') {
+    redirect(`/login?redirectTo=/curriculum/${encodeURIComponent(moduleId)}/${encodeURIComponent(lessonId)}`);
+  }
+
   const mod = getModule(moduleId);
+
+  // If unauthorized: NEVER return or serialize the restricted lesson content!
+  if (!access.allowed) {
+    const lessonSummary = mod?.lessons.find((l) => l.id === lessonId);
+    return (
+      <LockedLessonView
+        moduleId={moduleId}
+        lessonId={lessonId}
+        moduleTitle={mod?.title}
+        lessonTitle={lessonSummary?.title}
+      />
+    );
+  }
+
+  // 2. Fetch lesson content ONLY when access is verified
+  const lesson = getLesson(moduleId, lessonId);
 
   if (!lesson) {
     return (
