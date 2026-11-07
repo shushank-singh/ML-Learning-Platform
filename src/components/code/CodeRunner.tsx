@@ -31,7 +31,13 @@ export const CodeRunner: React.FC<CodeRunnerProps> = ({
   const [code, setCode] = useState<string>(initialCode.trim());
   const [runResult, setRunResult] = useState<PyodideRunResult | null>(null);
   const [copied, setCopied] = useState<boolean>(false);
-  const { isReady, isLoading, loadingStatus, loadError, isRunning, runCode } = usePyodide();
+  const { isReady, isLoading, loadingStatus, loadError, isRunning, runCode, initPyodide } = usePyodide();
+
+  const handleWarmup = () => {
+    if (!isReady && !isLoading) {
+      initPyodide().catch(() => {});
+    }
+  };
 
   const handleRun = async () => {
     const result = await runCode(code);
@@ -65,7 +71,11 @@ export const CodeRunner: React.FC<CodeRunnerProps> = ({
   };
 
   return (
-    <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm overflow-hidden my-6">
+    <div
+      onMouseEnter={handleWarmup}
+      onFocus={handleWarmup}
+      className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm overflow-hidden my-6"
+    >
       {/* Top Toolbar */}
       <div className="flex flex-wrap items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 px-3 sm:px-4 py-2 sm:py-2.5 gap-2">
         <div className="flex items-center gap-2 min-w-0 max-w-full">
@@ -120,11 +130,11 @@ export const CodeRunner: React.FC<CodeRunnerProps> = ({
           {!readOnly && (
             <button
               onClick={handleRun}
-              disabled={isRunning || !isReady}
+              disabled={isRunning || isLoading}
               className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md bg-emerald-600 hover:bg-emerald-700 text-white transition-colors disabled:opacity-50 shadow-sm"
             >
               <Play className="w-3.5 h-3.5" />
-              {isRunning ? 'Running...' : 'Run Code'}
+              {isRunning ? 'Running...' : isLoading ? 'Initializing...' : 'Run Code'}
             </button>
           )}
         </div>

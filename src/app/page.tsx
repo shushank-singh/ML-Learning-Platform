@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { getProgress } from '@/lib/storage';
 import { UserProgressState } from '@/lib/types';
@@ -10,14 +10,14 @@ import {
   ResumeLessonInfo,
 } from '@/data/learningPlatformConfig';
 import { HeroSection } from '@/components/dashboard/HeroSection';
-import { LoggedInDashboardBanner } from '@/components/dashboard/LoggedInDashboardBanner';
 import { LearningTracksShowcase } from '@/components/dashboard/LearningTracksShowcase';
 import { WhyLearnHereSection } from '@/components/dashboard/WhyLearnHereSection';
+import { PlatformFooter } from '@/components/dashboard/PlatformFooter';
+import { LoggedInDashboardBanner } from '@/components/dashboard/LoggedInDashboardBanner';
 import { InteractiveCodingHub } from '@/components/dashboard/InteractiveCodingHub';
 import { LearningJourneyRoadmap } from '@/components/dashboard/LearningJourneyRoadmap';
 import { ProjectShowcaseSection } from '@/components/dashboard/ProjectShowcaseSection';
 import { FinalCTASection } from '@/components/dashboard/FinalCTASection';
-import { PlatformFooter } from '@/components/dashboard/PlatformFooter';
 
 export default function PlatformDashboardPage() {
   const { user } = useAuth();
@@ -27,8 +27,11 @@ export default function PlatformDashboardPage() {
   useEffect(() => {
     const syncState = () => {
       const current = getProgress();
-      setProgress(current);
-      setResumeLesson(resolveUserResumeLesson(current));
+      const hasProgress = current && Object.keys(current.completedLessons || {}).length > 0;
+      if (hasProgress) {
+        setProgress(current);
+        setResumeLesson(resolveUserResumeLesson(current));
+      }
     };
 
     syncState();
@@ -36,7 +39,7 @@ export default function PlatformDashboardPage() {
     return () => window.removeEventListener('ml_progress_updated', syncState);
   }, []);
 
-  const overallStats = getOverallPlatformStats(progress);
+  const overallStats = useMemo(() => getOverallPlatformStats(progress), [progress]);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans selection:bg-indigo-500 selection:text-white transition-colors duration-200">

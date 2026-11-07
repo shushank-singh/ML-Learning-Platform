@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import {
   Brain,
@@ -25,19 +25,7 @@ import {
   CheckSquare,
   FileText,
 } from 'lucide-react';
-import {
-  MODULES_CATALOG_ML_CORE,
-  MODULES_CATALOG_DEEP_LEARNING,
-  MODULES_CATALOG_TRANSFORMERS,
-  MODULES_CATALOG_GENAI,
-  MODULES_CATALOG_RAG,
-  MODULES_CATALOG_AGENTS,
-  MODULES_CATALOG_MLOPS,
-  MODULES_CATALOG_DEPLOYMENT,
-} from '@/data/modules/curriculum';
-import { MODULES_CATALOG_DSA } from '@/data/dsa/curriculum';
-import { MODULES_CATALOG_PYTHON } from '@/data/python/curriculum';
-import { MODULES_CATALOG_JAVA } from '@/data/java/curriculum';
+import { TRACK_METADATA } from '@/data/trackMetadata';
 import { UserProgressState } from '@/lib/types';
 import {
   DSAIllustration,
@@ -49,35 +37,25 @@ interface LearningTracksShowcaseProps {
   progress: UserProgressState | null;
 }
 
-export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ progress }) => {
+export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = React.memo(({ progress }) => {
   const [activeTab, setActiveTab] = useState<'all' | 'ai-ml' | 'programming' | 'practice'>('all');
 
   // Compute lesson counts and real user progress
-  const getProgressStats = (lessons: { id: string }[]) => {
-    const total = lessons.length;
+  const getProgressStats = useCallback((lessonIds: readonly string[]) => {
+    const total = lessonIds.length;
     if (!progress || total === 0) return { completed: 0, total, pct: 0 };
-    const completed = lessons.filter((l) => Boolean(progress.completedLessons[l.id])).length;
+    let completed = 0;
+    for (let i = 0; i < lessonIds.length; i++) {
+      if (progress.completedLessons[lessonIds[i]]) completed++;
+    }
     return {
       completed,
       total,
       pct: Math.round((completed / total) * 100),
     };
-  };
+  }, [progress]);
 
-  const mlLessons = MODULES_CATALOG_ML_CORE.flatMap((m) => m.lessons);
-  const dlLessons = MODULES_CATALOG_DEEP_LEARNING.flatMap((m) => m.lessons);
-  const tfLessons = MODULES_CATALOG_TRANSFORMERS.flatMap((m) => m.lessons);
-  const genaiLessons = MODULES_CATALOG_GENAI.flatMap((m) => m.lessons);
-  const ragLessons = MODULES_CATALOG_RAG.flatMap((m) => m.lessons);
-  const agentLessons = MODULES_CATALOG_AGENTS.flatMap((m) => m.lessons);
-  const mlopsLessons = MODULES_CATALOG_MLOPS.flatMap((m) => m.lessons);
-  const deployLessons = MODULES_CATALOG_DEPLOYMENT.flatMap((m) => m.lessons);
-
-  const dsaLessons = MODULES_CATALOG_DSA.flatMap((m) => m.lessons);
-  const pyLessons = MODULES_CATALOG_PYTHON.flatMap((m) => m.lessons);
-  const javaLessons = MODULES_CATALOG_JAVA.flatMap((m) => m.lessons);
-
-  const AI_ML_TRACKS = [
+  const AI_ML_TRACKS = useMemo(() => [
     {
       id: 'ml-foundations',
       title: 'Machine Learning',
@@ -88,8 +66,8 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
       badge: 'Core Track',
       color: 'from-blue-600 to-indigo-600',
       accentColor: 'indigo',
-      modulesCount: MODULES_CATALOG_ML_CORE.length,
-      stats: getProgressStats(mlLessons),
+      modulesCount: TRACK_METADATA.mlCore.modulesCount,
+      stats: getProgressStats(TRACK_METADATA.mlCore.lessonIds),
       illustration: (
         <svg className="w-full h-full" viewBox="0 0 240 120" fill="none">
           <circle cx="40" cy="60" r="14" fill="#4f46e5" fillOpacity="0.15" stroke="#4f46e5" strokeWidth="2" />
@@ -110,8 +88,8 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
       badge: 'Deep Learning',
       color: 'from-indigo-600 to-violet-600',
       accentColor: 'violet',
-      modulesCount: MODULES_CATALOG_DEEP_LEARNING.length,
-      stats: getProgressStats(dlLessons),
+      modulesCount: TRACK_METADATA.deepLearning.modulesCount,
+      stats: getProgressStats(TRACK_METADATA.deepLearning.lessonIds),
       illustration: (
         <svg className="w-full h-full" viewBox="0 0 240 120" fill="none">
           <path d="M20 90 Q 60 85 100 45 T 220 20" stroke="#8b5cf6" strokeWidth="3" fill="none" />
@@ -134,8 +112,8 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
       badge: 'Architecture',
       color: 'from-violet-600 to-pink-600',
       accentColor: 'pink',
-      modulesCount: MODULES_CATALOG_TRANSFORMERS.length,
-      stats: getProgressStats(tfLessons),
+      modulesCount: TRACK_METADATA.transformers.modulesCount,
+      stats: getProgressStats(TRACK_METADATA.transformers.lessonIds),
       illustration: (
         <svg className="w-full h-full" viewBox="0 0 240 120" fill="none">
           <rect x="40" y="25" width="45" height="45" rx="6" fill="#ec4899" fillOpacity="0.2" stroke="#ec4899" strokeWidth="2" />
@@ -159,8 +137,8 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
       badge: 'Generative AI',
       color: 'from-amber-500 to-rose-500',
       accentColor: 'amber',
-      modulesCount: MODULES_CATALOG_GENAI.length,
-      stats: getProgressStats(genaiLessons),
+      modulesCount: TRACK_METADATA.genai.modulesCount,
+      stats: getProgressStats(TRACK_METADATA.genai.lessonIds),
       illustration: (
         <svg className="w-full h-full" viewBox="0 0 240 120" fill="none">
           <rect x="30" y="30" width="180" height="60" rx="10" fill="#fef3c7" stroke="#fcd34d" strokeWidth="2" />
@@ -181,8 +159,8 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
       badge: 'Retrieval Systems',
       color: 'from-cyan-500 to-blue-600',
       accentColor: 'cyan',
-      modulesCount: MODULES_CATALOG_RAG.length,
-      stats: getProgressStats(ragLessons),
+      modulesCount: TRACK_METADATA.rag.modulesCount,
+      stats: getProgressStats(TRACK_METADATA.rag.lessonIds),
       illustration: (
         <svg className="w-full h-full" viewBox="0 0 240 120" fill="none">
           <circle cx="120" cy="60" r="45" stroke="#0ea5e9" strokeWidth="1.5" strokeDasharray="3 3" />
@@ -205,8 +183,8 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
       badge: 'Agentic Systems',
       color: 'from-emerald-500 to-teal-600',
       accentColor: 'emerald',
-      modulesCount: MODULES_CATALOG_AGENTS.length,
-      stats: getProgressStats(agentLessons),
+      modulesCount: TRACK_METADATA.agents.modulesCount,
+      stats: getProgressStats(TRACK_METADATA.agents.lessonIds),
       illustration: (
         <svg className="w-full h-full" viewBox="0 0 240 120" fill="none">
           <rect x="25" y="40" width="55" height="40" rx="8" fill="#d1fae5" stroke="#10b981" strokeWidth="2" />
@@ -231,8 +209,8 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
       badge: 'Production Systems',
       color: 'from-blue-600 to-cyan-600',
       accentColor: 'blue',
-      modulesCount: MODULES_CATALOG_MLOPS.length,
-      stats: getProgressStats(mlopsLessons),
+      modulesCount: TRACK_METADATA.mlops.modulesCount,
+      stats: getProgressStats(TRACK_METADATA.mlops.lessonIds),
       illustration: (
         <svg className="w-full h-full" viewBox="0 0 240 120" fill="none">
           <rect x="25" y="30" width="50" height="35" rx="6" fill="#e0e7ff" stroke="#6366f1" strokeWidth="1.5" />
@@ -258,8 +236,8 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
       badge: 'Cloud & Infrastructure',
       color: 'from-slate-700 to-indigo-900',
       accentColor: 'slate',
-      modulesCount: MODULES_CATALOG_DEPLOYMENT.length,
-      stats: getProgressStats(deployLessons),
+      modulesCount: TRACK_METADATA.deployment.modulesCount,
+      stats: getProgressStats(TRACK_METADATA.deployment.lessonIds),
       illustration: (
         <svg className="w-full h-full" viewBox="0 0 240 120" fill="none">
           <rect x="40" y="25" width="160" height="70" rx="8" fill="#f8fafc" stroke="#64748b" strokeWidth="1.5" />
@@ -273,9 +251,9 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
         </svg>
       ),
     },
-  ];
+  ], [getProgressStats]);
 
-  const ENGINEERING_TRACKS = [
+  const ENGINEERING_TRACKS = useMemo(() => [
     {
       id: 'dsa-track',
       title: 'Data Structures & Algorithms',
@@ -284,8 +262,8 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
       route: '/dsa',
       icon: TreePine,
       badge: 'Algorithms',
-      modulesCount: MODULES_CATALOG_DSA.length,
-      stats: getProgressStats(dsaLessons),
+      modulesCount: TRACK_METADATA.dsa.modulesCount,
+      stats: getProgressStats(TRACK_METADATA.dsa.lessonIds),
       illustration: <DSAIllustration className="w-full h-full object-cover" />,
     },
     {
@@ -296,8 +274,8 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
       route: '/python',
       icon: Code2,
       badge: 'Programming',
-      modulesCount: MODULES_CATALOG_PYTHON.length,
-      stats: getProgressStats(pyLessons),
+      modulesCount: TRACK_METADATA.python.modulesCount,
+      stats: getProgressStats(TRACK_METADATA.python.lessonIds),
       illustration: <PythonIllustration className="w-full h-full object-cover" />,
     },
     {
@@ -308,13 +286,13 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
       route: '/java',
       icon: Coffee,
       badge: 'Enterprise',
-      modulesCount: MODULES_CATALOG_JAVA.length,
-      stats: getProgressStats(javaLessons),
+      modulesCount: TRACK_METADATA.java.modulesCount,
+      stats: getProgressStats(TRACK_METADATA.java.lessonIds),
       illustration: <JavaIllustration className="w-full h-full object-cover" />,
     },
-  ];
+  ], [getProgressStats]);
 
-  const PRACTICE_TRACKS = [
+  const PRACTICE_TRACKS = useMemo(() => [
     {
       id: 'playground-hub',
       title: 'Interactive ML Playground',
@@ -396,16 +374,18 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
         </svg>
       ),
     },
-  ];
+  ], [progress]);
 
-  const visibleTracks =
+  const visibleTracks = useMemo(() =>
     activeTab === 'all'
       ? [...AI_ML_TRACKS, ...ENGINEERING_TRACKS]
       : activeTab === 'ai-ml'
       ? AI_ML_TRACKS
       : activeTab === 'programming'
       ? ENGINEERING_TRACKS
-      : PRACTICE_TRACKS;
+      : PRACTICE_TRACKS,
+    [activeTab, AI_ML_TRACKS, ENGINEERING_TRACKS, PRACTICE_TRACKS]
+  );
 
   return (
     <section id="learning-tracks" className="space-y-8 scroll-mt-24">
@@ -530,6 +510,7 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
                 {/* Action Link */}
                 <Link
                   href={track.route}
+                  prefetch={false}
                   className="inline-flex items-center justify-between w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-indigo-600 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-300 hover:text-white dark:hover:text-white text-xs font-semibold transition-all group/btn"
                 >
                   <span>Explore Track</span>
@@ -542,5 +523,7 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = ({ 
       </div>
     </section>
   );
-};
+});
+
+LearningTracksShowcase.displayName = 'LearningTracksShowcase';
 

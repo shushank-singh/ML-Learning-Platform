@@ -26,7 +26,7 @@ interface HeroSectionProps {
   resumeLesson: ResumeLessonInfo | null;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({
+export const HeroSection: React.FC<HeroSectionProps> = React.memo(({
   totalLessons,
   totalModules,
   tracksCount,
@@ -34,9 +34,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 }) => {
   return (
     <section className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-b from-white via-slate-50/80 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-slate-950 border border-slate-200/90 dark:border-slate-800 shadow-lg sm:shadow-xl transition-all duration-300 p-4 sm:p-8 lg:p-12">
-      {/* Ambient background glows */}
-      <div className="absolute -top-32 -left-32 w-80 sm:w-96 h-80 sm:h-96 bg-indigo-500/10 dark:bg-indigo-600/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-32 -right-32 w-80 sm:w-96 h-80 sm:h-96 bg-cyan-500/10 dark:bg-cyan-600/15 rounded-full blur-3xl pointer-events-none" />
+      {/* Ambient background glows - optimized for mobile rasterization */}
+      <div className="hidden sm:block absolute -top-32 -left-32 w-80 sm:w-96 h-80 sm:h-96 bg-indigo-500/10 dark:bg-indigo-600/15 rounded-full blur-2xl sm:blur-3xl pointer-events-none" />
+      <div className="hidden sm:block absolute -bottom-32 -right-32 w-80 sm:w-96 h-80 sm:h-96 bg-cyan-500/10 dark:bg-cyan-600/15 rounded-full blur-2xl sm:blur-3xl pointer-events-none" />
 
       {/* Subtle background grid pattern */}
       <div className="absolute inset-0 opacity-[0.035] dark:opacity-[0.07] pointer-events-none bg-[radial-gradient(#4f46e5_1px,transparent_1px)] [background-size:20px_20px]" />
@@ -46,7 +46,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="lg:col-span-7 space-y-4 sm:space-y-6 text-left">
           {/* Platform Tag Badge: Compact & single-line on small phones */}
           <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1 rounded-full bg-indigo-50/90 dark:bg-indigo-950/60 border border-indigo-200/80 dark:border-indigo-800/80 text-indigo-700 dark:text-indigo-300 text-[11px] sm:text-xs font-semibold shadow-xs max-w-full">
-            <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            <span className="flex h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] shrink-0" />
             <span className="font-bold">AzurLearn</span>
             <span className="text-indigo-300 dark:text-indigo-600">·</span>
             <span className="font-medium text-slate-600 dark:text-slate-300 truncate">
@@ -82,9 +82,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {resumeLesson ? (
               <Link
                 href={resumeLesson.route}
+                prefetch={false}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-3.5 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-sm transition-all shadow-xs min-h-[44px]"
               >
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-ping shrink-0 mr-1" />
+                <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] shrink-0 mr-1" />
                 <Play className="w-3.5 h-3.5 fill-current text-emerald-500 shrink-0" />
                 <span className="truncate max-w-[180px] sm:max-w-[200px]">
                   Resume: {resumeLesson.title}
@@ -96,6 +97,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             ) : (
               <Link
                 href="/curriculum"
+                prefetch={false}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-sm transition-all shadow-xs min-h-[44px]"
               >
                 <Brain className="w-4 h-4 text-indigo-500 shrink-0" />
@@ -279,4 +281,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
     </section>
   );
-};
+});
+
+HeroSection.displayName = 'HeroSection';

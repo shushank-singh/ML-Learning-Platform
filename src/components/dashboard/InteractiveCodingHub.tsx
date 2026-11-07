@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import {
   Terminal,
   Code2,
@@ -14,8 +15,30 @@ import {
   Layers,
   Zap,
 } from 'lucide-react';
-import { CodeRunner } from '@/components/code/CodeRunner';
-import { JavaCodeRunner } from '@/components/java/JavaCodeRunner';
+
+const CodeRunner = dynamic(
+  () => import('@/components/code/CodeRunner').then((mod) => mod.CodeRunner),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-64 sm:h-72 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 font-mono text-xs">
+        Loading Interactive Python Studio...
+      </div>
+    ),
+  }
+);
+
+const JavaCodeRunner = dynamic(
+  () => import('@/components/java/JavaCodeRunner').then((mod) => mod.JavaCodeRunner),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-64 sm:h-72 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 font-mono text-xs">
+        Loading Interactive Java Studio...
+      </div>
+    ),
+  }
+);
 
 type HubLanguage = 'python' | 'java' | 'dsa' | 'visualizers';
 
@@ -252,13 +275,34 @@ export const InteractiveCodingHub: React.FC = () => {
   const [activePyTemplate, setActivePyTemplate] = useState<string>(PYTHON_TEMPLATES[0].id);
   const [activeJavaTemplate, setActiveJavaTemplate] = useState<string>(JAVA_TEMPLATES[0].id);
   const [activeDsaTemplate, setActiveDsaTemplate] = useState<string>(DSA_TEMPLATES[0].id);
+  const [isNearVisible, setIsNearVisible] = useState(false);
+  const hubRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!hubRef.current) return;
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
+      setIsNearVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsNearVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '300px' }
+    );
+    observer.observe(hubRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   const currentPy = PYTHON_TEMPLATES.find((t) => t.id === activePyTemplate) || PYTHON_TEMPLATES[0];
   const currentJava = JAVA_TEMPLATES.find((t) => t.id === activeJavaTemplate) || JAVA_TEMPLATES[0];
   const currentDsa = DSA_TEMPLATES.find((t) => t.id === activeDsaTemplate) || DSA_TEMPLATES[0];
 
   return (
-    <section id="coding-hub" className="space-y-6 scroll-mt-24">
+    <section ref={hubRef} id="coding-hub" className="space-y-6 scroll-mt-24">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div className="space-y-1.5">
@@ -363,11 +407,26 @@ export const InteractiveCodingHub: React.FC = () => {
             💡 {currentPy.description}
           </p>
 
-          <CodeRunner
-            key={currentPy.id}
-            initialCode={currentPy.code}
-            title={`Python Studio: ${currentPy.title}`}
-          />
+          {isNearVisible ? (
+            <CodeRunner
+              key={currentPy.id}
+              initialCode={currentPy.code}
+              title={`Python Studio: ${currentPy.title}`}
+            />
+          ) : (
+            <div
+              onClick={() => setIsNearVisible(true)}
+              className="h-64 sm:h-72 rounded-xl bg-slate-900 border border-slate-800 p-4 font-mono text-xs text-slate-300 flex flex-col justify-between cursor-pointer group hover:border-slate-700 transition-colors"
+            >
+              <pre className="overflow-hidden opacity-75">{currentPy.code.slice(0, 320)}...</pre>
+              <div className="flex items-center justify-between pt-2 border-t border-slate-800">
+                <span className="text-[11px] text-slate-500">Interactive Studio Ready</span>
+                <span className="px-2.5 py-1 rounded bg-emerald-600 group-hover:bg-emerald-500 text-white font-sans text-xs font-semibold transition-colors">
+                  Click to Activate &amp; Run
+                </span>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -408,11 +467,26 @@ export const InteractiveCodingHub: React.FC = () => {
             💡 {currentJava.description}
           </p>
 
-          <JavaCodeRunner
-            key={currentJava.id}
-            initialCode={currentJava.code}
-            title={`Java Execution Studio: ${currentJava.title}`}
-          />
+          {isNearVisible ? (
+            <JavaCodeRunner
+              key={currentJava.id}
+              initialCode={currentJava.code}
+              title={`Java Execution Studio: ${currentJava.title}`}
+            />
+          ) : (
+            <div
+              onClick={() => setIsNearVisible(true)}
+              className="h-64 sm:h-72 rounded-xl bg-slate-900 border border-slate-800 p-4 font-mono text-xs text-slate-300 flex flex-col justify-between cursor-pointer group hover:border-slate-700 transition-colors"
+            >
+              <pre className="overflow-hidden opacity-75">{currentJava.code.slice(0, 320)}...</pre>
+              <div className="flex items-center justify-between pt-2 border-t border-slate-800">
+                <span className="text-[11px] text-slate-500">Java Studio Ready</span>
+                <span className="px-2.5 py-1 rounded bg-amber-600 group-hover:bg-amber-500 text-white font-sans text-xs font-semibold transition-colors">
+                  Click to Activate &amp; Run
+                </span>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -453,11 +527,26 @@ export const InteractiveCodingHub: React.FC = () => {
             💡 {currentDsa.description}
           </p>
 
-          <CodeRunner
-            key={currentDsa.id}
-            initialCode={currentDsa.code}
-            title={`DSA Algorithm Runner: ${currentDsa.title}`}
-          />
+          {isNearVisible ? (
+            <CodeRunner
+              key={currentDsa.id}
+              initialCode={currentDsa.code}
+              title={`DSA Algorithm Runner: ${currentDsa.title}`}
+            />
+          ) : (
+            <div
+              onClick={() => setIsNearVisible(true)}
+              className="h-64 sm:h-72 rounded-xl bg-slate-900 border border-slate-800 p-4 font-mono text-xs text-slate-300 flex flex-col justify-between cursor-pointer group hover:border-slate-700 transition-colors"
+            >
+              <pre className="overflow-hidden opacity-75">{currentDsa.code.slice(0, 320)}...</pre>
+              <div className="flex items-center justify-between pt-2 border-t border-slate-800">
+                <span className="text-[11px] text-slate-500">Algorithm Studio Ready</span>
+                <span className="px-2.5 py-1 rounded bg-purple-600 group-hover:bg-purple-500 text-white font-sans text-xs font-semibold transition-colors">
+                  Click to Activate &amp; Run
+                </span>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

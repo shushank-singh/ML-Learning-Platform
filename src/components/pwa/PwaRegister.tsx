@@ -14,11 +14,10 @@ export const PwaRegister: React.FC = () => {
       'serviceWorker' in navigator &&
       window.location.protocol.startsWith('http')
     ) {
-      window.addEventListener('load', () => {
+      const registerSW = () => {
         navigator.serviceWorker
           .register('/sw.js', { scope: '/' })
           .then((registration) => {
-            // Check for service worker updates periodically
             registration.onupdatefound = () => {
               const installingWorker = registration.installing;
               if (installingWorker) {
@@ -27,7 +26,6 @@ export const PwaRegister: React.FC = () => {
                     installingWorker.state === 'installed' &&
                     navigator.serviceWorker.controller
                   ) {
-                    // New content available
                     console.log('[PWA] New content is available; please refresh.');
                   }
                 };
@@ -37,7 +35,14 @@ export const PwaRegister: React.FC = () => {
           .catch((err) => {
             console.warn('[PWA] ServiceWorker registration error:', err);
           });
-      });
+      };
+
+      // Defer service worker registration until main thread is idle to eliminate network competition during initial paint
+      if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(registerSW, { timeout: 4000 });
+      } else {
+        setTimeout(registerSW, 3000);
+      }
     }
   }, []);
 

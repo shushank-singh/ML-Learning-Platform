@@ -32,19 +32,7 @@ import {
 import { useAuth } from '@/context/AuthContext';
 import { UserProgressState } from '@/lib/types';
 import { ResumeLessonInfo } from '@/data/learningPlatformConfig';
-import {
-  MODULES_CATALOG_ML_CORE,
-  MODULES_CATALOG_DEEP_LEARNING,
-  MODULES_CATALOG_TRANSFORMERS,
-  MODULES_CATALOG_GENAI,
-  MODULES_CATALOG_RAG,
-  MODULES_CATALOG_AGENTS,
-  MODULES_CATALOG_MLOPS,
-  MODULES_CATALOG_DEPLOYMENT,
-} from '@/data/modules/curriculum';
-import { MODULES_CATALOG_DSA } from '@/data/dsa/curriculum';
-import { MODULES_CATALOG_PYTHON } from '@/data/python/curriculum';
-import { MODULES_CATALOG_JAVA } from '@/data/java/curriculum';
+import { TRACK_METADATA } from '@/data/trackMetadata';
 import {
   MLIllustration,
   DLIllustration,
@@ -98,11 +86,14 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
       ? 'Good afternoon'
       : 'Good evening';
 
-  // Helper to compute stats for each track
-  const getTrackStats = (lessons: { id: string }[]) => {
-    const total = lessons.length;
+  // Helper to compute stats for each track using lightweight metadata
+  const getTrackStats = (lessonIds: readonly string[]) => {
+    const total = lessonIds.length;
     if (!progress || total === 0) return { completed: 0, total, pct: 0 };
-    const completed = lessons.filter((l) => Boolean(progress.completedLessons[l.id])).length;
+    let completed = 0;
+    for (let i = 0; i < total; i++) {
+      if (progress.completedLessons[lessonIds[i]]) completed++;
+    }
     return {
       completed,
       total,
@@ -119,8 +110,8 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
       color: 'indigo',
       route: '/curriculum',
       illustration: <MLIllustration className="w-full h-32 rounded-xl object-cover" />,
-      stats: getTrackStats(MODULES_CATALOG_ML_CORE.flatMap((m) => m.lessons)),
-      modulesCount: MODULES_CATALOG_ML_CORE.length,
+      stats: getTrackStats(TRACK_METADATA.mlCore.lessonIds),
+      modulesCount: TRACK_METADATA.mlCore.modulesCount,
     },
     {
       id: 'deep-learning',
@@ -130,8 +121,8 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
       color: 'violet',
       route: '/curriculum/dl-module-1',
       illustration: <DLIllustration className="w-full h-32 rounded-xl object-cover" />,
-      stats: getTrackStats(MODULES_CATALOG_DEEP_LEARNING.flatMap((m) => m.lessons)),
-      modulesCount: MODULES_CATALOG_DEEP_LEARNING.length,
+      stats: getTrackStats(TRACK_METADATA.deepLearning.lessonIds),
+      modulesCount: TRACK_METADATA.deepLearning.modulesCount,
     },
     {
       id: 'transformers',
@@ -141,8 +132,8 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
       color: 'cyan',
       route: '/curriculum/tf-module-1',
       illustration: <TransformersIllustration className="w-full h-32 rounded-xl object-cover" />,
-      stats: getTrackStats(MODULES_CATALOG_TRANSFORMERS.flatMap((m) => m.lessons)),
-      modulesCount: MODULES_CATALOG_TRANSFORMERS.length,
+      stats: getTrackStats(TRACK_METADATA.transformers.lessonIds),
+      modulesCount: TRACK_METADATA.transformers.modulesCount,
     },
     {
       id: 'genai',
@@ -152,8 +143,8 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
       color: 'pink',
       route: '/curriculum/genai-module-1',
       illustration: <GenAIIllustration className="w-full h-32 rounded-xl object-cover" />,
-      stats: getTrackStats(MODULES_CATALOG_GENAI.flatMap((m) => m.lessons)),
-      modulesCount: MODULES_CATALOG_GENAI.length,
+      stats: getTrackStats(TRACK_METADATA.genai.lessonIds),
+      modulesCount: TRACK_METADATA.genai.modulesCount,
     },
     {
       id: 'rag',
@@ -163,8 +154,8 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
       color: 'amber',
       route: '/curriculum/rag-module-1',
       illustration: <RAGIllustration className="w-full h-32 rounded-xl object-cover" />,
-      stats: getTrackStats(MODULES_CATALOG_RAG.flatMap((m) => m.lessons)),
-      modulesCount: MODULES_CATALOG_RAG.length,
+      stats: getTrackStats(TRACK_METADATA.rag.lessonIds),
+      modulesCount: TRACK_METADATA.rag.modulesCount,
     },
     {
       id: 'agents',
@@ -174,8 +165,8 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
       color: 'blue',
       route: '/curriculum/agent-module-1',
       illustration: <AgentsIllustration className="w-full h-32 rounded-xl object-cover" />,
-      stats: getTrackStats(MODULES_CATALOG_AGENTS.flatMap((m) => m.lessons)),
-      modulesCount: MODULES_CATALOG_AGENTS.length,
+      stats: getTrackStats(TRACK_METADATA.agents.lessonIds),
+      modulesCount: TRACK_METADATA.agents.modulesCount,
     },
     {
       id: 'mlops',
@@ -185,8 +176,8 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
       color: 'emerald',
       route: '/curriculum/mlops-module-1',
       illustration: <MLOpsIllustration className="w-full h-32 rounded-xl object-cover" />,
-      stats: getTrackStats(MODULES_CATALOG_MLOPS.flatMap((m) => m.lessons)),
-      modulesCount: MODULES_CATALOG_MLOPS.length,
+      stats: getTrackStats(TRACK_METADATA.mlops.lessonIds),
+      modulesCount: TRACK_METADATA.mlops.modulesCount,
     },
     {
       id: 'deployment',
@@ -196,8 +187,8 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
       color: 'rose',
       route: '/curriculum/deployment-module-1',
       illustration: <DeploymentIllustration className="w-full h-32 rounded-xl object-cover" />,
-      stats: getTrackStats(MODULES_CATALOG_DEPLOYMENT.flatMap((m) => m.lessons)),
-      modulesCount: MODULES_CATALOG_DEPLOYMENT.length,
+      stats: getTrackStats(TRACK_METADATA.deployment.lessonIds),
+      modulesCount: TRACK_METADATA.deployment.modulesCount,
     },
     {
       id: 'dsa',
@@ -207,8 +198,8 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
       color: 'purple',
       route: '/dsa',
       illustration: <DSAIllustration className="w-full h-32 rounded-xl object-cover" />,
-      stats: getTrackStats(MODULES_CATALOG_DSA.flatMap((m) => m.lessons)),
-      modulesCount: MODULES_CATALOG_DSA.length,
+      stats: getTrackStats(TRACK_METADATA.dsa.lessonIds),
+      modulesCount: TRACK_METADATA.dsa.modulesCount,
     },
     {
       id: 'python',
@@ -218,8 +209,8 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
       color: 'emerald',
       route: '/python',
       illustration: <PythonIllustration className="w-full h-32 rounded-xl object-cover" />,
-      stats: getTrackStats(MODULES_CATALOG_PYTHON.flatMap((m) => m.lessons)),
-      modulesCount: MODULES_CATALOG_PYTHON.length,
+      stats: getTrackStats(TRACK_METADATA.python.lessonIds),
+      modulesCount: TRACK_METADATA.python.modulesCount,
     },
     {
       id: 'java',
@@ -229,8 +220,8 @@ export const LoggedInDashboardBanner: React.FC<LoggedInDashboardBannerProps> = (
       color: 'amber',
       route: '/java',
       illustration: <JavaIllustration className="w-full h-32 rounded-xl object-cover" />,
-      stats: getTrackStats(MODULES_CATALOG_JAVA.flatMap((m) => m.lessons)),
-      modulesCount: MODULES_CATALOG_JAVA.length,
+      stats: getTrackStats(TRACK_METADATA.java.lessonIds),
+      modulesCount: TRACK_METADATA.java.modulesCount,
     },
   ];
 

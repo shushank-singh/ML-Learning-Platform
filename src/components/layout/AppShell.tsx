@@ -1,12 +1,14 @@
 'use client';
 
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 import { LandingLayout } from './LandingLayout';
-import { MLLayout } from './MLLayout';
-import { DSALayout } from './DSALayout';
-import { PythonLayout } from './PythonLayout';
-import { JavaLayout } from './JavaLayout';
+
+const MLLayout = dynamic(() => import('./MLLayout').then((m) => m.MLLayout), { ssr: true });
+const DSALayout = dynamic(() => import('./DSALayout').then((m) => m.DSALayout), { ssr: true });
+const PythonLayout = dynamic(() => import('./PythonLayout').then((m) => m.PythonLayout), { ssr: true });
+const JavaLayout = dynamic(() => import('./JavaLayout').then((m) => m.JavaLayout), { ssr: true });
 
 interface AppShellProps {
   children: React.ReactNode;

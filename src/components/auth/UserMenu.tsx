@@ -101,6 +101,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({ className = '' }) => {
       <div className={`flex items-center gap-1.5 sm:gap-2 shrink-0 ${className}`}>
         <Link
           href="/login"
+          prefetch={false}
           className="inline-flex items-center justify-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors whitespace-nowrap shrink-0 border border-slate-200/90 dark:border-slate-800 sm:border-transparent"
         >
           <LogIn className="w-3.5 h-3.5 shrink-0" />
@@ -108,6 +109,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({ className = '' }) => {
         </Link>
         <Link
           href="/signup"
+          prefetch={false}
           className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 rounded-xl shadow-sm shadow-indigo-600/30 transition-all hover:shadow-indigo-600/50 whitespace-nowrap shrink-0"
         >
           <UserPlus className="w-3.5 h-3.5 shrink-0" />

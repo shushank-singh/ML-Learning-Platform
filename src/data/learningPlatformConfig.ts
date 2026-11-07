@@ -28,10 +28,7 @@ import {
   CheckSquare,
   BarChart2,
 } from 'lucide-react';
-import { MODULES_CATALOG, MODULES_CATALOG_NUMPY, MODULES_CATALOG_PANDAS } from '@/data/modules/curriculum';
-import { MODULES_CATALOG_DSA } from '@/data/dsa/curriculum';
-import { MODULES_CATALOG_PYTHON } from '@/data/python/curriculum';
-import { MODULES_CATALOG_JAVA } from '@/data/java/curriculum';
+import { TRACK_METADATA } from '@/data/trackMetadata';
 import { UserProgressState } from '@/lib/types';
 
 export const CANONICAL_BRANDING = {
@@ -126,14 +123,41 @@ export interface ResumeLessonInfo {
 }
 
 // =========================================================================
-// DYNAMIC PROGRESS CALCULATORS FOR EACH TRACK
+// DYNAMIC PROGRESS CALCULATORS FOR EACH TRACK (OPTIMIZED)
 // =========================================================================
 
+const ALL_ML_LESSON_IDS = TRACK_METADATA.allML.lessonIds;
+const ALL_NUMPY_LESSON_IDS = TRACK_METADATA.numpy.lessonIds;
+const ALL_PANDAS_LESSON_IDS = TRACK_METADATA.pandas.lessonIds;
+const ALL_DSA_LESSON_IDS = TRACK_METADATA.dsa.lessonIds;
+const ALL_PYTHON_LESSON_IDS = TRACK_METADATA.python.lessonIds;
+const ALL_JAVA_LESSON_IDS = TRACK_METADATA.java.lessonIds;
+
+const TOTAL_MODULES_COUNT =
+  TRACK_METADATA.allML.modulesCount +
+  TRACK_METADATA.dsa.modulesCount +
+  TRACK_METADATA.python.modulesCount +
+  TRACK_METADATA.java.modulesCount;
+
+const TOTAL_HOURS_ESTIMATE =
+  TRACK_METADATA.allML.totalHours +
+  TRACK_METADATA.dsaTotalHours +
+  TRACK_METADATA.pyTotalHours +
+  TRACK_METADATA.javaTotalHours;
+
+function countCompleted(ids: readonly string[], completedLessons?: Record<string, boolean>): number {
+  if (!completedLessons) return 0;
+  let count = 0;
+  for (let i = 0; i < ids.length; i++) {
+    if (completedLessons[ids[i]]) count++;
+  }
+  return count;
+}
+
 export function getMLProgress(progress: UserProgressState | null): LearningSectionProgress {
-  const allLessons = MODULES_CATALOG.flatMap((m) => m.lessons);
-  const totalLessons = allLessons.length;
+  const totalLessons = ALL_ML_LESSON_IDS.length as number;
   if (!progress || totalLessons === 0) return { completedLessons: 0, totalLessons, percentage: 0 };
-  const completedLessons = allLessons.filter((l) => Boolean(progress.completedLessons[l.id])).length;
+  const completedLessons = countCompleted(ALL_ML_LESSON_IDS, progress.completedLessons);
   return {
     completedLessons,
     totalLessons,
@@ -142,10 +166,9 @@ export function getMLProgress(progress: UserProgressState | null): LearningSecti
 }
 
 export function getNumPyProgress(progress: UserProgressState | null): LearningSectionProgress {
-  const allLessons = MODULES_CATALOG_NUMPY.flatMap((m) => m.lessons);
-  const totalLessons = allLessons.length;
+  const totalLessons = ALL_NUMPY_LESSON_IDS.length as number;
   if (!progress || totalLessons === 0) return { completedLessons: 0, totalLessons, percentage: 0 };
-  const completedLessons = allLessons.filter((l) => Boolean(progress.completedLessons[l.id])).length;
+  const completedLessons = countCompleted(ALL_NUMPY_LESSON_IDS, progress.completedLessons);
   return {
     completedLessons,
     totalLessons,
@@ -154,10 +177,9 @@ export function getNumPyProgress(progress: UserProgressState | null): LearningSe
 }
 
 export function getPandasProgress(progress: UserProgressState | null): LearningSectionProgress {
-  const allLessons = MODULES_CATALOG_PANDAS.flatMap((m) => m.lessons);
-  const totalLessons = allLessons.length;
+  const totalLessons = ALL_PANDAS_LESSON_IDS.length as number;
   if (!progress || totalLessons === 0) return { completedLessons: 0, totalLessons, percentage: 0 };
-  const completedLessons = allLessons.filter((l) => Boolean(progress.completedLessons[l.id])).length;
+  const completedLessons = countCompleted(ALL_PANDAS_LESSON_IDS, progress.completedLessons);
   return {
     completedLessons,
     totalLessons,
@@ -166,10 +188,9 @@ export function getPandasProgress(progress: UserProgressState | null): LearningS
 }
 
 export function getDSAProgress(progress: UserProgressState | null): LearningSectionProgress {
-  const allLessons = MODULES_CATALOG_DSA.flatMap((m) => m.lessons);
-  const totalLessons = allLessons.length;
+  const totalLessons = ALL_DSA_LESSON_IDS.length as number;
   if (!progress || totalLessons === 0) return { completedLessons: 0, totalLessons, percentage: 0 };
-  const completedLessons = allLessons.filter((l) => Boolean(progress.completedLessons[l.id])).length;
+  const completedLessons = countCompleted(ALL_DSA_LESSON_IDS, progress.completedLessons);
   return {
     completedLessons,
     totalLessons,
@@ -178,10 +199,9 @@ export function getDSAProgress(progress: UserProgressState | null): LearningSect
 }
 
 export function getPythonProgress(progress: UserProgressState | null): LearningSectionProgress {
-  const allLessons = MODULES_CATALOG_PYTHON.flatMap((m) => m.lessons);
-  const totalLessons = allLessons.length;
+  const totalLessons = ALL_PYTHON_LESSON_IDS.length as number;
   if (!progress || totalLessons === 0) return { completedLessons: 0, totalLessons, percentage: 0 };
-  const completedLessons = allLessons.filter((l) => Boolean(progress.completedLessons[l.id])).length;
+  const completedLessons = countCompleted(ALL_PYTHON_LESSON_IDS, progress.completedLessons);
   return {
     completedLessons,
     totalLessons,
@@ -190,10 +210,9 @@ export function getPythonProgress(progress: UserProgressState | null): LearningS
 }
 
 export function getJavaProgress(progress: UserProgressState | null): LearningSectionProgress {
-  const allLessons = MODULES_CATALOG_JAVA.flatMap((m) => m.lessons);
-  const totalLessons = allLessons.length;
+  const totalLessons = ALL_JAVA_LESSON_IDS.length as number;
   if (!progress || totalLessons === 0) return { completedLessons: 0, totalLessons, percentage: 0 };
-  const completedLessons = allLessons.filter((l) => Boolean(progress.completedLessons[l.id])).length;
+  const completedLessons = countCompleted(ALL_JAVA_LESSON_IDS, progress.completedLessons);
   return {
     completedLessons,
     totalLessons,
@@ -201,8 +220,18 @@ export function getJavaProgress(progress: UserProgressState | null): LearningSec
   };
 }
 
+const DEFAULT_PLATFORM_STATS = {
+  totalModules: TOTAL_MODULES_COUNT,
+  totalLessons: 417,
+  completedLessons: 0,
+  percentage: 0,
+  totalHours: TOTAL_HOURS_ESTIMATE,
+  tracksCount: 4,
+};
+
 // Calculate platform-wide aggregate statistics
 export function getOverallPlatformStats(progress: UserProgressState | null) {
+  if (!progress) return DEFAULT_PLATFORM_STATS;
   const mlProg = getMLProgress(progress);
   const dsaProg = getDSAProgress(progress);
   const pyProg = getPythonProgress(progress);
@@ -210,12 +239,8 @@ export function getOverallPlatformStats(progress: UserProgressState | null) {
 
   const totalLessons = mlProg.totalLessons + dsaProg.totalLessons + pyProg.totalLessons + javaProg.totalLessons;
   const completedLessons = mlProg.completedLessons + dsaProg.completedLessons + pyProg.completedLessons + javaProg.completedLessons;
-  const totalModules = MODULES_CATALOG.length + MODULES_CATALOG_DSA.length + MODULES_CATALOG_PYTHON.length + MODULES_CATALOG_JAVA.length;
-  const totalHours =
-    MODULES_CATALOG.reduce((acc, m) => acc + m.estimatedHours, 0) +
-    MODULES_CATALOG_DSA.reduce((acc, m) => acc + m.estimatedHours, 0) +
-    MODULES_CATALOG_PYTHON.reduce((acc, m) => acc + m.estimatedHours, 0) +
-    MODULES_CATALOG_JAVA.reduce((acc, m) => acc + m.estimatedHours, 0);
+  const totalModules = TOTAL_MODULES_COUNT;
+  const totalHours = TOTAL_HOURS_ESTIMATE;
 
   const percentage = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
@@ -271,69 +296,22 @@ export function resolveUserResumeLesson(progress: UserProgressState | null): Res
     const completedIds = Object.keys(progress.completedLessons).filter((id) => progress.completedLessons[id]);
     if (completedIds.length > 0) {
       const lastId = completedIds[completedIds.length - 1];
-
-      // Check ML
-      for (const mod of MODULES_CATALOG) {
-        const found = mod.lessons.find((l) => l.id === lastId);
-        if (found) {
-          return {
-            lessonId: found.id,
-            moduleId: mod.id,
-            title: found.title,
-            trackId: 'ml',
-            trackTitle: CANONICAL_BRANDING.trackTitle,
-            route: `/curriculum/${mod.id}/${found.id}`,
-            completionPercentage: getMLProgress(progress).percentage,
-          };
-        }
-      }
-
-      // Check DSA
-      for (const mod of MODULES_CATALOG_DSA) {
-        const found = mod.lessons.find((l) => l.id === lastId);
-        if (found) {
-          return {
-            lessonId: found.id,
-            moduleId: mod.id,
-            title: found.title,
-            trackId: 'dsa',
-            trackTitle: 'DSA Mastery Lab',
-            route: `/dsa/${mod.id}/${found.id}`,
-            completionPercentage: getDSAProgress(progress).percentage,
-          };
-        }
-      }
-
-      // Check Python
-      for (const mod of MODULES_CATALOG_PYTHON) {
-        const found = mod.lessons.find((l) => l.id === lastId);
-        if (found) {
-          return {
-            lessonId: found.id,
-            moduleId: mod.id,
-            title: found.title,
-            trackId: 'python',
-            trackTitle: 'Python Mastery Lab',
-            route: `/python/${mod.id}/${found.id}`,
-            completionPercentage: getPythonProgress(progress).percentage,
-          };
-        }
-      }
-
-      // Check Java
-      for (const mod of MODULES_CATALOG_JAVA) {
-        const found = mod.lessons.find((l) => l.id === lastId);
-        if (found) {
-          return {
-            lessonId: found.id,
-            moduleId: mod.id,
-            title: found.title,
-            trackId: 'java',
-            trackTitle: 'Java Mastery Lab',
-            route: `/java/${mod.id}/${found.id}`,
-            completionPercentage: getJavaProgress(progress).percentage,
-          };
-        }
+      const lookup = (TRACK_METADATA.lessonLookup as Record<string, any>)[lastId];
+      if (lookup) {
+        let pct = 0;
+        if (lookup.trackId === 'ml') pct = getMLProgress(progress).percentage;
+        else if (lookup.trackId === 'dsa') pct = getDSAProgress(progress).percentage;
+        else if (lookup.trackId === 'python') pct = getPythonProgress(progress).percentage;
+        else if (lookup.trackId === 'java') pct = getJavaProgress(progress).percentage;
+        return {
+          lessonId: lastId,
+          moduleId: lookup.moduleId,
+          title: lookup.title,
+          trackId: lookup.trackId,
+          trackTitle: lookup.trackTitle,
+          route: lookup.route,
+          completionPercentage: pct,
+        };
       }
     }
   }
@@ -382,9 +360,9 @@ export const LEARNING_SECTIONS: Record<string, LearningSectionConfig> = {
       'Production Engineering: MLOps, LLMOps, Docker, FastAPI Serving, and Real-World Capstones',
     ],
     stats: {
-      totalModules: MODULES_CATALOG.length,
-      totalLessons: MODULES_CATALOG.reduce((acc, m) => acc + m.lessons.length, 0),
-      estimatedHours: MODULES_CATALOG.reduce((acc, m) => acc + m.estimatedHours, 0),
+      totalModules: TRACK_METADATA.allML.modulesCount,
+      totalLessons: TRACK_METADATA.allML.lessonIds.length,
+      estimatedHours: TRACK_METADATA.allML.totalHours,
     },
     quickLinks: [
       { label: 'Full Syllabus', href: '/curriculum' },
@@ -434,9 +412,9 @@ export const LEARNING_SECTIONS: Record<string, LearningSectionConfig> = {
       'Dynamic Programming: 1D/2D memoization & table visualization',
     ],
     stats: {
-      totalModules: MODULES_CATALOG_DSA.length,
-      totalLessons: MODULES_CATALOG_DSA.reduce((acc, m) => acc + m.lessons.length, 0),
-      estimatedHours: MODULES_CATALOG_DSA.reduce((acc, m) => acc + m.estimatedHours, 0),
+      totalModules: TRACK_METADATA.dsa.modulesCount,
+      totalLessons: TRACK_METADATA.dsa.lessonIds.length,
+      estimatedHours: TRACK_METADATA.dsaTotalHours,
     },
     quickLinks: [
       { label: 'DSA Track Overview', href: '/dsa' },
@@ -485,9 +463,9 @@ export const LEARNING_SECTIONS: Record<string, LearningSectionConfig> = {
       'NumPy array vectorization & Pandas data pipeline operations',
     ],
     stats: {
-      totalModules: MODULES_CATALOG_PYTHON.length,
-      totalLessons: MODULES_CATALOG_PYTHON.reduce((acc, m) => acc + m.lessons.length, 0),
-      estimatedHours: MODULES_CATALOG_PYTHON.reduce((acc, m) => acc + m.estimatedHours, 0),
+      totalModules: TRACK_METADATA.python.modulesCount,
+      totalLessons: TRACK_METADATA.python.lessonIds.length,
+      estimatedHours: TRACK_METADATA.pyTotalHours,
     },
     quickLinks: [
       { label: 'Python Curriculum', href: '/python' },
@@ -535,9 +513,9 @@ export const LEARNING_SECTIONS: Record<string, LearningSectionConfig> = {
       'Collections: List, Set, Map, Queue implementations & performance',
     ],
     stats: {
-      totalModules: MODULES_CATALOG_JAVA.length,
-      totalLessons: MODULES_CATALOG_JAVA.reduce((acc, m) => acc + m.lessons.length, 0),
-      estimatedHours: MODULES_CATALOG_JAVA.reduce((acc, m) => acc + m.estimatedHours, 0),
+      totalModules: TRACK_METADATA.java.modulesCount,
+      totalLessons: TRACK_METADATA.java.lessonIds.length,
+      estimatedHours: TRACK_METADATA.javaTotalHours,
     },
     quickLinks: [
       { label: 'Java Curriculum', href: '/java' },

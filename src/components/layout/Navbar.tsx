@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 import {
   Brain,
@@ -39,13 +40,44 @@ import { UserProgressState } from '@/lib/types';
 import { UserMenu } from '@/components/auth/UserMenu';
 import { ThemeToggle } from '@/components/shared/ThemeToggle';
 import { AzurLearnLogo } from '@/components/shared/AzurLearnLogo';
-import { SearchModal } from './SearchModal';
+
+const SearchModal = dynamic(
+  () => import('./SearchModal').then((mod) => mod.SearchModal),
+  { ssr: false }
+);
 
 interface NavbarProps {
   isAuthPage?: boolean;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
+const AI_ML_TRACKS = [
+  { title: 'Machine Learning Core', href: '/curriculum', icon: Brain, badge: 'Phase 0-4', desc: 'Regression, Classification, SVM, Clustering' },
+  { title: 'Deep Learning & Neural Networks', href: '/curriculum', icon: Cpu, badge: 'Phase 5', desc: 'Backprop, CNNs, RNNs & PyTorch' },
+  { title: 'Transformers & LLM Foundations', href: '/curriculum', icon: Layers, badge: 'Phase 6', desc: 'Self-Attention, BERT, GPT Architectures' },
+  { title: 'Generative AI & LLM Systems', href: '/curriculum', icon: Sparkles, badge: 'Phase 7', desc: 'Fine-Tuning, LoRA, Quantization, RLHF' },
+  { title: 'RAG & Vector Search', href: '/curriculum', icon: Activity, badge: 'Phase 8', desc: 'Embeddings, Hybrid Search & Pinecone' },
+  { title: 'Autonomous AI Agents', href: '/curriculum', icon: Bot, badge: 'Phase 9', desc: 'ReAct, Tool Calling, Multi-Agent Swarms' },
+  { title: 'MLOps & LLMOps', href: '/curriculum', icon: Sliders, badge: 'Phase 10', desc: 'Pipelines, CI/CD, MLflow & Monitoring' },
+  { title: 'AI Deployment & Cloud', href: '/curriculum', icon: Server, badge: 'Phase 11', desc: 'Triton, ONNX, FastAPI & AWS/GCP' },
+];
+
+const PROGRAMMING_TRACKS = [
+  { title: 'Data Structures & Algorithms', href: '/dsa', icon: TreePine, badge: '13 Topics', desc: 'Trees, Graphs, DP & Big-O Masterclass' },
+  { title: 'Python Programming', href: '/python', icon: Code2, badge: '10 Modules', desc: 'CPython Internals, OOP & Pyodide In-Browser' },
+  { title: 'Java Programming', href: '/java', icon: Coffee, badge: '8 Modules', desc: 'JVM Architecture, Memory Model & Concurrency' },
+];
+
+const PRACTICE_AND_TOOLS = [
+  { title: 'Interactive Coding Hub', href: '/#coding-hub', icon: Terminal, desc: 'Multi-language live execution for Python, Java & DSA' },
+  { title: 'AI & ML Playground', href: '/playground', icon: Sliders, desc: 'Interactive hyperparameter & model simulation' },
+  { title: 'Python Code Lab', href: '/code-lab', icon: Code2, desc: 'Interactive in-browser Pyodide sandbox' },
+  { title: 'Capstone Projects', href: '/projects', icon: Briefcase, desc: 'Production-grade ML & Full-Stack portfolios' },
+  { title: 'Quizzes & Assessments', href: '/quizzes', icon: CheckSquare, desc: 'Track-wide conceptual quizzes and knowledge checks' },
+  { title: 'Visual Revision Notes', href: '/revision-notes', icon: Zap, desc: 'Cheat sheets, diagrams and quick concept cards' },
+  { title: 'Mathematical Formulas', href: '/formulas', icon: Calculator, desc: 'Equations, derivations and proof references' },
+];
+
+export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false }) => {
   const { user } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -64,13 +96,14 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
   }, []);
 
   useEffect(() => {
+    if (!user) return;
     const syncState = () => {
       setProgress(getProgress());
     };
     syncState();
     window.addEventListener('ml_progress_updated', syncState);
     return () => window.removeEventListener('ml_progress_updated', syncState);
-  }, []);
+  }, [user]);
 
   // Keyboard shortcut listener for Ctrl+K / Cmd+K
   useEffect(() => {
@@ -100,33 +133,6 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
-  const aiMlTracks = [
-    { title: 'Machine Learning Core', href: '/curriculum', icon: Brain, badge: 'Phase 0-4', desc: 'Regression, Classification, SVM, Clustering' },
-    { title: 'Deep Learning & Neural Networks', href: '/curriculum', icon: Cpu, badge: 'Phase 5', desc: 'Backprop, CNNs, RNNs & PyTorch' },
-    { title: 'Transformers & LLM Foundations', href: '/curriculum', icon: Layers, badge: 'Phase 6', desc: 'Self-Attention, BERT, GPT Architectures' },
-    { title: 'Generative AI & LLM Systems', href: '/curriculum', icon: Sparkles, badge: 'Phase 7', desc: 'Fine-Tuning, LoRA, Quantization, RLHF' },
-    { title: 'RAG & Vector Search', href: '/curriculum', icon: Activity, badge: 'Phase 8', desc: 'Embeddings, Hybrid Search & Pinecone' },
-    { title: 'Autonomous AI Agents', href: '/curriculum', icon: Bot, badge: 'Phase 9', desc: 'ReAct, Tool Calling, Multi-Agent Swarms' },
-    { title: 'MLOps & LLMOps', href: '/curriculum', icon: Sliders, badge: 'Phase 10', desc: 'Pipelines, CI/CD, MLflow & Monitoring' },
-    { title: 'AI Deployment & Cloud', href: '/curriculum', icon: Server, badge: 'Phase 11', desc: 'Triton, ONNX, FastAPI & AWS/GCP' },
-  ];
-
-  const programmingTracks = [
-    { title: 'Data Structures & Algorithms', href: '/dsa', icon: TreePine, badge: '13 Topics', desc: 'Trees, Graphs, DP & Big-O Masterclass' },
-    { title: 'Python Programming', href: '/python', icon: Code2, badge: '10 Modules', desc: 'CPython Internals, OOP & Pyodide In-Browser' },
-    { title: 'Java Programming', href: '/java', icon: Coffee, badge: '8 Modules', desc: 'JVM Architecture, Memory Model & Concurrency' },
-  ];
-
-  const practiceAndTools = [
-    { title: 'Interactive Coding Hub', href: '/#coding-hub', icon: Terminal, desc: 'Multi-language live execution for Python, Java & DSA' },
-    { title: 'AI & ML Playground', href: '/playground', icon: Sliders, desc: 'Interactive hyperparameter & model simulation' },
-    { title: 'Python Code Lab', href: '/code-lab', icon: Code2, desc: 'Interactive in-browser Pyodide sandbox' },
-    { title: 'Capstone Projects', href: '/projects', icon: Briefcase, desc: 'Production-grade ML & Full-Stack portfolios' },
-    { title: 'Quizzes & Assessments', href: '/quizzes', icon: CheckSquare, desc: 'Track-wide conceptual quizzes and knowledge checks' },
-    { title: 'Visual Revision Notes', href: '/revision-notes', icon: Zap, desc: 'Cheat sheets, diagrams and quick concept cards' },
-    { title: 'Mathematical Formulas', href: '/formulas', icon: Calculator, desc: 'Equations, derivations and proof references' },
-  ];
 
   const toggleDropdown = (name: string) => {
     setActiveDropdown((prev) => (prev === name ? null : name));
@@ -188,7 +194,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
                         </Link>
                       </div>
                       <div className="max-h-[380px] overflow-y-auto py-1 space-y-0.5">
-                        {aiMlTracks.map((track) => {
+                        {AI_ML_TRACKS.map((track) => {
                           const Icon = track.icon;
                           return (
                             <Link
@@ -244,7 +250,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
                         </span>
                       </div>
                       <div className="py-1 space-y-1">
-                        {programmingTracks.map((track) => {
+                        {PROGRAMMING_TRACKS.map((track) => {
                           const Icon = track.icon;
                           return (
                             <Link
@@ -306,7 +312,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
                         </span>
                       </div>
                       <div className="max-h-[380px] overflow-y-auto py-1 space-y-0.5">
-                        {practiceAndTools.map((item) => {
+                        {PRACTICE_AND_TOOLS.map((item) => {
                           const Icon = item.icon;
                           return (
                             <Link
@@ -346,6 +352,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
                 {/* 5. AI Tutor Direct Link */}
                 <Link
                   href="/ai-tutor"
+                  prefetch={false}
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors ${
                     pathname.startsWith('/ai-tutor')
                       ? 'text-pink-600 dark:text-pink-400 bg-pink-50 dark:bg-pink-950/40'
@@ -496,7 +503,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
                 <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider px-3 block mb-1">
                   💻 Programming &amp; Computer Science
                 </span>
-                {programmingTracks.map((track) => {
+                {PROGRAMMING_TRACKS.map((track) => {
                   const Icon = track.icon;
                   const isActive = pathname.startsWith(track.href);
                   return (
@@ -528,7 +535,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
                   🤖 AI &amp; Machine Learning Tracks
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
-                  {aiMlTracks.map((track) => {
+                  {AI_ML_TRACKS.map((track) => {
                     const Icon = track.icon;
                     return (
                       <Link
@@ -550,7 +557,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
                 <span className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider px-3 block mb-1">
                   🧪 Practice, Projects &amp; Tools
                 </span>
-                {practiceAndTools.map((item) => {
+                {PRACTICE_AND_TOOLS.map((item) => {
                   const Icon = item.icon;
                   const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
                   return (
@@ -610,7 +617,11 @@ export const Navbar: React.FC<NavbarProps> = ({ isAuthPage = false }) => {
       </header>
 
       {/* Global Search Modal */}
-      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+      {searchOpen && (
+        <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+      )}
     </>
   );
-};
+});
+
+Navbar.displayName = 'Navbar';

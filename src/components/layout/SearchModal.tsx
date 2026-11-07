@@ -3,10 +3,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { Search, X, BookOpen, Compass, Calculator, ArrowRight, Code } from 'lucide-react';
-import { MODULES_CATALOG } from '@/data/modules/curriculum';
-import { MODULES_CATALOG_DSA } from '@/data/dsa/curriculum';
-import { MODULES_CATALOG_PYTHON } from '@/data/python/curriculum';
-import { MODULES_CATALOG_JAVA } from '@/data/java/curriculum';
+import { TRACK_METADATA } from '@/data/trackMetadata';
 
 interface SearchResult {
   title: string;
@@ -165,52 +162,19 @@ const SEARCH_DATABASE: SearchResult[] = [
   },
 ];
 
-const DSA_SEARCH_ITEMS: SearchResult[] = MODULES_CATALOG_DSA.flatMap((mod) =>
-  mod.lessons.map((lesson) => ({
-    title: lesson.title,
-    category: 'Algorithm' as const,
-    url: `/dsa/${mod.id}/${lesson.id}`,
-    description: lesson.description,
-    badge: `DSA M${mod.number}`,
-  }))
-);
-
-const PYTHON_SEARCH_ITEMS: SearchResult[] = MODULES_CATALOG_PYTHON.flatMap((mod) =>
-  mod.lessons.map((lesson) => ({
-    title: lesson.title,
-    category: 'Lesson' as const,
-    url: `/python/${mod.id}/${lesson.id}`,
-    description: lesson.description,
-    badge: `Python M${mod.number}`,
-  }))
-);
-
-const JAVA_SEARCH_ITEMS: SearchResult[] = MODULES_CATALOG_JAVA.flatMap((mod) =>
-  mod.lessons.map((lesson) => ({
-    title: lesson.title,
-    category: 'Lesson' as const,
-    url: `/java/${mod.id}/${lesson.id}`,
-    description: lesson.description,
-    badge: `Java M${mod.number}`,
-  }))
-);
-
-const ML_SEARCH_ITEMS: SearchResult[] = MODULES_CATALOG.flatMap((mod) =>
-  mod.lessons.map((lesson) => ({
-    title: lesson.title,
-    category: 'Lesson' as const,
-    url: `/curriculum/${mod.id}/${lesson.id}`,
-    description: lesson.description,
-    badge: mod.id.startsWith('dl-module') ? 'Deep Learning' : mod.id.startsWith('numpy') ? 'NumPy' : mod.id.startsWith('pandas') ? 'Pandas' : `AI & ML M${mod.number}`,
-  }))
+const DYNAMIC_SEARCH_ITEMS: SearchResult[] = Object.entries(TRACK_METADATA.lessonLookup).map(
+  ([, info]: [string, any]) => ({
+    title: info.title,
+    category: (info.trackId === 'dsa' ? 'Algorithm' : 'Lesson') as 'Algorithm' | 'Lesson',
+    url: info.route,
+    description: `${info.trackTitle} · ${info.title}`,
+    badge: info.trackTitle,
+  })
 );
 
 const ALL_SEARCH_ITEMS: SearchResult[] = [
   ...SEARCH_DATABASE,
-  ...ML_SEARCH_ITEMS,
-  ...DSA_SEARCH_ITEMS,
-  ...PYTHON_SEARCH_ITEMS,
-  ...JAVA_SEARCH_ITEMS,
+  ...DYNAMIC_SEARCH_ITEMS,
 ];
 
 interface SearchModalProps {

@@ -7,6 +7,7 @@ declare global {
     loadPyodide?: any;
     pyodideInstance?: any;
     isPyodideLoading?: boolean;
+    _pyodideInitPromise?: Promise<any>;
   }
 }
 
@@ -18,120 +19,127 @@ export interface PyodideRunResult {
   error?: string;
 }
 
+// Global singleton loader to avoid duplicate script injection or race conditions
+async function loadPyodideSingleton(onStatusChange?: (status: string) => void): Promise<any> {
+  if (typeof window === 'undefined') return null;
+
+  if (window.pyodideInstance) {
+    return window.pyodideInstance;
+  }
+
+  if (window._pyodideInitPromise) {
+    return window._pyodideInitPromise;
+  }
+
+  window._pyodideInitPromise = (async () => {
+    window.isPyodideLoading = true;
+    try {
+      if (onStatusChange) onStatusChange('Loading Pyodide runtime script...');
+
+      // Dynamically inject Pyodide CDN script on demand only
+      if (!document.getElementById('pyodide-script')) {
+        await new Promise<void>((resolve, reject) => {
+          const script = document.createElement('script');
+          script.id = 'pyodide-script';
+          script.src = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js';
+          script.async = true;
+          script.onload = () => resolve();
+          script.onerror = () =>
+            reject(new Error('Failed to load Pyodide script from CDN. You might be offline.'));
+          document.head.appendChild(script);
+        });
+      }
+
+      if (onStatusChange) onStatusChange('Initializing WebAssembly core...');
+      const pyodide = await window.loadPyodide({
+        indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/',
+      });
+
+      if (onStatusChange) onStatusChange('Loading scientific packages (NumPy, SciPy, Scikit-learn)...');
+      try {
+        await pyodide.loadPackage(['numpy', 'scipy', 'scikit-learn']);
+      } catch (pkgErr) {
+        console.warn('Optional packages delayed or failed loading:', pkgErr);
+      }
+
+      window.pyodideInstance = pyodide;
+      return pyodide;
+    } finally {
+      window.isPyodideLoading = false;
+    }
+  })();
+
+  return window._pyodideInitPromise;
+}
+
 export function usePyodide() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [loadingStatus, setLoadingStatus] = useState<string>('Initializing Python WASM environment...');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [loadingStatus, setLoadingStatus] = useState<string>('Ready to run Python');
   const [isReady, setIsReady] = useState<boolean>(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const pyodideRef = useRef<any>(null);
 
   useEffect(() => {
-    let isMounted = true;
+    // If Pyodide was already initialized in the session, link immediately
+    if (typeof window !== 'undefined' && window.pyodideInstance) {
+      pyodideRef.current = window.pyodideInstance;
+      setIsReady(true);
+      setLoadingStatus('Python environment ready (WASM, NumPy, Scikit-learn enabled)');
+    }
+  }, []);
 
-    async function initPyodide() {
-      if (typeof window === 'undefined') return;
-
-      if (window.pyodideInstance) {
-        pyodideRef.current = window.pyodideInstance;
-        if (isMounted) {
-          setIsReady(true);
-          setIsLoading(false);
-          setLoadingStatus('Python environment ready (NumPy, SciPy, Scikit-learn available)');
-        }
-        return;
-      }
-
-      if (window.isPyodideLoading) {
-        // Poll for existing loading instance
-        const checkInterval = setInterval(() => {
-          if (window.pyodideInstance) {
-            pyodideRef.current = window.pyodideInstance;
-            if (isMounted) {
-              setIsReady(true);
-              setIsLoading(false);
-              setLoadingStatus('Python environment ready');
-            }
-            clearInterval(checkInterval);
-          }
-        }, 300);
-        return;
-      }
-
-      window.isPyodideLoading = true;
-
-      try {
-        if (isMounted) setLoadingStatus('Loading Pyodide runtime script...');
-        
-        // Dynamically inject script if not present
-        if (!document.getElementById('pyodide-script')) {
-          await new Promise<void>((resolve, reject) => {
-            const script = document.createElement('script');
-            script.id = 'pyodide-script';
-            script.src = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js';
-            script.async = true;
-            script.onload = () => resolve();
-            script.onerror = () => reject(new Error('Failed to load Pyodide script from CDN. You might be offline.'));
-            document.head.appendChild(script);
-          });
-        }
-
-        if (isMounted) setLoadingStatus('Initializing WebAssembly core...');
-        const pyodide = await window.loadPyodide({
-          indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/',
-        });
-
-        if (isMounted) setLoadingStatus('Loading NumPy and basic scientific packages...');
-        try {
-          await pyodide.loadPackage(['numpy', 'scipy', 'scikit-learn']);
-        } catch (pkgErr) {
-          console.warn('Optional packages delayed or failed loading:', pkgErr);
-        }
-
-        window.pyodideInstance = pyodide;
-        pyodideRef.current = pyodide;
-
-        if (isMounted) {
-          setIsReady(true);
-          setIsLoading(false);
-          setLoadingStatus('Python environment ready (WASM, NumPy, Scikit-learn enabled)');
-        }
-      } catch (err: any) {
-        console.error('Pyodide load error:', err);
-        if (isMounted) {
-          setLoadError(err.message || 'Failed to initialize Python runtime');
-          setIsLoading(false);
-          setLoadingStatus('Client-side Python could not be initialized');
-        }
-      } finally {
-        window.isPyodideLoading = false;
-      }
+  const initPyodide = useCallback(async (): Promise<any> => {
+    if (pyodideRef.current || (typeof window !== 'undefined' && window.pyodideInstance)) {
+      pyodideRef.current = window.pyodideInstance;
+      setIsReady(true);
+      return pyodideRef.current;
     }
 
-    initPyodide();
+    setIsLoading(true);
+    setLoadingStatus('Initializing Python WASM environment...');
+    setLoadError(null);
 
-    return () => {
-      isMounted = false;
-    };
+    try {
+      const instance = await loadPyodideSingleton((status) => {
+        setLoadingStatus(status);
+      });
+      pyodideRef.current = instance;
+      setIsReady(true);
+      setIsLoading(false);
+      setLoadingStatus('Python environment ready (WASM, NumPy, Scikit-learn enabled)');
+      return instance;
+    } catch (err: any) {
+      console.error('Pyodide load error:', err);
+      const msg = err.message || 'Failed to initialize Python runtime';
+      setLoadError(msg);
+      setIsLoading(false);
+      setLoadingStatus('Client-side Python could not be initialized');
+      throw err;
+    }
   }, []);
 
   const runCode = useCallback(
     async (code: string): Promise<PyodideRunResult> => {
-      if (!pyodideRef.current) {
-        return {
-          stdout: '',
-          stderr: 'Python engine is not initialized yet. Please wait for WebAssembly to load, or check your internet connection.',
-          executionTimeMs: 0,
-          error: 'Python engine not ready',
-        };
+      let pyodide = pyodideRef.current || (typeof window !== 'undefined' ? window.pyodideInstance : null);
+
+      if (!pyodide) {
+        try {
+          pyodide = await initPyodide();
+        } catch (initErr: any) {
+          return {
+            stdout: '',
+            stderr: `Python initialization failed: ${initErr.message || String(initErr)}`,
+            executionTimeMs: 0,
+            error: initErr.message,
+          };
+        }
       }
 
       setIsRunning(true);
       const startTime = performance.now();
 
       try {
-        const pyodide = pyodideRef.current;
-
         // Python harness to capture stdout/stderr safely
         const wrapper = `
 import sys
@@ -180,7 +188,7 @@ finally:
         };
       }
     },
-    []
+    [initPyodide]
   );
 
   return {
@@ -190,5 +198,6 @@ finally:
     loadError,
     isRunning,
     runCode,
+    initPyodide,
   };
 }
