@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { PlatformDashboardView } from '@/components/dashboard/PlatformDashboardView';
+import { PlatformHomeOverview } from '@/components/dashboard/PlatformHomeOverview';
 
-export default function PlatformDashboardPage() {
-  return <PlatformDashboardView />;
+export default function PlatformOverviewPage() {
+  return <PlatformHomeOverview />;
 }

@@ -74,7 +74,7 @@ const PROGRAMMING_TRACKS = [
 ];
 
 const PRACTICE_AND_TOOLS = [
-  { title: 'Interactive Coding Hub', href: '/#coding-hub', icon: Terminal, desc: 'Multi-language live execution for Python, Java & DSA' },
+  { title: 'Interactive Coding Hub', href: '/engineering#coding-hub', icon: Terminal, desc: 'Multi-language live execution for Python, Java & DSA' },
   { title: 'AI & ML Playground', href: '/playground', icon: Sliders, desc: 'Interactive hyperparameter & model simulation' },
   { title: 'Python Code Lab', href: '/code-lab', icon: Code2, desc: 'Interactive in-browser Pyodide sandbox' },
   { title: 'Capstone Projects', href: '/projects', icon: Briefcase, desc: 'Production-grade ML & Full-Stack portfolios' },
@@ -95,6 +95,7 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
   const [progress, setProgress] = useState<UserProgressState | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname() || '/';
+  const isOverviewPage = pathname === '/';
   const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -160,7 +161,7 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16 gap-1.5 sm:gap-3">
-            {/* Left: AzurLearn Brand Logo + Compact Division Switcher */}
+            {/* Left: AzurLearn Brand Logo + Compact Route Switcher */}
             <div className="flex items-center gap-2 sm:gap-3 shrink-0 min-w-0">
               <Link
                 href="/"
@@ -169,7 +170,13 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
               >
                 <AzurLearnLogo
                   size="md"
-                  subtitle={division === 'doctor' ? 'MBBS Medical Academy' : 'Engineering & AI Academy'}
+                  subtitle={
+                    isOverviewPage
+                      ? 'Dual-Academy Platform Overview'
+                      : division === 'doctor'
+                      ? 'MBBS Medical Academy'
+                      : 'Engineering & AI Academy'
+                  }
                 />
               </Link>
 
@@ -177,38 +184,83 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
                 <div
                   className="hidden sm:inline-flex items-center p-0.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700"
                   role="group"
-                  aria-label="Academy division toggle"
+                  aria-label="Academy route switcher"
                 >
-                  <button
-                    type="button"
+                  <Link
+                    href="/"
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
+                      isOverviewPage
+                        ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs'
+                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                    }`}
+                  >
+                    <Layers className="w-3 h-3" />
+                    <span>Overview</span>
+                  </Link>
+                  <Link
+                    href="/engineering"
                     onClick={() => setDivision('engineering')}
                     className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
-                      division === 'engineering'
+                      !isOverviewPage && division === 'engineering'
                         ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
                         : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                     }`}
                   >
                     <Cpu className="w-3 h-3" />
                     <span>Engineering</span>
-                  </button>
-                  <button
-                    type="button"
+                  </Link>
+                  <Link
+                    href="/doctor"
                     onClick={() => setDivision('doctor')}
                     className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
-                      division === 'doctor'
+                      !isOverviewPage && division === 'doctor'
                         ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-xs'
                         : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                     }`}
                   >
                     <Stethoscope className="w-3 h-3" />
-                    <span>Doctor (MBBS)</span>
-                  </button>
+                    <span>Doctor</span>
+                  </Link>
                 </div>
               )}
             </div>
 
             {/* Desktop Navigation Links */}
-            {!isAuthPage && division === 'doctor' && (
+            {!isAuthPage && isOverviewPage && (
+              <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5">
+                <a
+                  href="#platform-tools"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                >
+                  <Sliders className="w-3.5 h-3.5 text-cyan-500" />
+                  <span>Platform Tools</span>
+                </a>
+                <Link
+                  href="/engineering"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-lg hover:bg-indigo-50/70 dark:hover:bg-slate-800 transition-colors"
+                >
+                  <Cpu className="w-3.5 h-3.5 text-indigo-500" />
+                  <span>Engineering Wing</span>
+                </Link>
+                <Link
+                  href="/doctor"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 rounded-lg hover:bg-teal-50/70 dark:hover:bg-slate-800 transition-colors"
+                >
+                  <Stethoscope className="w-3.5 h-3.5 text-teal-500" />
+                  <span>Doctor (MedVerse 3D)</span>
+                </Link>
+                <Link
+                  href="/ai-tutor"
+                  prefetch={false}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-pink-600 dark:hover:text-pink-400 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-pink-500" />
+                  <span>AI Tutor</span>
+                </Link>
+              </nav>
+            )}
+
+            {!isAuthPage && !isOverviewPage && division === 'doctor' && (
               <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5">
                 <Link
                   href="/doctor/anatomy"
@@ -248,7 +300,7 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
               </nav>
             )}
 
-            {!isAuthPage && division === 'engineering' && (
+            {!isAuthPage && !isOverviewPage && division === 'engineering' && (
               <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5">
                 {/* 1. AI & ML Tracks Dropdown */}
                 <div className="relative">
@@ -428,7 +480,7 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
 
                 {/* 4. Learning Journey Roadmap Link */}
                 <Link
-                  href="/#learning-journey"
+                  href="/engineering#learning-journey"
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                 >
                   <Compass className="w-3.5 h-3.5 text-violet-500" />
@@ -528,38 +580,50 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
         {mobileMenuOpen && (
           <div className="lg:hidden border-t border-slate-200 dark:border-slate-800 bg-white/98 dark:bg-slate-900/98 backdrop-blur-xl transition-all shadow-xl">
             <div className="px-4 pt-4 pb-6 space-y-4 max-h-[85vh] overflow-y-auto">
-              {/* Mobile Academy Division Switcher */}
-              <div className="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                <button
-                  type="button"
+              {/* Mobile Academy Route Switcher */}
+              <div className="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <Link
+                  href="/"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center justify-center gap-1 py-2 rounded-lg text-xs font-bold transition-all ${
+                    isOverviewPage
+                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400'
+                  }`}
+                >
+                  <Layers className="w-3.5 h-3.5" />
+                  <span>Overview</span>
+                </Link>
+                <Link
+                  href="/engineering"
                   onClick={() => {
                     setDivision('engineering');
                     setMobileMenuOpen(false);
                   }}
-                  className={`flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold transition-all ${
-                    division === 'engineering'
+                  className={`flex items-center justify-center gap-1 py-2 rounded-lg text-xs font-bold transition-all ${
+                    !isOverviewPage && division === 'engineering'
                       ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
                       : 'text-slate-600 dark:text-slate-400'
                   }`}
                 >
                   <Cpu className="w-3.5 h-3.5" />
                   <span>Engineering</span>
-                </button>
-                <button
-                  type="button"
+                </Link>
+                <Link
+                  href="/doctor"
                   onClick={() => {
                     setDivision('doctor');
                     setMobileMenuOpen(false);
                   }}
-                  className={`flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold transition-all ${
-                    division === 'doctor'
+                  className={`flex items-center justify-center gap-1 py-2 rounded-lg text-xs font-bold transition-all ${
+                    !isOverviewPage && division === 'doctor'
                       ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-xs'
                       : 'text-slate-600 dark:text-slate-400'
                   }`}
                 >
                   <Stethoscope className="w-3.5 h-3.5" />
-                  <span>Doctor (MBBS)</span>
-                </button>
+                  <span>Doctor</span>
+                </Link>
               </div>
 
               {/* Quick Search in Drawer */}
@@ -580,7 +644,7 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
               </button>
 
               {/* Section 1: Quick Navigation */}
-              {division === 'doctor' ? (
+              {!isOverviewPage && division === 'doctor' ? (
                 <div className="space-y-1">
                   <span className="text-[10px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider px-3 block mb-1">
                     🩺 MedVerse 3D (MBBS)
@@ -630,7 +694,7 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
                 <>
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 block mb-1">
-                  Home &amp; Roadmap
+                  Home &amp; Wings
                 </span>
                 <Link
                   href="/"
@@ -641,8 +705,32 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
                       : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
                   }`}
                 >
+                  <Layers className="w-4 h-4 text-indigo-500" />
+                  <span>Platform Overview (/)</span>
+                </Link>
+                <Link
+                  href="/engineering"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
+                    pathname === '/engineering'
+                      ? 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400'
+                      : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
+                  }`}
+                >
                   <LayoutDashboard className="w-4 h-4 text-indigo-500" />
-                  <span>Dashboard Home</span>
+                  <span>Engineering Dashboard (/engineering)</span>
+                </Link>
+                <Link
+                  href="/doctor"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
+                    pathname.startsWith('/doctor')
+                      ? 'bg-teal-50 dark:bg-teal-950/50 text-teal-600 dark:text-teal-400'
+                      : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
+                  }`}
+                >
+                  <Stethoscope className="w-4 h-4 text-teal-500" />
+                  <span>Doctor · MedVerse 3D (/doctor)</span>
                 </Link>
                 <Link
                   href="/curriculum"
@@ -657,7 +745,7 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
                   <span>My Learning (All Modules)</span>
                 </Link>
                 <Link
-                  href="/#learning-journey"
+                  href="/engineering#learning-journey"
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                 >

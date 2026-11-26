@@ -77,32 +77,14 @@ export const DivisionProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         } catch {}
       }
 
-      const isDashboardRoute =
-        pathname === '/' || pathname === '/engineering' || pathname === '/doctor';
-
-      if (options?.navigateHome || !isDashboardRoute) {
-        router.push(`/?division=${next}`);
+      if (options?.navigateHome) {
+        router.push('/');
         return;
       }
 
-      if (pathname === '/engineering' && next === 'doctor') {
-        router.push('/doctor');
-        return;
-      }
-      if (pathname === '/doctor' && next === 'engineering') {
-        router.push('/engineering');
-        return;
-      }
-
-      if (typeof window !== 'undefined' && pathname === '/') {
-        try {
-          const url = new URL(window.location.href);
-          url.searchParams.set('division', next);
-          window.history.replaceState(window.history.state, '', url.toString());
-        } catch {}
-      }
+      router.push(next === 'doctor' ? '/doctor' : '/engineering');
     },
-    [pathname, router]
+    [router]
   );
 
   return (
