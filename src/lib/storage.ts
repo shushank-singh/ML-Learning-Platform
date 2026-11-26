@@ -28,7 +28,31 @@ export function getProgress(): UserProgressState {
       return defaultState;
     }
     const parsed = JSON.parse(raw);
-    return { ...defaultState, ...parsed };
+    if (!parsed || typeof parsed !== 'object') {
+      return defaultState;
+    }
+    return {
+      ...defaultState,
+      ...parsed,
+      completedLessons:
+        parsed.completedLessons && typeof parsed.completedLessons === 'object'
+          ? parsed.completedLessons
+          : {},
+      bookmarks: Array.isArray(parsed.bookmarks) ? parsed.bookmarks : [],
+      notes:
+        parsed.notes && typeof parsed.notes === 'object' ? parsed.notes : {},
+      quizScores:
+        parsed.quizScores && typeof parsed.quizScores === 'object'
+          ? parsed.quizScores
+          : {},
+      streak: {
+        ...defaultState.streak,
+        ...(parsed.streak && typeof parsed.streak === 'object'
+          ? parsed.streak
+          : {}),
+      },
+      weakTopics: Array.isArray(parsed.weakTopics) ? parsed.weakTopics : [],
+    };
   } catch (e) {
     console.error('Failed to parse progress from localStorage', e);
     return defaultState;

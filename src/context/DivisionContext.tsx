@@ -95,9 +95,11 @@ export const DivisionProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }
 
       if (typeof window !== 'undefined' && pathname === '/') {
-        const url = new URL(window.location.href);
-        url.searchParams.set('division', next);
-        window.history.replaceState({}, '', url.toString());
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.set('division', next);
+          window.history.replaceState(window.history.state, '', url.toString());
+        } catch {}
       }
     },
     [pathname, router]

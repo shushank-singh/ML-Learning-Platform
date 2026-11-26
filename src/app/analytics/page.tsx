@@ -214,12 +214,12 @@ export default function AnalyticsPage() {
           <span className="text-xs text-slate-500 font-medium">Daily Streak</span>
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-extrabold font-mono text-amber-500">
-              {progress?.streak.currentStreak || 1}
+              {progress?.streak?.currentStreak || 1}
             </span>
             <span className="text-xs text-slate-400">days active</span>
           </div>
           <span className="text-[11px] text-slate-400 block">
-            Longest streak: {progress?.streak.longestStreak || 1} days
+            Longest streak: {progress?.streak?.longestStreak || 1} days
           </span>
         </div>
 

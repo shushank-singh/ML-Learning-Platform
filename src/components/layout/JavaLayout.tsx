@@ -162,7 +162,7 @@ export const JavaLayout: React.FC<{ children: React.ReactNode }> = ({ children }
             title="Daily Learning Streak"
           >
             <Flame className="w-3.5 h-3.5 fill-current" />
-            <span>{progress?.streak.currentStreak || 1}d</span>
+            <span>{progress?.streak?.currentStreak || 1}d</span>
           </div>
 
           {/* Study Minutes */}

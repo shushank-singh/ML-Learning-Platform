@@ -94,7 +94,7 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [progress, setProgress] = useState<UserProgressState | null>(null);
   const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
+  const pathname = usePathname() || '/';
   const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -480,7 +480,7 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
                     title="Daily Learning Streak"
                   >
                     <Flame className="w-3.5 h-3.5 fill-current text-amber-500" />
-                    <span>{progress?.streak.currentStreak || 1}d</span>
+                    <span>{progress?.streak?.currentStreak || 1}d</span>
                   </div>
                   <div
                     className="hidden lg:flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium"

@@ -9,9 +9,8 @@
  * - Pass-through network strategy for all dynamic requests
  */
 
-const CACHE_NAME = 'ctla-static-v1';
+const CACHE_NAME = 'azurlearn-static-v2';
 const STATIC_ASSETS = [
-  '/',
   '/manifest.webmanifest',
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png',

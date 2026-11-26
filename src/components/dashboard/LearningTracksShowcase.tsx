@@ -43,7 +43,7 @@ export const LearningTracksShowcase: React.FC<LearningTracksShowcaseProps> = Rea
   // Compute lesson counts and real user progress
   const getProgressStats = useCallback((lessonIds: readonly string[]) => {
     const total = lessonIds.length;
-    if (!progress || total === 0) return { completed: 0, total, pct: 0 };
+    if (!progress?.completedLessons || total === 0) return { completed: 0, total, pct: 0 };
     let completed = 0;
     for (let i = 0; i < lessonIds.length; i++) {
       if (progress.completedLessons[lessonIds[i]]) completed++;
