@@ -69,6 +69,7 @@ async function run() {
     { url: 'http://127.0.0.1:3005/api/certificates', expect: [401] },
     { url: 'http://127.0.0.1:3005/api/certificates/AZL-ML-TEST1234', expect: [404] },
     { url: 'http://127.0.0.1:3005/api/ai-tutor', method: 'POST', body: { message: 'hi' }, expect: [401] },
+    { url: 'http://127.0.0.1:3005/api/mock-interview/generate', method: 'POST', body: { trackId: 'mixed', questionCount: 5 }, expect: [401] },
     { url: 'http://127.0.0.1:3005/api/payments/create-order', method: 'POST', body: { trackId: 'all-access' }, expect: [401] },
   ];
 
