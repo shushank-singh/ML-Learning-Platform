@@ -2,7 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
-import { getJavaModule, getJavaLesson } from '@/data/java/curriculum';
+import { getJavaModule } from '@/data/catalogs/java';
+import { loadJavaLessonFast } from '@/data/java/loader';
 import { JavaLessonView } from '@/components/java/JavaLessonView';
 import { checkLessonAccessServer } from '@/lib/entitlements/server';
 import { LockedLessonView } from '@/components/entitlements/LockedLessonView';
@@ -55,7 +56,7 @@ export default async function JavaLessonPage({ params }: JavaLessonPageProps) {
     );
   }
 
-  const lesson = getJavaLesson(lessonId);
+  const lesson = await loadJavaLessonFast(moduleId, lessonId);
   const lessonSummary = mod.lessons.find((l) => l.id === lessonId);
 
   if (!lesson || !lessonSummary) {

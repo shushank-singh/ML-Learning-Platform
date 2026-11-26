@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import {
   CheckCircle2,
@@ -26,11 +27,8 @@ import {
 } from 'lucide-react';
 import { DSALessonContent } from '@/lib/types';
 import { MathBlock, MathInline } from '../math/Math';
-import { DSAVisualizerDispatcher } from './visualizers/DSAVisualizerDispatcher';
 import { ComplexityBadge } from '../shared/ComplexityBadge';
 import { PseudocodePanel } from '../shared/PseudocodePanel';
-import { CodeRunner } from '../code/CodeRunner';
-import { AITutorPanel } from '@/components/tutor/AITutorPanel';
 import {
   getProgress,
   toggleLessonCompletion,
@@ -38,7 +36,10 @@ import {
   saveNote,
   recordQuizScore,
 } from '@/lib/storage';
-import confetti from 'canvas-confetti';
+
+const DSAVisualizerDispatcher = dynamic(() => import('./visualizers/DSAVisualizerDispatcher').then((m) => m.DSAVisualizerDispatcher), { ssr: false });
+const CodeRunner = dynamic(() => import('../code/CodeRunner').then((m) => m.CodeRunner), { ssr: false });
+const AITutorPanel = dynamic(() => import('@/components/tutor/AITutorPanel').then((m) => m.AITutorPanel), { ssr: false });
 
 interface DSALessonViewProps {
   lesson: DSALessonContent;
@@ -73,11 +74,9 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
     const newState = toggleLessonCompletion(lesson.id);
     setIsCompleted(newState);
     if (newState) {
-      confetti({
-        particleCount: 80,
-        spread: 60,
-        origin: { y: 0.8 },
-      });
+      import('canvas-confetti')
+        .then((mod) => mod.default({ particleCount: 80, spread: 60, origin: { y: 0.8 } }))
+        .catch(() => {});
     }
   };
 
@@ -112,7 +111,9 @@ export const DSALessonView: React.FC<DSALessonViewProps> = ({ lesson }) => {
     setQuizSubmitted(true);
     recordQuizScore(lesson.id, score, lesson.quiz.length);
     if (score === lesson.quiz.length) {
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.7 } });
+      import('canvas-confetti')
+        .then((mod) => mod.default({ particleCount: 100, spread: 70, origin: { y: 0.7 } }))
+        .catch(() => {});
     }
   };
 

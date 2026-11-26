@@ -2,7 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
-import { getPythonModule, getPythonLesson } from '@/data/python/curriculum';
+import { getPythonModule } from '@/data/catalogs/python';
+import { loadPythonLessonFast } from '@/data/python/loader';
 import { PythonLessonView } from '@/components/python/PythonLessonView';
 import { checkLessonAccessServer } from '@/lib/entitlements/server';
 import { LockedLessonView } from '@/components/entitlements/LockedLessonView';
@@ -51,7 +52,7 @@ export default async function PythonLessonPage({ params }: PythonLessonPageProps
     );
   }
 
-  const lesson = getPythonLesson(lessonId);
+  const lesson = await loadPythonLessonFast(moduleId, lessonId);
   const lessonSummary = mod.lessons.find((l) => l.id === lessonId);
 
   if (!lesson || !lessonSummary) {

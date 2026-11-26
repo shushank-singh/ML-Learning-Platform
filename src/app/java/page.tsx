@@ -181,6 +181,7 @@ export default function JavaDashboardPage() {
               <Link
                 key={mod.id}
                 href={`/java/${mod.id}`}
+                prefetch={false}
                 className="group relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 flex flex-col justify-between hover:border-amber-500/60 hover:shadow-lg transition-all duration-200"
               >
                 <div className="space-y-4">

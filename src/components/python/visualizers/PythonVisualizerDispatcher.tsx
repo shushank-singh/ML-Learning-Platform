@@ -1,12 +1,20 @@
 'use client';
 
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { PythonConceptType } from '@/lib/types';
-import { ExecutionVisualizer } from './ExecutionVisualizer';
-import { DataStructureVisualizer } from './DataStructureVisualizer';
-import { OOPVisualizer } from './OOPVisualizer';
-import { MemoryVisualizer } from './MemoryVisualizer';
 import { Terminal, Database, Box, Cpu } from 'lucide-react';
+
+const LoadingBox = () => (
+  <div className="h-64 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 flex items-center justify-center text-xs font-mono text-slate-400">
+    Loading Python Visualizer...
+  </div>
+);
+
+const ExecutionVisualizer = dynamic(() => import('./ExecutionVisualizer').then((m) => m.ExecutionVisualizer), { ssr: false, loading: LoadingBox });
+const DataStructureVisualizer = dynamic(() => import('./DataStructureVisualizer').then((m) => m.DataStructureVisualizer), { ssr: false, loading: LoadingBox });
+const OOPVisualizer = dynamic(() => import('./OOPVisualizer').then((m) => m.OOPVisualizer), { ssr: false, loading: LoadingBox });
+const MemoryVisualizer = dynamic(() => import('./MemoryVisualizer').then((m) => m.MemoryVisualizer), { ssr: false, loading: LoadingBox });
 
 interface PythonVisualizerDispatcherProps {
   type: PythonConceptType;

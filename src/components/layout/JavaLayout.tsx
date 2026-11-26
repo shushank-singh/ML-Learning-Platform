@@ -266,6 +266,7 @@ export const JavaLayout: React.FC<{ children: React.ReactNode }> = ({ children }
                   <Link
                     key={mod.id}
                     href={`/java/${mod.id}`}
+                    prefetch={false}
                     onClick={() => setSidebarOpen(false)}
                     className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-[11px] transition-colors ${
                       isActive

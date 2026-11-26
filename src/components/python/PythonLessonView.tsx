@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import {
   CheckCircle2,
@@ -27,9 +28,6 @@ import {
   ShieldAlert,
 } from 'lucide-react';
 import { PythonLessonContent } from '@/lib/types';
-import { PythonVisualizerDispatcher } from './visualizers/PythonVisualizerDispatcher';
-import { CodeRunner } from '../code/CodeRunner';
-import { AITutorPanel } from '@/components/tutor/AITutorPanel';
 import {
   getProgress,
   toggleLessonCompletion,
@@ -37,7 +35,10 @@ import {
   saveNote,
   recordQuizScore,
 } from '@/lib/storage';
-import confetti from 'canvas-confetti';
+
+const PythonVisualizerDispatcher = dynamic(() => import('./visualizers/PythonVisualizerDispatcher').then((m) => m.PythonVisualizerDispatcher), { ssr: false });
+const CodeRunner = dynamic(() => import('../code/CodeRunner').then((m) => m.CodeRunner), { ssr: false });
+const AITutorPanel = dynamic(() => import('@/components/tutor/AITutorPanel').then((m) => m.AITutorPanel), { ssr: false });
 
 interface PythonLessonViewProps {
   lesson: PythonLessonContent;
@@ -72,11 +73,9 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
     const newState = toggleLessonCompletion(lesson.id);
     setIsCompleted(newState);
     if (newState) {
-      confetti({
-        particleCount: 80,
-        spread: 60,
-        origin: { y: 0.8 },
-      });
+      import('canvas-confetti')
+        .then((mod) => mod.default({ particleCount: 80, spread: 60, origin: { y: 0.8 } }))
+        .catch(() => {});
     }
   };
 
@@ -111,7 +110,9 @@ export const PythonLessonView: React.FC<PythonLessonViewProps> = ({ lesson }) =>
     setQuizSubmitted(true);
     recordQuizScore(lesson.id, score, lesson.quiz.length);
     if (score === lesson.quiz.length) {
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.7 } });
+      import('canvas-confetti')
+        .then((mod) => mod.default({ particleCount: 100, spread: 70, origin: { y: 0.7 } }))
+        .catch(() => {});
     }
   };
 

@@ -140,6 +140,7 @@ export default function DSALandingPage() {
               <Link
                 key={mod.id}
                 href={`/dsa/${mod.id}`}
+                prefetch={false}
                 className="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:border-violet-500/50 hover:shadow-md transition-all flex flex-col justify-between group"
               >
                 <div>

@@ -2,7 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
-import { getDSAModule, getDSALesson } from '@/data/dsa/curriculum';
+import { getDSAModule } from '@/data/catalogs/dsa';
+import { loadDSALessonFast } from '@/data/dsa/loader';
 import { DSALessonView } from '@/components/dsa/DSALessonView';
 import { checkLessonAccessServer } from '@/lib/entitlements/server';
 import { LockedLessonView } from '@/components/entitlements/LockedLessonView';
@@ -51,7 +52,7 @@ export default async function DSALessonPage({ params }: DSALessonPageProps) {
     );
   }
 
-  const lesson = getDSALesson(lessonId);
+  const lesson = await loadDSALessonFast(moduleId, lessonId);
   const lessonSummary = mod.lessons.find((l) => l.id === lessonId);
 
   if (!lesson || !lessonSummary) {
