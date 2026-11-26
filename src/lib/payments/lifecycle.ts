@@ -12,6 +12,7 @@
 import { getSupabaseAdminClient } from '@/lib/supabase/admin';
 import { CANONICAL_TRACK_IDS, CanonicalTrackId, normalizeTrackId } from '@/lib/entitlements/config';
 import { TrackBillingType } from '@/lib/entitlements/types';
+import { invalidateUserEntitlementCache } from '@/lib/entitlements/server';
 
 export interface SettlementResult {
   success: boolean;
@@ -316,6 +317,8 @@ export async function settleOneTimeOrder(params: {
     };
   }
 
+  invalidateUserEntitlementCache(userId);
+
   return {
     success: true,
     trackId: canonicalTrack,
@@ -423,6 +426,8 @@ export async function settleSubscriptionActivation(params: {
       error: 'Failed to record subscription entitlement.',
     };
   }
+
+  invalidateUserEntitlementCache(userId);
 
   return {
     success: true,

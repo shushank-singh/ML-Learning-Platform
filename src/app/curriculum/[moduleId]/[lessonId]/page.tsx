@@ -2,7 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { BookOpen, ArrowLeft, AlertCircle } from 'lucide-react';
-import { getLesson, getModule } from '@/data/modules/curriculum';
+import { getModule } from '@/data/catalogs/ml';
+import { loadLessonFast } from '@/data/modules/loader';
 import { LessonView } from '@/components/lessons/LessonView';
 import { checkLessonAccessServer } from '@/lib/entitlements/server';
 import { LockedLessonView } from '@/components/entitlements/LockedLessonView';
@@ -58,8 +59,8 @@ export default async function LessonDetailPage({ params }: LessonDetailPageProps
     );
   }
 
-  // 2. Fetch lesson content ONLY when access is verified
-  const lesson = getLesson(moduleId, lessonId);
+  // 2. Fetch ONLY the requested module's lesson content when access is verified
+  const lesson = await loadLessonFast(moduleId, lessonId);
 
   if (!lesson) {
     return (
