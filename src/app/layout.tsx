@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from 'next/font/google';
 import '@/styles/globals.css';
 import { AppShell } from '@/components/layout/AppShell';
 import { AuthProvider } from '@/context/AuthContext';
+import { DivisionProvider } from '@/context/DivisionContext';
 import { PwaRegister } from '@/components/pwa/PwaRegister';
 
 const inter = Inter({
@@ -70,7 +71,9 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans bg-slate-50 dark:bg-slate-950 min-h-screen text-slate-900 dark:text-slate-100`}>
         <AuthProvider>
-          <AppShell>{children}</AppShell>
+          <DivisionProvider>
+            <AppShell>{children}</AppShell>
+          </DivisionProvider>
         </AuthProvider>
         <PwaRegister />
       </body>

@@ -27,9 +27,11 @@ interface AppShellProps {
 export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const pathname = usePathname() || '/';
 
-  // 1. Public Standalone Pages (Home, Pricing, Plans, Certificate Verification, Auth): Standalone layout without sidebar or AuthGuard
+  // 1. Public Standalone Pages (Home, Engineering/Doctor Dashboards, Pricing, Plans, Certificate Verification, Auth): Standalone layout without sidebar or AuthGuard
   if (
     pathname === '/' ||
+    pathname === '/engineering' ||
+    pathname === '/doctor' ||
     pathname === '/pricing' ||
     pathname === '/plans' ||
     pathname.startsWith('/verify') ||

@@ -19,11 +19,17 @@ import {
   Coffee,
   Bookmark,
   BarChart2,
+  Stethoscope,
+  HeartPulse,
+  ClipboardCheck,
 } from 'lucide-react';
 import { ThemeToggle } from '@/components/shared/ThemeToggle';
 import { AzurLearnLogo } from '@/components/shared/AzurLearnLogo';
+import { useDivision } from '@/context/DivisionContext';
 
 export const PlatformFooter: React.FC = () => {
+  const { division } = useDivision();
+
   return (
     <footer className="mt-14 sm:mt-20 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-t-3xl pt-8 sm:pt-12 pb-8 sm:pb-10 px-4 sm:px-8 text-slate-600 dark:text-slate-400 transition-colors duration-200">
       <div className="max-w-7xl mx-auto space-y-8 sm:space-y-12">
@@ -31,21 +37,31 @@ export const PlatformFooter: React.FC = () => {
           {/* Brand & Mission Column (col-span-2) */}
           <div className="lg:col-span-2 space-y-4">
             <Link href="/" className="inline-flex items-center group">
-              <AzurLearnLogo size="md" />
+              <AzurLearnLogo
+                size="md"
+                subtitle={division === 'doctor' ? 'MBBS Medical Academy' : 'Engineering & AI Academy'}
+              />
             </Link>
 
             <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed max-w-sm">
-              An open, production-grade educational platform designed to master artificial intelligence, machine learning, and deep learning through first-principles mathematics, interactive visualizers, zero-install runnable code, and industrial deployment blueprints.
+              A dual-academy learning platform divided into Engineering (AI &amp; ML, DSA, Python, Java) and Doctor / MBBS (19 Medical Subjects, Clinical Simulators, and Case Vignettes).
             </p>
 
             <div className="flex flex-wrap items-center gap-2 text-xs">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium">
-                <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                8 AI/ML Tracks Active
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium">
-                100+ Interactive Lessons
-              </span>
+              <Link
+                href="/engineering"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 font-medium hover:bg-indigo-100 transition-colors"
+              >
+                <Cpu className="w-3.5 h-3.5" />
+                <span>Engineering Wing</span>
+              </Link>
+              <Link
+                href="/doctor"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 font-medium hover:bg-emerald-100 transition-colors"
+              >
+                <Stethoscope className="w-3.5 h-3.5" />
+                <span>Doctor (MBBS) Wing</span>
+              </Link>
             </div>
           </div>
 
@@ -157,10 +173,10 @@ export const PlatformFooter: React.FC = () => {
             </ul>
           </div>
 
-          {/* Complementary Labs & System */}
+          {/* Complementary Labs & MBBS Wing */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200">
-              Complementary Labs
+              CS &amp; Medical Wings
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
@@ -182,15 +198,21 @@ export const PlatformFooter: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/analytics" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
-                  <BarChart2 className="w-3.5 h-3.5 text-cyan-500" />
-                  <span>Learning Analytics</span>
+                <Link href="/doctor#mbbs-subjects" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+                  <Stethoscope className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>MBBS 19 Subjects</span>
                 </Link>
               </li>
               <li>
-                <Link href="/notes" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
-                  <Bookmark className="w-3.5 h-3.5 text-indigo-500" />
-                  <span>Bookmarks &amp; Notes</span>
+                <Link href="/doctor#clinical-hub" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+                  <HeartPulse className="w-3.5 h-3.5 text-rose-500" />
+                  <span>ECG &amp; ABG Clinical Lab</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/doctor#clinical-cases" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+                  <ClipboardCheck className="w-3.5 h-3.5 text-cyan-500" />
+                  <span>Ward Case Vignettes</span>
                 </Link>
               </li>
             </ul>

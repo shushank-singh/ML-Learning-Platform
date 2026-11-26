@@ -35,8 +35,12 @@ import {
   ChevronRight,
   Award,
   Timer,
+  Stethoscope,
+  HeartPulse,
+  ClipboardCheck,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { useDivision } from '@/context/DivisionContext';
 import { getProgress } from '@/lib/storage';
 import { UserProgressState } from '@/lib/types';
 import { UserMenu } from '@/components/auth/UserMenu';
@@ -84,6 +88,7 @@ const PRACTICE_AND_TOOLS = [
 
 export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false }) => {
   const { user } = useAuth();
+  const { division, setDivision } = useDivision();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -155,19 +160,88 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16 gap-1.5 sm:gap-3">
-            {/* Left: AzurLearn Brand Logo */}
-            <div className="flex items-center shrink-0 min-w-0">
+            {/* Left: AzurLearn Brand Logo + Compact Division Switcher */}
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0 min-w-0">
               <Link
                 href="/"
                 className="flex items-center group focus:outline-none"
                 aria-label="AzurLearn Home"
               >
-                <AzurLearnLogo size="md" />
+                <AzurLearnLogo
+                  size="md"
+                  subtitle={division === 'doctor' ? 'MBBS Medical Academy' : 'Engineering & AI Academy'}
+                />
               </Link>
+
+              {!isAuthPage && (
+                <div
+                  className="hidden sm:inline-flex items-center p-0.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700"
+                  role="group"
+                  aria-label="Academy division toggle"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setDivision('engineering')}
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
+                      division === 'engineering'
+                        ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
+                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                    }`}
+                  >
+                    <Cpu className="w-3 h-3" />
+                    <span>Engineering</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setDivision('doctor')}
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
+                      division === 'doctor'
+                        ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-xs'
+                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                    }`}
+                  >
+                    <Stethoscope className="w-3 h-3" />
+                    <span>Doctor (MBBS)</span>
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Desktop Navigation Links */}
-            {!isAuthPage && (
+            {!isAuthPage && division === 'doctor' && (
+              <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5">
+                <Link
+                  href="/doctor#mbbs-subjects"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-emerald-50/70 dark:hover:bg-slate-800 transition-colors"
+                >
+                  <BookOpen className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>19 MBBS Subjects</span>
+                </Link>
+                <Link
+                  href="/doctor#clinical-hub"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-emerald-50/70 dark:hover:bg-slate-800 transition-colors"
+                >
+                  <HeartPulse className="w-3.5 h-3.5 text-rose-500" />
+                  <span>Clinical Lab</span>
+                </Link>
+                <Link
+                  href="/doctor#mbbs-roadmap"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-emerald-50/70 dark:hover:bg-slate-800 transition-colors"
+                >
+                  <Compass className="w-3.5 h-3.5 text-teal-500" />
+                  <span>MBBS Roadmap</span>
+                </Link>
+                <Link
+                  href="/doctor#clinical-cases"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-emerald-50/70 dark:hover:bg-slate-800 transition-colors"
+                >
+                  <ClipboardCheck className="w-3.5 h-3.5 text-cyan-500" />
+                  <span>Ward Cases</span>
+                </Link>
+              </nav>
+            )}
+
+            {!isAuthPage && division === 'engineering' && (
               <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5">
                 {/* 1. AI & ML Tracks Dropdown */}
                 <div className="relative">
@@ -447,6 +521,40 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
         {mobileMenuOpen && (
           <div className="lg:hidden border-t border-slate-200 dark:border-slate-800 bg-white/98 dark:bg-slate-900/98 backdrop-blur-xl transition-all shadow-xl">
             <div className="px-4 pt-4 pb-6 space-y-4 max-h-[85vh] overflow-y-auto">
+              {/* Mobile Academy Division Switcher */}
+              <div className="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setDivision('engineering');
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold transition-all ${
+                    division === 'engineering'
+                      ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400'
+                  }`}
+                >
+                  <Cpu className="w-3.5 h-3.5" />
+                  <span>Engineering</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setDivision('doctor');
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold transition-all ${
+                    division === 'doctor'
+                      ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400'
+                  }`}
+                >
+                  <Stethoscope className="w-3.5 h-3.5" />
+                  <span>Doctor (MBBS)</span>
+                </button>
+              </div>
+
               {/* Quick Search in Drawer */}
               <button
                 onClick={() => {
@@ -465,6 +573,46 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
               </button>
 
               {/* Section 1: Quick Navigation */}
+              {division === 'doctor' ? (
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider px-3 block mb-1">
+                    🩺 Doctor (MBBS) Dashboard
+                  </span>
+                  <Link
+                    href="/doctor#mbbs-subjects"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors"
+                  >
+                    <BookOpen className="w-4 h-4 text-emerald-500" />
+                    <span>19 MBBS Subjects</span>
+                  </Link>
+                  <Link
+                    href="/doctor#clinical-hub"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors"
+                  >
+                    <HeartPulse className="w-4 h-4 text-rose-500" />
+                    <span>Clinical &amp; ECG Simulators</span>
+                  </Link>
+                  <Link
+                    href="/doctor#mbbs-roadmap"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors"
+                  >
+                    <Compass className="w-4 h-4 text-teal-500" />
+                    <span>MBBS Prof Years Roadmap</span>
+                  </Link>
+                  <Link
+                    href="/doctor#clinical-cases"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors"
+                  >
+                    <ClipboardCheck className="w-4 h-4 text-cyan-500" />
+                    <span>Bedside Case Vignettes</span>
+                  </Link>
+                </div>
+              ) : (
+                <>
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 block mb-1">
                   Home &amp; Roadmap
@@ -594,6 +742,8 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
                   <span>AI Tutor &amp; Mentorship</span>
                 </Link>
               </div>
+              </>
+              )}
 
               {/* Auth actions if logged out */}
               {!user && (

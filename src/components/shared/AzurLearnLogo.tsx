@@ -6,6 +6,7 @@ interface AzurLearnLogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   showText?: boolean;
   showSubtitle?: boolean;
+  subtitle?: string;
   className?: string;
 }
 
@@ -13,6 +14,7 @@ export const AzurLearnLogo: React.FC<AzurLearnLogoProps> = ({
   size = 'md',
   showText = true,
   showSubtitle = true,
+  subtitle = 'Engineering & Medical Academy',
   className = '',
 }) => {
   const iconSizes = {
@@ -112,7 +114,7 @@ export const AzurLearnLogo: React.FC<AzurLearnLogoProps> = ({
           </div>
           {showSubtitle && (
             <span className={`${subtitleSizes[size]} font-semibold text-slate-500 dark:text-slate-400 tracking-wide mt-0.5 hidden sm:block whitespace-nowrap`}>
-              AI &amp; Machine Learning Academy
+              {subtitle}
             </span>
           )}
         </div>
