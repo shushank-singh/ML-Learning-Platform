@@ -106,33 +106,35 @@ export async function POST(req: NextRequest) {
 
     const { keyId } = getRazorpayCredentials();
 
-    // 5. Create Order via Razorpay REST API
-    let orderId: string;
-    let orderAmount = product.amountPaise;
-    let orderCurrency: 'INR' = 'INR';
-
-    if (isRazorpayConfigured()) {
-      const { order, error: rzpError } = await createRazorpayOrder({
-        amount: orderAmount,
-        currency: orderCurrency,
-        receipt,
-        notes,
-      });
-
-      if (rzpError || !order) {
-        return NextResponse.json(
-          { error: `Payment gateway error: ${rzpError}` },
-          { status: 502 }
-        );
-      }
-
-      orderId = order.id;
-      orderAmount = order.amount;
-      orderCurrency = 'INR';
-    } else {
-      // In sandbox/local dev without gateway credentials, provide a test order ID
-      orderId = `order_test_${Date.now()}`;
+    if (!isRazorpayConfigured() || !keyId) {
+      return NextResponse.json(
+        {
+          error:
+            'Razorpay payment gateway is not configured on this server. Please configure RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in your environment variables.',
+          missingGatewayConfig: true,
+        },
+        { status: 503 }
+      );
     }
+
+    // 5. Create Order via Razorpay REST API
+    const { order, error: rzpError } = await createRazorpayOrder({
+      amount: product.amountPaise,
+      currency: 'INR',
+      receipt,
+      notes,
+    });
+
+    if (rzpError || !order) {
+      return NextResponse.json(
+        { error: `Payment gateway error: ${rzpError}` },
+        { status: 502 }
+      );
+    }
+
+    const orderId = order.id;
+    const orderAmount = order.amount;
+    const orderCurrency: 'INR' = 'INR';
 
     // 6. Record Durable Order in Database
     await recordOrderCreation({
@@ -154,7 +156,7 @@ export async function POST(req: NextRequest) {
         trackId: canonicalTrack,
         productId: product.id,
         trackTitle: product.trackTitle,
-        keyId: keyId || 'rzp_test_placeholder',
+        keyId,
       },
       {
         status: 200,

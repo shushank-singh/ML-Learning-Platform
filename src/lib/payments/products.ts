@@ -205,7 +205,7 @@ export function buildProductCatalog(): Record<string, TrackProduct> {
     displayPrice: `₹${(monthlyAllPrice / 100).toLocaleString('en-IN')}/mo`,
     billingPeriod: 'monthly',
     isActive: true,
-    razorpayPlanId: process.env.RAZORPAY_MONTHLY_PLAN_ID || 'plan_TxC1G2P04xPWfW',
+    razorpayPlanId: process.env.RAZORPAY_MONTHLY_PLAN_ID || 'plan_TxCovTm1sx2hME',
     description: 'Flexible monthly subscription to all 13 curriculum tracks, 131 modules, 417 lessons, interactive coding visualizers, and AI Tutor. Automatically renews monthly, cancel anytime.',
     requiresOwnerApproval: false,
   };

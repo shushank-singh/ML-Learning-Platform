@@ -132,29 +132,33 @@ export async function POST(req: NextRequest) {
 
     const { keyId } = getRazorpayCredentials();
 
-    // 5. Create Subscription via Razorpay REST API
-    let subscriptionId: string;
-
-    if (isRazorpayConfigured()) {
-      const { subscription, error: rzpError } = await createRazorpaySubscription({
-        planId: product.razorpayPlanId,
-        totalCount: 12,
-        customerNotify: true,
-        notes,
-      });
-
-      if (rzpError || !subscription) {
-        return NextResponse.json(
-          { error: `Payment gateway error: ${rzpError}` },
-          { status: 502 }
-        );
-      }
-
-      subscriptionId = subscription.id;
-    } else {
-      // In sandbox/local dev without gateway credentials, provide a test subscription ID
-      subscriptionId = `sub_test_${Date.now()}`;
+    if (!isRazorpayConfigured() || !keyId) {
+      return NextResponse.json(
+        {
+          error:
+            'Razorpay payment gateway is not configured on this server. Please configure RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in your environment variables.',
+          missingGatewayConfig: true,
+        },
+        { status: 503 }
+      );
     }
+
+    // 5. Create Subscription via Razorpay REST API
+    const { subscription, error: rzpError } = await createRazorpaySubscription({
+      planId: product.razorpayPlanId,
+      totalCount: 12,
+      customerNotify: true,
+      notes,
+    });
+
+    if (rzpError || !subscription) {
+      return NextResponse.json(
+        { error: `Payment gateway error: ${rzpError}` },
+        { status: 502 }
+      );
+    }
+
+    const subscriptionId = subscription.id;
 
     // 6. Record Durable Subscription in Database
     await recordSubscriptionCreation({
@@ -176,7 +180,7 @@ export async function POST(req: NextRequest) {
         productId: product.id,
         trackTitle: product.trackTitle,
         planId: product.razorpayPlanId,
-        keyId: keyId || 'rzp_test_placeholder',
+        keyId,
       },
       {
         status: 200,

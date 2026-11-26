@@ -81,7 +81,7 @@ export default function PricingPage() {
   // Launch One-Time Lifetime Checkout
   const handlePurchaseLifetime = async (trackId: CanonicalTrackId | 'all' = 'all') => {
     if (!user) {
-      window.location.href = '/login?next=/pricing';
+      window.location.href = '/login?redirectTo=/pricing';
       return;
     }
 
@@ -103,6 +103,17 @@ export default function PricingPage() {
       if (!res.ok) {
         setCheckoutState('error');
         setStatusMessage(data.error || 'Failed to initiate order.');
+        return;
+      }
+
+      if (
+        !data.keyId ||
+        String(data.keyId).includes('placeholder') ||
+        !data.orderId ||
+        String(data.orderId).startsWith('order_test_')
+      ) {
+        setCheckoutState('error');
+        setStatusMessage('Razorpay gateway keys are not configured on the server.');
         return;
       }
 
@@ -170,6 +181,14 @@ export default function PricingPage() {
       };
 
       const rzp = new (window as any).Razorpay(options);
+      rzp.on('payment.failed', (failure: any) => {
+        setCheckoutState('error');
+        setStatusMessage(
+          failure?.error?.description ||
+            failure?.error?.reason ||
+            'Payment failed in Razorpay checkout. Please try again.'
+        );
+      });
       rzp.open();
     } catch (err: any) {
       setCheckoutState('error');
@@ -180,7 +199,7 @@ export default function PricingPage() {
   // Launch Monthly Subscription Checkout
   const handleSubscribeMonthly = async (trackId: CanonicalTrackId | 'all' = 'all') => {
     if (!user) {
-      window.location.href = '/login?next=/pricing';
+      window.location.href = '/login?redirectTo=/pricing';
       return;
     }
 
@@ -202,6 +221,17 @@ export default function PricingPage() {
       if (!res.ok) {
         setCheckoutState('error');
         setStatusMessage(data.error || 'Failed to initiate subscription.');
+        return;
+      }
+
+      if (
+        !data.keyId ||
+        String(data.keyId).includes('placeholder') ||
+        !data.subscriptionId ||
+        String(data.subscriptionId).startsWith('sub_test_')
+      ) {
+        setCheckoutState('error');
+        setStatusMessage('Razorpay subscription keys are not configured on the server.');
         return;
       }
 
@@ -267,6 +297,14 @@ export default function PricingPage() {
       };
 
       const rzp = new (window as any).Razorpay(options);
+      rzp.on('payment.failed', (failure: any) => {
+        setCheckoutState('error');
+        setStatusMessage(
+          failure?.error?.description ||
+            failure?.error?.reason ||
+            'Payment failed in Razorpay checkout. Please try again.'
+        );
+      });
       rzp.open();
     } catch (err: any) {
       setCheckoutState('error');
