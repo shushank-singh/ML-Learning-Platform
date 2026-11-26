@@ -9,6 +9,7 @@ const MLLayout = dynamic(() => import('./MLLayout').then((m) => m.MLLayout), { s
 const DSALayout = dynamic(() => import('./DSALayout').then((m) => m.DSALayout), { ssr: true });
 const PythonLayout = dynamic(() => import('./PythonLayout').then((m) => m.PythonLayout), { ssr: true });
 const JavaLayout = dynamic(() => import('./JavaLayout').then((m) => m.JavaLayout), { ssr: true });
+const MedVerseLayout = dynamic(() => import('./MedVerseLayout').then((m) => m.MedVerseLayout), { ssr: true });
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -44,7 +45,12 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
     return <LandingLayout>{children}</LandingLayout>;
   }
 
-  // 2. DSA Learning Environment
+  // 2. MedVerse 3D Doctor (MBBS) Sub-Routes
+  if (pathname.startsWith('/doctor/')) {
+    return <MedVerseLayout>{children}</MedVerseLayout>;
+  }
+
+  // 3. DSA Learning Environment
   if (pathname.startsWith('/dsa')) {
     return <DSALayout>{children}</DSALayout>;
   }

@@ -13,7 +13,7 @@ import {
 } from '@/data/learningPlatformConfig';
 import { AcademyDivisionSwitcher } from '@/components/dashboard/AcademyDivisionSwitcher';
 import { HeroSection } from '@/components/dashboard/HeroSection';
-import { DoctorHeroSection } from '@/components/dashboard/doctor/DoctorHeroSection';
+import { MedVerseDashboardHome } from '@/components/medverse/MedVerseDashboardHome';
 
 // Engineering Dashboard Sections (Everything built so far)
 const LearningTracksShowcase = dynamic(
@@ -49,35 +49,6 @@ const FinalCTASection = dynamic(
   { ssr: true }
 );
 
-// Doctor (MBBS) Dashboard Design Sections
-const DoctorDashboardBanner = dynamic(
-  () => import('@/components/dashboard/doctor/DoctorDashboardBanner').then((m) => m.DoctorDashboardBanner),
-  { ssr: false }
-);
-const DoctorSubjectsShowcase = dynamic(
-  () => import('@/components/dashboard/doctor/DoctorSubjectsShowcase').then((m) => m.DoctorSubjectsShowcase),
-  { ssr: true }
-);
-const DoctorWhySection = dynamic(
-  () => import('@/components/dashboard/doctor/DoctorWhySection').then((m) => m.DoctorWhySection),
-  { ssr: true }
-);
-const DoctorClinicalHub = dynamic(
-  () => import('@/components/dashboard/doctor/DoctorClinicalHub').then((m) => m.DoctorClinicalHub),
-  { ssr: false }
-);
-const DoctorJourneyRoadmap = dynamic(
-  () => import('@/components/dashboard/doctor/DoctorJourneyRoadmap').then((m) => m.DoctorJourneyRoadmap),
-  { ssr: false }
-);
-const DoctorCasesShowcase = dynamic(
-  () => import('@/components/dashboard/doctor/DoctorCasesShowcase').then((m) => m.DoctorCasesShowcase),
-  { ssr: false }
-);
-const DoctorFinalCTA = dynamic(
-  () => import('@/components/dashboard/doctor/DoctorFinalCTA').then((m) => m.DoctorFinalCTA),
-  { ssr: true }
-);
 
 interface PlatformDashboardViewProps {
   forcedDivision?: PlatformDivision;
@@ -159,27 +130,9 @@ export const PlatformDashboardView: React.FC<PlatformDashboardViewProps> = ({ fo
           )
         ) : (
           /* ========================================================================= */
-          /* DIVISION 2: DOCTOR / MBBS (DASHBOARD DESIGN PREVIEW)                      */
+          /* DIVISION 2: MEDVERSE 3D — INTERACTIVE MBBS MEDICAL PLATFORM               */
           /* ========================================================================= */
-          user ? (
-            <>
-              <DoctorDashboardBanner />
-              <DoctorSubjectsShowcase />
-              <DoctorClinicalHub />
-              <DoctorJourneyRoadmap />
-              <DoctorCasesShowcase />
-            </>
-          ) : (
-            <>
-              <DoctorHeroSection />
-              <DoctorSubjectsShowcase />
-              <DoctorWhySection />
-              <DoctorClinicalHub />
-              <DoctorJourneyRoadmap />
-              <DoctorCasesShowcase />
-              <DoctorFinalCTA />
-            </>
-          )
+          <MedVerseDashboardHome />
         )}
       </div>
 

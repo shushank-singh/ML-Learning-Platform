@@ -198,21 +198,21 @@ export const PlatformFooter: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/doctor#mbbs-subjects" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+                <Link href="/doctor/anatomy" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5">
                   <Stethoscope className="w-3.5 h-3.5 text-emerald-500" />
-                  <span>MBBS 19 Subjects</span>
+                  <span>3D Anatomy Atlas</span>
                 </Link>
               </li>
               <li>
-                <Link href="/doctor#clinical-hub" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+                <Link href="/doctor/animations" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5">
                   <HeartPulse className="w-3.5 h-3.5 text-rose-500" />
-                  <span>ECG &amp; ABG Clinical Lab</span>
+                  <span>Scientific Animations</span>
                 </Link>
               </li>
               <li>
-                <Link href="/doctor#clinical-cases" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+                <Link href="/doctor/cases" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5">
                   <ClipboardCheck className="w-3.5 h-3.5 text-cyan-500" />
-                  <span>Ward Case Vignettes</span>
+                  <span>Clinical Case Lab</span>
                 </Link>
               </li>
             </ul>

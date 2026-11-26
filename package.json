@@ -6,8 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "node tests/validate_curriculum_integrity.js && node tests/verify.js && node tests/auth-verify.js && node tests/test-ai-tutor.js && node tests/verify_transformers.js && node tests/verify_genai.js && node tests/verify_rag.js && node tests/verify_agents.js && node tests/verify_mlops.js && node tests/verify_deployment.js && node tests/session-security-verify.js && node tests/entitlements-security-verify.js && node tests/payments-lifecycle-verify.js && node tests/signup-database-verify.js",
-    "test:integrity": "node tests/validate_curriculum_integrity.js"
+    "test": "node tests/validate_curriculum_integrity.js && node tests/verify.js && node tests/auth-verify.js && node tests/test-ai-tutor.js && node tests/verify_transformers.js && node tests/verify_genai.js && node tests/verify_rag.js && node tests/verify_agents.js && node tests/verify_mlops.js && node tests/verify_deployment.js && node tests/session-security-verify.js && node tests/entitlements-security-verify.js && node tests/payments-lifecycle-verify.js && node tests/signup-database-verify.js && node tests/medverse-verify.js",
+    "test:integrity": "node tests/validate_curriculum_integrity.js",
+    "test:medverse": "node tests/medverse-verify.js"
   },
   "keywords": [],
   "author": "",
@@ -16,11 +17,15 @@
   "dependencies": {
     "@google/genai": "^2.31.0",
     "@monaco-editor/react": "^4.7.0",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.118.0",
+    "@types/three": "^0.170.0",
     "autoprefixer": "^10.4.20",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
+    "framer-motion": "^11.15.0",
     "katex": "^0.19.0",
     "lucide-react": "^1.57.0",
     "next": "^14.2.15",
@@ -28,7 +33,9 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwind-merge": "^3.7.0",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "three": "^0.170.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/canvas-confetti": "^1.9.0",

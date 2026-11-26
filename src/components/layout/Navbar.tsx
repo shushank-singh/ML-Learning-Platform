@@ -211,32 +211,39 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
             {!isAuthPage && division === 'doctor' && (
               <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5">
                 <Link
-                  href="/doctor#mbbs-subjects"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-emerald-50/70 dark:hover:bg-slate-800 transition-colors"
+                  href="/doctor/anatomy"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 rounded-lg hover:bg-teal-50/70 dark:hover:bg-slate-800 transition-colors"
+                >
+                  <Stethoscope className="w-3.5 h-3.5 text-teal-500" />
+                  <span>3D Anatomy</span>
+                </Link>
+                <Link
+                  href="/doctor/animations"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 rounded-lg hover:bg-teal-50/70 dark:hover:bg-slate-800 transition-colors"
+                >
+                  <HeartPulse className="w-3.5 h-3.5 text-cyan-500" />
+                  <span>Animations</span>
+                </Link>
+                <Link
+                  href="/doctor/curriculum"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 rounded-lg hover:bg-teal-50/70 dark:hover:bg-slate-800 transition-colors"
                 >
                   <BookOpen className="w-3.5 h-3.5 text-emerald-500" />
-                  <span>19 MBBS Subjects</span>
+                  <span>MBBS Syllabus</span>
                 </Link>
                 <Link
-                  href="/doctor#clinical-hub"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-emerald-50/70 dark:hover:bg-slate-800 transition-colors"
+                  href="/doctor/cases"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 rounded-lg hover:bg-teal-50/70 dark:hover:bg-slate-800 transition-colors"
                 >
-                  <HeartPulse className="w-3.5 h-3.5 text-rose-500" />
-                  <span>Clinical Lab</span>
+                  <ClipboardCheck className="w-3.5 h-3.5 text-violet-500" />
+                  <span>Clinical Cases</span>
                 </Link>
                 <Link
-                  href="/doctor#mbbs-roadmap"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-emerald-50/70 dark:hover:bg-slate-800 transition-colors"
+                  href="/doctor/quizzes"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 rounded-lg hover:bg-teal-50/70 dark:hover:bg-slate-800 transition-colors"
                 >
-                  <Compass className="w-3.5 h-3.5 text-teal-500" />
-                  <span>MBBS Roadmap</span>
-                </Link>
-                <Link
-                  href="/doctor#clinical-cases"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-emerald-50/70 dark:hover:bg-slate-800 transition-colors"
-                >
-                  <ClipboardCheck className="w-3.5 h-3.5 text-cyan-500" />
-                  <span>Ward Cases</span>
+                  <CheckSquare className="w-3.5 h-3.5 text-teal-500" />
+                  <span>Quizzes</span>
                 </Link>
               </nav>
             )}
@@ -575,40 +582,48 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
               {/* Section 1: Quick Navigation */}
               {division === 'doctor' ? (
                 <div className="space-y-1">
-                  <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider px-3 block mb-1">
-                    🩺 Doctor (MBBS) Dashboard
+                  <span className="text-[10px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider px-3 block mb-1">
+                    🩺 MedVerse 3D (MBBS)
                   </span>
                   <Link
-                    href="/doctor#mbbs-subjects"
+                    href="/doctor/anatomy"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors"
+                    className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-teal-50 dark:hover:bg-slate-800 transition-colors"
+                  >
+                    <Stethoscope className="w-4 h-4 text-teal-500" />
+                    <span>3D Anatomy Atlas</span>
+                  </Link>
+                  <Link
+                    href="/doctor/animations"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-teal-50 dark:hover:bg-slate-800 transition-colors"
+                  >
+                    <HeartPulse className="w-4 h-4 text-cyan-500" />
+                    <span>Animation Studio</span>
+                  </Link>
+                  <Link
+                    href="/doctor/curriculum"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-teal-50 dark:hover:bg-slate-800 transition-colors"
                   >
                     <BookOpen className="w-4 h-4 text-emerald-500" />
-                    <span>19 MBBS Subjects</span>
+                    <span>NMC MBBS Syllabus</span>
                   </Link>
                   <Link
-                    href="/doctor#clinical-hub"
+                    href="/doctor/cases"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors"
+                    className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-teal-50 dark:hover:bg-slate-800 transition-colors"
                   >
-                    <HeartPulse className="w-4 h-4 text-rose-500" />
-                    <span>Clinical &amp; ECG Simulators</span>
+                    <ClipboardCheck className="w-4 h-4 text-violet-500" />
+                    <span>Synthetic Clinical Cases</span>
                   </Link>
                   <Link
-                    href="/doctor#mbbs-roadmap"
+                    href="/doctor/quizzes"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors"
+                    className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-teal-50 dark:hover:bg-slate-800 transition-colors"
                   >
-                    <Compass className="w-4 h-4 text-teal-500" />
-                    <span>MBBS Prof Years Roadmap</span>
-                  </Link>
-                  <Link
-                    href="/doctor#clinical-cases"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors"
-                  >
-                    <ClipboardCheck className="w-4 h-4 text-cyan-500" />
-                    <span>Bedside Case Vignettes</span>
+                    <CheckSquare className="w-4 h-4 text-teal-500" />
+                    <span>Quizzes &amp; SM-2 Flashcards</span>
                   </Link>
                 </div>
               ) : (
