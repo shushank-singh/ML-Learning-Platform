@@ -33,6 +33,8 @@ import {
   Layers,
   Calculator,
   ChevronRight,
+  Award,
+  Timer,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { getProgress } from '@/lib/storage';
@@ -73,6 +75,9 @@ const PRACTICE_AND_TOOLS = [
   { title: 'Python Code Lab', href: '/code-lab', icon: Code2, desc: 'Interactive in-browser Pyodide sandbox' },
   { title: 'Capstone Projects', href: '/projects', icon: Briefcase, desc: 'Production-grade ML & Full-Stack portfolios' },
   { title: 'Quizzes & Assessments', href: '/quizzes', icon: CheckSquare, desc: 'Track-wide conceptual quizzes and knowledge checks' },
+  { title: 'Daily Flashcard Review', href: '/daily-review', icon: Flame, desc: 'SM-2 spaced-repetition queue for weak & high-yield topics' },
+  { title: 'Mock Interview Simulator', href: '/mock-interview', icon: Timer, desc: 'Timed concept & live Python coding rounds with auto-grading' },
+  { title: 'Completion Certificates', href: '/certificates', icon: Award, desc: 'Claim verifiable credentials & public verification links' },
   { title: 'Visual Revision Notes', href: '/revision-notes', icon: Zap, desc: 'Cheat sheets, diagrams and quick concept cards' },
   { title: 'Mathematical Formulas', href: '/formulas', icon: Calculator, desc: 'Equations, derivations and proof references' },
 ];

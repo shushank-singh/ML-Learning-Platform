@@ -46,6 +46,7 @@ async function run() {
     { url: 'http://127.0.0.1:3005/signup', expect: [200] },
     { url: 'http://127.0.0.1:3005/pricing', expect: [200] },
     { url: 'http://127.0.0.1:3005/plans', expect: [200] },
+    { url: 'http://127.0.0.1:3005/verify/AZL-ML-TEST1234', expect: [200] },
 
     // Protected learning routes -> 307 redirect to /login when unauthenticated
     { url: 'http://127.0.0.1:3005/curriculum', expect: [307, 302], redirectTo: '/login' },
@@ -56,12 +57,17 @@ async function run() {
     { url: 'http://127.0.0.1:3005/quizzes', expect: [307, 302], redirectTo: '/login' },
     { url: 'http://127.0.0.1:3005/projects', expect: [307, 302], redirectTo: '/login' },
     { url: 'http://127.0.0.1:3005/analytics', expect: [307, 302], redirectTo: '/login' },
+    { url: 'http://127.0.0.1:3005/certificates', expect: [307, 302], redirectTo: '/login' },
+    { url: 'http://127.0.0.1:3005/mock-interview', expect: [307, 302], redirectTo: '/login' },
+    { url: 'http://127.0.0.1:3005/daily-review', expect: [307, 302], redirectTo: '/login' },
     { url: 'http://127.0.0.1:3005/settings', expect: [307, 302], redirectTo: '/login' },
 
     // API guards
     { url: 'http://127.0.0.1:3005/api/payments/catalog', expect: [200] },
     { url: 'http://127.0.0.1:3005/api/entitlements/me', expect: [200] },
     { url: 'http://127.0.0.1:3005/api/progress', expect: [401] },
+    { url: 'http://127.0.0.1:3005/api/certificates', expect: [401] },
+    { url: 'http://127.0.0.1:3005/api/certificates/AZL-ML-TEST1234', expect: [404] },
     { url: 'http://127.0.0.1:3005/api/ai-tutor', method: 'POST', body: { message: 'hi' }, expect: [401] },
     { url: 'http://127.0.0.1:3005/api/payments/create-order', method: 'POST', body: { trackId: 'all-access' }, expect: [401] },
   ];

@@ -26,6 +26,8 @@ import {
   ArrowLeft,
   CheckCircle2,
   Zap,
+  Award,
+  Timer,
 } from 'lucide-react';
 import { MODULES_CATALOG } from '@/data/catalogs/ml';
 import { getProgress } from '@/lib/storage';
@@ -45,6 +47,9 @@ const ML_NAV_ITEMS = [
   { name: 'Python Code Lab', href: '/code-lab', icon: Terminal },
   { name: 'Formula Explorer', href: '/formulas', icon: Calculator },
   { name: 'AI & ML Quiz Center', href: '/quizzes', icon: CheckSquare },
+  { name: 'Daily Flashcard Review', href: '/daily-review', icon: Flame },
+  { name: 'Mock Interviews', href: '/mock-interview', icon: Timer },
+  { name: 'Certificates', href: '/certificates', icon: Award },
   { name: 'Capstone Projects', href: '/projects', icon: Briefcase },
   { name: 'Bookmarks & Notes', href: '/notes', icon: Bookmark },
   { name: 'Learning Analytics', href: '/analytics', icon: BarChart2 },

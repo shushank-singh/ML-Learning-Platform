@@ -52,6 +52,9 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith('/projects') ||
     pathname.startsWith('/notes') ||
     pathname.startsWith('/analytics') ||
+    pathname.startsWith('/certificates') ||
+    pathname.startsWith('/mock-interview') ||
+    pathname.startsWith('/daily-review') ||
     pathname.startsWith('/settings') ||
     pathname.startsWith('/dsa') ||
     pathname.startsWith('/python') ||
