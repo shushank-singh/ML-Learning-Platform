@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -25,13 +26,14 @@ import {
   Shield,
   Box,
 } from 'lucide-react';
-import { MODULES_CATALOG_PYTHON } from '@/data/python/curriculum';
+import { MODULES_CATALOG_PYTHON } from '@/data/catalogs/python';
 import { getProgress } from '@/lib/storage';
 import { getPythonProgress } from '@/data/learningPlatformConfig';
 import { UserProgressState } from '@/lib/types';
-import { SearchModal } from './SearchModal';
 import { UserMenu } from '@/components/auth/UserMenu';
 import { AuthGuard } from '@/components/auth/AuthGuard';
+
+const SearchModal = dynamic(() => import('./SearchModal').then((m) => m.SearchModal), { ssr: false });
 
 const PYTHON_NAV_ITEMS = [
   { name: 'Python Track Overview', href: '/python', icon: Terminal },

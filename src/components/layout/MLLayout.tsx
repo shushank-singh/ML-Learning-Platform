@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -26,14 +27,15 @@ import {
   CheckCircle2,
   Zap,
 } from 'lucide-react';
-import { MODULES_CATALOG } from '@/data/modules/curriculum';
+import { MODULES_CATALOG } from '@/data/catalogs/ml';
 import { getProgress } from '@/lib/storage';
 import { getMLProgress } from '@/data/learningPlatformConfig';
 import { UserProgressState } from '@/lib/types';
-import { SearchModal } from './SearchModal';
 import { UserMenu } from '@/components/auth/UserMenu';
 import { AuthGuard } from '@/components/auth/AuthGuard';
 import { AzurLearnLogo } from '@/components/shared/AzurLearnLogo';
+
+const SearchModal = dynamic(() => import('./SearchModal').then((m) => m.SearchModal), { ssr: false });
 
 const ML_NAV_ITEMS = [
   { name: 'AI & ML Curriculum', href: '/curriculum', icon: BookOpen },

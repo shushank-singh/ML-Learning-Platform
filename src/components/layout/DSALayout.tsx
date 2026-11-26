@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -21,13 +22,14 @@ import {
   TrendingUp,
   Code2,
 } from 'lucide-react';
-import { MODULES_CATALOG_DSA } from '@/data/dsa/curriculum';
+import { MODULES_CATALOG_DSA } from '@/data/catalogs/dsa';
 import { getProgress } from '@/lib/storage';
 import { getDSAProgress } from '@/data/learningPlatformConfig';
 import { UserProgressState } from '@/lib/types';
-import { SearchModal } from './SearchModal';
 import { UserMenu } from '@/components/auth/UserMenu';
 import { AuthGuard } from '@/components/auth/AuthGuard';
+
+const SearchModal = dynamic(() => import('./SearchModal').then((m) => m.SearchModal), { ssr: false });
 
 const DSA_NAV_ITEMS = [
   { name: 'DSA Track Overview', href: '/dsa', icon: Cpu },

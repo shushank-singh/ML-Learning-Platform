@@ -19,7 +19,7 @@ import {
 } from '@/lib/progressSync';
 import { useAuth } from '@/context/AuthContext';
 import { UserProgressState } from '@/lib/types';
-import { MODULES_CATALOG } from '@/data/modules/curriculum';
+import { MODULES_CATALOG } from '@/data/catalogs/ml';
 
 interface TrackBucket {
   id: string;

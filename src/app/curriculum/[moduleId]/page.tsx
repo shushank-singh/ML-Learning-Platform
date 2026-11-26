@@ -13,7 +13,7 @@ import {
   Sparkles,
   Lock,
 } from 'lucide-react';
-import { getModule } from '@/data/modules/curriculum';
+import { getModule } from '@/data/catalogs/ml';
 import { getProgress } from '@/lib/storage';
 import { useAuth } from '@/context/AuthContext';
 import { isFreeAllowedModule } from '@/lib/entitlements/config';

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
+import dynamic from 'next/dynamic';
 import { useAuth } from '@/context/AuthContext';
 import { getProgress } from '@/lib/storage';
 import { UserProgressState } from '@/lib/types';
@@ -10,14 +11,15 @@ import {
   ResumeLessonInfo,
 } from '@/data/learningPlatformConfig';
 import { HeroSection } from '@/components/dashboard/HeroSection';
-import { LearningTracksShowcase } from '@/components/dashboard/LearningTracksShowcase';
-import { WhyLearnHereSection } from '@/components/dashboard/WhyLearnHereSection';
-import { PlatformFooter } from '@/components/dashboard/PlatformFooter';
-import { LoggedInDashboardBanner } from '@/components/dashboard/LoggedInDashboardBanner';
-import { InteractiveCodingHub } from '@/components/dashboard/InteractiveCodingHub';
-import { LearningJourneyRoadmap } from '@/components/dashboard/LearningJourneyRoadmap';
-import { ProjectShowcaseSection } from '@/components/dashboard/ProjectShowcaseSection';
-import { FinalCTASection } from '@/components/dashboard/FinalCTASection';
+
+const LearningTracksShowcase = dynamic(() => import('@/components/dashboard/LearningTracksShowcase').then((m) => m.LearningTracksShowcase), { ssr: true });
+const WhyLearnHereSection = dynamic(() => import('@/components/dashboard/WhyLearnHereSection').then((m) => m.WhyLearnHereSection), { ssr: true });
+const PlatformFooter = dynamic(() => import('@/components/dashboard/PlatformFooter').then((m) => m.PlatformFooter), { ssr: true });
+const LoggedInDashboardBanner = dynamic(() => import('@/components/dashboard/LoggedInDashboardBanner').then((m) => m.LoggedInDashboardBanner), { ssr: false });
+const InteractiveCodingHub = dynamic(() => import('@/components/dashboard/InteractiveCodingHub').then((m) => m.InteractiveCodingHub), { ssr: false });
+const LearningJourneyRoadmap = dynamic(() => import('@/components/dashboard/LearningJourneyRoadmap').then((m) => m.LearningJourneyRoadmap), { ssr: false });
+const ProjectShowcaseSection = dynamic(() => import('@/components/dashboard/ProjectShowcaseSection').then((m) => m.ProjectShowcaseSection), { ssr: false });
+const FinalCTASection = dynamic(() => import('@/components/dashboard/FinalCTASection').then((m) => m.FinalCTASection), { ssr: true });
 
 export default function PlatformDashboardPage() {
   const { user } = useAuth();

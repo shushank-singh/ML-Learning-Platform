@@ -40,7 +40,7 @@ import {
   MODULES_CATALOG_DEPLOYMENT,
   MODULES_CATALOG_NUMPY,
   MODULES_CATALOG_PANDAS,
-} from '@/data/modules/curriculum';
+} from '@/data/catalogs/ml';
 import { AI_ML_PHASES } from '@/data/phases/curriculumPhases';
 import { getProgress, toggleLessonCompletion } from '@/lib/storage';
 import { UserProgressState, ModuleData } from '@/lib/types';

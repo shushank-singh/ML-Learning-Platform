@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import {
   Terminal,
@@ -23,10 +24,14 @@ import {
   AlertTriangle,
   Boxes,
 } from 'lucide-react';
-import { MODULES_CATALOG_JAVA } from '@/data/java/curriculum';
+import { MODULES_CATALOG_JAVA } from '@/data/catalogs/java';
 import { getProgress } from '@/lib/storage';
 import { UserProgressState } from '@/lib/types';
-import { JavaVisualizerDispatcher } from '@/components/java/visualizers/JavaVisualizerDispatcher';
+
+const JavaVisualizerDispatcher = dynamic(
+  () => import('@/components/java/visualizers/JavaVisualizerDispatcher').then((m) => m.JavaVisualizerDispatcher),
+  { ssr: false }
+);
 
 const MODULE_ICONS: Record<number, React.ElementType> = {
   1: Terminal,

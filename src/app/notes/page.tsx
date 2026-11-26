@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { getProgress, saveNote, toggleBookmark } from '@/lib/storage';
 import { UserProgressState } from '@/lib/types';
-import { MODULES_CATALOG } from '@/data/modules/curriculum';
+import { MODULES_CATALOG } from '@/data/catalogs/ml';
 
 export default function NotesPage() {
   const [progress, setProgress] = useState<UserProgressState | null>(null);

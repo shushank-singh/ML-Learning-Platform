@@ -167,12 +167,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (currentUser) {
         const userMeta = currentUser.user_metadata || {};
-        await fetchProfile(
-          currentUser.id,
-          currentUser.email,
-          userMeta.full_name || userMeta.name
-        );
-        await fetchEntitlements();
+        setIsLoading(false);
+        await Promise.all([
+          fetchProfile(
+            currentUser.id,
+            currentUser.email,
+            userMeta.full_name || userMeta.name
+          ),
+          fetchEntitlements(),
+        ]);
         setCloudSyncAuthenticated(true);
         syncProgressFromCloud().catch(() => {});
       } else {

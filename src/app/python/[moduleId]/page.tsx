@@ -12,7 +12,7 @@ import {
   Sparkles,
   Lock,
 } from 'lucide-react';
-import { MODULES_CATALOG_PYTHON, getPythonModule } from '@/data/python/curriculum';
+import { MODULES_CATALOG_PYTHON, getPythonModule } from '@/data/catalogs/python';
 import { getProgress, toggleLessonCompletion } from '@/lib/storage';
 import { UserProgressState } from '@/lib/types';
 import { useAuth } from '@/context/AuthContext';

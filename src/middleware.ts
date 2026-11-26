@@ -4,10 +4,12 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr';
 /**
  * Next.js Middleware for Session-Only Authentication & Route Guarding.
  *
- * 1. Automatically refreshes user auth tokens on every request.
- * 2. Enforces session-only cookie headers (no persistent Max-Age / Expires).
- * 3. Restricts unauthenticated access to protected learning tracks & labs.
- * 4. Redirects authenticated users away from /login and /signup back to /curriculum.
+ * Performance-optimized:
+ * - Public pages (/, /pricing, /plans, etc.) skip remote auth checks completely (0ms).
+ * - Unauthenticated requests without any Supabase auth cookie skip client creation.
+ * - Background <Link> prefetch requests with an existing session cookie skip remote
+ *   getUser() calls so sidebar/navigation prefetching stays instantaneous; actual page
+ *   navigations and Server Components perform full getUser() verification.
  */
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({
@@ -34,6 +36,33 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
+  const isAuthRoute =
+    pathname === '/login' ||
+    pathname === '/signup' ||
+    pathname === '/forgot-password' ||
+    pathname === '/reset-password';
+
+  const isProtectedRoute =
+    pathname.startsWith('/curriculum') ||
+    pathname.startsWith('/ai-tutor') ||
+    pathname.startsWith('/code-lab') ||
+    pathname.startsWith('/playground') ||
+    pathname.startsWith('/revision-notes') ||
+    pathname.startsWith('/quizzes') ||
+    pathname.startsWith('/projects') ||
+    pathname.startsWith('/notes') ||
+    pathname.startsWith('/analytics') ||
+    pathname.startsWith('/settings') ||
+    pathname.startsWith('/dsa') ||
+    pathname.startsWith('/python') ||
+    pathname.startsWith('/java') ||
+    pathname.startsWith('/formulas');
+
+  // Public pages (e.g. /, /pricing, /plans) need no auth round-trip in middleware
+  if (!isAuthRoute && !isProtectedRoute) {
+    return response;
+  }
+
   const supabaseUrl =
     process.env.NEXT_PUBLIC_SUPABASE_URL ||
     process.env.SUPABASE_URL ||
@@ -52,6 +81,29 @@ export async function middleware(request: NextRequest) {
 
   // If Supabase is unconfigured, allow requests through so developers see setup instructions via AuthGuard
   if (!isConfigured) {
+    return response;
+  }
+
+  // Fast path: if no Supabase auth cookie exists, avoid instantiating client or calling Supabase
+  const hasAuthCookie = request.cookies.getAll().some((c) => c.name.startsWith('sb-'));
+  if (!hasAuthCookie) {
+    if (isProtectedRoute) {
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set(
+        'redirectTo',
+        pathname + (request.nextUrl.search || '')
+      );
+      return NextResponse.redirect(loginUrl);
+    }
+    return response;
+  }
+
+  // Fast path for Next.js <Link> background prefetches when a session cookie is present;
+  // full Server Components & non-prefetch navigations still verify via supabase.auth.getUser().
+  const isPrefetch =
+    request.headers.get('next-router-prefetch') === '1' ||
+    request.headers.get('purpose') === 'prefetch';
+  if (isPrefetch && isProtectedRoute) {
     return response;
   }
 
@@ -98,28 +150,6 @@ export async function middleware(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  const isAuthRoute =
-    pathname === '/login' ||
-    pathname === '/signup' ||
-    pathname === '/forgot-password' ||
-    pathname === '/reset-password';
-
-  const isProtectedRoute =
-    pathname.startsWith('/curriculum') ||
-    pathname.startsWith('/ai-tutor') ||
-    pathname.startsWith('/code-lab') ||
-    pathname.startsWith('/playground') ||
-    pathname.startsWith('/revision-notes') ||
-    pathname.startsWith('/quizzes') ||
-    pathname.startsWith('/projects') ||
-    pathname.startsWith('/notes') ||
-    pathname.startsWith('/analytics') ||
-    pathname.startsWith('/settings') ||
-    pathname.startsWith('/dsa') ||
-    pathname.startsWith('/python') ||
-    pathname.startsWith('/java') ||
-    pathname.startsWith('/formulas');
 
   // If authenticated user visits login/signup, redirect to curriculum
   if (user && isAuthRoute) {

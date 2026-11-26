@@ -14,7 +14,7 @@ import {
   ChevronLeft,
   Lock,
 } from 'lucide-react';
-import { MODULES_CATALOG_JAVA, getJavaModule } from '@/data/java/curriculum';
+import { MODULES_CATALOG_JAVA, getJavaModule } from '@/data/catalogs/java';
 import { getProgress, toggleLessonCompletion } from '@/lib/storage';
 import { UserProgressState } from '@/lib/types';
 import { useAuth } from '@/context/AuthContext';

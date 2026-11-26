@@ -12,7 +12,7 @@ import {
   Sparkles,
   Lock,
 } from 'lucide-react';
-import { MODULES_CATALOG_DSA, getDSAModule } from '@/data/dsa/curriculum';
+import { MODULES_CATALOG_DSA, getDSAModule } from '@/data/catalogs/dsa';
 import { getProgress, toggleLessonCompletion } from '@/lib/storage';
 import { UserProgressState } from '@/lib/types';
 import { useAuth } from '@/context/AuthContext';

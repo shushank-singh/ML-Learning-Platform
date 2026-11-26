@@ -20,7 +20,7 @@ import {
   CheckCircle2,
   Circle,
 } from 'lucide-react';
-import { MODULES_CATALOG_PYTHON } from '@/data/python/curriculum';
+import { MODULES_CATALOG_PYTHON } from '@/data/catalogs/python';
 import { getProgress } from '@/lib/storage';
 import { UserProgressState } from '@/lib/types';
 

@@ -16,7 +16,7 @@ import {
   CheckCircle2,
   Circle,
 } from 'lucide-react';
-import { MODULES_CATALOG_DSA } from '@/data/dsa/curriculum';
+import { MODULES_CATALOG_DSA } from '@/data/catalogs/dsa';
 import { getProgress } from '@/lib/storage';
 import { UserProgressState } from '@/lib/types';
 

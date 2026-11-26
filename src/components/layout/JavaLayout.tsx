@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -25,13 +26,14 @@ import {
   Workflow,
   AlertTriangle,
 } from 'lucide-react';
-import { MODULES_CATALOG_JAVA } from '@/data/java/curriculum';
+import { MODULES_CATALOG_JAVA } from '@/data/catalogs/java';
 import { getProgress } from '@/lib/storage';
 import { getJavaProgress } from '@/data/learningPlatformConfig';
 import { UserProgressState } from '@/lib/types';
-import { SearchModal } from './SearchModal';
 import { UserMenu } from '@/components/auth/UserMenu';
 import { AuthGuard } from '@/components/auth/AuthGuard';
+
+const SearchModal = dynamic(() => import('./SearchModal').then((m) => m.SearchModal), { ssr: false });
 
 const JAVA_NAV_ITEMS = [
   { name: 'Java Track Overview', href: '/java', icon: Coffee },
