@@ -18,7 +18,6 @@ import {
 import { LessonContent, QuizQuestion, PracticeQuestion } from '@/lib/types';
 import { CodeRunner } from '../code/CodeRunner';
 import { recordQuizScore } from '@/lib/storage';
-import confetti from 'canvas-confetti';
 
 interface LessonPracticeProps {
   lesson: LessonContent;
@@ -79,11 +78,9 @@ export const LessonPractice: React.FC<LessonPracticeProps> = ({ lesson }) => {
     recordQuizScore(lesson.id, score, conceptualMCQs.length);
 
     if (score === conceptualMCQs.length) {
-      confetti({
-        particleCount: 90,
-        spread: 70,
-        origin: { y: 0.6 },
-      });
+      import('canvas-confetti')
+        .then((mod) => mod.default({ particleCount: 90, spread: 70, origin: { y: 0.6 } }))
+        .catch(() => {});
     }
   };
 

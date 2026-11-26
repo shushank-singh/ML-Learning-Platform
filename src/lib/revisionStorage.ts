@@ -1,6 +1,7 @@
 'use client';
 
 import { RevisionStatus } from '@/data/revision/types';
+import { scheduleCloudProgressSync } from './progressSync';
 
 const REVISION_STORAGE_KEY = 'ml_mastery_revision_progress_v1';
 
@@ -39,11 +40,14 @@ export function getRevisionState(): RevisionStorageState {
   }
 }
 
-export function saveRevisionState(state: RevisionStorageState): void {
+export function saveRevisionState(state: RevisionStorageState, skipCloudSync = false): void {
   if (typeof window === 'undefined') return;
   try {
     localStorage.setItem(REVISION_STORAGE_KEY, JSON.stringify(state));
     window.dispatchEvent(new Event('ml_revision_updated'));
+    if (!skipCloudSync) {
+      scheduleCloudProgressSync();
+    }
   } catch (e) {
     console.error('Failed to save revision progress to localStorage', e);
   }

@@ -5,6 +5,7 @@ import type { User, Session } from '@supabase/supabase-js';
 import { getSupabaseBrowserClient, isSupabaseConfigured } from '@/lib/supabase/client';
 import type { EntitlementTier, TrackEntitlementGrant, UserEntitlements } from '@/lib/entitlements/types';
 import { isFreeAllowedModule, normalizeTrackId, getTrackFromModuleId } from '@/lib/entitlements/config';
+import { setCloudSyncAuthenticated, syncProgressFromCloud } from '@/lib/progressSync';
 
 export type UserRole = 'student' | 'owner' | 'admin';
 
@@ -146,6 +147,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             userMeta.full_name || userMeta.name
           );
           fetchEntitlements();
+          setCloudSyncAuthenticated(true);
+          syncProgressFromCloud().catch(() => {});
+        } else {
+          setCloudSyncAuthenticated(false);
         }
       })
       .finally(() => {
@@ -168,7 +173,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           userMeta.full_name || userMeta.name
         );
         await fetchEntitlements();
+        setCloudSyncAuthenticated(true);
+        syncProgressFromCloud().catch(() => {});
       } else {
+        setCloudSyncAuthenticated(false);
         setProfile(null);
         setServerIsOwner(false);
         setTier('free');

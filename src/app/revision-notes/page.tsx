@@ -1,22 +1,16 @@
 'use client';
 
 import React, { useState, useEffect, useMemo, useCallback, Suspense } from 'react';
-import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { useSearchParams, useRouter } from 'next/navigation';
 import {
   RevisionSubject,
   RevisionTopic,
   RevisionFilterOptions,
 } from '@/data/revision/types';
-import {
-  REVISION_SUBJECTS,
-  ALL_REVISION_TOPICS,
-  getTopicsBySubject,
-  getPlannedTopicsBySubject,
-  getTopicById,
-  filterTopics,
-  getSubjectStats,
-} from '@/data/revision';
+import { REVISION_SUBJECTS } from '@/data/revision/categories';
+import { PLANNED_REVISION_TOPICS } from '@/data/revision/plannedTopics';
+import { loadRevisionSubjectTopics } from '@/data/revision/loader';
 import {
   getRevisionState,
   toggleTopicBookmark,
@@ -29,33 +23,69 @@ import {
 import { SubjectCard } from '@/components/revision/SubjectCard';
 import { TopicSidebar } from '@/components/revision/TopicSidebar';
 import { QuickRecall } from '@/components/revision/QuickRecall';
-import { VisualDiagram } from '@/components/revision/VisualDiagram';
-import { AnimatedVisualizer } from '@/components/revision/AnimatedVisualizer';
-import { LightweightQuiz } from '@/components/revision/LightweightQuiz';
-import { PracticalCodeCard } from '@/components/revision/PracticalCodeCard';
 import { RevisionControls } from '@/components/revision/RevisionControls';
-import { KeyboardShortcutsModal } from '@/components/revision/KeyboardShortcutsModal';
 import {
   Zap,
-  BookOpen,
   Sparkles,
-  ArrowRight,
-  Bookmark,
   CheckCircle2,
   Clock,
-  Layers,
-  Search,
-  Filter,
-  BarChart3,
-  Flame,
-  Award,
 } from 'lucide-react';
+
+const VisualDiagram = dynamic(
+  () => import('@/components/revision/VisualDiagram').then((m) => m.VisualDiagram),
+  { ssr: false }
+);
+const AnimatedVisualizer = dynamic(
+  () => import('@/components/revision/AnimatedVisualizer').then((m) => m.AnimatedVisualizer),
+  { ssr: false }
+);
+const LightweightQuiz = dynamic(
+  () => import('@/components/revision/LightweightQuiz').then((m) => m.LightweightQuiz),
+  { ssr: false }
+);
+const PracticalCodeCard = dynamic(
+  () => import('@/components/revision/PracticalCodeCard').then((m) => m.PracticalCodeCard),
+  { ssr: false }
+);
+const KeyboardShortcutsModal = dynamic(
+  () => import('@/components/revision/KeyboardShortcutsModal').then((m) => m.KeyboardShortcutsModal),
+  { ssr: false }
+);
+
+const ALL_SUBJECTS: RevisionSubject[] = ['ml', 'python', 'java', 'dsa'];
+
+function filterSubjectTopics(
+  topics: RevisionTopic[],
+  filters: RevisionFilterOptions,
+  bookmarkedIds: string[] = [],
+  revisedIds: string[] = []
+): RevisionTopic[] {
+  return topics.filter((t) => {
+    if (filters.subject !== 'all' && t.subject !== filters.subject) return false;
+    if (filters.category && filters.category !== 'All' && t.category !== filters.category) return false;
+    if (filters.difficulty !== 'all' && t.difficulty !== filters.difficulty) return false;
+    if (filters.isInterviewFavoriteOnly && !t.isInterviewFavorite) return false;
+    if (filters.status === 'bookmarked' && !bookmarkedIds.includes(t.id)) return false;
+    if (filters.status === 'revised' && !revisedIds.includes(t.id)) return false;
+
+    if (filters.searchQuery.trim()) {
+      const q = filters.searchQuery.toLowerCase();
+      const match =
+        t.title.toLowerCase().includes(q) ||
+        t.subtitle.toLowerCase().includes(q) ||
+        t.quickRecall.oneLiner.toLowerCase().includes(q) ||
+        t.tags.some((tag) => tag.toLowerCase().includes(q)) ||
+        t.category.toLowerCase().includes(q);
+      if (!match) return false;
+    }
+    return true;
+  });
+}
 
 function RevisionNotesContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Storage state
   const [storageState, setStorageState] = useState<RevisionStorageState>({
     revisionStatus: {},
     bookmarks: [],
@@ -66,11 +96,11 @@ function RevisionNotesContent() {
     quickReviewModeEnabled: false,
   });
 
+  const [topicsBySubject, setTopicsBySubject] = useState<Partial<Record<RevisionSubject, RevisionTopic[]>>>({});
   const [activeSubject, setActiveSubject] = useState<RevisionSubject>('ml');
   const [activeTopicId, setActiveTopicId] = useState<string | null>(null);
   const [shortcutsModalOpen, setShortcutsModalOpen] = useState<boolean>(false);
 
-  // Filters state
   const [filters, setFilters] = useState<RevisionFilterOptions>({
     subject: 'ml',
     searchQuery: '',
@@ -82,8 +112,7 @@ function RevisionNotesContent() {
 
   // Sync storage on mount and when event fires
   const syncStorage = useCallback(() => {
-    const s = getRevisionState();
-    setStorageState(s);
+    setStorageState(getRevisionState());
   }, []);
 
   useEffect(() => {
@@ -91,6 +120,43 @@ function RevisionNotesContent() {
     window.addEventListener('ml_revision_updated', syncStorage);
     return () => window.removeEventListener('ml_revision_updated', syncStorage);
   }, [syncStorage]);
+
+  // Load active subject first, then warm remaining subjects asynchronously
+  useEffect(() => {
+    let cancelled = false;
+
+    loadRevisionSubjectTopics(activeSubject).then((topics) => {
+      if (!cancelled) {
+        setTopicsBySubject((prev) => ({ ...prev, [activeSubject]: topics }));
+      }
+    });
+
+    const timer = setTimeout(() => {
+      ALL_SUBJECTS.filter((s) => s !== activeSubject).forEach((subj) => {
+        loadRevisionSubjectTopics(subj).then((topics) => {
+          if (!cancelled) {
+            setTopicsBySubject((prev) => (prev[subj] ? prev : { ...prev, [subj]: topics }));
+          }
+        });
+      });
+    }, 300);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [activeSubject]);
+
+  const allLoadedTopics = useMemo(() => {
+    return ALL_SUBJECTS.flatMap((s) => topicsBySubject[s] || []);
+  }, [topicsBySubject]);
+
+  const findTopicById = useCallback(
+    (id: string): RevisionTopic | undefined => {
+      return allLoadedTopics.find((t) => t.id === id);
+    },
+    [allLoadedTopics]
+  );
 
   // Read URL query parameters on load
   useEffect(() => {
@@ -103,65 +169,80 @@ function RevisionNotesContent() {
     }
 
     if (topicParam) {
-      const topic = getTopicById(topicParam);
+      const topic = findTopicById(topicParam);
       if (topic) {
         setActiveTopicId(topic.id);
         setActiveSubject(topic.subject);
         setFilters((prev) => ({ ...prev, subject: topic.subject }));
         recordTopicViewed(topic.id);
+      } else {
+        setActiveTopicId(topicParam);
       }
     } else {
       setActiveTopicId(null);
     }
-  }, [searchParams]);
+  }, [searchParams, findTopicById]);
 
-  // Active topic object
   const activeTopic = useMemo(() => {
     if (!activeTopicId) return null;
-    return getTopicById(activeTopicId) || null;
-  }, [activeTopicId]);
+    return findTopicById(activeTopicId) || null;
+  }, [activeTopicId, findTopicById]);
 
-  // Subject topics & planned
   const subjectTopics = useMemo(() => {
-    return getTopicsBySubject(activeSubject);
-  }, [activeSubject]);
+    return topicsBySubject[activeSubject] || [];
+  }, [topicsBySubject, activeSubject]);
 
   const subjectPlanned = useMemo(() => {
-    return getPlannedTopicsBySubject(activeSubject);
+    return PLANNED_REVISION_TOPICS.filter((t) => t.subject === activeSubject);
   }, [activeSubject]);
 
-  // Filtered topics for the sidebar
+  const revisedIds = useMemo(
+    () =>
+      Object.keys(storageState.revisionStatus).filter(
+        (id) => storageState.revisionStatus[id] === 'revised'
+      ),
+    [storageState.revisionStatus]
+  );
+
   const filteredTopics = useMemo(() => {
-    const revisedIds = Object.keys(storageState.revisionStatus).filter(
-      (id) => storageState.revisionStatus[id] === 'revised'
-    );
-    return filterTopics(
+    return filterSubjectTopics(
       subjectTopics,
       filters,
       storageState.bookmarks,
       revisedIds
     );
-  }, [subjectTopics, filters, storageState.bookmarks, storageState.revisionStatus]);
+  }, [subjectTopics, filters, storageState.bookmarks, revisedIds]);
 
-  // Total platform stats
-  const totalNotesCount = ALL_REVISION_TOPICS.length;
-  const totalRevisedCount = Object.values(storageState.revisionStatus).filter(
-    (s) => s === 'revised'
-  ).length;
+  const totalNotesCount = allLoadedTopics.length;
+  const totalRevisedCount = revisedIds.length;
   const overallPercentage =
     totalNotesCount > 0 ? Math.round((totalRevisedCount / totalNotesCount) * 100) : 0;
 
-  // Recent topics objects
   const recentTopics = useMemo(() => {
     return storageState.recentTopicIds
-      .map((id) => getTopicById(id))
-      .filter((t): t is RevisionTopic => !!t)
+      .map((id) => findTopicById(id))
+      .filter((t): t is RevisionTopic => Boolean(t))
       .slice(0, 5);
-  }, [storageState.recentTopicIds]);
+  }, [storageState.recentTopicIds, findTopicById]);
 
-  // Selection handler
+  const getStatsForSubject = useCallback(
+    (subj: RevisionSubject) => {
+      const list = topicsBySubject[subj] || [];
+      const total = list.length;
+      const revised = list.filter((t) => revisedIds.includes(t.id)).length;
+      const bookmarked = list.filter((t) => storageState.bookmarks.includes(t.id)).length;
+      return {
+        total,
+        revised,
+        bookmarked,
+        percentage: total > 0 ? Math.round((revised / total) * 100) : 0,
+      };
+    },
+    [topicsBySubject, revisedIds, storageState.bookmarks]
+  );
+
   const handleSelectTopic = (topicId: string) => {
-    const topic = getTopicById(topicId);
+    const topic = findTopicById(topicId);
     if (!topic) return;
     setActiveTopicId(topic.id);
     setActiveSubject(topic.subject);
@@ -169,16 +250,19 @@ function RevisionNotesContent() {
     router.push(`/revision-notes?subject=${topic.subject}&topic=${topic.id}`);
   };
 
-  const handleSelectSubject = (subject: RevisionSubject) => {
+  const handleSelectSubject = async (subject: RevisionSubject) => {
     setActiveSubject(subject);
     setFilters((prev) => ({ ...prev, subject, category: 'All' }));
-    const firstTopic = getTopicsBySubject(subject)[0];
+    const topics = await loadRevisionSubjectTopics(subject);
+    setTopicsBySubject((prev) => ({ ...prev, [subject]: topics }));
+    const firstTopic = topics[0];
     if (firstTopic) {
-      handleSelectTopic(firstTopic.id);
+      setActiveTopicId(firstTopic.id);
+      recordTopicViewed(firstTopic.id);
+      router.push(`/revision-notes?subject=${firstTopic.subject}&topic=${firstTopic.id}`);
     }
   };
 
-  // Prev / Next Topic Navigation
   const currentTopicIndex = useMemo(() => {
     if (!activeTopicId) return -1;
     return filteredTopics.findIndex((t) => t.id === activeTopicId);
@@ -206,7 +290,6 @@ function RevisionNotesContent() {
     handleSelectTopic(pool[randomIndex].id);
   };
 
-  // Keyboard navigation shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
@@ -261,7 +344,7 @@ function RevisionNotesContent() {
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-sm font-extrabold tracking-tight text-white">
-                Visual Short Notes & Revision
+                Visual Short Notes &amp; Revision
               </h1>
               <span className="hidden sm:inline-block px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">
                 30–90s Recall
@@ -275,16 +358,10 @@ function RevisionNotesContent() {
 
         {/* Subject Navigation Tabs */}
         <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-semibold">
-          {(['ml', 'python', 'java', 'dsa'] as RevisionSubject[]).map((subjKey) => {
+          {ALL_SUBJECTS.map((subjKey) => {
             const meta = REVISION_SUBJECTS[subjKey];
             const isTabActive = activeSubject === subjKey;
-            const stats = getSubjectStats(
-              subjKey,
-              Object.keys(storageState.revisionStatus).filter(
-                (id) => storageState.revisionStatus[id] === 'revised'
-              ),
-              storageState.bookmarks
-            );
+            const stats = getStatsForSubject(subjKey);
 
             return (
               <button
@@ -297,13 +374,15 @@ function RevisionNotesContent() {
                 }`}
               >
                 <span>{meta.name}</span>
-                <span
-                  className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full ${
-                    isTabActive ? 'bg-indigo-800 text-indigo-100' : 'bg-slate-800 text-slate-400'
-                  }`}
-                >
-                  {stats.total}
-                </span>
+                {stats.total > 0 && (
+                  <span
+                    className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full ${
+                      isTabActive ? 'bg-indigo-800 text-indigo-100' : 'bg-slate-800 text-slate-400'
+                    }`}
+                  >
+                    {stats.total}
+                  </span>
+                )}
               </button>
             );
           })}
@@ -315,7 +394,7 @@ function RevisionNotesContent() {
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
             <span className="text-slate-400">Total Progress:</span>
             <span className="font-mono font-bold text-slate-200">
-              {totalRevisedCount} / {totalNotesCount} ({overallPercentage}%)
+              {totalRevisedCount} / {totalNotesCount || '…'} ({overallPercentage}%)
             </span>
           </div>
 
@@ -335,9 +414,7 @@ function RevisionNotesContent() {
 
       {/* Main Content Area */}
       {!activeTopicId ? (
-        /* DASHBOARD OVERVIEW VIEW (When no topic is selected) */
         <div className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-8 space-y-8">
-          {/* Hero Banner */}
           <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 p-6 sm:p-8 shadow-xl">
             <div className="max-w-2xl space-y-3 relative z-10">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">
@@ -353,7 +430,7 @@ function RevisionNotesContent() {
               <div className="pt-2 flex flex-wrap gap-4 text-xs font-semibold">
                 <div className="flex items-center gap-1.5 text-slate-300">
                   <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                  <span>46 Implemented High-Yield Notes</span>
+                  <span>{totalNotesCount || 46} High-Yield Notes</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-slate-300">
                   <span className="w-2 h-2 rounded-full bg-indigo-400" />
@@ -367,7 +444,6 @@ function RevisionNotesContent() {
             </div>
           </div>
 
-          {/* Recently Viewed Carousel */}
           {recentTopics.length > 0 && (
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -401,7 +477,6 @@ function RevisionNotesContent() {
             </div>
           )}
 
-          {/* Four Subject Cards Grid */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
@@ -415,12 +490,9 @@ function RevisionNotesContent() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {(['ml', 'python', 'java', 'dsa'] as RevisionSubject[]).map((subjKey) => {
+              {ALL_SUBJECTS.map((subjKey) => {
                 const meta = REVISION_SUBJECTS[subjKey];
-                const revisedIds = Object.keys(storageState.revisionStatus).filter(
-                  (id) => storageState.revisionStatus[id] === 'revised'
-                );
-                const stats = getSubjectStats(subjKey, revisedIds, storageState.bookmarks);
+                const stats = getStatsForSubject(subjKey);
 
                 return (
                   <SubjectCard
@@ -438,9 +510,7 @@ function RevisionNotesContent() {
           </div>
         </div>
       ) : (
-        /* SPLIT NOTE VIEW (When a topic is selected) */
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
-          {/* Left Topic Sidebar */}
           <TopicSidebar
             topics={subjectTopics}
             plannedTopics={subjectPlanned}
@@ -449,18 +519,14 @@ function RevisionNotesContent() {
             filters={filters}
             onUpdateFilters={(partial) => setFilters((prev) => ({ ...prev, ...partial }))}
             bookmarkedIds={storageState.bookmarks}
-            revisedIds={Object.keys(storageState.revisionStatus).filter(
-              (id) => storageState.revisionStatus[id] === 'revised'
-            )}
+            revisedIds={revisedIds}
             onToggleBookmark={toggleTopicBookmark}
             subjectCategories={REVISION_SUBJECTS[activeSubject].categories}
           />
 
-          {/* Center Revision Document Viewer */}
           <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6 max-w-5xl">
-            {activeTopic && (
+            {activeTopic ? (
               <>
-                {/* Topic Header & Breadcrumb */}
                 <div className="space-y-2 pb-2 border-b border-slate-800">
                   <div className="flex items-center gap-2 text-xs text-slate-400 flex-wrap">
                     <button
@@ -517,7 +583,6 @@ function RevisionNotesContent() {
                   </div>
                 </div>
 
-                {/* Control Action Bar */}
                 <RevisionControls
                   isExamMode={storageState.examModeEnabled}
                   onToggleExamMode={() => setExamMode(!storageState.examModeEnabled)}
@@ -538,7 +603,6 @@ function RevisionNotesContent() {
                   onOpenShortcuts={() => setShortcutsModalOpen(true)}
                 />
 
-                {/* SECTION A: QUICK RECALL (20% Text) */}
                 <section className="space-y-2">
                   <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-indigo-400">
                     <span className="w-2 h-2 rounded-full bg-indigo-500" />
@@ -551,7 +615,6 @@ function RevisionNotesContent() {
                   />
                 </section>
 
-                {/* SECTION B: VISUAL UNDERSTANDING (50% Visuals) */}
                 {!storageState.quickReviewModeEnabled && (
                   <section className="space-y-2 pt-4 border-t border-slate-800/80">
                     <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-cyan-400">
@@ -562,7 +625,6 @@ function RevisionNotesContent() {
                   </section>
                 )}
 
-                {/* SECTION C: SEE IT IN ACTION (30% Animation) */}
                 {!storageState.quickReviewModeEnabled && (
                   <section className="space-y-2 pt-4 border-t border-slate-800/80">
                     <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400">
@@ -573,18 +635,16 @@ function RevisionNotesContent() {
                   </section>
                 )}
 
-                {/* PRACTICAL CODE IMPLEMENTATION */}
                 {activeTopic.codeSnippet && !storageState.quickReviewModeEnabled && (
                   <section className="space-y-2 pt-4 border-t border-slate-800/80">
                     <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-cyan-400">
                       <span className="w-2 h-2 rounded-full bg-cyan-500" />
-                      <span>Code in Action • Runnable Syntax & Output</span>
+                      <span>Code in Action • Runnable Syntax &amp; Output</span>
                     </div>
                     <PracticalCodeCard snippet={activeTopic.codeSnippet} />
                   </section>
                 )}
 
-                {/* LIGHTWEIGHT QUIZ (3 Quick Recall Questions) */}
                 <section className="space-y-2 pt-4 border-t border-slate-800/80">
                   <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400">
                     <span className="w-2 h-2 rounded-full bg-amber-500" />
@@ -596,7 +656,6 @@ function RevisionNotesContent() {
                   />
                 </section>
 
-                {/* Bottom Pagination Controls */}
                 <div className="flex items-center justify-between pt-6 border-t border-slate-800">
                   <button
                     onClick={handlePreviousTopic}
@@ -615,12 +674,15 @@ function RevisionNotesContent() {
                   </button>
                 </div>
               </>
+            ) : (
+              <div className="py-20 flex items-center justify-center text-xs font-mono text-slate-400">
+                Loading visual revision note...
+              </div>
             )}
           </main>
         </div>
       )}
 
-      {/* Keyboard Shortcuts Dialog */}
       <KeyboardShortcutsModal
         isOpen={shortcutsModalOpen}
         onClose={() => setShortcutsModalOpen(false)}

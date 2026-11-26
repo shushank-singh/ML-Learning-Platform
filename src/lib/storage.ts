@@ -1,6 +1,7 @@
 'use client';
 
 import { UserProgressState } from './types';
+import { scheduleCloudProgressSync } from './progressSync';
 
 const STORAGE_KEY = 'ml_mastery_lab_progress_v1';
 
@@ -34,11 +35,14 @@ export function getProgress(): UserProgressState {
   }
 }
 
-export function saveProgress(state: UserProgressState): void {
+export function saveProgress(state: UserProgressState, skipCloudSync = false): void {
   if (typeof window === 'undefined') return;
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     window.dispatchEvent(new Event('ml_progress_updated'));
+    if (!skipCloudSync) {
+      scheduleCloudProgressSync();
+    }
   } catch (e) {
     console.error('Failed to save progress to localStorage', e);
   }

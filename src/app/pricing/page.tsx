@@ -298,6 +298,8 @@ export default function PricingPage() {
   const currentTrackGrant = trackGrants[selectedTrack];
   const hasLifetimeTrack = currentTrackGrant?.sourceType === 'lifetime_purchase' && currentTrackGrant.status === 'active';
   const hasMonthlyTrack = currentTrackGrant?.sourceType === 'monthly_subscription' && currentTrackGrant.status === 'active';
+  const individualLifetimeProduct = products.find((p) => p.id === `${selectedTrack}_lifetime`);
+  const individualMonthlyProduct = products.find((p) => p.id === `${selectedTrack}_monthly`);
 
   // Platform-wide all-access status
   const hasLifetimeAllAccess = tier === 'all_access' && !validUntil;
@@ -685,6 +687,14 @@ export default function PricingPage() {
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 max-w-2xl leading-relaxed">
                 {selectedMeta.description}
+              </p>
+              <p className="text-[11px] text-slate-400 dark:text-slate-500">
+                {individualLifetimeProduct?.isActive
+                  ? `Standalone Lifetime: ${individualLifetimeProduct.displayPrice}`
+                  : 'Included in ₹99/mo & ₹399 Lifetime All-Access Pass'}
+                {individualMonthlyProduct?.isActive
+                  ? ` · Standalone Monthly: ${individualMonthlyProduct.displayPrice}`
+                  : ''}
               </p>
             </div>
 

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import {
   CheckCircle2,
@@ -16,22 +17,22 @@ import {
   toggleLessonCompletion,
   toggleBookmark,
 } from '@/lib/storage';
-import confetti from 'canvas-confetti';
 
 import { LessonIntroduction } from './LessonIntroduction';
 import { LessonAnalogy } from './LessonAnalogy';
 import { LessonSimpleConcept } from './LessonSimpleConcept';
-import { TopicVisualizer } from './TopicVisualizer';
 import { LessonAnimationPlayer } from './LessonAnimationPlayer';
 import { LessonMathematics } from './LessonMathematics';
 import { LessonWorkflow } from './LessonWorkflow';
-import { LessonPythonCode } from './LessonPythonCode';
 import { LessonResultsVisualization } from './LessonResultsVisualization';
 import { LessonEvaluation } from './LessonEvaluation';
-import { LessonPractice } from './LessonPractice';
 import { LessonCheatSheet } from './LessonCheatSheet';
 import { LessonNavigation } from './LessonNavigation';
-import { AITutorPanel } from '@/components/tutor/AITutorPanel';
+
+const TopicVisualizer = dynamic(() => import('./TopicVisualizer').then((m) => m.TopicVisualizer), { ssr: false });
+const LessonPythonCode = dynamic(() => import('./LessonPythonCode').then((m) => m.LessonPythonCode), { ssr: false });
+const LessonPractice = dynamic(() => import('./LessonPractice').then((m) => m.LessonPractice), { ssr: false });
+const AITutorPanel = dynamic(() => import('@/components/tutor/AITutorPanel').then((m) => m.AITutorPanel), { ssr: false });
 
 interface LessonViewProps {
   lesson: LessonContent;
@@ -53,11 +54,9 @@ export const LessonView: React.FC<LessonViewProps> = ({ lesson }) => {
     const newState = toggleLessonCompletion(lesson.id);
     setIsCompleted(newState);
     if (newState) {
-      confetti({
-        particleCount: 90,
-        spread: 60,
-        origin: { y: 0.8 },
-      });
+      import('canvas-confetti')
+        .then((mod) => mod.default({ particleCount: 90, spread: 60, origin: { y: 0.8 } }))
+        .catch(() => {});
     }
   };
 

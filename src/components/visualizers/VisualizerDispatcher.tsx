@@ -1,78 +1,93 @@
 'use client';
 
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { AlgorithmType } from '@/lib/types';
-import { LinearRegressionVisualizer } from './LinearRegressionVisualizer';
-import { GradientDescentVisualizer } from './GradientDescentVisualizer';
-import { LogisticBoundaryVisualizer } from './LogisticBoundaryVisualizer';
-import { KMeansVisualizer } from './KMeansVisualizer';
-import { MetricsRocVisualizer } from './MetricsRocVisualizer';
-import { DecisionTreeVisualizer } from './DecisionTreeVisualizer';
-import { KNNVisualizer } from './KNNVisualizer';
-import { PCAVisualizer } from './PCAVisualizer';
-import { NeuralNetVisualizer } from './NeuralNetVisualizer';
-import { NumPyVisualizer } from './NumPyVisualizer';
-import { PandasVisualizer } from './PandasVisualizer';
-import { NeuronCalculator } from './dl/NeuronCalculator';
-import { ActivationExplorer } from './dl/ActivationExplorer';
-import { ForwardPropExplorer } from './dl/ForwardPropExplorer';
-import { LossExplorer } from './dl/LossExplorer';
-import { GradientDescentPlayground } from './dl/GradientDescentPlayground';
-import { OverfittingExplorer } from './dl/OverfittingExplorer';
-import { CNNConvolutionExplorer } from './dl/CNNConvolutionExplorer';
-import { AttentionExplorer } from './dl/AttentionExplorer';
-import { TokenizationExplorer } from './transformers/TokenizationExplorer';
-import { PositionalEncodingExplorer } from './transformers/PositionalEncodingExplorer';
-import { CausalMaskExplorer } from './transformers/CausalMaskExplorer';
-import { MultiHeadAttentionExplorer } from './transformers/MultiHeadAttentionExplorer';
-import { NextTokenPredictionExplorer } from './genai/NextTokenPredictionExplorer';
-import { TemperatureSamplingExplorer } from './genai/TemperatureSamplingExplorer';
-import { TopKTopPExplorer } from './genai/TopKTopPExplorer';
-import { ContextBudgetExplorer } from './genai/ContextBudgetExplorer';
-import { EmbeddingSimilarityExplorer } from './genai/EmbeddingSimilarityExplorer';
-import { PerplexityLossExplorer } from './genai/PerplexityLossExplorer';
-import { LoRARankExplorer } from './genai/LoRARankExplorer';
-import { QuantizationSizeExplorer } from './genai/QuantizationSizeExplorer';
-import { LLMEvalBenchmarkExplorer } from './genai/LLMEvalBenchmarkExplorer';
-import { DocumentChunkingExplorer } from './rag/DocumentChunkingExplorer';
-import { TopKRetrievalExplorer } from './rag/TopKRetrievalExplorer';
-import { ChunkTradeoffExplorer } from './rag/ChunkTradeoffExplorer';
-import { BM25DenseRetrievalExplorer } from './rag/BM25DenseRetrievalExplorer';
-import { HybridRRFExplorer } from './rag/HybridRRFExplorer';
-import { RerankingExplorer } from './rag/RerankingExplorer';
-import { RAGContextBudgetExplorer } from './rag/RAGContextBudgetExplorer';
-import { RetrievalMetricsExplorer } from './rag/RetrievalMetricsExplorer';
-import { GroundedCitationExplorer } from './rag/GroundedCitationExplorer';
-import { AgentControlLoopExplorer } from './agents/AgentControlLoopExplorer';
-import { AgentToolCallingExplorer } from './agents/AgentToolCallingExplorer';
-import { AgentMemoryStateExplorer } from './agents/AgentMemoryStateExplorer';
-import { AgentPlanningExplorer } from './agents/AgentPlanningExplorer';
-import { AgentWorkflowGraphExplorer } from './agents/AgentWorkflowGraphExplorer';
-import { AgentMultiAgentHandoffExplorer } from './agents/AgentMultiAgentHandoffExplorer';
-import { AgentHITLApprovalExplorer } from './agents/AgentHITLApprovalExplorer';
-import { AgentEvaluationExplorer } from './agents/AgentEvaluationExplorer';
-import { AgentSafetyGuardrailsExplorer } from './agents/AgentSafetyGuardrailsExplorer';
-import { AgentTraceBudgetExplorer } from './agents/AgentTraceBudgetExplorer';
-import { MLLifecycleExplorer } from './mlops/MLLifecycleExplorer';
-import { ExperimentComparisonExplorer } from './mlops/ExperimentComparisonExplorer';
-import { PipelineDAGExplorer } from './mlops/PipelineDAGExplorer';
-import { ModelReleaseWorkflowExplorer } from './mlops/ModelReleaseWorkflowExplorer';
-import { DataDriftExplorer } from './mlops/DataDriftExplorer';
-import { CICDQualityGateExplorer } from './mlops/CICDQualityGateExplorer';
-import { LLMEvaluationExplorer } from './mlops/LLMEvaluationExplorer';
-import { LLMTraceTimelineExplorer } from './mlops/LLMTraceTimelineExplorer';
-import { LLMCostLatencyExplorer } from './mlops/LLMCostLatencyExplorer';
-import { ProductionReadinessChecklist } from './mlops/ProductionReadinessChecklist';
-import { DeploymentArchitectureExplorer } from './deployment/DeploymentArchitectureExplorer';
-import { HttpRequestJourneyExplorer } from './deployment/HttpRequestJourneyExplorer';
-import { DockerLayerExplorer } from './deployment/DockerLayerExplorer';
-import { CloudServiceComparisonExplorer } from './deployment/CloudServiceComparisonExplorer';
-import { ScalingLoadBalancerExplorer } from './deployment/ScalingLoadBalancerExplorer';
-import { AsyncJobQueueExplorer } from './deployment/AsyncJobQueueExplorer';
-import { GpuInferenceResourceExplorer } from './deployment/GpuInferenceResourceExplorer';
-import { LLMServingLatencyExplorer } from './deployment/LLMServingLatencyExplorer';
-import { ProductionObservabilityDashboard } from './deployment/ProductionObservabilityDashboard';
-import { DeploymentReadinessChecklist } from './deployment/DeploymentReadinessChecklist';
+
+const VisualizerLoading = () => (
+  <div className="h-64 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 flex items-center justify-center text-xs font-mono text-slate-400">
+    Loading Interactive Visualizer...
+  </div>
+);
+
+const LinearRegressionVisualizer = dynamic(() => import('./LinearRegressionVisualizer').then((m) => m.LinearRegressionVisualizer), { ssr: false, loading: VisualizerLoading });
+const GradientDescentVisualizer = dynamic(() => import('./GradientDescentVisualizer').then((m) => m.GradientDescentVisualizer), { ssr: false, loading: VisualizerLoading });
+const LogisticBoundaryVisualizer = dynamic(() => import('./LogisticBoundaryVisualizer').then((m) => m.LogisticBoundaryVisualizer), { ssr: false, loading: VisualizerLoading });
+const KMeansVisualizer = dynamic(() => import('./KMeansVisualizer').then((m) => m.KMeansVisualizer), { ssr: false, loading: VisualizerLoading });
+const MetricsRocVisualizer = dynamic(() => import('./MetricsRocVisualizer').then((m) => m.MetricsRocVisualizer), { ssr: false, loading: VisualizerLoading });
+const DecisionTreeVisualizer = dynamic(() => import('./DecisionTreeVisualizer').then((m) => m.DecisionTreeVisualizer), { ssr: false, loading: VisualizerLoading });
+const KNNVisualizer = dynamic(() => import('./KNNVisualizer').then((m) => m.KNNVisualizer), { ssr: false, loading: VisualizerLoading });
+const PCAVisualizer = dynamic(() => import('./PCAVisualizer').then((m) => m.PCAVisualizer), { ssr: false, loading: VisualizerLoading });
+const NeuralNetVisualizer = dynamic(() => import('./NeuralNetVisualizer').then((m) => m.NeuralNetVisualizer), { ssr: false, loading: VisualizerLoading });
+const NumPyVisualizer = dynamic(() => import('./NumPyVisualizer').then((m) => m.NumPyVisualizer), { ssr: false, loading: VisualizerLoading });
+const PandasVisualizer = dynamic(() => import('./PandasVisualizer').then((m) => m.PandasVisualizer), { ssr: false, loading: VisualizerLoading });
+
+const NeuronCalculator = dynamic(() => import('./dl/NeuronCalculator').then((m) => m.NeuronCalculator), { ssr: false, loading: VisualizerLoading });
+const ActivationExplorer = dynamic(() => import('./dl/ActivationExplorer').then((m) => m.ActivationExplorer), { ssr: false, loading: VisualizerLoading });
+const ForwardPropExplorer = dynamic(() => import('./dl/ForwardPropExplorer').then((m) => m.ForwardPropExplorer), { ssr: false, loading: VisualizerLoading });
+const LossExplorer = dynamic(() => import('./dl/LossExplorer').then((m) => m.LossExplorer), { ssr: false, loading: VisualizerLoading });
+const GradientDescentPlayground = dynamic(() => import('./dl/GradientDescentPlayground').then((m) => m.GradientDescentPlayground), { ssr: false, loading: VisualizerLoading });
+const OverfittingExplorer = dynamic(() => import('./dl/OverfittingExplorer').then((m) => m.OverfittingExplorer), { ssr: false, loading: VisualizerLoading });
+const CNNConvolutionExplorer = dynamic(() => import('./dl/CNNConvolutionExplorer').then((m) => m.CNNConvolutionExplorer), { ssr: false, loading: VisualizerLoading });
+const AttentionExplorer = dynamic(() => import('./dl/AttentionExplorer').then((m) => m.AttentionExplorer), { ssr: false, loading: VisualizerLoading });
+
+const TokenizationExplorer = dynamic(() => import('./transformers/TokenizationExplorer').then((m) => m.TokenizationExplorer), { ssr: false, loading: VisualizerLoading });
+const PositionalEncodingExplorer = dynamic(() => import('./transformers/PositionalEncodingExplorer').then((m) => m.PositionalEncodingExplorer), { ssr: false, loading: VisualizerLoading });
+const CausalMaskExplorer = dynamic(() => import('./transformers/CausalMaskExplorer').then((m) => m.CausalMaskExplorer), { ssr: false, loading: VisualizerLoading });
+const MultiHeadAttentionExplorer = dynamic(() => import('./transformers/MultiHeadAttentionExplorer').then((m) => m.MultiHeadAttentionExplorer), { ssr: false, loading: VisualizerLoading });
+
+const NextTokenPredictionExplorer = dynamic(() => import('./genai/NextTokenPredictionExplorer').then((m) => m.NextTokenPredictionExplorer), { ssr: false, loading: VisualizerLoading });
+const TemperatureSamplingExplorer = dynamic(() => import('./genai/TemperatureSamplingExplorer').then((m) => m.TemperatureSamplingExplorer), { ssr: false, loading: VisualizerLoading });
+const TopKTopPExplorer = dynamic(() => import('./genai/TopKTopPExplorer').then((m) => m.TopKTopPExplorer), { ssr: false, loading: VisualizerLoading });
+const ContextBudgetExplorer = dynamic(() => import('./genai/ContextBudgetExplorer').then((m) => m.ContextBudgetExplorer), { ssr: false, loading: VisualizerLoading });
+const EmbeddingSimilarityExplorer = dynamic(() => import('./genai/EmbeddingSimilarityExplorer').then((m) => m.EmbeddingSimilarityExplorer), { ssr: false, loading: VisualizerLoading });
+const PerplexityLossExplorer = dynamic(() => import('./genai/PerplexityLossExplorer').then((m) => m.PerplexityLossExplorer), { ssr: false, loading: VisualizerLoading });
+const LoRARankExplorer = dynamic(() => import('./genai/LoRARankExplorer').then((m) => m.LoRARankExplorer), { ssr: false, loading: VisualizerLoading });
+const QuantizationSizeExplorer = dynamic(() => import('./genai/QuantizationSizeExplorer').then((m) => m.QuantizationSizeExplorer), { ssr: false, loading: VisualizerLoading });
+const LLMEvalBenchmarkExplorer = dynamic(() => import('./genai/LLMEvalBenchmarkExplorer').then((m) => m.LLMEvalBenchmarkExplorer), { ssr: false, loading: VisualizerLoading });
+
+const DocumentChunkingExplorer = dynamic(() => import('./rag/DocumentChunkingExplorer').then((m) => m.DocumentChunkingExplorer), { ssr: false, loading: VisualizerLoading });
+const TopKRetrievalExplorer = dynamic(() => import('./rag/TopKRetrievalExplorer').then((m) => m.TopKRetrievalExplorer), { ssr: false, loading: VisualizerLoading });
+const ChunkTradeoffExplorer = dynamic(() => import('./rag/ChunkTradeoffExplorer').then((m) => m.ChunkTradeoffExplorer), { ssr: false, loading: VisualizerLoading });
+const BM25DenseRetrievalExplorer = dynamic(() => import('./rag/BM25DenseRetrievalExplorer').then((m) => m.BM25DenseRetrievalExplorer), { ssr: false, loading: VisualizerLoading });
+const HybridRRFExplorer = dynamic(() => import('./rag/HybridRRFExplorer').then((m) => m.HybridRRFExplorer), { ssr: false, loading: VisualizerLoading });
+const RerankingExplorer = dynamic(() => import('./rag/RerankingExplorer').then((m) => m.RerankingExplorer), { ssr: false, loading: VisualizerLoading });
+const RAGContextBudgetExplorer = dynamic(() => import('./rag/RAGContextBudgetExplorer').then((m) => m.RAGContextBudgetExplorer), { ssr: false, loading: VisualizerLoading });
+const RetrievalMetricsExplorer = dynamic(() => import('./rag/RetrievalMetricsExplorer').then((m) => m.RetrievalMetricsExplorer), { ssr: false, loading: VisualizerLoading });
+const GroundedCitationExplorer = dynamic(() => import('./rag/GroundedCitationExplorer').then((m) => m.GroundedCitationExplorer), { ssr: false, loading: VisualizerLoading });
+
+const AgentControlLoopExplorer = dynamic(() => import('./agents/AgentControlLoopExplorer').then((m) => m.AgentControlLoopExplorer), { ssr: false, loading: VisualizerLoading });
+const AgentToolCallingExplorer = dynamic(() => import('./agents/AgentToolCallingExplorer').then((m) => m.AgentToolCallingExplorer), { ssr: false, loading: VisualizerLoading });
+const AgentMemoryStateExplorer = dynamic(() => import('./agents/AgentMemoryStateExplorer').then((m) => m.AgentMemoryStateExplorer), { ssr: false, loading: VisualizerLoading });
+const AgentPlanningExplorer = dynamic(() => import('./agents/AgentPlanningExplorer').then((m) => m.AgentPlanningExplorer), { ssr: false, loading: VisualizerLoading });
+const AgentWorkflowGraphExplorer = dynamic(() => import('./agents/AgentWorkflowGraphExplorer').then((m) => m.AgentWorkflowGraphExplorer), { ssr: false, loading: VisualizerLoading });
+const AgentMultiAgentHandoffExplorer = dynamic(() => import('./agents/AgentMultiAgentHandoffExplorer').then((m) => m.AgentMultiAgentHandoffExplorer), { ssr: false, loading: VisualizerLoading });
+const AgentHITLApprovalExplorer = dynamic(() => import('./agents/AgentHITLApprovalExplorer').then((m) => m.AgentHITLApprovalExplorer), { ssr: false, loading: VisualizerLoading });
+const AgentEvaluationExplorer = dynamic(() => import('./agents/AgentEvaluationExplorer').then((m) => m.AgentEvaluationExplorer), { ssr: false, loading: VisualizerLoading });
+const AgentSafetyGuardrailsExplorer = dynamic(() => import('./agents/AgentSafetyGuardrailsExplorer').then((m) => m.AgentSafetyGuardrailsExplorer), { ssr: false, loading: VisualizerLoading });
+const AgentTraceBudgetExplorer = dynamic(() => import('./agents/AgentTraceBudgetExplorer').then((m) => m.AgentTraceBudgetExplorer), { ssr: false, loading: VisualizerLoading });
+
+const MLLifecycleExplorer = dynamic(() => import('./mlops/MLLifecycleExplorer').then((m) => m.MLLifecycleExplorer), { ssr: false, loading: VisualizerLoading });
+const ExperimentComparisonExplorer = dynamic(() => import('./mlops/ExperimentComparisonExplorer').then((m) => m.ExperimentComparisonExplorer), { ssr: false, loading: VisualizerLoading });
+const PipelineDAGExplorer = dynamic(() => import('./mlops/PipelineDAGExplorer').then((m) => m.PipelineDAGExplorer), { ssr: false, loading: VisualizerLoading });
+const ModelReleaseWorkflowExplorer = dynamic(() => import('./mlops/ModelReleaseWorkflowExplorer').then((m) => m.ModelReleaseWorkflowExplorer), { ssr: false, loading: VisualizerLoading });
+const DataDriftExplorer = dynamic(() => import('./mlops/DataDriftExplorer').then((m) => m.DataDriftExplorer), { ssr: false, loading: VisualizerLoading });
+const CICDQualityGateExplorer = dynamic(() => import('./mlops/CICDQualityGateExplorer').then((m) => m.CICDQualityGateExplorer), { ssr: false, loading: VisualizerLoading });
+const LLMEvaluationExplorer = dynamic(() => import('./mlops/LLMEvaluationExplorer').then((m) => m.LLMEvaluationExplorer), { ssr: false, loading: VisualizerLoading });
+const LLMTraceTimelineExplorer = dynamic(() => import('./mlops/LLMTraceTimelineExplorer').then((m) => m.LLMTraceTimelineExplorer), { ssr: false, loading: VisualizerLoading });
+const LLMCostLatencyExplorer = dynamic(() => import('./mlops/LLMCostLatencyExplorer').then((m) => m.LLMCostLatencyExplorer), { ssr: false, loading: VisualizerLoading });
+const ProductionReadinessChecklist = dynamic(() => import('./mlops/ProductionReadinessChecklist').then((m) => m.ProductionReadinessChecklist), { ssr: false, loading: VisualizerLoading });
+
+const DeploymentArchitectureExplorer = dynamic(() => import('./deployment/DeploymentArchitectureExplorer').then((m) => m.DeploymentArchitectureExplorer), { ssr: false, loading: VisualizerLoading });
+const HttpRequestJourneyExplorer = dynamic(() => import('./deployment/HttpRequestJourneyExplorer').then((m) => m.HttpRequestJourneyExplorer), { ssr: false, loading: VisualizerLoading });
+const DockerLayerExplorer = dynamic(() => import('./deployment/DockerLayerExplorer').then((m) => m.DockerLayerExplorer), { ssr: false, loading: VisualizerLoading });
+const CloudServiceComparisonExplorer = dynamic(() => import('./deployment/CloudServiceComparisonExplorer').then((m) => m.CloudServiceComparisonExplorer), { ssr: false, loading: VisualizerLoading });
+const ScalingLoadBalancerExplorer = dynamic(() => import('./deployment/ScalingLoadBalancerExplorer').then((m) => m.ScalingLoadBalancerExplorer), { ssr: false, loading: VisualizerLoading });
+const AsyncJobQueueExplorer = dynamic(() => import('./deployment/AsyncJobQueueExplorer').then((m) => m.AsyncJobQueueExplorer), { ssr: false, loading: VisualizerLoading });
+const GpuInferenceResourceExplorer = dynamic(() => import('./deployment/GpuInferenceResourceExplorer').then((m) => m.GpuInferenceResourceExplorer), { ssr: false, loading: VisualizerLoading });
+const LLMServingLatencyExplorer = dynamic(() => import('./deployment/LLMServingLatencyExplorer').then((m) => m.LLMServingLatencyExplorer), { ssr: false, loading: VisualizerLoading });
+const ProductionObservabilityDashboard = dynamic(() => import('./deployment/ProductionObservabilityDashboard').then((m) => m.ProductionObservabilityDashboard), { ssr: false, loading: VisualizerLoading });
+const DeploymentReadinessChecklist = dynamic(() => import('./deployment/DeploymentReadinessChecklist').then((m) => m.DeploymentReadinessChecklist), { ssr: false, loading: VisualizerLoading });
 
 interface VisualizerDispatcherProps {
   type: AlgorithmType;
