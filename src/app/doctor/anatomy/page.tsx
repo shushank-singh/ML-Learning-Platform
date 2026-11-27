@@ -21,7 +21,7 @@ const AnatomyGLBViewer = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="h-[540px] rounded-3xl bg-slate-950 border border-slate-800 flex flex-col items-center justify-center gap-3 text-slate-300 text-xs">
+      <div className="h-[540px] rounded-3xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-3 text-slate-600 dark:text-slate-300 text-xs">
         <Loader2 className="w-6 h-6 text-teal-400 animate-spin" />
         <span>Initializing Three.js WebGL 3D Anatomy Engine...</span>
       </div>
@@ -65,16 +65,16 @@ function AnatomyAtlasInner() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5">
       {/* Header & Asset Selector */}
-      <div className="flex flex-col gap-4 rounded-2xl border border-slate-800 bg-slate-900/90 p-4 sm:p-5">
+      <div className="flex flex-col gap-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-4 sm:p-5 shadow-xs">
         <div className="space-y-1">
-          <div className="inline-flex items-center gap-2 text-xs font-bold text-teal-400 uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 text-xs font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">
             <Box className="w-4 h-4" />
             <span>Interactive 3D Anatomy Workstation ({glbAssets.length} BodyParts3D Organs)</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             MedVerse 3D Anatomical Atlas
           </h1>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-slate-600 dark:text-slate-400">
             Explore Heart, Skeleton, Brain, Lungs, Kidneys, Liver, and Eye in WebGL with X-Ray mode, 3D surface pins, drawing annotations, pathology overlays, Latin/FMA terminology, and saved collections.
           </p>
         </div>
@@ -85,7 +85,7 @@ function AnatomyAtlasInner() {
             const meta = ORGAN_SHORT_LABELS[asset.id] || {
               label: asset.title,
               icon: Box,
-              color: 'text-teal-300',
+              color: 'text-teal-500 dark:text-teal-300',
             };
             const Icon = meta.icon;
             return (
@@ -99,10 +99,10 @@ function AnatomyAtlasInner() {
                 className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold border transition-all ${
                   active
                     ? 'bg-teal-600 border-teal-500 text-white shadow-md shadow-teal-600/20'
-                    : 'bg-slate-950 border-slate-800 text-slate-300 hover:border-teal-500/60'
+                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-teal-500/60'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${meta.color}`} />
+                <Icon className={`w-4 h-4 ${active ? 'text-white' : meta.color}`} />
                 <span>{meta.label}</span>
               </button>
             );

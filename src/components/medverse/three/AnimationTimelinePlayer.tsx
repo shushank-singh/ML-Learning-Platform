@@ -141,24 +141,24 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
   const currentSeconds = progress * animation.durationSeconds;
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 bg-slate-950 text-slate-100 rounded-3xl border border-slate-800/90 p-3 sm:p-4 shadow-2xl">
+    <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 rounded-3xl border border-slate-200 dark:border-slate-800/90 p-3 sm:p-4 shadow-sm dark:shadow-2xl transition-colors duration-200">
       {/* LEFT / MAIN: 3D Animation Viewport + Deterministic Timeline Controls */}
       <div className="xl:col-span-8 flex flex-col gap-3">
         {/* Top Metadata & Mode Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-slate-900/90 border border-slate-800 px-3.5 py-2.5">
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 px-3.5 py-2.5">
           <div className="flex flex-wrap items-center gap-2">
             <span
               className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
                 animation.isSchematic
-                  ? 'bg-cyan-950 border-cyan-800 text-cyan-300'
-                  : 'bg-teal-950 border-teal-800 text-teal-300'
+                  ? 'bg-cyan-50 dark:bg-cyan-950 border-cyan-200 dark:border-cyan-800 text-cyan-800 dark:text-cyan-300'
+                  : 'bg-teal-50 dark:bg-teal-950 border-teal-200 dark:border-teal-800 text-teal-800 dark:text-teal-300'
               }`}
             >
               {animation.isSchematic
                 ? 'Educational Physiological Schematic'
                 : '3D Organ Mechanism (BodyParts3D)'}
             </span>
-            <h2 className="text-sm sm:text-base font-extrabold text-white">{animation.title}</h2>
+            <h2 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white">{animation.title}</h2>
           </div>
 
           <div className="flex flex-wrap items-center gap-1.5">
@@ -167,8 +167,8 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
               onClick={() => setFollowCamera((f) => !f)}
               className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-colors ${
                 followCamera
-                  ? 'bg-teal-600/20 border-teal-500 text-teal-300'
-                  : 'bg-slate-800 border-slate-700 text-slate-400'
+                  ? 'bg-teal-50 dark:bg-teal-600/20 border-teal-500 text-teal-800 dark:text-teal-300'
+                  : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'
               }`}
             >
               <Camera className="w-3.5 h-3.5" />
@@ -179,8 +179,8 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
               onClick={() => setShowLabels((l) => !l)}
               className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-colors ${
                 showLabels
-                  ? 'bg-cyan-600/20 border-cyan-500 text-cyan-300'
-                  : 'bg-slate-800 border-slate-700 text-slate-400'
+                  ? 'bg-cyan-50 dark:bg-cyan-600/20 border-cyan-500 text-cyan-800 dark:text-cyan-300'
+                  : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'
               }`}
             >
               <Tag className="w-3.5 h-3.5" />
@@ -191,8 +191,8 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
               onClick={() => setShowCaptions((c) => !c)}
               className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-colors ${
                 showCaptions
-                  ? 'bg-violet-600/20 border-violet-500 text-violet-300'
-                  : 'bg-slate-800 border-slate-700 text-slate-400'
+                  ? 'bg-violet-50 dark:bg-violet-600/20 border-violet-500 text-violet-800 dark:text-violet-300'
+                  : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'
               }`}
             >
               <Captions className="w-3.5 h-3.5" />
@@ -204,8 +204,8 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
               title="Toggle Reduced Motion / Accessible Mode"
               className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-colors ${
                 reducedMotion
-                  ? 'bg-amber-600/20 border-amber-500 text-amber-300'
-                  : 'bg-slate-800 border-slate-700 text-slate-400'
+                  ? 'bg-amber-50 dark:bg-amber-600/20 border-amber-500 text-amber-800 dark:text-amber-300'
+                  : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'
               }`}
             >
               <Accessibility className="w-3.5 h-3.5" />
@@ -262,10 +262,10 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
         </div>
 
         {/* Timeline Scrubber & Playback Controls */}
-        <div className="rounded-2xl bg-slate-900/90 border border-slate-800 p-3.5 space-y-3">
+        <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 p-3.5 space-y-3">
           {/* Scrubber Slider with Step Tick Indicators */}
           <div className="space-y-1.5">
-            <div className="flex items-center justify-between text-[11px] font-mono text-slate-400">
+            <div className="flex items-center justify-between text-[11px] font-mono text-slate-600 dark:text-slate-400">
               <span>
                 {formatClockTime(currentSeconds)} / {formatClockTime(animation.durationSeconds)}
               </span>
@@ -279,7 +279,7 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
               value={progress}
               onChange={(e) => handleScrub(Number(e.target.value))}
               aria-label="Animation timeline scrubber"
-              className="w-full accent-teal-400 cursor-pointer"
+              className="w-full accent-teal-600 dark:accent-teal-400 cursor-pointer"
             />
             <div className="flex items-center gap-1">
               {animation.steps.map((step, idx) => (
@@ -293,10 +293,10 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
                   title={step.title}
                   className={`h-2 rounded-full transition-colors ${
                     idx === activeStepIndex
-                      ? 'bg-teal-400'
+                      ? 'bg-teal-500 dark:bg-teal-400'
                       : idx < activeStepIndex
                       ? 'bg-teal-700'
-                      : 'bg-slate-800 hover:bg-slate-700'
+                      : 'bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700'
                   }`}
                   aria-label={`Jump to ${step.title}`}
                 />
@@ -320,7 +320,7 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
                 type="button"
                 onClick={handleRestart}
                 aria-label="Restart animation"
-                className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors"
+                className="p-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-transparent text-slate-700 dark:text-slate-200 transition-colors"
                 title="Restart"
               >
                 <RotateCcw className="w-4 h-4" />
@@ -331,7 +331,7 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
                 onClick={() => jumpToStep(activeStepIndex - 1, false)}
                 disabled={activeStepIndex === 0}
                 aria-label="Previous step"
-                className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-slate-200 transition-colors"
+                className="p-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-transparent disabled:opacity-40 text-slate-700 dark:text-slate-200 transition-colors"
                 title="Previous Step"
               >
                 <SkipBack className="w-4 h-4" />
@@ -342,7 +342,7 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
                 onClick={() => jumpToStep(activeStepIndex + 1, false)}
                 disabled={activeStepIndex >= animation.steps.length - 1}
                 aria-label="Next step"
-                className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-slate-200 transition-colors"
+                className="p-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-transparent disabled:opacity-40 text-slate-700 dark:text-slate-200 transition-colors"
                 title="Next Step"
               >
                 <SkipForward className="w-4 h-4" />
@@ -351,7 +351,7 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
               <button
                 type="button"
                 onClick={() => jumpToStep(activeStepIndex, true)}
-                className="inline-flex items-center gap-1 px-2.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 text-xs font-semibold transition-colors"
+                className="inline-flex items-center gap-1 px-2.5 py-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-transparent text-cyan-700 dark:text-cyan-300 text-xs font-semibold transition-colors"
                 title="Replay Current Step"
               >
                 <Repeat className="w-3.5 h-3.5" />
@@ -361,7 +361,7 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
 
             {/* Playback Speed + Step-by-Step Mode */}
             <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex items-center p-0.5 rounded-xl bg-slate-950 border border-slate-800">
+              <div className="inline-flex items-center p-0.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
                 {([0.5, 1, 2] as const).map((sp) => (
                   <button
                     key={sp}
@@ -370,7 +370,7 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
                     className={`px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold transition-colors ${
                       speed === sp
                         ? 'bg-teal-600 text-white'
-                        : 'text-slate-400 hover:text-white'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
                     {sp}x
@@ -383,8 +383,8 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
                 onClick={handleStepByStepToggle}
                 className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-colors ${
                   stepByStep
-                    ? 'bg-violet-600/20 border-violet-500 text-violet-300'
-                    : 'bg-slate-800 border-slate-700 text-slate-300'
+                    ? 'bg-violet-50 dark:bg-violet-600/20 border-violet-500 text-violet-800 dark:text-violet-300'
+                    : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300'
                 }`}
               >
                 Step-by-Step: {stepByStep ? 'ON' : 'OFF'}
@@ -395,28 +395,28 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
       </div>
 
       {/* RIGHT: Synchronized Explanation, Step Breakdown & Simplification Disclosure */}
-      <aside className="xl:col-span-4 rounded-2xl bg-slate-900/90 border border-slate-800 p-4 flex flex-col justify-between gap-4 max-h-[680px] overflow-y-auto">
+      <aside className="xl:col-span-4 rounded-2xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 p-4 flex flex-col justify-between gap-4 max-h-[680px] overflow-y-auto">
         <div className="space-y-4">
-          <div className="space-y-1.5 border-b border-slate-800 pb-3">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-teal-400">
+          <div className="space-y-1.5 border-b border-slate-200 dark:border-slate-800 pb-3">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-teal-700 dark:text-teal-400">
               {animation.system} · Step {activeStep.order} of {animation.steps.length}
             </span>
-            <h3 className="text-base font-extrabold text-white">{activeStep.title}</h3>
-            <p className="text-xs text-slate-300 leading-relaxed">{activeStep.explanation}</p>
+            <h3 className="text-base font-extrabold text-slate-900 dark:text-white">{activeStep.title}</h3>
+            <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">{activeStep.explanation}</p>
           </div>
 
           {activeStep.clinicalPearl && (
-            <div className="p-3 rounded-xl bg-teal-950/35 border border-teal-800/60 space-y-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-teal-300 flex items-center gap-1">
+            <div className="p-3 rounded-xl bg-teal-50 dark:bg-teal-950/35 border border-teal-200 dark:border-teal-800/60 space-y-1">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300 flex items-center gap-1">
                 <Sparkles className="w-3 h-3" /> Clinical Correlation
               </span>
-              <p className="text-xs text-teal-100 leading-relaxed">{activeStep.clinicalPearl}</p>
+              <p className="text-xs text-teal-950 dark:text-teal-100 leading-relaxed">{activeStep.clinicalPearl}</p>
             </div>
           )}
 
           {/* Step List */}
           <div className="space-y-1.5">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">
               Mechanism Sequence
             </span>
             <div className="space-y-1.5">
@@ -429,8 +429,8 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
                     onClick={() => jumpToStep(idx, false)}
                     className={`w-full text-left p-2.5 rounded-xl border text-xs transition-colors ${
                       active
-                        ? 'bg-teal-950/60 border-teal-500 text-white'
-                        : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+                        ? 'bg-teal-50 dark:bg-teal-950/60 border-teal-500 text-teal-950 dark:text-white'
+                        : 'bg-white dark:bg-slate-950/60 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700'
                     }`}
                   >
                     <div className="font-bold">{step.title}</div>
@@ -442,11 +442,11 @@ export const AnimationTimelinePlayer: React.FC<AnimationTimelinePlayerProps> = (
           </div>
         </div>
 
-        <div className="space-y-3 pt-3 border-t border-slate-800">
-          <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-[11px] text-slate-400 leading-relaxed flex items-start gap-2">
-            <Info className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+        <div className="space-y-3 pt-3 border-t border-slate-200 dark:border-slate-800">
+          <div className="p-2.5 rounded-xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed flex items-start gap-2">
+            <Info className="w-4 h-4 text-cyan-600 dark:text-cyan-400 shrink-0 mt-0.5" />
             <span>
-              <strong className="text-slate-200">Scientific Disclosure:</strong>{' '}
+              <strong className="text-slate-800 dark:text-slate-200">Scientific Disclosure:</strong>{' '}
               {animation.simplificationNotice}
             </span>
           </div>

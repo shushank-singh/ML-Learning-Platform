@@ -23,7 +23,7 @@ export const FlashcardSM2Panel: React.FC<FlashcardSM2PanelProps> = ({ cards }) =
 
   if (cards.length === 0) {
     return (
-      <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 text-center text-xs text-slate-400">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 p-6 text-center text-xs text-slate-500 dark:text-slate-400">
         No flashcards published for this selection yet.
       </div>
     );
@@ -40,13 +40,13 @@ export const FlashcardSM2Panel: React.FC<FlashcardSM2PanelProps> = ({ cards }) =
   };
 
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900/90 text-slate-100 p-4 sm:p-6 space-y-4">
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 text-slate-900 dark:text-slate-100 p-4 sm:p-6 space-y-4 shadow-xs">
       <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2 text-xs font-bold text-cyan-300 uppercase tracking-wider">
+        <div className="flex items-center gap-2 text-xs font-bold text-cyan-700 dark:text-cyan-300 uppercase tracking-wider">
           <Layers className="w-4 h-4" />
           <span>SM-2 Spaced Repetition Flashcards</span>
         </div>
-        <span className="text-xs font-mono text-slate-400">
+        <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
           Card {(index % cards.length) + 1} of {cards.length}
         </span>
       </div>
@@ -54,16 +54,16 @@ export const FlashcardSM2Panel: React.FC<FlashcardSM2PanelProps> = ({ cards }) =
       <button
         type="button"
         onClick={() => setFlipped((f) => !f)}
-        className="w-full min-h-[180px] rounded-2xl bg-slate-950 border border-slate-800 hover:border-teal-500/60 p-6 flex flex-col items-center justify-center text-center space-y-3 transition-colors"
+        className="w-full min-h-[180px] rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-teal-500/60 p-6 flex flex-col items-center justify-center text-center space-y-3 transition-colors"
       >
-        <span className="text-[10px] font-bold uppercase tracking-wider text-teal-400">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400">
           {flipped ? 'High-Yield Answer' : 'Prompt — Click to Reveal Answer'}
         </span>
-        <p className="text-sm sm:text-base font-bold text-white max-w-xl leading-relaxed">
+        <p className="text-sm sm:text-base font-bold text-slate-900 dark:text-white max-w-xl leading-relaxed">
           {flipped ? card.back : card.front}
         </p>
         {flipped && card.clinicalHint && (
-          <p className="text-xs text-cyan-300 max-w-lg">{card.clinicalHint}</p>
+          <p className="text-xs text-cyan-700 dark:text-cyan-300 max-w-lg">{card.clinicalHint}</p>
         )}
         <span className="inline-flex items-center gap-1 text-[11px] text-slate-500 pt-2">
           <RotateCw className="w-3 h-3" /> Click card to flip
@@ -71,8 +71,8 @@ export const FlashcardSM2Panel: React.FC<FlashcardSM2PanelProps> = ({ cards }) =
       </button>
 
       {cardReview && (
-        <div className="text-[11px] text-slate-400 flex items-center justify-between px-1">
-          <span className="inline-flex items-center gap-1 text-emerald-400">
+        <div className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center justify-between px-1">
+          <span className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
             <CheckCircle2 className="w-3.5 h-3.5" />
             Scheduled interval: {cardReview.intervalDays}d (Ease {cardReview.easeFactor})
           </span>
@@ -84,10 +84,10 @@ export const FlashcardSM2Panel: React.FC<FlashcardSM2PanelProps> = ({ cards }) =
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         {[
-          { label: 'Again (1d)', q: 1 as const, style: 'bg-rose-950/50 border-rose-800 text-rose-200 hover:bg-rose-900/60' },
-          { label: 'Hard', q: 2 as const, style: 'bg-amber-950/50 border-amber-800 text-amber-200 hover:bg-amber-900/60' },
-          { label: 'Good', q: 4 as const, style: 'bg-teal-950/50 border-teal-800 text-teal-200 hover:bg-teal-900/60' },
-          { label: 'Easy', q: 5 as const, style: 'bg-emerald-950/50 border-emerald-800 text-emerald-200 hover:bg-emerald-900/60' },
+          { label: 'Again (1d)', q: 1 as const, style: 'bg-rose-50 dark:bg-rose-950/50 border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-200 hover:bg-rose-100 dark:hover:bg-rose-900/60' },
+          { label: 'Hard', q: 2 as const, style: 'bg-amber-50 dark:bg-amber-950/50 border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200 hover:bg-amber-100 dark:hover:bg-amber-900/60' },
+          { label: 'Good', q: 4 as const, style: 'bg-teal-50 dark:bg-teal-950/50 border-teal-200 dark:border-teal-800 text-teal-800 dark:text-teal-200 hover:bg-teal-100 dark:hover:bg-teal-900/60' },
+          { label: 'Easy', q: 5 as const, style: 'bg-emerald-50 dark:bg-emerald-950/50 border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-200 hover:bg-emerald-100 dark:hover:bg-emerald-900/60' },
         ].map((btn) => (
           <button
             key={btn.label}

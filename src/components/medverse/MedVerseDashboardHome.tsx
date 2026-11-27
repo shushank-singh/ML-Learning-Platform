@@ -42,8 +42,8 @@ const AnatomyGLBViewer = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="h-[440px] rounded-3xl bg-slate-950 border border-slate-800 flex flex-col items-center justify-center gap-2 text-xs text-slate-400">
-        <Loader2 className="w-6 h-6 text-teal-400 animate-spin" />
+      <div className="h-[440px] rounded-3xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+        <Loader2 className="w-6 h-6 text-teal-600 dark:text-teal-400 animate-spin" />
         <span>Loading Interactive 3D Heart GLB (BodyParts3D)...</span>
       </div>
     ),
@@ -110,27 +110,27 @@ export const MedVerseDashboardHome: React.FC = () => {
   return (
     <div className="space-y-10 sm:space-y-14">
       {/* 1. CINEMATIC MEDVERSE 3D HERO & REAL PROGRESS OVERVIEW */}
-      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-[#0a1628] to-[#081b26] border border-teal-900/60 p-5 sm:p-8 lg:p-10 text-slate-100 shadow-2xl">
+      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white via-teal-50/40 to-cyan-50/50 dark:from-slate-950 dark:via-[#0a1628] dark:to-[#081b26] border border-teal-200/80 dark:border-teal-900/60 p-5 sm:p-8 lg:p-10 text-slate-900 dark:text-slate-100 shadow-xl dark:shadow-2xl">
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-7 space-y-5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-950/80 border border-teal-700/70 text-teal-300 text-xs font-semibold">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 dark:bg-teal-950/80 border border-teal-200 dark:border-teal-700/70 text-teal-700 dark:text-teal-300 text-xs font-semibold">
               <Stethoscope className="w-3.5 h-3.5" />
               <span>MedVerse 3D · Interactive MBBS Platform</span>
               {displayName && (
-                <span className="text-slate-400">· Dr. {displayName}</span>
+                <span className="text-slate-500 dark:text-slate-400">· Dr. {displayName}</span>
               )}
             </div>
 
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-[1.14]">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.14]">
               Explore Human Anatomy in{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-cyan-300 to-violet-300">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 via-cyan-600 to-violet-600 dark:from-teal-300 dark:via-cyan-300 dark:to-violet-300">
                 Real-Time 3D
               </span>{' '}
               &amp; Physiological Timelines
             </h1>
 
-            <p className="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed">
-              Built on segmented BodyParts3D GLB assets (11 heart structures &amp; 242 skeletal bones), deterministic scientific animation timelines, referenced MBBS revision notes, SM-2 flashcards, and synthetic clinical cases.
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
+              Built on segmented BodyParts3D GLB assets (Heart, Skeleton, Brain, Lungs, Kidneys, Liver, Eye), deterministic scientific animation timelines, referenced MBBS revision notes, SM-2 flashcards, and synthetic clinical cases.
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-1">
@@ -145,7 +145,7 @@ export const MedVerseDashboardHome: React.FC = () => {
 
               <Link
                 href="/doctor/animations"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-cyan-300 text-xs sm:text-sm font-bold transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 text-cyan-700 dark:text-cyan-300 text-xs sm:text-sm font-bold transition-colors"
               >
                 <PlayCircle className="w-4 h-4" />
                 <span>Animation Studio ({SCIENTIFIC_ANIMATIONS.length})</span>
@@ -153,9 +153,9 @@ export const MedVerseDashboardHome: React.FC = () => {
 
               <Link
                 href="/doctor/curriculum"
-                className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-slate-950/70 hover:bg-slate-900 border border-slate-800 text-slate-200 text-xs sm:text-sm font-semibold transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-white/80 dark:bg-slate-950/70 hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-semibold transition-colors"
               >
-                <BookOpen className="w-4 h-4 text-teal-400" />
+                <BookOpen className="w-4 h-4 text-teal-600 dark:text-teal-400" />
                 <span>Full NMC Syllabus</span>
               </Link>
             </div>
@@ -163,11 +163,11 @@ export const MedVerseDashboardHome: React.FC = () => {
 
           {/* Right: Real User Progress & Curriculum Truth Metrics */}
           <div className="lg:col-span-5 grid grid-cols-2 gap-3">
-            <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+            <div className="p-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 space-y-1 shadow-xs">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 Published Topics Done
               </span>
-              <div className="text-2xl font-mono font-extrabold text-teal-300">
+              <div className="text-2xl font-mono font-extrabold text-teal-600 dark:text-teal-300">
                 {completedPublishedCount}/{MBBS_CURRICULUM_STATS.publishedTopicsCount}
               </div>
               <p className="text-[11px] text-slate-500">
@@ -175,11 +175,11 @@ export const MedVerseDashboardHome: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+            <div className="p-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 space-y-1 shadow-xs">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 Recorded MCQ Accuracy
               </span>
-              <div className="text-2xl font-mono font-extrabold text-cyan-300">
+              <div className="text-2xl font-mono font-extrabold text-cyan-600 dark:text-cyan-300">
                 {accuracyStats?.accuracyPercentage !== null &&
                 accuracyStats?.accuracyPercentage !== undefined
                   ? `${accuracyStats.accuracyPercentage}%`
@@ -190,11 +190,11 @@ export const MedVerseDashboardHome: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+            <div className="p-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 space-y-1 shadow-xs">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 SM-2 Flashcards Due
               </span>
-              <div className="text-2xl font-mono font-extrabold text-violet-300">
+              <div className="text-2xl font-mono font-extrabold text-violet-600 dark:text-violet-300">
                 {dueFlashcardsCount}
               </div>
               <p className="text-[11px] text-slate-500">
@@ -202,11 +202,11 @@ export const MedVerseDashboardHome: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+            <div className="p-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 space-y-1 shadow-xs">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 Logged Study Time
               </span>
-              <div className="text-2xl font-mono font-extrabold text-white">
+              <div className="text-2xl font-mono font-extrabold text-slate-900 dark:text-white">
                 {totalStudyMinutes}m
               </div>
               <p className="text-[11px] text-slate-500">
@@ -242,9 +242,9 @@ export const MedVerseDashboardHome: React.FC = () => {
             </Link>
             <Link
               href="/doctor/anatomy?asset=skeleton-bp3d"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white border border-slate-700 text-xs font-bold"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 text-xs font-bold"
             >
-              <Bone className="w-3.5 h-3.5 text-amber-300" />
+              <Bone className="w-3.5 h-3.5 text-amber-500 dark:text-amber-300" />
               <span>Skeleton 3D (242 Bones)</span>
             </Link>
           </div>
@@ -253,16 +253,16 @@ export const MedVerseDashboardHome: React.FC = () => {
         {mount3DPreview ? (
           <AnatomyGLBViewer assetId="heart-bp3d" compact />
         ) : (
-          <div className="rounded-3xl border border-slate-800 bg-slate-950 p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 text-slate-100">
+          <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 text-slate-900 dark:text-slate-100 shadow-xs">
             <div className="space-y-2 max-w-2xl">
-              <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-teal-950 border border-teal-800 text-teal-300">
+              <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-teal-50 dark:bg-teal-950 border border-teal-200 dark:border-teal-800 text-teal-700 dark:text-teal-300">
                 Lazy-Loaded WebGL Scene (2.52 MB GLB)
               </span>
-              <h3 className="text-lg sm:text-xl font-extrabold text-white">
+              <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white">
                 Human Heart — BodyParts3D Segmented 3D Model
               </h3>
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                Load the real Three.js + React Three Fiber viewport inline, or open the full-screen Anatomy Atlas for both the Heart (11 structures) and Skeleton (242 bones).
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Load the real Three.js + React Three Fiber viewport inline, or open the full-screen Anatomy Atlas for Heart, Skeleton, Brain, Lungs, Kidneys, Liver &amp; Eye.
               </p>
             </div>
             <div className="flex flex-wrap gap-3 shrink-0">
@@ -276,7 +276,7 @@ export const MedVerseDashboardHome: React.FC = () => {
               </button>
               <Link
                 href="/doctor/anatomy"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 text-xs font-bold"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold"
               >
                 <span>Open Full Atlas</span>
                 <ArrowRight className="w-4 h-4" />

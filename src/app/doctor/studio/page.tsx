@@ -112,15 +112,15 @@ export default function MedVerseAdminStudioPage() {
   if (!user || (!isAdmin && !isOwner && audit?.success !== true)) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-16">
-        <div className="rounded-3xl border border-rose-900/60 bg-slate-900/95 p-8 text-center space-y-4">
-          <div className="w-12 h-12 rounded-2xl bg-rose-950/70 border border-rose-800 text-rose-400 flex items-center justify-center mx-auto">
+        <div className="rounded-3xl border border-rose-200 dark:border-rose-900/60 bg-white dark:bg-slate-900/95 p-8 text-center space-y-4 shadow-sm">
+          <div className="w-12 h-12 rounded-2xl bg-rose-50 dark:bg-rose-950/70 border border-rose-200 dark:border-rose-800 text-rose-600 dark:text-rose-400 flex items-center justify-center mx-auto">
             <Lock className="w-6 h-6" />
           </div>
-          <h1 className="text-xl font-extrabold text-white">
+          <h1 className="text-xl font-extrabold text-slate-900 dark:text-white">
             Admin / Medical Reviewer Authorization Required
           </h1>
-          <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-            The MedVerse Content Studio enforces server-side role authorization (`admin` or `owner` in <code className="text-teal-300">profiles.role</code> or server owner configuration).
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            The MedVerse Content Studio enforces server-side role authorization (`admin` or `owner` in <code className="text-teal-600 dark:text-teal-300">profiles.role</code> or server owner configuration).
             {audit?.error ? ` Server response: "${audit.error}"` : ''}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
@@ -134,9 +134,9 @@ export default function MedVerseAdminStudioPage() {
             )}
             <Link
               href="/doctor"
-              className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold"
+              className="px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-semibold"
             >
-              Back to MedVerse Dashboard
+              Back to Doctor Platform
             </Link>
           </div>
         </div>
@@ -146,44 +146,44 @@ export default function MedVerseAdminStudioPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      <div className="rounded-3xl border border-slate-800 bg-slate-900/90 p-5 sm:p-6 space-y-4">
+      <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-5 sm:p-6 space-y-4 shadow-xs">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="inline-flex items-center gap-2 text-xs font-bold text-teal-400 uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 text-xs font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">
             <ShieldAlert className="w-4 h-4" />
             <span>MedVerse Admin Content Studio</span>
           </div>
-          <span className="px-3 py-1 rounded-full bg-emerald-950 border border-emerald-800 text-emerald-300 text-xs font-mono">
+          <span className="px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-xs font-mono">
             Authorized: {audit?.editor?.email} ({audit?.editor?.role})
           </span>
         </div>
 
-        <h1 className="text-2xl font-extrabold text-white">
+        <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">
           Curriculum Authoring, Asset Audit &amp; Medical Review Gate
         </h1>
 
         {audit?.summary && (
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-            <div className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800">
+            <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
               <span className="text-[10px] text-slate-500 uppercase block">Published Topics</span>
-              <span className="text-xl font-mono font-bold text-emerald-300">
+              <span className="text-xl font-mono font-bold text-emerald-600 dark:text-emerald-300">
                 {audit.summary.publishedCount}/{audit.summary.topicsCount}
               </span>
             </div>
-            <div className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800">
+            <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
               <span className="text-[10px] text-slate-500 uppercase block">Verified 3D Assets</span>
-              <span className="text-xl font-mono font-bold text-cyan-300">
+              <span className="text-xl font-mono font-bold text-cyan-600 dark:text-cyan-300">
                 {audit.summary.assetsCount}
               </span>
             </div>
-            <div className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800">
+            <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
               <span className="text-[10px] text-slate-500 uppercase block">Animations</span>
-              <span className="text-xl font-mono font-bold text-teal-300">
+              <span className="text-xl font-mono font-bold text-teal-600 dark:text-teal-300">
                 {audit.summary.animationsCount}
               </span>
             </div>
-            <div className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800">
+            <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
               <span className="text-[10px] text-slate-500 uppercase block">Missing 3D Assets</span>
-              <span className="text-xl font-mono font-bold text-amber-300">
+              <span className="text-xl font-mono font-bold text-amber-600 dark:text-amber-300">
                 {audit.summary.missingAssetTopicsCount}
               </span>
             </div>
@@ -195,28 +195,28 @@ export default function MedVerseAdminStudioPage() {
         {/* Topic Editor Form (Validated with Zod on Server) */}
         <form
           onSubmit={handleSaveTopic}
-          className="lg:col-span-7 rounded-2xl border border-slate-800 bg-slate-900/90 p-5 space-y-4"
+          className="lg:col-span-7 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-5 space-y-4 shadow-xs"
         >
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-teal-400">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400">
             <FilePlus2 className="w-4 h-4" />
             <span>Create / Update Topic Specification</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
             <label className="space-y-1">
-              <span className="text-slate-400 font-semibold block">Topic ID (slug)</span>
+              <span className="text-slate-600 dark:text-slate-400 font-semibold block">Topic ID (slug)</span>
               <input
                 value={topicId}
                 onChange={(e) => setTopicId(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-mono"
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-mono"
               />
             </label>
             <label className="space-y-1">
-              <span className="text-slate-400 font-semibold block">Review &amp; Publish Status</span>
+              <span className="text-slate-600 dark:text-slate-400 font-semibold block">Review &amp; Publish Status</span>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as ContentStatus)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white"
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white"
               >
                 <option value="planned">planned</option>
                 <option value="in_development">in_development</option>
@@ -228,30 +228,30 @@ export default function MedVerseAdminStudioPage() {
           </div>
 
           <label className="space-y-1 text-xs block">
-            <span className="text-slate-400 font-semibold block">Topic Title</span>
+            <span className="text-slate-600 dark:text-slate-400 font-semibold block">Topic Title</span>
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white"
+              className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white"
             />
           </label>
 
           <label className="space-y-1 text-xs block">
-            <span className="text-slate-400 font-semibold block">Subtitle</span>
+            <span className="text-slate-600 dark:text-slate-400 font-semibold block">Subtitle</span>
             <input
               value={subtitle}
               onChange={(e) => setSubtitle(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white"
+              className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white"
             />
           </label>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
             <label className="space-y-1">
-              <span className="text-slate-400 font-semibold block">Phase</span>
+              <span className="text-slate-600 dark:text-slate-400 font-semibold block">Phase</span>
               <select
                 value={phaseId}
                 onChange={(e) => setPhaseId(e.target.value as MBBSPhaseId)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white"
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white"
               >
                 {MBBS_PHASES.map((ph) => (
                   <option key={ph.id} value={ph.id}>
@@ -261,11 +261,11 @@ export default function MedVerseAdminStudioPage() {
               </select>
             </label>
             <label className="space-y-1">
-              <span className="text-slate-400 font-semibold block">Subject</span>
+              <span className="text-slate-600 dark:text-slate-400 font-semibold block">Subject</span>
               <select
                 value={subjectId}
                 onChange={(e) => setSubjectId(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white"
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white"
               >
                 {MBBS_SUBJECTS_CATALOG.map((s) => (
                   <option key={s.id} value={s.id}>
@@ -275,11 +275,11 @@ export default function MedVerseAdminStudioPage() {
               </select>
             </label>
             <label className="space-y-1">
-              <span className="text-slate-400 font-semibold block">Bound 3D Asset</span>
+              <span className="text-slate-600 dark:text-slate-400 font-semibold block">Bound 3D Asset</span>
               <select
                 value={assetId}
                 onChange={(e) => setAssetId(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white"
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white"
               >
                 <option value="">None (Missing Asset)</option>
                 {ANATOMY_ASSET_LIST.map((a) => (
@@ -292,11 +292,11 @@ export default function MedVerseAdminStudioPage() {
           </div>
 
           <label className="space-y-1 text-xs block">
-            <span className="text-slate-400 font-semibold block">Parent Module</span>
+            <span className="text-slate-600 dark:text-slate-400 font-semibold block">Parent Module</span>
             <select
               value={moduleId}
               onChange={(e) => setModuleId(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white"
+              className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white"
             >
               {MBBS_MODULES_CATALOG.map((m) => (
                 <option key={m.id} value={m.id}>
@@ -307,15 +307,15 @@ export default function MedVerseAdminStudioPage() {
           </label>
 
           {saveFeedback && (
-            <div className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-800 text-xs text-emerald-200 flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+            <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-200 flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
               <span>{saveFeedback}</span>
             </div>
           )}
 
           {saveError && (
-            <div className="p-3 rounded-xl bg-rose-950/40 border border-rose-800 text-xs text-rose-200 flex items-start gap-2">
-              <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+            <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-xs text-rose-800 dark:text-rose-200 flex items-start gap-2">
+              <AlertTriangle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
               <span>{saveError}</span>
             </div>
           )}
@@ -329,8 +329,8 @@ export default function MedVerseAdminStudioPage() {
         </form>
 
         {/* Missing Assets & Completeness Inspector */}
-        <aside className="lg:col-span-5 rounded-2xl border border-slate-800 bg-slate-900/90 p-5 space-y-4">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400">
+        <aside className="lg:col-span-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-5 space-y-4 shadow-xs">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
             <Database className="w-4 h-4" />
             <span>Missing 3D Asset Queue ({audit?.missingAssetTopics?.length || 0})</span>
           </div>
@@ -338,11 +338,11 @@ export default function MedVerseAdminStudioPage() {
             {(audit?.missingAssetTopics || []).map((t) => (
               <div
                 key={t.id}
-                className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs space-y-1"
+                className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs space-y-1"
               >
                 <div className="flex items-center justify-between gap-2">
-                  <span className="font-bold text-white">{t.title}</span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+                  <span className="font-bold text-slate-900 dark:text-white">{t.title}</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
                     {t.status}
                   </span>
                 </div>

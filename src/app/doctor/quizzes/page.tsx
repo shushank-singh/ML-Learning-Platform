@@ -102,39 +102,39 @@ export default function MedVerseQuizzesPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       {/* Header & Real Attempt Metrics */}
-      <div className="rounded-3xl border border-slate-800 bg-slate-900/90 p-5 sm:p-6 space-y-5">
+      <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-5 sm:p-6 space-y-5 shadow-xs">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
-            <div className="inline-flex items-center gap-2 text-xs font-bold text-violet-400 uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 text-xs font-bold text-violet-600 dark:text-violet-400 uppercase tracking-wider">
               <CheckSquare className="w-4 h-4" />
               <span>Assessment &amp; SM-2 Spaced Repetition</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               MBBS Quizzes, Structure ID &amp; Flashcard Revision
             </h1>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-600 dark:text-slate-400">
               All scores and accuracy metrics reflect your actual recorded attempts. Practice items are labeled as synthetic MedVerse questions.
             </p>
           </div>
 
           <div className="grid grid-cols-3 gap-2.5 shrink-0">
-            <div className="px-3.5 py-2.5 rounded-2xl bg-slate-950 border border-slate-800 text-center">
+            <div className="px-3.5 py-2.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center">
               <span className="text-[10px] text-slate-500 uppercase block">Attempts</span>
-              <span className="text-lg font-mono font-extrabold text-white">
+              <span className="text-lg font-mono font-extrabold text-slate-900 dark:text-white">
                 {stats?.totalAttempts ?? 0}
               </span>
             </div>
-            <div className="px-3.5 py-2.5 rounded-2xl bg-slate-950 border border-slate-800 text-center">
+            <div className="px-3.5 py-2.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center">
               <span className="text-[10px] text-slate-500 uppercase block">Accuracy</span>
-              <span className="text-lg font-mono font-extrabold text-teal-300">
+              <span className="text-lg font-mono font-extrabold text-teal-600 dark:text-teal-300">
                 {stats?.accuracyPercentage !== null && stats?.accuracyPercentage !== undefined
                   ? `${stats.accuracyPercentage}%`
                   : '—'}
               </span>
             </div>
-            <div className="px-3.5 py-2.5 rounded-2xl bg-slate-950 border border-slate-800 text-center">
+            <div className="px-3.5 py-2.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center">
               <span className="text-[10px] text-slate-500 uppercase block">Due Cards</span>
-              <span className="text-lg font-mono font-extrabold text-cyan-300">
+              <span className="text-lg font-mono font-extrabold text-cyan-600 dark:text-cyan-300">
                 {dueFlashcardsCount}
               </span>
             </div>
@@ -142,7 +142,7 @@ export default function MedVerseQuizzesPage() {
         </div>
 
         {/* Mode Tabs */}
-        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-800">
+        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
           {[
             { id: 'topic' as const, label: `Topic MCQs (${MEDVERSE_MCQS.length})`, icon: CheckSquare },
             { id: 'structure-id' as const, label: 'Structure ID Drills', icon: Award },
@@ -159,7 +159,7 @@ export default function MedVerseQuizzesPage() {
                 className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold border transition-colors ${
                   mode === tab.id
                     ? 'bg-teal-600 border-teal-500 text-white'
-                    : 'bg-slate-950 border-slate-800 text-slate-300 hover:border-teal-500/60'
+                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-teal-500/60'
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />
@@ -172,12 +172,12 @@ export default function MedVerseQuizzesPage() {
         {/* Topic Filter or Timed Mode Controls */}
         {mode === 'topic' && (
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-semibold text-slate-400">Filter Topic:</span>
+            <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">Filter Topic:</span>
             <select
               value={selectedTopicId}
               onChange={(e) => setSelectedTopicId(e.target.value)}
               aria-label="Filter MCQs by topic"
-              className="px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-teal-500"
+              className="px-3 py-1.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-teal-500"
             >
               <option value="all">All Published Topics ({MEDVERSE_MCQS.length} Questions)</option>
               {publishedTopics.map((t) => (
@@ -190,13 +190,13 @@ export default function MedVerseQuizzesPage() {
         )}
 
         {mode === 'timed' && (
-          <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-slate-950 border border-slate-800">
+          <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
             <div className="flex items-center gap-3">
-              <Timer className="w-5 h-5 text-cyan-400" />
-              <span className="text-sm font-mono font-extrabold text-white">
+              <Timer className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+              <span className="text-sm font-mono font-extrabold text-slate-900 dark:text-white">
                 {String(mins).padStart(2, '0')}:{String(secs).padStart(2, '0')}
               </span>
-              <span className="text-xs text-slate-400">10-Question Timed Assessment (5 mins)</span>
+              <span className="text-xs text-slate-600 dark:text-slate-400">10-Question Timed Assessment (5 mins)</span>
             </div>
             <button
               type="button"
