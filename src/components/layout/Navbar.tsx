@@ -207,7 +207,7 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
                     }`}
                   >
                     <Cpu className="w-3 h-3" />
-                    <span>Engineering</span>
+                    <span>Engineering Platform</span>
                   </Link>
                   <Link
                     href="/doctor"
@@ -219,7 +219,7 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
                     }`}
                   >
                     <Stethoscope className="w-3 h-3" />
-                    <span>Doctor</span>
+                    <span>Doctor Platform</span>
                   </Link>
                 </div>
               )}
@@ -233,21 +233,21 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                 >
                   <Sliders className="w-3.5 h-3.5 text-cyan-500" />
-                  <span>Platform Tools</span>
+                  <span>Implemented Features</span>
                 </a>
                 <Link
                   href="/engineering"
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-lg hover:bg-indigo-50/70 dark:hover:bg-slate-800 transition-colors"
                 >
                   <Cpu className="w-3.5 h-3.5 text-indigo-500" />
-                  <span>Engineering Wing</span>
+                  <span>Engineering Platform</span>
                 </Link>
                 <Link
                   href="/doctor"
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 rounded-lg hover:bg-teal-50/70 dark:hover:bg-slate-800 transition-colors"
                 >
                   <Stethoscope className="w-3.5 h-3.5 text-teal-500" />
-                  <span>Doctor (MedVerse 3D)</span>
+                  <span>Doctor Platform</span>
                 </Link>
                 <Link
                   href="/ai-tutor"
@@ -718,7 +718,7 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
                   }`}
                 >
                   <LayoutDashboard className="w-4 h-4 text-indigo-500" />
-                  <span>Engineering Dashboard (/engineering)</span>
+                  <span>Engineering Platform</span>
                 </Link>
                 <Link
                   href="/doctor"
@@ -730,7 +730,7 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
                   }`}
                 >
                   <Stethoscope className="w-4 h-4 text-teal-500" />
-                  <span>Doctor · MedVerse 3D (/doctor)</span>
+                  <span>Doctor Platform</span>
                 </Link>
                 <Link
                   href="/curriculum"

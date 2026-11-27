@@ -52,9 +52,13 @@ const FinalCTASection = dynamic(
 
 interface PlatformDashboardViewProps {
   forcedDivision?: PlatformDivision;
+  hideSwitcher?: boolean;
 }
 
-export const PlatformDashboardView: React.FC<PlatformDashboardViewProps> = ({ forcedDivision }) => {
+export const PlatformDashboardView: React.FC<PlatformDashboardViewProps> = ({
+  forcedDivision,
+  hideSwitcher = false,
+}) => {
   const { user } = useAuth();
   const { division: contextDivision, setDivision } = useDivision();
   const activeDivision = forcedDivision || contextDivision;
@@ -82,15 +86,17 @@ export const PlatformDashboardView: React.FC<PlatformDashboardViewProps> = ({ fo
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans selection:bg-indigo-500 selection:text-white transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-8 sm:space-y-14 lg:space-y-20">
-        {/* Top Dual-Academy Division Switcher (Engineering vs Doctor MBBS) */}
-        <AcademyDivisionSwitcher
-          division={activeDivision}
-          onSelect={(next) => setDivision(next)}
-          engineeringStats={{
-            totalLessons: overallStats.totalLessons,
-            totalModules: overallStats.totalModules,
-          }}
-        />
+        {/* Top Dual-Academy Division Switcher (omitted on dedicated standalone wing routes) */}
+        {!hideSwitcher && (
+          <AcademyDivisionSwitcher
+            division={activeDivision}
+            onSelect={(next) => setDivision(next)}
+            engineeringStats={{
+              totalLessons: overallStats.totalLessons,
+              totalModules: overallStats.totalModules,
+            }}
+          />
+        )}
 
         {activeDivision === 'engineering' ? (
           /* ========================================================================= */

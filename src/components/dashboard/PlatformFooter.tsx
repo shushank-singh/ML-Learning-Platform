@@ -53,14 +53,14 @@ export const PlatformFooter: React.FC = () => {
                 className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 font-medium hover:bg-indigo-100 transition-colors"
               >
                 <Cpu className="w-3.5 h-3.5" />
-                <span>Engineering Wing</span>
+                <span>Engineering Platform</span>
               </Link>
               <Link
                 href="/doctor"
                 className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 font-medium hover:bg-emerald-100 transition-colors"
               >
                 <Stethoscope className="w-3.5 h-3.5" />
-                <span>Doctor (MBBS) Wing</span>
+                <span>Doctor Platform</span>
               </Link>
             </div>
           </div>
