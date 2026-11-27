@@ -3,6 +3,8 @@
 import {
   MedVerseAttemptRecord,
   MedVerseFlashcardReview,
+  MedVersePinAnnotation,
+  MedVerseStudyCollection,
   MedVerseStudySession,
   MedVerseUserProgress,
 } from '@/types/medverse';
@@ -16,6 +18,8 @@ const defaultProgress = (): MedVerseUserProgress => ({
   attempts: [],
   flashcardReviews: {},
   studySessions: [],
+  pinAnnotations: [],
+  collections: [],
   updatedAt: new Date().toISOString(),
 });
 
@@ -40,6 +44,8 @@ export function normalizeMedVerseProgress(raw: unknown): MedVerseUserProgress {
         ? obj.flashcardReviews
         : {},
     studySessions: Array.isArray(obj.studySessions) ? obj.studySessions : [],
+    pinAnnotations: Array.isArray(obj.pinAnnotations) ? obj.pinAnnotations : [],
+    collections: Array.isArray(obj.collections) ? obj.collections : [],
     lastVisitedTopicId: typeof obj.lastVisitedTopicId === 'string' ? obj.lastVisitedTopicId : undefined,
     updatedAt: typeof obj.updatedAt === 'string' ? obj.updatedAt : base.updatedAt,
   };
@@ -121,6 +127,8 @@ export async function syncMedVerseProgressFromCloud(): Promise<MedVerseUserProgr
       attempts: mergeAttempts(local.attempts, cloud.attempts),
       flashcardReviews: { ...cloud.flashcardReviews, ...local.flashcardReviews },
       studySessions: mergeSessions(local.studySessions, cloud.studySessions),
+      pinAnnotations: mergeById(cloud.pinAnnotations || [], local.pinAnnotations || []),
+      collections: mergeById(cloud.collections || [], local.collections || []),
       lastVisitedTopicId: local.lastVisitedTopicId || cloud.lastVisitedTopicId,
       updatedAt: new Date().toISOString(),
     };
@@ -159,6 +167,59 @@ function mergeSessions(
     }
   }
   return combined.slice(-1000);
+}
+
+function mergeById<T extends { id: string }>(cloud: T[], local: T[]): T[] {
+  const map = new Map<string, T>();
+  for (const item of cloud) map.set(item.id, item);
+  for (const item of local) map.set(item.id, item);
+  return Array.from(map.values()).slice(-500);
+}
+
+export function addMedVersePinAnnotation(
+  pin: Omit<MedVersePinAnnotation, 'id' | 'createdAt'>
+): MedVerseUserProgress {
+  const current = getMedVerseProgress();
+  const nextPin: MedVersePinAnnotation = {
+    ...pin,
+    id: `pin-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+    createdAt: new Date().toISOString(),
+  };
+  return saveMedVerseProgress({
+    ...current,
+    pinAnnotations: [...(current.pinAnnotations || []), nextPin],
+  });
+}
+
+export function deleteMedVersePinAnnotation(pinId: string): MedVerseUserProgress {
+  const current = getMedVerseProgress();
+  return saveMedVerseProgress({
+    ...current,
+    pinAnnotations: (current.pinAnnotations || []).filter((p) => p.id !== pinId),
+  });
+}
+
+export function saveMedVerseCollection(
+  collection: Omit<MedVerseStudyCollection, 'id' | 'createdAt'>
+): MedVerseUserProgress {
+  const current = getMedVerseProgress();
+  const entry: MedVerseStudyCollection = {
+    ...collection,
+    id: `col-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+    createdAt: new Date().toISOString(),
+  };
+  return saveMedVerseProgress({
+    ...current,
+    collections: [...(current.collections || []), entry],
+  });
+}
+
+export function deleteMedVerseCollection(collectionId: string): MedVerseUserProgress {
+  const current = getMedVerseProgress();
+  return saveMedVerseProgress({
+    ...current,
+    collections: (current.collections || []).filter((c) => c.id !== collectionId),
+  });
 }
 
 export function toggleMedVerseTopicCompletion(topicId: string): MedVerseUserProgress {

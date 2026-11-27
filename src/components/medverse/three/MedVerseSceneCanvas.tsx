@@ -107,6 +107,7 @@ export const MedVerseSceneCanvas: React.FC<MedVerseSceneCanvasProps> = ({
           gl={{
             antialias: true,
             alpha: true,
+            preserveDrawingBuffer: true,
             localClippingEnabled: true,
             powerPreference: 'high-performance',
           }}

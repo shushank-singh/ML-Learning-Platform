@@ -5,6 +5,7 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { Html, OrbitControls } from '@react-three/drei';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import {
+  Box3,
   CatmullRomCurve3,
   Color,
   Group,
@@ -577,6 +578,122 @@ const DNAReplicationSchematicScene: React.FC<{
   );
 };
 
+const SkeletonKinematicsModel: React.FC<{
+  playbackRef: React.MutableRefObject<TimelinePlaybackState>;
+  activeStep: AnimationStepSpec;
+}> = ({ playbackRef, activeStep }) => {
+  const [sceneGroup, setSceneGroup] = React.useState<Group | null>(null);
+  const forearmPivotRef = useRef<Group | null>(null);
+
+  useEffect(() => {
+    const abort = new AbortController();
+    let active: Group | null = null;
+    const loader = new GLTFLoader();
+
+    fetch('/models/medverse/skeleton.glb', { signal: abort.signal })
+      .then((r) => r.arrayBuffer())
+      .then((buf) => loader.parseAsync(buf, ''))
+      .then((gltf) => {
+        if (abort.signal.aborted) {
+          disposeObject3D(gltf.scene);
+          return;
+        }
+
+        const upperLimbFocus = new Set([
+          'right-clavicle',
+          'right-scapula',
+          'right-humerus',
+          'right-radius',
+          'right-ulna',
+          'right-scaphoid',
+        ]);
+        const forearmIds = new Set(['right-radius', 'right-ulna', 'right-scaphoid']);
+
+        let elbowPivot = new Vector3(-0.22, 0.08, 0);
+        const forearmMeshes: Mesh[] = [];
+
+        gltf.scene.traverse((obj) => {
+          if (!(obj instanceof Mesh)) return;
+          const sid = (obj.userData?.structureId as string) || obj.name;
+          const srcMat = Array.isArray(obj.material) ? obj.material[0] : obj.material;
+          obj.material = srcMat
+            ? srcMat.clone()
+            : new MeshStandardMaterial({ color: '#e2e8f0' });
+
+          const isFocus = upperLimbFocus.has(sid);
+          const mat = obj.material as MeshStandardMaterial;
+          mat.transparent = !isFocus;
+          mat.opacity = isFocus ? 1.0 : 0.14;
+          mat.depthWrite = isFocus;
+
+          if (sid === 'right-humerus') {
+            const box = new Box3().setFromObject(obj);
+            if (!box.isEmpty()) {
+              elbowPivot = new Vector3(
+                (box.min.x + box.max.x) / 2,
+                box.min.y + 0.025,
+                (box.min.z + box.max.z) / 2
+              );
+            }
+          }
+          if (forearmIds.has(sid)) {
+            forearmMeshes.push(obj);
+          }
+        });
+
+        const pivot = new Group();
+        pivot.position.copy(elbowPivot);
+        gltf.scene.add(pivot);
+        for (const m of forearmMeshes) {
+          pivot.attach(m);
+        }
+        forearmPivotRef.current = pivot;
+        active = gltf.scene;
+        setSceneGroup(gltf.scene);
+      })
+      .catch(() => {});
+
+    return () => {
+      abort.abort();
+      disposeObject3D(active);
+    };
+  }, []);
+
+  useFrame(() => {
+    const p = playbackRef.current.progress;
+    if (forearmPivotRef.current) {
+      // 0..0.34 hold extended -> 0.34..0.72 flex anteriorly up to ~115 deg -> 0.72..1.0 return
+      let flexRatio = 0;
+      if (p >= 0.34 && p <= 0.72) {
+        flexRatio = (p - 0.34) / 0.38;
+      } else if (p > 0.72) {
+        flexRatio = Math.max(0, 1 - (p - 0.72) / 0.28);
+      }
+      forearmPivotRef.current.rotation.x = -flexRatio * 2.0;
+    }
+
+    if (sceneGroup) {
+      const hi = new Set(activeStep.highlightStructureIds);
+      sceneGroup.traverse((obj) => {
+        if (!(obj instanceof Mesh)) return;
+        const sid = (obj.userData?.structureId as string) || obj.name;
+        const mat = obj.material;
+        if (!(mat instanceof MeshStandardMaterial)) return;
+        if (hi.has(sid)) {
+          mat.emissive.set('#14b8a6');
+          mat.emissiveIntensity = 0.55;
+        } else {
+          mat.emissive.set('#000000');
+          mat.emissiveIntensity = 0;
+        }
+      });
+    }
+  });
+
+  if (!sceneGroup) return null;
+  return <primitive object={sceneGroup} position={[0, -0.1, 0]} />;
+};
+
 export const ScientificAnimationScene: React.FC<ScientificAnimationSceneProps> = ({
   animation,
   playbackRef,
@@ -604,6 +721,10 @@ export const ScientificAnimationScene: React.FC<ScientificAnimationSceneProps> =
           playbackRef={playbackRef}
           activeStep={activeStep}
         />
+      )}
+
+      {animation.renderKind === 'skeleton_kinematics' && (
+        <SkeletonKinematicsModel playbackRef={playbackRef} activeStep={activeStep} />
       )}
 
       {animation.renderKind === 'respiratory_mechanics' && (

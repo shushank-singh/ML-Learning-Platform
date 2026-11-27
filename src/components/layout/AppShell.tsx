@@ -28,6 +28,11 @@ interface AppShellProps {
 export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const pathname = usePathname() || '/';
 
+  // Clean Embed Mode for MedVerse iframe embedding (`/doctor/embed`)
+  if (pathname === '/doctor/embed') {
+    return <main className="min-h-screen w-full bg-slate-950">{children}</main>;
+  }
+
   // 1. Public Standalone Pages (Home, Engineering/Doctor Dashboards, Pricing, Plans, Certificate Verification, Auth): Standalone layout without sidebar or AuthGuard
   if (
     pathname === '/' ||

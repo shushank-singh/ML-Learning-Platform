@@ -1,6 +1,15 @@
 import { ANATOMY_ASSETS, ANATOMY_ASSET_LIST } from './assets';
 import { HEART_STRUCTURES, HEART_STRUCTURES_BY_ID } from './heartStructures';
 import { SKELETON_STRUCTURES, SKELETON_STRUCTURES_BY_ID } from './skeletonStructures';
+import {
+  ORGAN_STRUCTURES_BY_ASSET,
+  PATHOLOGY_TERRITORIES,
+  BRAIN_STRUCTURES,
+  LUNGS_STRUCTURES,
+  KIDNEYS_STRUCTURES,
+  LIVER_STRUCTURES,
+  EYE_STRUCTURES,
+} from './organStructures';
 import { SCIENTIFIC_ANIMATIONS, SCIENTIFIC_ANIMATIONS_BY_ID } from './animations';
 import {
   MBBS_PHASES,
@@ -24,6 +33,13 @@ export {
   HEART_STRUCTURES_BY_ID,
   SKELETON_STRUCTURES,
   SKELETON_STRUCTURES_BY_ID,
+  BRAIN_STRUCTURES,
+  LUNGS_STRUCTURES,
+  KIDNEYS_STRUCTURES,
+  LIVER_STRUCTURES,
+  EYE_STRUCTURES,
+  ORGAN_STRUCTURES_BY_ASSET,
+  PATHOLOGY_TERRITORIES,
   SCIENTIFIC_ANIMATIONS,
   SCIENTIFIC_ANIMATIONS_BY_ID,
   MBBS_PHASES,
@@ -40,7 +56,7 @@ export {
 export function getStructuresForAsset(assetId: string): AnatomicalStructureMetadata[] {
   if (assetId === 'heart-bp3d') return HEART_STRUCTURES;
   if (assetId === 'skeleton-bp3d') return SKELETON_STRUCTURES;
-  return [];
+  return ORGAN_STRUCTURES_BY_ASSET[assetId] || [];
 }
 
 export function getStructureMetadata(
@@ -49,7 +65,8 @@ export function getStructureMetadata(
 ): AnatomicalStructureMetadata | null {
   if (assetId === 'heart-bp3d') return HEART_STRUCTURES_BY_ID[structureId] || null;
   if (assetId === 'skeleton-bp3d') return SKELETON_STRUCTURES_BY_ID[structureId] || null;
-  return null;
+  const list = ORGAN_STRUCTURES_BY_ASSET[assetId];
+  return list ? list.find((s) => s.id === structureId || s.meshId === structureId) || null : null;
 }
 
 export function getTopicById(topicId: string) {

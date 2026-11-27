@@ -95,10 +95,36 @@ export const TopicCreateOrUpdateSchema = z.object({
   reviewerName: z.string().optional(),
 });
 
+export const MedVersePinAnnotationSchema = z.object({
+  id: z.string().min(2).max(100),
+  assetId: z.string().min(2),
+  structureId: z.string().min(1),
+  position: z.tuple([z.number(), z.number(), z.number()]),
+  title: z.string().min(1).max(120),
+  note: z.string().max(600),
+  color: z.string().regex(/^#[0-9a-fA-F]{6}$/).optional(),
+  createdAt: z.string(),
+});
+
+export const MedVerseStudyCollectionSchema = z.object({
+  id: z.string().min(2).max(100),
+  name: z.string().min(1).max(120),
+  assetId: z.string().min(2),
+  selectedStructureId: z.string().nullable().optional(),
+  hiddenStructureIds: z.array(z.string()).max(400),
+  isolatedStructureId: z.string().nullable().optional(),
+  xrayMode: z.boolean(),
+  cameraView: z.string().min(1),
+  note: z.string().max(600).optional(),
+  createdAt: z.string(),
+});
+
 export const MedVerseProgressUpdateSchema = z.object({
   completedTopics: z.record(z.string(), z.boolean()).optional(),
   bookmarkedTopicIds: z.array(z.string()).max(500).optional(),
   bookmarkedStructureIds: z.array(z.string()).max(1000).optional(),
+  pinAnnotations: z.array(MedVersePinAnnotationSchema).max(500).optional(),
+  collections: z.array(MedVerseStudyCollectionSchema).max(200).optional(),
   attempts: z
     .array(
       z.object({

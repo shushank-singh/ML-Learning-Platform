@@ -108,6 +108,7 @@ export interface AnatomicalStructureMetadata {
   assetId: string;
   meshId: string;
   fmaId?: string;
+  latinName?: string;
   standardName: string;
   sourceName: string;
   group: string;
@@ -127,6 +128,7 @@ export interface AnatomicalStructureMetadata {
 export type AnimationRenderKind =
   | 'heart_blood_flow'
   | 'heart_conduction'
+  | 'skeleton_kinematics'
   | 'respiratory_mechanics'
   | 'renal_nephron'
   | 'neuro_action_potential'
@@ -273,6 +275,41 @@ export interface MedVerseStudySession {
   recordedAt: string;
 }
 
+export type MedVerseTerminologyMode = 'clinical' | 'latin' | 'fma';
+
+export interface MedVersePinAnnotation {
+  id: string;
+  assetId: string;
+  structureId: string;
+  position: [number, number, number];
+  title: string;
+  note: string;
+  color?: string;
+  createdAt: string;
+}
+
+export interface MedVerseStudyCollection {
+  id: string;
+  name: string;
+  assetId: string;
+  selectedStructureId?: string | null;
+  hiddenStructureIds: string[];
+  isolatedStructureId?: string | null;
+  xrayMode: boolean;
+  cameraView: string;
+  note?: string;
+  createdAt: string;
+}
+
+export interface PathologyTerritoryPreset {
+  id: string;
+  title: string;
+  summary: string;
+  affectedStructureIds: string[];
+  clinicalSigns: string[];
+  highlightColor: string;
+}
+
 export interface MedVerseUserProgress {
   completedTopics: Record<string, boolean>;
   bookmarkedTopicIds: string[];
@@ -280,6 +317,8 @@ export interface MedVerseUserProgress {
   attempts: MedVerseAttemptRecord[];
   flashcardReviews: Record<string, MedVerseFlashcardReview>;
   studySessions: MedVerseStudySession[];
+  pinAnnotations?: MedVersePinAnnotation[];
+  collections?: MedVerseStudyCollection[];
   lastVisitedTopicId?: string;
   updatedAt: string;
 }

@@ -102,6 +102,16 @@ const requiredFiles = [
   'public/models/medverse/skeleton.glb',
   'public/models/medverse/skeleton-manifest.json',
   'public/models/medverse/skeleton-ATTRIBUTION.md',
+  'public/models/medverse/brain.glb',
+  'public/models/medverse/brain-manifest.json',
+  'public/models/medverse/lungs.glb',
+  'public/models/medverse/lungs-manifest.json',
+  'public/models/medverse/kidneys.glb',
+  'public/models/medverse/kidneys-manifest.json',
+  'public/models/medverse/liver.glb',
+  'public/models/medverse/liver-manifest.json',
+  'public/models/medverse/eye.glb',
+  'public/models/medverse/eye-manifest.json',
   'supabase/migrations/20261126_medverse_3d_schema.sql',
   'supabase/seed_medverse_3d.sql',
   'src/types/medverse.ts',
@@ -111,6 +121,7 @@ const requiredFiles = [
   'src/data/medverse/assets.ts',
   'src/data/medverse/heartStructures.ts',
   'src/data/medverse/skeletonStructures.ts',
+  'src/data/medverse/organStructures.ts',
   'src/data/medverse/animations.ts',
   'src/data/medverse/curriculum.ts',
   'src/data/medverse/topicsContent.ts',
@@ -119,6 +130,8 @@ const requiredFiles = [
   'src/components/medverse/three/threeUtils.ts',
   'src/components/medverse/three/MedVerseSceneCanvas.tsx',
   'src/components/medverse/three/AnatomyGLBViewer.tsx',
+  'src/components/medverse/three/AnnotationDrawingOverlay.tsx',
+  'src/components/medverse/three/VokaToolsPanels.tsx',
   'src/components/medverse/three/ScientificAnimationScene.tsx',
   'src/components/medverse/three/AnimationTimelinePlayer.tsx',
   'src/components/medverse/NotesRenderer.tsx',
@@ -129,6 +142,7 @@ const requiredFiles = [
   'src/app/doctor/curriculum/page.tsx',
   'src/app/doctor/anatomy/page.tsx',
   'src/app/doctor/animations/page.tsx',
+  'src/app/doctor/embed/page.tsx',
   'src/app/doctor/topics/[topicId]/page.tsx',
   'src/app/doctor/cases/page.tsx',
   'src/app/doctor/quizzes/page.tsx',
@@ -182,7 +196,39 @@ for (const meshId of skeletonGlb.meshNames) {
     `skeleton.glb mesh "${meshId}" missing from SKELETON_STRUCTURES_BY_ID`
   );
 }
-console.log('  [PASS] heart.glb (11/11) and skeleton.glb (242/242) meshes map 1:1 to anatomical registries.');
+
+const extraOrgans = [
+  { file: 'brain.glb', assetId: 'brain-bp3d', expectedCount: 19 },
+  { file: 'lungs.glb', assetId: 'lungs-bp3d', expectedCount: 20 },
+  { file: 'kidneys.glb', assetId: 'kidneys-bp3d', expectedCount: 6 },
+  { file: 'liver.glb', assetId: 'liver-bp3d', expectedCount: 7 },
+  { file: 'eye.glb', assetId: 'eye-bp3d', expectedCount: 21 },
+];
+for (const organ of extraOrgans) {
+  const glb = parseGlbMeshNodes(path.join(ROOT, 'public/models/medverse', organ.file));
+  const list = medverse.getStructuresForAsset(organ.assetId);
+  assert.strictEqual(glb.meshNames.length, organ.expectedCount, `${organ.file} mesh count mismatch`);
+  assert.strictEqual(list.length, organ.expectedCount, `${organ.assetId} registry length mismatch`);
+  const regIds = new Set(list.map((s) => s.id));
+  for (const meshId of glb.meshNames) {
+    assert(regIds.has(meshId), `${organ.file} mesh "${meshId}" missing in ${organ.assetId} registry`);
+  }
+}
+
+// Verify pathology territory IDs map cleanly to real structures
+for (const [assetId, territories] of Object.entries(medverse.PATHOLOGY_TERRITORIES)) {
+  for (const territory of territories) {
+    assert(territory.affectedStructureIds.length > 0);
+    for (const sid of territory.affectedStructureIds) {
+      assert(
+        medverse.getStructureMetadata(assetId, sid),
+        `Pathology territory ${territory.id} references missing structure "${sid}" in ${assetId}`
+      );
+    }
+  }
+}
+
+console.log('  [PASS] All 7 GLB organs (heart 11, skeleton 242, brain 19, lungs 20, kidneys 6, liver 7, eye 21) & pathology territories map 1:1.');
 
 // 3. Verify Curriculum Hierarchy, Honest Statuses & Content Coverage
 console.log('\n--- [3/6] Verifying NMC CBME Curriculum & Authored Content ---');
