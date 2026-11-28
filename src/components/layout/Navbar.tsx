@@ -38,6 +38,7 @@ import {
   Stethoscope,
   HeartPulse,
   ClipboardCheck,
+  GraduationCap,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useDivision } from '@/context/DivisionContext';
@@ -172,9 +173,11 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
                   size="md"
                   subtitle={
                     isOverviewPage
-                      ? 'Dual-Academy Platform Overview'
+                      ? 'Multi-Academy Platform Overview'
                       : division === 'doctor'
                       ? 'MBBS Medical Academy'
+                      : division === 'iit'
+                      ? 'IIT JEE Prep Academy'
                       : 'Engineering & AI Academy'
                   }
                 />
@@ -219,7 +222,19 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
                     }`}
                   >
                     <Stethoscope className="w-3 h-3" />
-                    <span>Doctor Platform</span>
+                    <span>Doctor</span>
+                  </Link>
+                  <Link
+                    href="/iit"
+                    onClick={() => setDivision('iit')}
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
+                      !isOverviewPage && division === 'iit'
+                        ? 'bg-white dark:bg-slate-900 text-amber-600 dark:text-amber-400 shadow-xs'
+                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                    }`}
+                  >
+                    <GraduationCap className="w-3 h-3" />
+                    <span>IIT JEE</span>
                   </Link>
                 </div>
               )}
@@ -248,6 +263,13 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
                 >
                   <Stethoscope className="w-3.5 h-3.5 text-teal-500" />
                   <span>Doctor Platform</span>
+                </Link>
+                <Link
+                  href="/iit"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 rounded-lg hover:bg-amber-50/70 dark:hover:bg-slate-800 transition-colors"
+                >
+                  <GraduationCap className="w-3.5 h-3.5 text-amber-500" />
+                  <span>IIT JEE Prep</span>
                 </Link>
                 <Link
                   href="/ai-tutor"
@@ -581,18 +603,18 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
           <div className="lg:hidden border-t border-slate-200 dark:border-slate-800 bg-white/98 dark:bg-slate-900/98 backdrop-blur-xl transition-all shadow-xl">
             <div className="px-4 pt-4 pb-6 space-y-4 max-h-[85vh] overflow-y-auto">
               {/* Mobile Academy Route Switcher */}
-              <div className="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <div className="grid grid-cols-4 gap-1 p-1 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
                 <Link
                   href="/"
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center justify-center gap-1 py-2 rounded-lg text-xs font-bold transition-all ${
+                  className={`flex items-center justify-center gap-1 py-2 rounded-lg text-[11px] font-bold transition-all ${
                     isOverviewPage
                       ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs'
                       : 'text-slate-600 dark:text-slate-400'
                   }`}
                 >
-                  <Layers className="w-3.5 h-3.5" />
-                  <span>Overview</span>
+                  <Layers className="w-3 h-3" />
+                  <span>Hub</span>
                 </Link>
                 <Link
                   href="/engineering"
@@ -600,14 +622,14 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
                     setDivision('engineering');
                     setMobileMenuOpen(false);
                   }}
-                  className={`flex items-center justify-center gap-1 py-2 rounded-lg text-xs font-bold transition-all ${
+                  className={`flex items-center justify-center gap-1 py-2 rounded-lg text-[11px] font-bold transition-all ${
                     !isOverviewPage && division === 'engineering'
                       ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
                       : 'text-slate-600 dark:text-slate-400'
                   }`}
                 >
-                  <Cpu className="w-3.5 h-3.5" />
-                  <span>Engineering</span>
+                  <Cpu className="w-3 h-3" />
+                  <span>Eng</span>
                 </Link>
                 <Link
                   href="/doctor"
@@ -615,14 +637,29 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({ isAuthPage = false })
                     setDivision('doctor');
                     setMobileMenuOpen(false);
                   }}
-                  className={`flex items-center justify-center gap-1 py-2 rounded-lg text-xs font-bold transition-all ${
+                  className={`flex items-center justify-center gap-1 py-2 rounded-lg text-[11px] font-bold transition-all ${
                     !isOverviewPage && division === 'doctor'
                       ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-xs'
                       : 'text-slate-600 dark:text-slate-400'
                   }`}
                 >
-                  <Stethoscope className="w-3.5 h-3.5" />
+                  <Stethoscope className="w-3 h-3" />
                   <span>Doctor</span>
+                </Link>
+                <Link
+                  href="/iit"
+                  onClick={() => {
+                    setDivision('iit');
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`flex items-center justify-center gap-1 py-2 rounded-lg text-[11px] font-bold transition-all ${
+                    !isOverviewPage && division === 'iit'
+                      ? 'bg-white dark:bg-slate-900 text-amber-600 dark:text-amber-400 shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400'
+                  }`}
+                >
+                  <GraduationCap className="w-3 h-3" />
+                  <span>IIT</span>
                 </Link>
               </div>
 

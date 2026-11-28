@@ -10,6 +10,7 @@ const DSALayout = dynamic(() => import('./DSALayout').then((m) => m.DSALayout), 
 const PythonLayout = dynamic(() => import('./PythonLayout').then((m) => m.PythonLayout), { ssr: true });
 const JavaLayout = dynamic(() => import('./JavaLayout').then((m) => m.JavaLayout), { ssr: true });
 const MedVerseLayout = dynamic(() => import('./MedVerseLayout').then((m) => m.MedVerseLayout), { ssr: true });
+const IITLayout = dynamic(() => import('./IITLayout').then((m) => m.IITLayout), { ssr: true });
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -50,12 +51,17 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
     return <LandingLayout>{children}</LandingLayout>;
   }
 
-  // 2. MedVerse 3D Doctor (MBBS) Sub-Routes
+  // 2. IIT JEE Preparation Sub-Routes (and /iit uses IITLayout for full sidebar + dashboard)
+  if (pathname === '/iit' || pathname.startsWith('/iit/')) {
+    return <IITLayout>{children}</IITLayout>;
+  }
+
+  // 3. MedVerse 3D Doctor (MBBS) Sub-Routes
   if (pathname.startsWith('/doctor/')) {
     return <MedVerseLayout>{children}</MedVerseLayout>;
   }
 
-  // 3. DSA Learning Environment
+  // 4. DSA Learning Environment
   if (pathname.startsWith('/dsa')) {
     return <DSALayout>{children}</DSALayout>;
   }

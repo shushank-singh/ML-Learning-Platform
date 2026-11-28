@@ -37,6 +37,10 @@ export const VALID_TRACKS = [
   'mbbs-preclinical',
   'mbbs-paraclinical',
   'mbbs-clinical',
+  'iit',
+  'iit-physics',
+  'iit-chemistry',
+  'iit-maths',
 ] as const;
 export type TutorTrack = typeof VALID_TRACKS[number];
 
@@ -85,6 +89,6 @@ export const TUTOR_MESSAGES = {
   UNAUTHENTICATED:
     "Please sign in with your account to access the AI Tutor.",
   INVALID_TRACK:
-    "Invalid learning track specified. Supported tracks are: ML, DSA, Python, Java, General, and Medical/MBBS.",
+    "Invalid learning track specified. Supported tracks are: ML, DSA, Python, Java, General, Medical/MBBS, and IIT JEE.",
 } as const;
 

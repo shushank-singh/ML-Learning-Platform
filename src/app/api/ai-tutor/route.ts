@@ -139,6 +139,10 @@ export async function POST(req: NextRequest) {
       'mbbs-preclinical',
       'mbbs-paraclinical',
       'mbbs-clinical',
+      'iit',
+      'iit-physics',
+      'iit-chemistry',
+      'iit-maths',
     ];
     const isOpenTrack = OPEN_FREE_TRACKS.includes(track as TutorTrack);
 

@@ -156,7 +156,11 @@ create table if not exists public.tutor_conversations (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references auth.users(id) on delete cascade,
   title text not null default 'New Conversation',
-  track text not null check (track in ('ml', 'dsa', 'python', 'java', 'general')),
+  track text not null check (track in (
+    'ml', 'dsa', 'python', 'java', 'general',
+    'medical', 'mbbs-preclinical', 'mbbs-paraclinical', 'mbbs-clinical',
+    'iit', 'iit-physics', 'iit-chemistry', 'iit-maths'
+  )),
   module_id text,
   lesson_id text,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null,
@@ -646,6 +650,72 @@ as $$
 $$;
 
 grant execute on function public.verify_certificate_by_id(text) to anon, authenticated;
+
+-- ==============================================================================
+-- 14. IIT JEE (Main & Advanced) Progress & Mock Test Ledger
+-- ==============================================================================
+
+create table if not exists public.iit_user_progress (
+  user_id uuid references auth.users(id) on delete cascade primary key,
+  target_exam text not null default 'Both' check (target_exam in ('JEE Main', 'JEE Advanced', 'Both')),
+  student_profile text not null default 'Class 12' check (student_profile in ('Class 11', 'Class 12', 'Dropper', 'Crash Revision')),
+  completed_lessons jsonb not null default '{}'::jsonb,
+  completed_chapters jsonb not null default '{}'::jsonb,
+  bookmarked_chapters jsonb not null default '[]'::jsonb,
+  bookmarked_questions jsonb not null default '[]'::jsonb,
+  personal_notes jsonb not null default '{}'::jsonb,
+  attempts jsonb not null default '[]'::jsonb,
+  mock_test_results jsonb not null default '[]'::jsonb,
+  flashcard_reviews jsonb not null default '{}'::jsonb,
+  study_sessions jsonb not null default '[]'::jsonb,
+  activity_dates jsonb not null default '[]'::jsonb,
+  revision_tasks jsonb not null default '[]'::jsonb,
+  last_visited jsonb,
+  created_at timestamptz not null default timezone('utc'::text, now()),
+  updated_at timestamptz not null default timezone('utc'::text, now())
+);
+
+alter table public.iit_user_progress enable row level security;
+
+drop policy if exists "Users can view own iit progress" on public.iit_user_progress;
+create policy "Users can view own iit progress"
+  on public.iit_user_progress for select to authenticated using (auth.uid() = user_id);
+
+drop policy if exists "Users can insert own iit progress" on public.iit_user_progress;
+create policy "Users can insert own iit progress"
+  on public.iit_user_progress for insert to authenticated with check (auth.uid() = user_id);
+
+drop policy if exists "Users can update own iit progress" on public.iit_user_progress;
+create policy "Users can update own iit progress"
+  on public.iit_user_progress for update to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+create table if not exists public.iit_mock_test_attempts (
+  id text primary key,
+  user_id uuid not null references auth.users(id) on delete cascade,
+  test_id text not null,
+  title text not null,
+  exam_pattern text not null check (exam_pattern in ('JEE Main', 'JEE Advanced')),
+  score numeric(8,2) not null,
+  max_score numeric(8,2) not null,
+  correct_count integer not null default 0,
+  incorrect_count integer not null default 0,
+  unattempted_count integer not null default 0,
+  accuracy_pct integer not null default 0 check (accuracy_pct >= 0 and accuracy_pct <= 100),
+  time_taken_sec integer not null default 0,
+  subject_breakdown jsonb not null default '[]'::jsonb,
+  submitted_at timestamptz not null default timezone('utc'::text, now())
+);
+
+create index if not exists idx_iit_mock_attempts_user on public.iit_mock_test_attempts(user_id, submitted_at desc);
+alter table public.iit_mock_test_attempts enable row level security;
+
+drop policy if exists "Users can view own iit mock attempts" on public.iit_mock_test_attempts;
+create policy "Users can view own iit mock attempts"
+  on public.iit_mock_test_attempts for select to authenticated using (auth.uid() = user_id);
+
+drop policy if exists "Users can insert own iit mock attempts" on public.iit_mock_test_attempts;
+create policy "Users can insert own iit mock attempts"
+  on public.iit_mock_test_attempts for insert to authenticated with check (auth.uid() = user_id);
 
 
 

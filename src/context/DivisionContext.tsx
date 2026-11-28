@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
-export type PlatformDivision = 'engineering' | 'doctor';
+export type PlatformDivision = 'engineering' | 'doctor' | 'iit';
 
 interface DivisionContextValue {
   division: PlatformDivision;
@@ -24,6 +24,10 @@ export const DivisionProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   // Sync division from route, query parameter, or saved preference
   useEffect(() => {
+    if (pathname === '/iit' || pathname.startsWith('/iit/')) {
+      setDivisionState('iit');
+      return;
+    }
     if (pathname === '/doctor' || pathname.startsWith('/doctor/')) {
       setDivisionState('doctor');
       return;
@@ -51,7 +55,7 @@ export const DivisionProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       const paramDiv = params.get('division');
-      if (paramDiv === 'doctor' || paramDiv === 'engineering') {
+      if (paramDiv === 'doctor' || paramDiv === 'engineering' || paramDiv === 'iit') {
         setDivisionState(paramDiv);
         try {
           localStorage.setItem(STORAGE_KEY, paramDiv);
@@ -61,7 +65,7 @@ export const DivisionProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved === 'doctor' || saved === 'engineering') {
+        if (saved === 'doctor' || saved === 'engineering' || saved === 'iit') {
           setDivisionState(saved);
         }
       } catch {}
@@ -82,7 +86,7 @@ export const DivisionProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         return;
       }
 
-      router.push(next === 'doctor' ? '/doctor' : '/engineering');
+      router.push(next === 'doctor' ? '/doctor' : next === 'iit' ? '/iit' : '/engineering');
     },
     [router]
   );

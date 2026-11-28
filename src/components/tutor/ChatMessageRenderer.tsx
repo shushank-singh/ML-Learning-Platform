@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { CodeSnippet } from './CodeSnippet';
+import { MathBlock, MathInline } from '@/components/math/Math';
 
 interface ChatMessageRendererProps {
   content: string;
@@ -9,7 +10,8 @@ interface ChatMessageRendererProps {
 }
 
 /**
- * Parses lightweight Markdown content with code blocks, bold text, lists, and headings.
+ * Parses Markdown content with code blocks, KaTeX display/inline math,
+ * bold text, lists, and headings.
  */
 export const ChatMessageRenderer: React.FC<ChatMessageRendererProps> = ({ content, tone = 'dark' }) => {
   // Split content by code blocks: ```[language]\ncode\n```
@@ -38,51 +40,62 @@ export const ChatMessageRenderer: React.FC<ChatMessageRendererProps> = ({ conten
           return <CodeSnippet key={index} code={code.trimEnd()} language={language} />;
         }
 
-        // Render standard text with paragraphs, bullet points, and inline formatting
-        const paragraphs = part.split(/\n\n+/);
+        // Split display math blocks $$...$$ cleanly
+        const mathSplit = part.split(/(\$\$[\s\S]*?\$\$)/g);
+
         return (
           <div key={index} className="space-y-2">
-            {paragraphs.map((para, pIdx) => {
-              const trimmed = para.trim();
-              if (!trimmed) return null;
-
-              // Headings
-              if (trimmed.startsWith('### ')) {
-                return (
-                  <h4 key={pIdx} className={`font-bold ${h4Text} text-sm mt-3 mb-1`}>
-                    {renderInlineFormatted(trimmed.slice(4), adaptive)}
-                  </h4>
-                );
-              }
-              if (trimmed.startsWith('## ')) {
-                return (
-                  <h3 key={pIdx} className={`font-bold ${h3Text} text-sm mt-3 mb-1`}>
-                    {renderInlineFormatted(trimmed.slice(3), adaptive)}
-                  </h3>
-                );
+            {mathSplit.map((chunk, cIdx) => {
+              if (chunk.startsWith('$$') && chunk.endsWith('$$') && chunk.length > 4) {
+                return <MathBlock key={cIdx} math={chunk.slice(2, -2).trim()} />;
               }
 
-              // Bullet list items
-              const lines = trimmed.split('\n');
-              const isList = lines.every((line) => line.trim().startsWith('- ') || line.trim().startsWith('* '));
-
-              if (isList) {
-                return (
-                  <ul key={pIdx} className={`list-disc list-inside space-y-1 ${subText} pl-1`}>
-                    {lines.map((line, lIdx) => (
-                      <li key={lIdx}>
-                        {renderInlineFormatted(line.replace(/^[-*]\s+/, ''), adaptive)}
-                      </li>
-                    ))}
-                  </ul>
-                );
-              }
-
-              // Standard Paragraph with inline formatting
+              const paragraphs = chunk.split(/\n\n+/);
               return (
-                <p key={pIdx} className={subText}>
-                  {renderInlineFormatted(trimmed, adaptive)}
-                </p>
+                <React.Fragment key={cIdx}>
+                  {paragraphs.map((para, pIdx) => {
+                    const trimmed = para.trim();
+                    if (!trimmed) return null;
+
+                    if (trimmed.startsWith('### ')) {
+                      return (
+                        <h4 key={pIdx} className={`font-bold ${h4Text} text-sm mt-3 mb-1`}>
+                          {renderInlineFormatted(trimmed.slice(4), adaptive)}
+                        </h4>
+                      );
+                    }
+                    if (trimmed.startsWith('## ')) {
+                      return (
+                        <h3 key={pIdx} className={`font-bold ${h3Text} text-sm mt-3 mb-1`}>
+                          {renderInlineFormatted(trimmed.slice(3), adaptive)}
+                        </h3>
+                      );
+                    }
+
+                    const lines = trimmed.split('\n');
+                    const isList = lines.every(
+                      (line) => line.trim().startsWith('- ') || line.trim().startsWith('* ')
+                    );
+
+                    if (isList) {
+                      return (
+                        <ul key={pIdx} className={`list-disc list-inside space-y-1 ${subText} pl-1`}>
+                          {lines.map((line, lIdx) => (
+                            <li key={lIdx}>
+                              {renderInlineFormatted(line.replace(/^[-*]\s+/, ''), adaptive)}
+                            </li>
+                          ))}
+                        </ul>
+                      );
+                    }
+
+                    return (
+                      <p key={pIdx} className={subText}>
+                        {renderInlineFormatted(trimmed, adaptive)}
+                      </p>
+                    );
+                  })}
+                </React.Fragment>
               );
             })}
           </div>
@@ -93,11 +106,10 @@ export const ChatMessageRenderer: React.FC<ChatMessageRendererProps> = ({ conten
 };
 
 /**
- * Handles inline bold (**text**) and inline code (`code`).
+ * Handles inline bold (**text**), inline code (`code`), and inline LaTeX ($...$).
  */
 function renderInlineFormatted(text: string, adaptive = false): React.ReactNode {
-  // Regex to match **bold** or `code`
-  const tokenRegex = /(\*\*.*?\*\*|`.*?`)/g;
+  const tokenRegex = /(\*\*[^*]+\*\*|`[^`]+`|\$(?:\\.|[^$\n])+\$)/g;
   const tokens = text.split(tokenRegex);
   const strongCls = adaptive ? 'font-semibold text-slate-900 dark:text-slate-100' : 'font-semibold text-slate-100';
   const codeCls = adaptive
@@ -105,19 +117,20 @@ function renderInlineFormatted(text: string, adaptive = false): React.ReactNode 
     : 'px-1.5 py-0.5 rounded bg-slate-800 text-indigo-300 font-mono text-xs border border-slate-700/60';
 
   return tokens.map((token, idx) => {
+    if (!token) return null;
+    if (token.startsWith('$') && token.endsWith('$') && token.length >= 2) {
+      return <MathInline key={idx} math={token.slice(1, -1)} />;
+    }
     if (token.startsWith('**') && token.endsWith('**')) {
       return (
         <strong key={idx} className={strongCls}>
-          {token.slice(2, -2)}
+          {renderInlineFormatted(token.slice(2, -2), adaptive)}
         </strong>
       );
     }
     if (token.startsWith('`') && token.endsWith('`')) {
       return (
-        <code
-          key={idx}
-          className={codeCls}
-        >
+        <code key={idx} className={codeCls}>
           {token.slice(1, -1)}
         </code>
       );
@@ -125,4 +138,3 @@ function renderInlineFormatted(text: string, adaptive = false): React.ReactNode 
     return token;
   });
 }
-
