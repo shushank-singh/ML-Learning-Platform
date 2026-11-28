@@ -31,6 +31,7 @@ import {
 import { NotesRenderer } from '@/components/medverse/NotesRenderer';
 import { QuizEnginePanel } from '@/components/medverse/QuizEnginePanel';
 import { FlashcardSM2Panel } from '@/components/medverse/FlashcardSM2Panel';
+import { DoctorTopicTutorWidget } from '@/components/medverse/DoctorTopicTutorWidget';
 import {
   getMedVerseProgress,
   recordMedVerseStudySession,
@@ -354,6 +355,8 @@ export default function SynchronizedTopicWorkspacePage() {
             </div>
           </div>
         ))}
+
+      <DoctorTopicTutorWidget topic={topic} />
     </div>
   );
 }

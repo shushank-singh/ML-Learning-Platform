@@ -27,7 +27,17 @@ export const DEFAULT_FREE_MODEL: VerifiedFreeModel = 'gemini-3.5-flash';
 /**
  * Valid learning tracks supported by the shared AI Tutor engine.
  */
-export const VALID_TRACKS = ['ml', 'dsa', 'python', 'java', 'general'] as const;
+export const VALID_TRACKS = [
+  'ml',
+  'dsa',
+  'python',
+  'java',
+  'general',
+  'medical',
+  'mbbs-preclinical',
+  'mbbs-paraclinical',
+  'mbbs-clinical',
+] as const;
 export type TutorTrack = typeof VALID_TRACKS[number];
 
 /**
@@ -73,8 +83,8 @@ export const TUTOR_MESSAGES = {
   MISSING_API_KEY:
     "AI Tutor is temporarily unavailable because the server Gemini API key is not configured.",
   UNAUTHENTICATED:
-    "Please sign in with your account to access the AI Coding & Concept Tutor.",
+    "Please sign in with your account to access the AI Tutor.",
   INVALID_TRACK:
-    "Invalid learning track specified. Supported tracks are: ML, DSA, Python, Java, and General.",
+    "Invalid learning track specified. Supported tracks are: ML, DSA, Python, Java, General, and Medical/MBBS.",
 } as const;
 

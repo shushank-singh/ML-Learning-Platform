@@ -132,7 +132,17 @@ export async function POST(req: NextRequest) {
     }
 
     // 4. Check Track, Module & Lesson Entitlement
-    if (track && track !== 'general') {
+    // General CS and all Doctor/MBBS medical tracks are openly accessible on Free Tier.
+    const OPEN_FREE_TRACKS: TutorTrack[] = [
+      'general',
+      'medical',
+      'mbbs-preclinical',
+      'mbbs-paraclinical',
+      'mbbs-clinical',
+    ];
+    const isOpenTrack = OPEN_FREE_TRACKS.includes(track as TutorTrack);
+
+    if (track && !isOpenTrack) {
       const trackAccess = await checkTrackAccessServer(track);
       if (!trackAccess.allowed) {
         return NextResponse.json(
@@ -147,7 +157,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    if (moduleId && typeof moduleId === 'string') {
+    if (!isOpenTrack && moduleId && typeof moduleId === 'string') {
       const moduleAccess = await checkModuleAccessServer(moduleId);
       if (!moduleAccess.allowed) {
         return NextResponse.json(
@@ -162,7 +172,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    if (lessonId && typeof lessonId === 'string') {
+    if (!isOpenTrack && lessonId && typeof lessonId === 'string') {
       const lessonAccess = await checkLessonAccessServer(moduleId || '', lessonId);
       if (!lessonAccess.allowed) {
         return NextResponse.json(

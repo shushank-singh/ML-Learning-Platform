@@ -11,6 +11,7 @@ import {
   PlayCircle,
   ArrowRight,
   Layers,
+  Sparkles,
 } from 'lucide-react';
 import {
   MBBS_PHASES,
@@ -83,6 +84,13 @@ export default function MedVerseCurriculumPage() {
             <span className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">
               {MBBS_CURRICULUM_STATS.plannedTopicsCount} Planned
             </span>
+            <Link
+              href="/doctor/ai-tutor"
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-teal-600 hover:bg-teal-500 text-white font-sans font-bold transition-colors"
+            >
+              <Sparkles className="w-3 h-3" />
+              <span>Ask AI Tutor</span>
+            </Link>
           </div>
         </div>
 
@@ -158,18 +166,42 @@ export default function MedVerseCurriculumPage() {
                 </span>
               </div>
 
-              {/* Subject Badges */}
-              <div className="flex flex-wrap gap-2">
-                {subjects.map((sub) => (
-                  <span
-                    key={sub.id}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300"
-                  >
-                    <span className="font-mono font-bold text-teal-600 dark:text-teal-400">{sub.shortCode}</span>
-                    <span>{sub.title}</span>
-                    <span className="text-[10px] text-slate-400 dark:text-slate-500">({sub.nmcCodeRange})</span>
-                  </span>
-                ))}
+              {/* Subject Summary Cards (Year 1–4 Syllabus Overview) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                {subjects.map((sub) => {
+                  const subFirstTopic = MBBS_TOPICS_CATALOG.find(
+                    (t) => t.subjectId === sub.id && t.status === 'published'
+                  );
+                  return (
+                    <div
+                      key={sub.id}
+                      className="rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 p-3 flex flex-col justify-between gap-1.5"
+                    >
+                      <div className="space-y-1">
+                        <div className="flex items-center justify-between gap-2 text-[11px]">
+                          <span className="font-mono font-bold text-teal-600 dark:text-teal-400">
+                            {sub.shortCode} · {sub.nmcCodeRange}
+                          </span>
+                          {subFirstTopic && (
+                            <Link
+                              href={`/doctor/topics/${subFirstTopic.id}`}
+                              className="text-[10px] font-bold text-cyan-700 dark:text-cyan-300 hover:underline inline-flex items-center gap-0.5"
+                            >
+                              <span>Study Notes</span>
+                              <ArrowRight className="w-2.5 h-2.5" />
+                            </Link>
+                          )}
+                        </div>
+                        <div className="text-xs font-extrabold text-slate-900 dark:text-white">
+                          {sub.title}
+                        </div>
+                        <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-snug">
+                          {sub.description}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
 
               {/* Topics Grid */}

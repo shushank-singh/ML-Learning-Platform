@@ -16,6 +16,7 @@ import {
   X,
   CheckCircle2,
   Cpu,
+  Sparkles,
 } from 'lucide-react';
 import { UserMenu } from '@/components/auth/UserMenu';
 import { ThemeToggle } from '@/components/shared/ThemeToggle';
@@ -30,6 +31,7 @@ const MEDVERSE_NAV_ITEMS = [
   { name: '3D Anatomy Atlas', href: '/doctor/anatomy', icon: Box },
   { name: 'Animation Studio', href: '/doctor/animations', icon: PlayCircle },
   { name: 'MBBS Curriculum', href: '/doctor/curriculum', icon: BookOpen },
+  { name: 'Medical AI Tutor', href: '/doctor/ai-tutor', icon: Sparkles },
   { name: 'Clinical Cases', href: '/doctor/cases', icon: ClipboardCheck },
   { name: 'Quizzes & Flashcards', href: '/doctor/quizzes', icon: CheckSquare },
   { name: 'Content Studio (Admin)', href: '/doctor/studio', icon: ShieldAlert },
@@ -154,7 +156,7 @@ export const MedVerseLayout: React.FC<{ children: React.ReactNode }> = ({ childr
               </span>
             </div>
 
-            <div className="space-y-0.5">
+            <div className="space-y-0.5 max-h-60 overflow-y-auto pr-1">
               {publishedTopics.map((topic) => {
                 const isDone = Boolean(progress?.completedTopics?.[topic.id]);
                 const isActive = pathname === `/doctor/topics/${topic.id}`;

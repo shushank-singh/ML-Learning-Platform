@@ -18,6 +18,7 @@ import {
   Loader2,
   HeartPulse,
   Bone,
+  Sparkles,
 } from 'lucide-react';
 import {
   MBBS_CURRICULUM_STATS,
@@ -156,7 +157,15 @@ export const MedVerseDashboardHome: React.FC = () => {
                 className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-white/80 dark:bg-slate-950/70 hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-semibold transition-colors"
               >
                 <BookOpen className="w-4 h-4 text-teal-600 dark:text-teal-400" />
-                <span>Full NMC Syllabus</span>
+                <span>MBBS Full Notes (1st–Final Yr)</span>
+              </Link>
+
+              <Link
+                href="/doctor/ai-tutor"
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-xs sm:text-sm font-bold shadow-lg shadow-violet-600/20 transition-colors"
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>Personal Medical AI Tutor</span>
               </Link>
             </div>
           </div>
@@ -413,8 +422,21 @@ export const MedVerseDashboardHome: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. QUICK ACCESS TOOLS: ANIMATIONS, CASES, QUIZZES, ADMIN STUDIO */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* 5. QUICK ACCESS TOOLS: ANIMATIONS, AI TUTOR, CASES, QUIZZES, ADMIN STUDIO */}
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <Link
+          href="/doctor/ai-tutor"
+          className="p-5 rounded-2xl border border-teal-200 dark:border-teal-800/70 bg-gradient-to-br from-teal-50/70 to-white dark:from-teal-950/30 dark:to-slate-900 hover:border-teal-500 space-y-2 transition-colors"
+        >
+          <Sparkles className="w-5 h-5 text-teal-600 dark:text-teal-400" />
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+            Medical AI Tutor
+          </h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            Ask any MBBS Year 1–4 doubt, differential, or mnemonic via Gemini AI.
+          </p>
+        </Link>
+
         <Link
           href="/doctor/animations"
           className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-cyan-500/60 space-y-2 transition-colors"

@@ -11,6 +11,7 @@ import {
   Lightbulb,
 } from 'lucide-react';
 import { MBBSNoteSection } from '@/types/medverse';
+import { MedicalNoteDiagram } from './MedicalNoteDiagram';
 
 interface NotesRendererProps {
   notes: MBBSNoteSection;
@@ -133,10 +134,15 @@ export const NotesRenderer: React.FC<NotesRendererProps> = ({ notes }) => {
           <div className="p-3.5 rounded-xl bg-violet-50 dark:bg-violet-950/30 border border-violet-200 dark:border-violet-800/60 flex items-start gap-2.5 text-xs text-violet-900 dark:text-violet-200">
             <Lightbulb className="w-4 h-4 text-violet-600 dark:text-violet-400 shrink-0 mt-0.5" />
             <div>
-              <strong className="text-violet-700 dark:text-violet-300">Memory Aid:</strong>{' '}
+              <strong className="text-violet-700 dark:text-violet-300">Memory Aid 💡:</strong>{' '}
               {notes.twoMinuteRevision.memoryAid}
             </div>
           </div>
+
+          <MedicalNoteDiagram
+            topicId={notes.topicId}
+            captions={notes.detailedNotes.diagramCaptions}
+          />
         </div>
       )}
 
@@ -145,7 +151,7 @@ export const NotesRenderer: React.FC<NotesRendererProps> = ({ notes }) => {
         <div className="space-y-5 text-xs sm:text-sm">
           <div className="space-y-1.5">
             <h4 className="text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400">
-              1. Core Concept
+              1. Core Concept 🧠
             </h4>
             <p className="text-slate-700 dark:text-slate-200 leading-relaxed">{notes.detailedNotes.coreConcept}</p>
           </div>
@@ -153,7 +159,7 @@ export const NotesRenderer: React.FC<NotesRendererProps> = ({ notes }) => {
           {notes.detailedNotes.definitions.length > 0 && (
             <div className="space-y-2">
               <h4 className="text-xs font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-400">
-                2. Definitions &amp; Essential Parameters
+                2. Definitions &amp; Essential Parameters 📖
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                 {notes.detailedNotes.definitions.map((d) => (
@@ -172,7 +178,7 @@ export const NotesRenderer: React.FC<NotesRendererProps> = ({ notes }) => {
           {notes.detailedNotes.classifications.length > 0 && (
             <div className="space-y-2">
               <h4 className="text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400">
-                Classifications
+                🗂️ Classifications
               </h4>
               {notes.detailedNotes.classifications.map((cls) => (
                 <div
@@ -192,7 +198,7 @@ export const NotesRenderer: React.FC<NotesRendererProps> = ({ notes }) => {
 
           <div className="space-y-2">
             <h4 className="text-xs font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-400">
-              3. Mechanism &amp; Sequence
+              3. Mechanism &amp; Sequence ⚙️
             </h4>
             <ol className="space-y-1.5 list-decimal list-inside text-xs text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
               {notes.detailedNotes.mechanismSteps.map((step) => (
@@ -206,7 +212,7 @@ export const NotesRenderer: React.FC<NotesRendererProps> = ({ notes }) => {
           {notes.detailedNotes.importantRelationships.length > 0 && (
             <div className="space-y-1.5">
               <h4 className="text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400">
-                4. Important Anatomical &amp; Physiological Relationships
+                4. Important Relationships &amp; Pearls 🔗
               </h4>
               <ul className="space-y-1 text-xs text-slate-600 dark:text-slate-300">
                 {notes.detailedNotes.importantRelationships.map((rel) => (
@@ -248,9 +254,14 @@ export const NotesRenderer: React.FC<NotesRendererProps> = ({ notes }) => {
             </div>
           )}
 
+          <MedicalNoteDiagram
+            topicId={notes.topicId}
+            captions={notes.detailedNotes.diagramCaptions}
+          />
+
           <div className="space-y-2">
             <h4 className="text-xs font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">
-              5. Clinical Relevance
+              5. Clinical Relevance 🩺
             </h4>
             <div className="space-y-1.5">
               {notes.detailedNotes.clinicalCorrelations.map((c) => (

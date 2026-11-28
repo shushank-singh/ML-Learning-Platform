@@ -5,6 +5,11 @@ import {
   MedicalReference,
   SyntheticClinicalCase,
 } from '@/types/medverse';
+import {
+  MEDVERSE_FLASHCARDS_EXTENDED,
+  MEDVERSE_MCQS_EXTENDED,
+  MEDVERSE_NOTES_EXTENDED,
+} from './topicsContentExtended';
 
 const STANDARD_REFS: Record<string, MedicalReference> = {
   guyton: {
@@ -43,10 +48,10 @@ export const MEDVERSE_NOTES: Record<string, MBBSNoteSection> = {
     reviewer: 'NMC CBME Reference Alignment',
     lastReviewedAt: '2026-11-26',
     sixtySecondSummary: [
-      'Deoxygenated blood flows: SVC/IVC -> Right Atrium -> Tricuspid valve -> Right Ventricle -> Pulmonary valve -> Pulmonary Trunk -> Lungs.',
-      'Oxygenated blood returns: 4 Pulmonary Veins -> Left Atrium -> Mitral (bicuspid) valve -> Left Ventricle -> Aortic valve -> Ascending Aorta & Arch.',
-      'Pulmonary circuit is low-pressure (~25/8 mmHg); Systemic circuit is high-pressure (~120/80 mmHg), explaining the ~3x thicker LV myocardium.',
-      'Clinical anchor: Left Atrium sits posteriorly anterior to the esophagus; Right Ventricle forms most of the anterior sternocostal surface.',
+      '💙 Deoxygenated blood flows: SVC/IVC -> Right Atrium -> Tricuspid valve -> Right Ventricle -> Pulmonary valve -> Pulmonary Trunk -> 🫁 Lungs.',
+      '❤️ Oxygenated blood returns: 4 Pulmonary Veins -> Left Atrium -> Mitral (bicuspid) valve -> Left Ventricle -> Aortic valve -> Ascending Aorta & Arch.',
+      '⚖️ Pulmonary circuit is low-pressure (~25/8 mmHg); Systemic circuit is high-pressure (~120/80 mmHg), explaining the ~3x thicker LV myocardium.',
+      '🎯 Clinical anchor: Left Atrium sits posteriorly anterior to the esophagus; Right Ventricle forms most of the anterior sternocostal surface.',
     ],
     twoMinuteRevision: {
       coreConcept:
@@ -154,10 +159,10 @@ export const MEDVERSE_NOTES: Record<string, MBBSNoteSection> = {
     reviewer: 'NMC CBME Reference Alignment',
     lastReviewedAt: '2026-11-26',
     sixtySecondSummary: [
-      'Conduction order: SA node (60–100/min) -> AV node (~100 ms delay) -> Bundle of His -> Left/Right Bundle Branches -> Purkinje fibers.',
-      'ECG correlation: P wave = atrial depolarization; PR interval = AV delay (120–200 ms); QRS = ventricular depolarization; T wave = ventricular repolarization.',
-      'Left ventricular coronary blood flow peaks during DIASTOLE when myocardial extravascular compression drops.',
-      'RCA supplies SA node (~60%) and AV node (~85–90%), explaining bradyarrhythmias/heart block in inferior STEMI.',
+      '⚡ Conduction order: SA node (60–100/min) -> AV node (~100 ms delay) -> Bundle of His -> Left/Right Bundle Branches -> Purkinje fibers.',
+      '📈 ECG correlation: P wave = atrial depolarization; PR interval = AV delay (120–200 ms); QRS = ventricular depolarization; T wave = ventricular repolarization.',
+      '🩸 Left ventricular coronary blood flow peaks during DIASTOLE when myocardial extravascular compression drops.',
+      '🫀 RCA supplies SA node (~60%) and AV node (~85–90%), explaining bradyarrhythmias/heart block in inferior STEMI.',
     ],
     twoMinuteRevision: {
       coreConcept:
@@ -241,10 +246,10 @@ export const MEDVERSE_NOTES: Record<string, MBBSNoteSection> = {
     reviewer: 'NMC CBME Reference Alignment',
     lastReviewedAt: '2026-11-26',
     sixtySecondSummary: [
-      'Adult human skeleton (~206 bones, 242 segmented bone/cartilage/disc elements in the BodyParts3D model): Axial (80) + Appendicular (126).',
-      'Sternal angle (T4/T5) anchors the 2nd costal cartilage and divides superior from inferior mediastinum.',
-      'High-yield upper limb fracture-nerve pairs: Clavicle (middle-lateral 1/3), Surgical neck of Humerus (Axillary), Midshaft Humerus (Radial), Medial epicondyle (Ulnar).',
-      'Scaphoid fractures risk proximal pole AVN (retrograde blood supply); Femoral neck fractures risk femoral head AVN.',
+      '🦴 Adult human skeleton (~206 bones, 242 segmented elements in BodyParts3D): Axial (80) + Appendicular (126).',
+      '📍 Sternal angle (T4/T5) anchors the 2nd costal cartilage and divides superior from inferior mediastinum.',
+      '⚡ Upper limb fracture-nerve pairs: Clavicle (middle-lateral 1/3), Surgical neck of Humerus (Axillary), Midshaft Humerus (Radial -> wrist drop), Medial epicondyle (Ulnar).',
+      '🩸 Scaphoid fractures risk proximal pole AVN (retrograde blood supply); Femoral neck fractures risk femoral head AVN.',
     ],
     twoMinuteRevision: {
       coreConcept:
@@ -319,9 +324,9 @@ export const MEDVERSE_NOTES: Record<string, MBBSNoteSection> = {
     reviewer: 'NMC CBME Reference Alignment',
     lastReviewedAt: '2026-11-26',
     sixtySecondSummary: [
-      'Inspiration is active (diaphragm via phrenic nerve C3–C5 + external intercostals); quiet expiration is passive via elastic recoil.',
-      'Boyle’s law: lung expansion drops alveolar pressure from 0 to -1 cmH2O, pulling air inward; intrapleural pressure stays subatmospheric (-5 to -8 cmH2O).',
-      'Fick’s law: gas diffusion is proportional to surface area × ΔP and inversely proportional to membrane thickness.',
+      '🫁 Inspiration is active (diaphragm via phrenic nerve C3–C5 + external intercostals); quiet expiration is passive via elastic recoil.',
+      '📉 Boyle’s law: lung expansion drops alveolar pressure from 0 to -1 cmH2O, pulling air inward; intrapleural pressure stays subatmospheric (-5 to -8 cmH2O).',
+      '💨 Fick’s law: gas diffusion is proportional to surface area × ΔP and inversely proportional to membrane thickness (CO2 diffuses ~20x faster than O2).',
     ],
     twoMinuteRevision: {
       coreConcept: 'Negative-pressure thoracic expansion drives convective airflow into alveoli, where partial pressure gradients diffuse O2 and CO2 across a 0.5 μm barrier.',
@@ -365,10 +370,10 @@ export const MEDVERSE_NOTES: Record<string, MBBSNoteSection> = {
     reviewer: 'NMC CBME Reference Alignment',
     lastReviewedAt: '2026-11-26',
     sixtySecondSummary: [
-      'Normal GFR ≈ 125 mL/min (~180 L/day) driven by glomerular capillary hydrostatic pressure (~60 mmHg).',
-      'PCT reabsorbs ~65% Na+/H2O and ~100% glucose/amino acids (SGLT2 target).',
-      'Thick Ascending Limb (NKCC2) is water-impermeable ("diluting segment", loop diuretic site).',
-      'Collecting Duct: Aldosterone controls Na+/K+ (ENaC/ROMK); ADH inserts Aquaporin-2 channels.',
+      '🫘 Normal GFR ≈ 125 mL/min (~180 L/day) driven by glomerular capillary hydrostatic pressure (~60 mmHg).',
+      '🔋 PCT reabsorbs ~65% Na+/H2O and ~100% glucose/amino acids (SGLT2 target).',
+      '🔁 Thick Ascending Limb (NKCC2) is water-impermeable ("diluting segment", Furosemide/loop diuretic site).',
+      '💧 Collecting Duct: Aldosterone controls Na+/K+ (ENaC/ROMK); ADH inserts Aquaporin-2 channels.',
     ],
     twoMinuteRevision: {
       coreConcept: 'The nephron filters a high volume of protein-free plasma at the glomerulus and selectively reclaims >99% of filtered water and essential solutes segment-by-segment.',
@@ -412,10 +417,10 @@ export const MEDVERSE_NOTES: Record<string, MBBSNoteSection> = {
     reviewer: 'NMC CBME Reference Alignment',
     lastReviewedAt: '2026-11-26',
     sixtySecondSummary: [
-      'Resting membrane potential (~ -70 mV) depends on K+ leak channels and Na+/K+-ATPase (3 Na+ out, 2 K+ in).',
-      'Threshold (-55 mV) triggers rapid voltage-gated Na+ influx -> +35 mV overshoot; K+ efflux drives repolarization.',
-      'Myelin (Schwann cells PNS, Oligodendrocytes CNS) accelerates conduction via saltatory jumping between Nodes of Ranvier.',
-      'Presynaptic Ca2+ influx triggers SNARE-mediated exocytosis of neurotransmitter across the synaptic cleft.',
+      '🧠 Resting membrane potential (~ -70 mV) depends on K+ leak channels and Na+/K+-ATPase (3 Na+ out, 2 K+ in).',
+      '⚡ Threshold (-55 mV) triggers rapid voltage-gated Na+ influx -> +35 mV overshoot; K+ efflux drives repolarization.',
+      '🛡️ Myelin (Schwann cells PNS, Oligodendrocytes CNS) accelerates conduction via saltatory jumping between Nodes of Ranvier.',
+      '🔬 Presynaptic Ca2+ influx triggers SNARE-mediated exocytosis of neurotransmitter across the synaptic cleft.',
     ],
     twoMinuteRevision: {
       coreConcept: 'Voltage-gated ion channels generate all-or-none electrical impulses that propagate without decrement to trigger Ca2+-dependent chemical neurotransmitter release.',
@@ -458,9 +463,9 @@ export const MEDVERSE_NOTES: Record<string, MBBSNoteSection> = {
     reviewer: 'NMC CBME Reference Alignment',
     lastReviewedAt: '2026-11-26',
     sixtySecondSummary: [
-      'Ca2+ released from SR binds Troponin-C, shifting tropomyosin to expose myosin-binding sites on actin.',
-      'During contraction, Z-discs move closer: H-zone and I-band shorten, while the A-band length stays constant.',
-      'ATP binding (not hydrolysis) is required to detach myosin from actin; lack of ATP causes rigor mortis.',
+      '💪 Ca2+ released from SR binds Troponin-C, shifting tropomyosin to expose myosin-binding sites on actin.',
+      '📏 During contraction, Z-discs move closer: H-zone and I-band shorten, while the A-band length stays constant.',
+      '⚡ ATP binding (not hydrolysis) is required to detach myosin from actin; lack of ATP causes rigor mortis.',
     ],
     twoMinuteRevision: {
       coreConcept: 'Thick myosin filaments pull thin actin filaments inward via cyclical ATP-driven cross-bridge strokes.',
@@ -495,9 +500,9 @@ export const MEDVERSE_NOTES: Record<string, MBBSNoteSection> = {
     reviewer: 'NMC CBME Reference Alignment',
     lastReviewedAt: '2026-11-26',
     sixtySecondSummary: [
-      'DNA synthesis ALWAYS proceeds 5’→3’ (new nucleotide added to free 3’-OH) and reads template 3’→5’.',
-      'Helicase unwinds double helix; Topoisomerase relieves supercoiling; Primase adds RNA primer; DNA Ligase seals Okazaki fragments.',
-      '3’→5’ exonuclease proofreading corrects mismatched nucleotides during synthesis.',
+      '🧬 DNA synthesis ALWAYS proceeds 5’→3’ (new nucleotide added to free 3’-OH) and reads template 3’→5’.',
+      '✂️ Helicase unwinds double helix; Topoisomerase relieves supercoiling; Primase adds RNA primer; DNA Ligase seals Okazaki fragments.',
+      '🔎 3’→5’ exonuclease proofreading corrects mismatched nucleotides during synthesis.',
     ],
     twoMinuteRevision: {
       coreConcept: 'Semi-conservative replication pairs each parental strand with a newly synthesized complementary strand using antiparallel continuous (leading) and discontinuous (lagging) synthesis.',
@@ -523,6 +528,7 @@ export const MEDVERSE_NOTES: Record<string, MBBSNoteSection> = {
     },
     references: [STANDARD_REFS.harper],
   },
+  ...MEDVERSE_NOTES_EXTENDED,
 };
 
 export const MEDVERSE_MCQS: MBBSMCQ[] = [
@@ -881,6 +887,7 @@ export const MEDVERSE_MCQS: MBBSMCQ[] = [
     difficulty: 'Foundational',
     sourceLabel: 'MedVerse Practice Item (Synthetic)',
   },
+  ...MEDVERSE_MCQS_EXTENDED,
 ];
 
 export const MEDVERSE_FLASHCARDS: MBBSFlashcard[] = [
@@ -909,6 +916,7 @@ export const MEDVERSE_FLASHCARDS: MBBSFlashcard[] = [
   { id: 'fc-sarc-2', topicId: 'msk-sarcomere-contraction', subjectId: 'mbbs-physiology', front: 'Biochemical basis of rigor mortis after death?', back: 'ATP depletion prevents fresh ATP binding to myosin heads, locking actin-myosin cross-bridges in attached state' },
   { id: 'fc-dna-1', topicId: 'biochem-dna-replication', subjectId: 'mbbs-biochemistry', front: 'Direction of DNA synthesis vs proofreading exonuclease activity?', back: 'Synthesizes 5’→3’; proofreads 3’→5’' },
   { id: 'fc-dna-2', topicId: 'biochem-dna-replication', subjectId: 'mbbs-biochemistry', front: 'Prokaryotic enzyme removing RNA primers from Okazaki fragments and filling gaps?', back: 'DNA Polymerase I via its unique 5’→3’ exonuclease + 5’→3’ polymerase activity' },
+  ...MEDVERSE_FLASHCARDS_EXTENDED,
 ];
 
 export const SYNTHETIC_CLINICAL_CASES: SyntheticClinicalCase[] = [
